@@ -1,0 +1,33 @@
+/* ===== RAVEO — self-hosted display/UI font (subset woff2) ===== */
+
+/* Display family — headings */
+@font-face {
+  font-family: 'Raveo Display';
+  src: url('../fonts/raveo-display-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raveo Display';
+  src: url('../fonts/raveo-display-extrabold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Text family — buttons, pills, nav, labels */
+@font-face {
+  font-family: 'Raveo';
+  src: url('../fonts/raveo-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raveo';
+  src: url('../fonts/raveo-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

@@ -1,0 +1,8 @@
+# OS junk
+.DS_Store
+**/.DS_Store
+
+# Excluded from this project's repo (per project owner)
+api/
+middleware.js
+Vias Media (standalone).html

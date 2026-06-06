@@ -1,0 +1,162 @@
+/* =====================================================================
+   DESIGN TOKENS — Vias Media
+   Palettes: petal (default, light) + ember + ember-dark.
+   All sizing in rem (px ÷ 16). 1px borders are the only px exception.
+   ===================================================================== */
+
+:root {
+  /* ---- Type families ---- */
+  --font-display: 'Raveo Display', 'Raveo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Helvetica Neue', Arial, sans-serif;   /* simple sans for labels (was Courier New) */
+
+  /* ---- Fluid type scale (clamp: min, fluid, max) ---- */
+  --fs-100: 0.625rem;                              /* 10px — micro label */
+  --fs-200: 0.75rem;                               /* 12px — small label */
+  --fs-300: 0.875rem;                              /* 14px — small / links */
+  --fs-400: 1rem;                                  /* 16px — body */
+  --fs-500: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);     /* 17–20px — body lg */
+  --fs-600: clamp(1.375rem, 1.2rem + 0.9vw, 1.5rem);     /* 22–24px — card title */
+  --fs-700: clamp(1.375rem, 1.1rem + 1.4vw, 1.75rem);    /* 22–28px — t-sm */
+  --fs-800: clamp(1.625rem, 1.1rem + 2.6vw, 2rem);       /* 26–32px — t-md */
+  --fs-900: clamp(1.5rem, 0.6rem + 4.5vw, 3rem);         /* 24–48px — t-lg */
+  --fs-1000: clamp(1.75rem, 0.4rem + 6.8vw, 4.5rem);     /* 28–72px — t-xl / hero */
+
+  /* ---- Spacing scale ---- */
+  --space-2xs: 0.25rem;   /* 4 */
+  --space-xs:  0.5rem;    /* 8 */
+  --space-sm:  0.75rem;   /* 12 */
+  --space-md:  1rem;      /* 16 */
+  --space-lg:  1.5rem;    /* 24 */
+  --space-xl:  2rem;      /* 32 */
+  --space-2xl: 3rem;      /* 48 */
+  --space-3xl: 4rem;      /* 64 */
+  --space-4xl: 5rem;      /* 80 */
+  --space-5xl: 7.5rem;    /* 120 */
+
+  /* ---- Radius ---- */
+  --radius-sm: 0.5rem;    /* 8 */
+  --radius-md: 0.75rem;   /* 12 */
+  --radius-lg: 1rem;      /* 16 */
+  --radius-pill: 2rem;    /* 32 */
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 0.125rem 1.25rem var(--nav-shadow);
+  --shadow-md: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 1.25rem 3rem rgba(0, 0, 0, 0.12);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.3, 0.7, 0.4, 1);
+  --dur-fast: 0.2s;
+  --dur-base: 0.35s;
+  --dur-slow: 0.6s;
+
+  /* ---- Layout ---- */
+  --container-max: 72.5rem;        /* 1160px */
+  --header-height: 7.5rem;         /* JS overrides via updateSpacer() */
+  --hero-gap: 3.75rem;             /* 60px — protected hero text↔actions gap */
+}
+
+/* =====================================================================
+   PALETTE: Petal (default / light)
+   Built from three base colors: powder-petal, dark-khaki, black-cherry.
+   Supporting tones (hovers, muted, borders, gradients) derived from them.
+   ===================================================================== */
+:root,
+[data-palette="petal"] {
+  /* ---- Base trio ---- */
+  --powder-petal: hsl(23 39% 85%);
+  --dark-khaki:   hsl(66 16% 25%);
+  --black-cherry: hsl(359 100% 18%);
+
+  --accent: hsl(359 100% 18%);          /* black-cherry */
+  --accent-hover: hsl(359 100% 13%);    /* cherry, darker */
+  --bg: #FEF8EF;                         /* warm cream */
+  --bg-alt: hsl(36 55% 93%);            /* subtle step for section rhythm */
+  --text: hsl(23 8% 12%);               /* warm near-black */
+  --text-sec: hsl(23 6% 30%);           /* warm dark grey */
+  --text-muted: hsla(23, 6%, 12%, 0.52);
+  --card: hsl(36 80% 99%);              /* near-white warm */
+  --card-hover: hsl(36 55% 93%);
+  --border: hsla(23, 6%, 12%, 0.16);
+  --border-light: hsla(23, 6%, 12%, 0.08);
+  --nav-bg: hsla(36, 80%, 97%, 0.92);
+  --nav-shadow: rgba(0, 0, 0, 0.09);
+  --btn-on-accent: #FFFFFF;
+  --gradient-footer: linear-gradient(to bottom, var(--bg-alt) 0%, hsl(36 50% 88%) 100%);
+  --gradient-testimonial: linear-gradient(to bottom, var(--bg-alt) 0%, var(--bg) 55%);
+  --gradient-flow: linear-gradient(to bottom, var(--bg) 0%, var(--bg-alt) 100%);
+  --gradient-hero-img: linear-gradient(to bottom, var(--bg), var(--bg-alt));
+  --input-bg: hsla(23, 6%, 12%, 0.05);
+  --star: hsl(359 100% 18%);
+  --star-stroke: hsl(359 100% 13%);
+  /* ---- Glass (opt-in; apply via .glass — never overrides base styles) ---- */
+  --glass-bg: hsla(36, 80%, 99%, 0.6);
+  --glass-border: hsla(0, 0%, 100%, 0.5);
+  --glass-blur: 0.75rem;
+  --glass-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+/* =====================================================================
+   PALETTE: Ember (light)
+   ===================================================================== */
+[data-palette="ember"] {
+  --accent: #E8593A;
+  --accent-hover: #D24828;
+  --bg: #FEF8EF;
+  --bg-alt: hsl(36 55% 93%);
+  --text: #1C1917;
+  --text-sec: #302A25;
+  --text-muted: rgba(28, 25, 23, 0.58);
+  --card: hsl(36 80% 99%);
+  --card-hover: hsl(36 55% 93%);
+  --border: rgba(28, 25, 23, 0.22);
+  --border-light: rgba(28, 25, 23, 0.10);
+  --nav-bg: hsla(36, 80%, 97%, 0.94);
+  --nav-shadow: rgba(0, 0, 0, 0.08);
+  --btn-on-accent: #FFFFFF;
+  --gradient-footer: linear-gradient(to bottom, var(--bg-alt) 0%, hsl(36 50% 88%) 100%);
+  --gradient-testimonial: linear-gradient(to bottom, var(--bg-alt) 0%, var(--bg) 55%);
+  --gradient-flow: linear-gradient(to bottom, var(--bg) 0%, var(--bg-alt) 100%);
+  --gradient-hero-img: linear-gradient(to bottom, var(--bg), var(--bg-alt));
+  --input-bg: rgba(28, 25, 23, 0.06);
+  --star: #E8593A;
+  --star-stroke: #C04A2E;
+  /* ---- Glass (opt-in; apply via .glass — never overrides base styles) ---- */
+  --glass-bg: hsla(36, 80%, 99%, 0.6);
+  --glass-border: hsla(0, 0%, 100%, 0.5);
+  --glass-blur: 0.75rem;
+  --glass-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+/* =====================================================================
+   PALETTE: Ember Dark
+   ===================================================================== */
+[data-palette="ember-dark"] {
+  --accent: #E8593A;
+  --accent-hover: #D24828;
+  --bg: #141210;
+  --bg-alt: #1E1A17;
+  --text: #EDE8E3;
+  --text-sec: #D0C8BF;
+  --text-muted: rgba(237, 232, 227, 0.48);
+  --card: #1C1916;
+  --card-hover: #262220;
+  --border: rgba(237, 232, 227, 0.16);
+  --border-light: rgba(237, 232, 227, 0.08);
+  --nav-bg: rgba(20, 18, 16, 0.94);
+  --nav-shadow: rgba(0, 0, 0, 0.45);
+  --btn-on-accent: #FFFFFF;
+  --gradient-footer: linear-gradient(to bottom, #141210 0%, #1e1513 100%);
+  --gradient-testimonial: linear-gradient(to bottom, #1e1513 0%, #141210 55%);
+  --gradient-flow: linear-gradient(to bottom, #141210 0%, #1E1A17 100%);
+  --gradient-hero-img: linear-gradient(to bottom, #141210, #1E1A17);
+  --input-bg: rgba(237, 232, 227, 0.08);
+  --star: #E8593A;
+  --star-stroke: #C04A2E;
+  /* ---- Glass (opt-in; apply via .glass — never overrides base styles) ---- */
+  --glass-bg: rgba(28, 25, 23, 0.5);
+  --glass-border: rgba(237, 232, 227, 0.12);
+  --glass-blur: 0.75rem;
+  --glass-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.45);
+}

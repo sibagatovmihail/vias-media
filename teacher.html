@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Teacher view · Vias Media</title>
+  <style>
+    :root {
+      --bg: #FAFAF8; --text: #1C1917; --text-muted: rgba(28,25,23,0.58);
+      --accent: #E8593A; --accent-hover: #D24828; --border: rgba(28,25,23,0.22);
+      --card: #FFFFFF; --radius-md: 0.75rem; --radius-sm: 0.5rem;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); min-height: 100dvh; }
+    .container { max-width: 72.5rem; margin-inline: auto; padding-inline: 1.5rem; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding-block: 1.5rem; border-bottom: 1px solid var(--border); }
+    .topbar__brand { font-weight: 700; font-size: 1.125rem; }
+    .btn-logout {
+      font-family: inherit; font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      color: var(--accent); background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 0.5rem 1rem; transition: border-color 0.2s ease;
+    }
+    .btn-logout:hover { border-color: var(--accent); }
+    .content { padding-block: 3rem; }
+    .content__title { font-size: 2rem; line-height: 1.15; font-weight: 700; margin-bottom: 1rem; }
+    .content__lead { font-size: 1.0625rem; color: var(--text-muted); line-height: 1.55; max-width: 40rem; }
+    .note { margin-top: 2rem; padding: 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 0.9375rem; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar">
+      <div class="topbar__brand">Vias Media · Teacher view</div>
+      <button class="btn-logout" id="logout-btn" type="button">Log out</button>
+    </div>
+  </header>
+
+  <main class="container content">
+    <div class="content__title">You're signed in 🎉</div>
+    <p class="content__lead">
+      Only people who entered the correct password can see this page. Replace the
+      contents of <strong>teacher.html</strong> with your real teacher-only material.
+    </p>
+    <div class="note">
+      This page is locked by <code>middleware.js</code>. To protect more pages, add
+      their paths to the <code>matcher</code> in that file.
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/';
+    });
+  </script>
+</body>
+</html>

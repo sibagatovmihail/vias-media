@@ -1,0 +1,45 @@
+/* ===== CONTACT PAGE ===== */
+.contact {
+  display: grid; grid-template-columns: minmax(0, 22rem) 1fr;
+  gap: var(--space-3xl); align-items: start;
+}
+.contact__aside { display: flex; flex-direction: column; gap: var(--space-lg); }
+.contact__points { display: flex; flex-direction: column; gap: var(--space-md); }
+.contact__point { display: flex; gap: var(--space-sm); align-items: flex-start; }
+.contact__point .icon-box { width: 2.5rem; height: 2.5rem; }
+
+.contact__form { display: flex; flex-direction: column; gap: var(--space-md); }
+.contact__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+
+/* The form is a static card — no lift/tint on hover; that belongs to the fields. */
+.contact__form.card:hover { background: var(--card); transform: none; box-shadow: none; }
+
+@media (max-width: 64rem) {
+  .contact { grid-template-columns: 1fr; gap: var(--space-2xl); }
+}
+@media (max-width: 37.5rem) {
+  .contact__row { grid-template-columns: 1fr; }
+}
+
+/* ===== FORM SUCCESS MODAL ===== */
+.form-success-overlay {
+  position: fixed; inset: 0; background: rgba(15, 12, 10, 0.6);
+  display: flex; align-items: center; justify-content: center; z-index: 300;
+  visibility: hidden; opacity: 0;
+  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
+}
+.form-success-overlay.open {
+  visibility: visible; opacity: 1;
+  transition: opacity 0.22s ease, visibility 0s linear 0s;
+}
+.form-success-modal {
+  background: var(--card); border-radius: var(--radius-lg);
+  padding: var(--space-2xl); max-width: 25rem;
+  width: calc(100% - var(--space-lg) * 2); text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-md);
+  transform: translateY(0.5rem); transition: transform 0.22s ease;
+  box-shadow: var(--shadow-lg);
+}
+.form-success-overlay.open .form-success-modal { transform: translateY(0); }
+.form-success-modal__icon svg { width: 3rem; height: 3rem; }
+.form-success-modal__close { margin-top: var(--space-sm); }

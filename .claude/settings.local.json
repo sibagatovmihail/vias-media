@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"/Users/mykhailo/Desktop/vias media/.claude/skills\")",
+      "Bash(cp -r \"/Users/mykhailo/Desktop/akkermann stroy/.claude/skills/.\" \"/Users/mykhailo/Desktop/vias media/.claude/skills/\")",
+      "Bash(cp \"/Users/mykhailo/Desktop/akkermann stroy/CLAUDE.md\" \"/Users/mykhailo/Desktop/vias media/CLAUDE.md\")",
+      "Bash(ls *.html)",
+      "Bash(cat vercel.json)",
+      "Bash(cat package.json)",
+      "Read(//Users/mykhailo/Desktop/invoice-app/**)"
+    ]
+  },
+  "sandbox": {
+    "enabled": false,
+    "autoAllowBashIfSandboxed": false
+  }
+}
