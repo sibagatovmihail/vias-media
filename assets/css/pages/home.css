@@ -60,14 +60,7 @@
 .section-head { display: flex; flex-direction: column; gap: var(--space-md); max-width: 40rem; }
 .section-head--center { align-items: center; text-align: center; margin-inline: auto; }
 
-/* ===== WHY A WEBSITE (resolves "do I even need one?") — big, premium cards =====
-   Section-level muted-ember gradient: fades from --bg (seamless with the trust
-   strip above) down to the muted-ember peak, which the .flow-band picks up. */
-.why-web {
-  background: linear-gradient(to bottom,
-    var(--bg) 0%,
-    color-mix(in srgb, var(--accent) 13%, var(--bg)) 100%);
-}
+/* ===== WHY A WEBSITE (resolves "do I even need one?") — big, premium cards ===== */
 .why-web .section-head { margin-bottom: var(--space-2xl); }
 .why-web__grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xs);
@@ -111,15 +104,8 @@ html.js .card.why-web__point.reveal.is-visible:hover,
   .why-web__grid { grid-template-columns: 1fr; gap: var(--space-xs); }
 }
 
-/* ===== FLOW BAND — Work → Services share one continuous gradient =====
-   Top stop = the muted-ember peak that the .why-web section fades up to, so
-   the two sections join with no visible seam; fades down to --bg-alt, which
-   is exactly where the testimonials gradient begins. */
-.flow-band {
-  background: linear-gradient(to bottom,
-    color-mix(in srgb, var(--accent) 13%, var(--bg)) 0%,
-    var(--bg-alt) 100%);
-}
+/* ===== FLOW BAND — Why → Work → Services share one continuous gradient ===== */
+.flow-band { background: var(--gradient-flow); }
 
 /* ===== FEATURES ("Why Vias Media") ===== */
 .features { background: transparent; }
@@ -299,5 +285,4 @@ html.js .card.why-web__point.reveal.is-visible:hover,
   .faq-item__panel, .faq-item__icon { transition: none; }
 }
 
-/* ===== Footer wrapper gradient ===== */
-.footer-wrap { background: var(--gradient-footer); }
+/* Footer wrapper gradient now lives in components.css (shared across pages). */
