@@ -60,27 +60,25 @@
 .section-head { display: flex; flex-direction: column; gap: var(--space-md); max-width: 40rem; }
 .section-head--center { align-items: center; text-align: center; margin-inline: auto; }
 
-/* ===== WHY A WEBSITE (resolves "do I even need one?") — big, premium cards ===== */
+/* ===== WHY A WEBSITE (resolves "do I even need one?") — big, premium cards =====
+   Section-level muted-ember gradient: fades from --bg (seamless with the trust
+   strip above) down to the muted-ember peak, which the .flow-band picks up. */
+.why-web {
+  background: linear-gradient(to bottom,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--accent) 13%, var(--bg)) 100%);
+}
 .why-web .section-head { margin-bottom: var(--space-2xl); }
 .why-web__grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xs);
 }
 .why-web__point {
-  /* Muted-ember wash: accent mixed into the card tone (softer, desaturated),
-     fading diagonally back to the card colour. Works in light + dark. */
-  --card-grad: linear-gradient(155deg,
-    color-mix(in srgb, var(--accent) 18%, var(--card)) 0%,
-    color-mix(in srgb, var(--accent) 7%, var(--card)) 42%,
-    var(--card) 100%);
-  background: var(--card-grad);
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; gap: var(--space-md);
   padding: var(--space-2xl) var(--space-xl);
   min-height: 22rem;
   border: 1px solid var(--border-light);
 }
-/* Re-assert the gradient on hover so .card:hover doesn't flatten it. */
-.why-web__point:hover { background: var(--card-grad); }
 html.js .card.why-web__point.reveal.is-visible:hover,
 .why-web__point:hover { transform: translateY(-0.375rem); }
 
@@ -113,8 +111,15 @@ html.js .card.why-web__point.reveal.is-visible:hover,
   .why-web__grid { grid-template-columns: 1fr; gap: var(--space-xs); }
 }
 
-/* ===== FLOW BAND — Why → Work → Services share one continuous gradient ===== */
-.flow-band { background: var(--gradient-flow); }
+/* ===== FLOW BAND — Work → Services share one continuous gradient =====
+   Top stop = the muted-ember peak that the .why-web section fades up to, so
+   the two sections join with no visible seam; fades down to --bg-alt, which
+   is exactly where the testimonials gradient begins. */
+.flow-band {
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--accent) 13%, var(--bg)) 0%,
+    var(--bg-alt) 100%);
+}
 
 /* ===== FEATURES ("Why Vias Media") ===== */
 .features { background: transparent; }
