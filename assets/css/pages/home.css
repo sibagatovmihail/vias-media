@@ -90,18 +90,17 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 }
 .why-web__point .icon-box {
   width: 4.75rem; height: 4.75rem; border-radius: var(--radius-md);
-  box-shadow: 0 0.5rem 1.25rem color-mix(in srgb, var(--accent) 35%, transparent);
 }
 .why-web__num {
   font-family: var(--font-display);
-  font-size: 4rem; font-weight: 800; line-height: 1; letter-spacing: -0.06em;
+  font-size: 6.5rem; font-weight: 800; line-height: 1; letter-spacing: -0.06em;
   color: var(--accent); opacity: 0.16;
 }
 .why-web__point h3, .why-web__point p { position: relative; z-index: 1; }
 
 @media (max-width: 64rem) {
   .why-web__point { min-height: 0; padding: var(--space-xl); }
-  .why-web__num { font-size: 3.25rem; }
+  .why-web__num { font-size: 5rem; }
 }
 @media (max-width: 48rem) {
   .why-web__grid { grid-template-columns: 1fr; gap: var(--space-md); }
