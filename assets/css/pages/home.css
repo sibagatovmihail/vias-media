@@ -66,12 +66,21 @@
   display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xs);
 }
 .why-web__point {
+  /* Muted-ember wash: accent mixed into the card tone (softer, desaturated),
+     fading diagonally back to the card colour. Works in light + dark. */
+  --card-grad: linear-gradient(155deg,
+    color-mix(in srgb, var(--accent) 18%, var(--card)) 0%,
+    color-mix(in srgb, var(--accent) 7%, var(--card)) 42%,
+    var(--card) 100%);
+  background: var(--card-grad);
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; gap: var(--space-md);
   padding: var(--space-2xl) var(--space-xl);
   min-height: 22rem;
   border: 1px solid var(--border-light);
 }
+/* Re-assert the gradient on hover so .card:hover doesn't flatten it. */
+.why-web__point:hover { background: var(--card-grad); }
 html.js .card.why-web__point.reveal.is-visible:hover,
 .why-web__point:hover { transform: translateY(-0.375rem); }
 
