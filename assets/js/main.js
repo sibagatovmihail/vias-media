@@ -326,6 +326,60 @@
     });
   }
 
+  /* ---- Hero title typing animation ----
+     Reveals the hero <h1> one glyph at a time. Every character is laid out up
+     front (each glyph in a <span>, hidden via visibility; spaces stay as text
+     so words wrap at the same points), so the line wrapping and centring are
+     fixed from the first frame — the title never reflows or jumps as it types.
+     The caret is an absolutely-positioned ::after on the current glyph, so it
+     adds no layout. i18n captured the English key on load (before this runs);
+     we restore a plain text node when done so EN/DE toggles still translate.
+     Skipped under reduced motion. */
+  function initHeroType() {
+    var el = document.querySelector('.hero__title');
+    if (!el || el.children.length) return;          // pure-text leaf only
+    var full = el.textContent;
+    if (prefersReduced || !full.trim()) return;     // a11y: keep full title
+
+    el.textContent = '';
+    var glyphs = [];
+    for (var c = 0; c < full.length; c++) {
+      if (full[c] === ' ') { el.appendChild(document.createTextNode(' ')); continue; }
+      var s = document.createElement('span');
+      s.className = 'char';
+      s.textContent = full[c];
+      el.appendChild(s);
+      glyphs.push(s);
+    }
+    el.classList.add('is-typing');
+
+    /* Reveal only once the web font is ready. If glyphs are laid out in the
+       fallback font, the final collapse back to plain text (now in the web
+       font) shifts the lines slightly — the "jump at the end". Waiting makes
+       the typing layout and the final layout use the same font, so they match. */
+    function reveal() {
+      var i = 0, prev = null;
+      (function tick() {
+        if (i < glyphs.length) {
+          if (prev) prev.classList.remove('cursor');
+          glyphs[i].classList.add('typed', 'cursor');
+          prev = glyphs[i];
+          i++;
+          window.setTimeout(tick, 30);
+        } else {
+          /* Let the caret blink a moment, then collapse back to a plain text
+             node — a clean leaf so i18n can translate it on later toggles. */
+          window.setTimeout(function () {
+            el.classList.remove('is-typing');
+            el.textContent = full;
+          }, 900);
+        }
+      })();
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reveal);
+    else reveal();
+  }
+
   /* ---- Wire up ---- */
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -348,5 +402,6 @@
   initReveal();
   initWhySlider();
   initFaq();
+  initHeroType();
   requestParallax();
 })();

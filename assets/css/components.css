@@ -144,8 +144,8 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   width: calc(100% - var(--space-lg) * 2);   /* side gaps → it floats */
   max-width: var(--container-max);
   background: var(--nav-bg);
-  -webkit-backdrop-filter: blur(1.25rem);
-  backdrop-filter: blur(1.25rem);
+  -webkit-backdrop-filter: blur(0.6rem);
+  backdrop-filter: blur(0.6rem);
   border-radius: var(--radius-lg);
   /* Larger, layered shadow so the floating card separates from same-tone
      content scrolling behind it. */
@@ -169,6 +169,11 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   color: var(--text);
 }
 .navbar__logo img { width: 1.625rem; height: auto; }
+/* Two marks, one per theme: the default (dark-outline) mark vanishes on the
+   dark nav, so the cream mark takes over under [data-palette="ember-dark"]. */
+.logo-mark--dark { display: none; }
+[data-palette="ember-dark"] .logo-mark--light { display: none; }
+[data-palette="ember-dark"] .logo-mark--dark { display: block; }
 .navbar__logo .dot { color: var(--accent); }
 
 .navbar__links {
@@ -252,6 +257,12 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   display: flex; align-items: center; gap: var(--space-sm);
   padding: var(--space-xs) 0.75rem 0;
 }
+/* CTA inside the menu — only surfaces at ≤30rem, where the in-bar CTA hides.
+   Re-assert white label + accent hover: .nav-drop a (and :hover) out-specify
+   .btn--primary and would otherwise grey the text. */
+.nav-drop__cta { display: none; margin: 0; }
+.nav-drop__cta .btn { width: 100%; justify-content: center; color: var(--btn-on-accent); }
+.nav-drop__cta .btn:hover { background: var(--accent-hover); color: var(--btn-on-accent); }
 
 /* --- Theme (dark-mode) toggle — small round icon button --- */
 .theme-toggle {
@@ -511,6 +522,8 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
 @media (max-width: 30rem) {
   .topbar .topbar__text { display: none; }
   .navbar__actions .btn-cta { display: none; }
+  /* CTA relocates into the popup menu the hamburger opens. */
+  .nav-drop__cta { display: block; }
 }
 
 /* =====================================================================
@@ -532,27 +545,3 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   color: var(--text-muted); font-size: var(--fs-200);
 }
 .cta-reassure svg { flex-shrink: 0; color: var(--accent); }
-
-/* =====================================================================
-   STICKY MOBILE CONTACT BAR — one-tap call + WhatsApp, phone-only.
-   Hidden on desktop and while the full-screen menu is open.
-   ===================================================================== */
-.mobile-contact-bar {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
-  display: none;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-md) calc(var(--space-xs) + env(safe-area-inset-bottom));
-  background: var(--nav-bg);
-  -webkit-backdrop-filter: blur(1.25rem); backdrop-filter: blur(1.25rem);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -0.25rem 1.5rem var(--nav-shadow);
-}
-.mobile-contact-bar .btn { flex: 1; }
-
-/* Show the bar (and clear footer space for it) on tablet-portrait & phones. */
-@media (max-width: 47.9375rem) {
-  .mobile-contact-bar { display: flex; }
-  .footer { padding-bottom: 6rem; }
-}
-/* Never let the bar sit over the open full-screen menu. */
-body.nav-open-lock .mobile-contact-bar { display: none; }

@@ -31,6 +31,28 @@
 
 .hero__pill .pill { gap: var(--space-xs); }
 
+/* Typing animation — every glyph is laid out up front (JS wraps each in a
+   .char span) and revealed one by one, so the title's wrapping and centring
+   stay fixed: it never reflows or jumps. Untyped glyphs are hidden but keep
+   their space. The caret is absolutely positioned on the current glyph, so it
+   adds no layout of its own. */
+.hero__title .char { position: relative; }
+.hero__title.is-typing .char:not(.typed) { visibility: hidden; }
+.hero__title.is-typing .char.cursor::after {
+  content: '';
+  position: absolute;
+  top: 0.12em;
+  right: -0.1em;
+  height: 0.74em;
+  width: 0.06em;
+  background: var(--accent);
+  animation: hero-caret 0.85s steps(1) infinite;
+}
+@keyframes hero-caret { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero__title.is-typing .char.cursor::after { animation: none; }
+}
+
 /* Progressive heading scale (CLAUDE.md hero rules) */
 /* Monotonic decreasing — a wider breakpoint is never smaller than a narrower one. */
 @media (max-width: 64rem)   { .hero__text h1 { font-size: 3.25rem; } }
@@ -39,8 +61,16 @@
   /* Reduced a touch at the smallest tier; lead paragraph smaller. */
   .hero__text h1 { font-size: 2.5rem; line-height: 1.04; }
   .hero__lead { font-size: 0.8125rem; }
-  .hero__actions { flex-direction: column; width: 100%; max-width: 20rem; }
+  .hero__actions { flex-direction: column; width: 100%; max-width: none; }
   .hero__actions .btn { width: 100%; }
+}
+
+/* Small phone ≤30rem — hero left-aligns as one block; the pill is dropped to
+   keep the tightest tier uncluttered. Button stack follows the text to the left. */
+@media (max-width: 30rem) {
+  .hero__text { align-items: flex-start; text-align: left; }
+  .hero__pill { display: none; }
+  .hero__actions { align-self: flex-start; justify-content: flex-start; }
 }
 
 /* ===== TRUST MARQUEE (client strip) ===== */
