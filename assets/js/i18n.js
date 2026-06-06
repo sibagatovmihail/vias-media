@@ -35,6 +35,9 @@
     '5 Star Review Rating': '5-Sterne-Bewertung',
 
     /* CTAs */
+    'Get a free quote': 'Kostenloses Angebot',
+    'Free, no-obligation quote — you own everything we build.':
+      'Kostenloses, unverbindliches Angebot – die fertige Website gehört ganz Ihnen.',
     'Start a Project': 'Projekt starten',
     'Start a project': 'Projekt starten',
     'See our work': 'Unsere Projekte ansehen',
@@ -52,6 +55,21 @@
     'Websites that get trades & small businesses more work': 'Websites, die Handwerkern & kleinen Unternehmen mehr Aufträge bringen',
     'Vias Media builds fast, professional websites for new and growing local businesses — with a special focus on trades and Handwerker. Get found on Google, look the part, and turn visitors into booked jobs.':
       'Vias Media baut schnelle, professionelle Websites für neue und wachsende lokale Unternehmen – mit besonderem Fokus auf Handwerker. Werden Sie bei Google gefunden, treten Sie professionell auf und machen Sie aus Besuchern echte Aufträge.',
+
+    /* Why a website (home) */
+    "Why it's worth it": 'Warum es sich lohnt',
+    'Most customers check you online before they call': 'Die meisten Kunden prüfen Sie online, bevor sie anrufen',
+    "If they can't find you — or what they find looks dated — they call the next name on the list. A clear, fast website turns that search into a booked job.":
+      'Wenn sie Sie nicht finden – oder das Gefundene veraltet wirkt – rufen sie den nächsten Namen auf der Liste an. Eine klare, schnelle Website macht aus dieser Suche einen festen Auftrag.',
+    'Found first': 'Zuerst gefunden',
+    'When someone searches your trade and town, you want to be the result they tap — not the competitor who showed up instead.':
+      'Wenn jemand nach Ihrem Gewerk und Ort sucht, wollen Sie das Ergebnis sein, das angetippt wird – nicht der Mitbewerber, der stattdessen erschien.',
+    'Trusted faster': 'Schneller Vertrauen',
+    'A professional site answers "are these people legit?" before you\'ve even spoken — so the enquiries you get are already warm.':
+      'Eine professionelle Website beantwortet „sind die seriös?" schon vor dem ersten Gespräch – die Anfragen, die Sie erhalten, sind also bereits vorgewärmt.',
+    'Working 24/7': 'Rund um die Uhr aktiv',
+    "Your site quotes, reassures, and captures enquiries while you're on the tools or asleep — no missed calls, no lost jobs.":
+      'Ihre Website informiert, überzeugt und sammelt Anfragen, während Sie arbeiten oder schlafen – keine verpassten Anrufe, keine verlorenen Aufträge.',
 
     /* Features */
     'Why Vias Media': 'Warum Vias Media',
@@ -186,6 +204,11 @@
     "Tell us a little about your project and we'll get back to you within one business day with clear next steps.":
       'Erzählen Sie uns kurz von Ihrem Projekt und wir melden uns innerhalb eines Werktags mit klaren nächsten Schritten.',
     'What happens next': 'Was als Nächstes passiert',
+    'Prefer to talk now?': 'Lieber direkt sprechen?',
+    'Call us': 'Anrufen',
+    'Call': 'Anrufen',
+    'A line or two is fine — or just say hi and we\'ll take it from there…':
+      'Ein, zwei Sätze genügen – oder sagen Sie einfach Hallo, den Rest klären wir.',
     'We review your brief': 'Wir prüfen Ihre Anfrage',
     'A real person reads it — no autoresponders.': 'Ein echter Mensch liest sie – keine Autoresponder.',
     'A free consultation call': 'Ein kostenloses Beratungsgespräch',
@@ -266,10 +289,26 @@
     try { localStorage.setItem(KEY, lang); } catch (e) {}
   }
 
-  /* Init */
-  var saved = 'en';
-  try { saved = localStorage.getItem(KEY) || 'en'; } catch (e) {}
-  apply(saved === 'de' ? 'de' : 'en');
+  /* Init — use the saved choice if present; otherwise auto-detect from the
+     browser's preferred languages (German speakers land in German on the
+     first visit). The manual toggle always overrides and is then persisted. */
+  function detectLang() {
+    try {
+      var langs = navigator.languages && navigator.languages.length
+        ? navigator.languages
+        : [navigator.language || navigator.userLanguage || 'en'];
+      for (var i = 0; i < langs.length; i++) {
+        if (/^de\b/i.test(langs[i])) return 'de';
+        if (/^en\b/i.test(langs[i])) return 'en';
+      }
+    } catch (e) {}
+    return 'en';
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  var initial = saved === 'de' || saved === 'en' ? saved : detectLang();
+  apply(initial);
 
   document.querySelectorAll('.lang-toggle').forEach(function (toggle) {
     toggle.addEventListener('click', function () {

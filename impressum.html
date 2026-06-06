@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Work — Vias Media</title>
-  <meta name="description" content="Selected web design and development projects by Vias Media — case studies with real, measurable results.">
+  <title>Impressum — Vias Media</title>
+  <meta name="description" content="Impressum / legal notice for Vias Media.">
+  <meta name="robots" content="noindex">
 
   <link rel="preload" href="assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -13,7 +14,16 @@
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/pages/work.css">
+  <style>
+    .legal { max-width: 48rem; margin-inline: auto; }
+    .legal h2 { margin-top: var(--space-2xl); margin-bottom: var(--space-sm); }
+    .legal h3 { margin-top: var(--space-lg); margin-bottom: var(--space-2xs); }
+    .legal p { color: var(--text-sec); margin-bottom: var(--space-sm); }
+    .legal .legal__note {
+      background: var(--input-bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: var(--space-md); margin-bottom: var(--space-xl);
+    }
+  </style>
 </head>
 <body>
 
@@ -32,7 +42,7 @@
         </a>
         <div class="navbar__links">
           <a href="services.html" data-de="Leistungen">Services</a>
-          <a href="work.html" aria-current="page" data-de="Projekte">Work</a>
+          <a href="work.html" data-de="Projekte">Work</a>
           <a href="index.html#reviews" data-de="Bewertungen">Reviews</a>
           <a href="contact.html" data-de="Kontakt">Contact</a>
         </div>
@@ -76,102 +86,75 @@
     </nav>
   </header>
 
-
   <div id="header-spacer"></div>
 
   <main>
     <section class="subhero">
       <div class="container">
-        <div class="subhero__inner reveal">
-          <div><span class="pill"><span class="t-label">Work</span></span></div>
-          <div><h1 class="t-xl">Our latest projects</h1></div>
-          <div><p class="t-body-lg subhero__lead">A selection of websites we've built for tradespeople and local businesses — each focused on getting found and winning more work.</p></div>
+        <div class="subhero__inner">
+          <div><span class="pill"><span class="t-label">Legal</span></span></div>
+          <div><h1 class="t-xl">Impressum</h1></div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="portfolio">
-          <article class="case reveal">
-            <div class="placeholder"><span>hvac company website</span></div>
-            <div class="case__head">
-              <div><h2 class="t-card">Eagle Air HVAC Website Redesign</h2></div>
-              <div class="case__tags">
-                <span class="pill"><span class="t-label-md t-muted">Web Design</span></span>
-                <span class="pill"><span class="t-label-md t-muted">Development</span></span>
-              </div>
-            </div>
-            <div><p class="t-body">A faster, cleaner site that turned a dated brochure into a lead engine for a regional HVAC company.</p></div>
-            <div class="case__result">
-              <div class="case__stat"><span class="case__stat-num">2×</span><span class="t-small">Inquiries since launch</span></div>
-              <div class="case__stat"><span class="case__stat-num">98</span><span class="t-small">Lighthouse performance</span></div>
-            </div>
-          </article>
+        <div class="legal">
+          <div class="legal__note">
+            <p style="margin:0;"><strong>⚠️ Template — not yet valid.</strong> Replace every <code>[PLACEHOLDER]</code> with your real details and have the result checked before going live. An Impressum is legally required in Germany (§ 5 DDG).</p>
+          </div>
 
-          <article class="case reveal" data-delay="1">
-            <div class="placeholder"><span>construction company website</span></div>
-            <div class="case__head">
-              <div><h2 class="t-card">Akkerman Stroy Digital Presence</h2></div>
-              <div class="case__tags">
-                <span class="pill"><span class="t-label-md t-muted">Web Design</span></span>
-                <span class="pill"><span class="t-label-md t-muted">SEO</span></span>
-              </div>
-            </div>
-            <div><p class="t-body">A search-first rebuild that put a growing construction firm on the map for the queries that matter.</p></div>
-            <div class="case__result">
-              <div class="case__stat"><span class="case__stat-num">+140%</span><span class="t-small">Organic traffic</span></div>
-              <div class="case__stat"><span class="case__stat-num">#1</span><span class="t-small">For target keywords</span></div>
-            </div>
-          </article>
+          <div><h2 class="t-md">Angaben gemäß § 5 DDG</h2></div>
+          <div><p class="t-body">[LEGAL NAME / COMPANY NAME]<br>
+            [STREET AND NUMBER]<br>
+            [POSTAL CODE] [CITY]<br>
+            [COUNTRY]</p></div>
 
-          <article class="case reveal">
-            <div class="placeholder"><span>studio portfolio website</span></div>
-            <div class="case__head">
-              <div><h2 class="t-card">Bloom Studio Portfolio</h2></div>
-              <div class="case__tags">
-                <span class="pill"><span class="t-label-md t-muted">Web Design</span></span>
-                <span class="pill"><span class="t-label-md t-muted">Accessibility</span></span>
-              </div>
-            </div>
-            <div><p class="t-body">An inclusive, WCAG-compliant portfolio that opened a creative studio's work to a wider audience.</p></div>
-            <div class="case__result">
-              <div class="case__stat"><span class="case__stat-num">AA</span><span class="t-small">WCAG conformance</span></div>
-              <div class="case__stat"><span class="case__stat-num">+60%</span><span class="t-small">Time on site</span></div>
-            </div>
-          </article>
+          <div><h3 class="t-sm">Vertreten durch</h3></div>
+          <div><p class="t-body">[REPRESENTATIVE / OWNER NAME — only if a company]</p></div>
 
-          <article class="case reveal" data-delay="1">
-            <div class="placeholder"><span>digital agency website</span></div>
-            <div class="case__head">
-              <div><h2 class="t-card">Northline Digital Rebrand</h2></div>
-              <div class="case__tags">
-                <span class="pill"><span class="t-label-md t-muted">Branding</span></span>
-                <span class="pill"><span class="t-label-md t-muted">Development</span></span>
-              </div>
-            </div>
-            <div><p class="t-body">A full rebrand and build that gave an agency a confident, conversion-ready presence.</p></div>
-            <div class="case__result">
-              <div class="case__stat"><span class="case__stat-num">3 wk</span><span class="t-small">Design to launch</span></div>
-              <div class="case__stat"><span class="case__stat-num">+45%</span><span class="t-small">Qualified leads</span></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+          <div><h3 class="t-sm">Kontakt</h3></div>
+          <div><p class="t-body">Telefon: [PHONE]<br>
+            E-Mail: hello@viasmedia.com</p></div>
 
-    <section class="section">
-      <div class="container">
-        <div class="cta-band reveal" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg); text-align:center;">
-          <div><span class="pill"><span class="t-label">Your project next</span></span></div>
-          <div><h2 class="t-xl footer-cta__title">Ready to be our next success story?</h2></div>
-          <a href="contact.html" class="btn btn--primary"><span>Start a Project</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
+          <div><h3 class="t-sm">Umsatzsteuer-ID</h3></div>
+          <div><p class="t-body">Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG:<br>
+            [VAT ID — or remove this block if not applicable]</p></div>
+
+          <div><h3 class="t-sm">Redaktionell verantwortlich</h3></div>
+          <div><p class="t-body">[NAME]<br>[ADDRESS, if different from above]</p></div>
+
+          <div><h2 class="t-md">EU-Streitschlichtung</h2></div>
+          <div><p class="t-body">Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="link" href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse finden Sie oben im Impressum.</p></div>
+          <div><p class="t-body">Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p></div>
+
+          <div><h2 class="t-md">Haftung für Inhalte</h2></div>
+          <div><p class="t-body">Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p></div>
+
+          <div><h2 class="t-md">Haftung für Links</h2></div>
+          <div><p class="t-body">Unser Angebot enthält ggf. Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p></div>
+
+          <div><h2 class="t-md">Urheberrecht</h2></div>
+          <div><p class="t-body">Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p></div>
+
+          <div style="margin-top: var(--space-2xl);"><a href="datenschutz.html" class="link">→ Datenschutzerklärung</a></div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Sticky mobile contact bar (call + WhatsApp; phone-only, JS-wired) -->
+  <div class="mobile-contact-bar">
+    <a data-contact="call" href="#" class="btn btn--primary btn--sm" aria-label="Call us">
+      <span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+      <span data-contact-text>Call</span>
+    </a>
+    <a data-contact="whatsapp" href="#" class="btn btn--whatsapp btn--sm" aria-label="Message us on WhatsApp">
+      <span class="btn__ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
+      <span>WhatsApp</span>
+    </a>
+  </div>
 
   <div class="footer-wrap">
     <footer class="footer" style="padding-top: var(--space-2xl);">
@@ -180,7 +163,7 @@
           <div class="footer__top">
             <div style="display:flex; flex-direction:column; gap: var(--space-md);">
               <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
-              <div><a href="services.html" class="btn btn--outline btn--sm"><span>View our services</span></a></div>
+              <div><a href="contact.html" class="btn btn--outline btn--sm"><span>Start a project</span></a></div>
             </div>
             <div class="footer__wordmark">vias<span class="dot">.</span></div>
           </div>
@@ -216,18 +199,6 @@
         </div>
       </div>
     </footer>
-  </div>
-
-  <!-- Sticky mobile contact bar (call + WhatsApp; phone-only, JS-wired) -->
-  <div class="mobile-contact-bar">
-    <a data-contact="call" href="#" class="btn btn--primary btn--sm" aria-label="Call us">
-      <span class="btn__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-      <span data-contact-text>Call</span>
-    </a>
-    <a data-contact="whatsapp" href="#" class="btn btn--whatsapp btn--sm" aria-label="Message us on WhatsApp">
-      <span class="btn__ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
-      <span>WhatsApp</span>
-    </a>
   </div>
 
   <script src="assets/js/i18n.js" defer></script>  <script src="assets/js/main.js" defer></script>

@@ -5,6 +5,36 @@
 (function () {
   'use strict';
 
+  /* ---- Contact details — SINGLE SOURCE OF TRUTH ----------------------
+     TODO: replace these placeholders with the real numbers. Everything on
+     the site (hero buttons, contact page, sticky mobile bar) reads from here.
+       phoneHref  — full international number, digits + leading + only.
+       phoneText  — how the number is shown to visitors.
+       whatsapp   — number for wa.me, country code + number, NO + or spaces.
+       waMessage  — pre-filled WhatsApp message (helps the hesitant owner start). */
+  var CONTACT = {
+    phoneHref: '+490000000000',
+    phoneText: '+49 000 000 0000',
+    whatsapp:  '490000000000',
+    waMessage: 'Hi Vias Media — I got your card and would like a free quote for my website.'
+  };
+  function wireContactLinks() {
+    var tel = 'tel:' + CONTACT.phoneHref.replace(/[^\d+]/g, '');
+    var wa  = 'https://wa.me/' + CONTACT.whatsapp.replace(/\D/g, '') +
+              '?text=' + encodeURIComponent(CONTACT.waMessage);
+    document.querySelectorAll('[data-contact="call"]').forEach(function (el) {
+      el.setAttribute('href', tel);
+      var t = el.querySelector('[data-contact-text]');
+      if (t) t.textContent = CONTACT.phoneText;
+    });
+    document.querySelectorAll('[data-contact="whatsapp"]').forEach(function (el) {
+      el.setAttribute('href', wa);
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener');
+    });
+  }
+  wireContactLinks();
+
   var root = document.documentElement;
   var header = document.getElementById('header');
   var spacer = document.getElementById('header-spacer');
@@ -55,6 +85,7 @@
   function openMenu() {
     if (!navbar) return;
     navbar.classList.add('nav-open');
+    document.body.classList.add('nav-open-lock');
     setHamburger(true);
     /* On the full-height phone menu, lock the page scroll behind it. */
     if (fullMQ.matches) document.body.style.overflow = 'hidden';
@@ -62,6 +93,7 @@
   function closeMenu() {
     if (!navbar) return;
     navbar.classList.remove('nav-open');
+    document.body.classList.remove('nav-open-lock');
     setHamburger(false);
     document.body.style.overflow = '';
   }
@@ -145,7 +177,9 @@
   function handleFormSubmit(e) {
     e.preventDefault();
 
-    var requiredText = ['contact-name', 'contact-message']
+    /* Name is the only hard-required text field — the project-details textarea
+       is optional so a hesitant owner can send a one-line enquiry. */
+    var requiredText = ['contact-name']
       .map(function (id) { return document.getElementById(id); })
       .filter(Boolean);
     if (requiredText.some(function (el) { return !el.value.trim(); })) return;
