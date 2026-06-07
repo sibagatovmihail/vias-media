@@ -111,6 +111,47 @@ Wrap all text elements (`<span>`, `<p>`, `h1, h2, h3, h4, h5, h6`, `<a>`) in a `
 
 ---
 
+## Code Health — Fallow (run regularly)
+
+Fallow is installed as a Claude Code skill (`fallow@fallow-skills`). It is a static-analysis tool for **JS/CSS**: dead code, duplication, and complexity. Use it as a recurring sanity check — not a one-off.
+
+**Scope on this project:** This is a static HTML/CSS/JS site (no `package.json`/TypeScript). Fallow's value here is narrow but real:
+- **JS** — `middleware.js`, `api/**`, `assets/js/main.js`: unused exports/files, duplication, complexity hotspots.
+- **CSS** — `assets/css/**`: unused selectors and duplicated rule blocks (Fallow's CSS layer).
+- It will **not** meaningfully cover inline HTML, the standalone `Vias Media (standalone).html` dump, or design fidelity. Don't expect dependency-graph results without a `package.json`.
+
+**Setup (once):** `npm install -g fallow` (frictionless CLI), or rely on `npx fallow …` per run. Verify with `fallow --version`.
+
+**When to run — make this a habit:**
+- Before every commit that touches `.js` or `.css`.
+- After deleting/renaming a component, section, or stylesheet (catches orphaned CSS/JS left behind).
+- Before a release or any "clean up the codebase" task.
+- When duplication is suspected (e.g. a snippet copy-pasted across `index.html` / `services.html` / `work.html`).
+
+**Core commands** (always `--format json --quiet 2>/dev/null` and append `|| true` — exit 1 = "issues found", which is normal, not an error):
+
+```bash
+fallow dead-code --format json --quiet 2>/dev/null || true   # unused JS/CSS
+fallow dupes     --format json --quiet 2>/dev/null || true   # copy-paste / clones
+fallow health    --format json --quiet 2>/dev/null || true   # complexity hotspots
+fallow           --format json --quiet 2>/dev/null || true   # all three at once
+```
+
+**Safe auto-fix cycle (never skip the dry-run):**
+
+```bash
+fallow fix --dry-run --format json --quiet 2>/dev/null || true   # 1. preview
+# review the proposed removals against the findings below
+fallow fix --yes     --format json --quiet 2>/dev/null || true   # 2. apply (--yes required, non-TTY)
+fallow dead-code     --format json --quiet 2>/dev/null || true   # 3. re-verify
+```
+
+**Improve, don't just delete:** treat findings as a worklist — confirm each removal is truly unused (use `fallow dead-code --trace <file>:<symbol>` before deleting anything non-obvious), refactor duplicated blocks into shared partials/CSS instead of leaving copies, and split complexity hotspots flagged by `health`. For genuine false positives, add `/* fallow-ignore-next-line */` (or `// fallow-ignore-next-line` in JS) rather than reshaping code to satisfy the tool.
+
+**Never** run `fallow watch` (interactive, never exits). Trigger the skill by asking in plain language ("run fallow", "find dead code/dupes", "check code health") or `/fallow`.
+
+---
+
 ## Git Commit Rules
 
 - Never include Claude or any AI tool as a co-author in commit messages. No `Co-Authored-By:` lines.
