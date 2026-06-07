@@ -47,7 +47,8 @@
 .hero__title.is-typing .char.cursor::after {
   content: '';
   position: absolute;
-  bottom: 0.05em;
+  top: 50%;
+  transform: translateY(-50%);
   right: -0.1em;
   height: 0.74em;
   width: 0.06em;
