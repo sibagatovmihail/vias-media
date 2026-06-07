@@ -376,8 +376,22 @@
         }
       })();
     }
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reveal);
-    else reveal();
+    /* Safari/WebKit can resolve `document.fonts.ready` before the exact face
+       the title uses has actually finished loading and painted (a long-
+       standing WebKit Font Loading API timing bug — invisible on desktop
+       Chrome's mobile emulation, which uses Blink). That lets typing start
+       (and finish) in the fallback font; when Raveo Display then arrives,
+       WebKit repaints with different glyph metrics — the slight jump only
+       seen on real iOS Safari. Explicitly requesting that exact face makes
+       the wait track its real load state, not the unreliable aggregate. */
+    function whenFontReady(cb) {
+      if (!(document.fonts && document.fonts.load && document.fonts.ready)) { cb(); return; }
+      Promise.all([
+        document.fonts.load('700 1em "Raveo Display"').catch(function () {}),
+        document.fonts.ready
+      ]).then(cb);
+    }
+    whenFontReady(reveal);
   }
 
   /* ---- Wire up ---- */

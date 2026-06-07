@@ -90,12 +90,25 @@ h1, h2, h3, h4, h5, h6 {
 .t-muted  { color: var(--text-muted); }
 .t-accent { color: var(--accent); }
 
+/* Apple-style body copy: muted grey base with full-contrast emphasis spans.
+   .t-muted-body sets readable secondary grey for paragraphs (lighter touch
+   than .t-muted, which uses --text-muted for labels/captions). .em lifts a
+   key phrase to full-contrast solid colour — near-black on light palettes,
+   near-white on ember-dark — with no layout impact. */
+.t-muted-body { color: var(--text-sec); }
+.em { color: var(--text); font-weight: 600; }
+
 /* ===== REVEAL-ON-SCROLL base =====
    Only hide when JS is active (html.js) so no-JS users still see all content. */
 html.js .reveal {
   opacity: 0;
   transform: translateY(1.5rem);
-  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  /* background-color + box-shadow are listed here too so revealed cards (which
+     are `.card.reveal`) still animate their hover background/shadow — this
+     transition shorthand otherwise overrides the one on `.card` and the change
+     would snap. They don't change during the entrance, so the reveal is intact. */
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease),
+              background-color var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
   will-change: opacity, transform;
 }
 html.js .reveal.is-visible { opacity: 1; transform: none; }

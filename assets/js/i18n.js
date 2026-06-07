@@ -239,6 +239,7 @@
   function norm(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
 
   var enText = new WeakMap();   // element -> original English textContent
+  var enHtml = new WeakMap();   // element -> original English innerHTML (data-de-html)
   var enPh = new WeakMap();     // element -> original English placeholder
   var enTitle = document.title;
 
@@ -255,9 +256,17 @@
       el.textContent = de ? el.getAttribute('data-de') : enText.get(el);
     });
 
+    /* 1b — rich elements that keep inline markup (e.g. <span class="em">
+       emphasis). Swap innerHTML so the markup survives in both languages. */
+    document.querySelectorAll('[data-de-html]').forEach(function (el) {
+      if (!enHtml.has(el)) enHtml.set(el, el.innerHTML);
+      el.innerHTML = de ? el.getAttribute('data-de-html') : enHtml.get(el);
+    });
+
     /* 2 — leaf text via dictionary */
     document.querySelectorAll(LEAF_SEL).forEach(function (el) {
       if (el.hasAttribute('data-de')) return;   // handled above
+      if (el.closest('[data-de-html]')) return; // inside a rich-markup element
       if (el.children.length) return;           // leaf only
       var key = enText.has(el) ? enText.get(el) : norm(el.textContent);
       if (!Object.prototype.hasOwnProperty.call(DE, key)) return;

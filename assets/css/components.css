@@ -12,7 +12,8 @@
   border-radius: var(--radius-pill);
   cursor: pointer; white-space: nowrap;
   transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
-              background-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+              background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+              opacity var(--dur-fast) var(--ease);
 }
 .btn:hover { transform: translateY(-0.0625rem); }
 .btn--primary { background: var(--accent); color: var(--btn-on-accent); }
@@ -64,9 +65,9 @@
   font-family: var(--font-display);
   font-weight: 700; font-size: var(--fs-300); letter-spacing: -0.02em;
   color: var(--text-sec); border-bottom: 1px solid var(--text);
-  padding-bottom: 0.0625rem; transition: opacity var(--dur-fast) ease;
+  padding-bottom: 0.0625rem; transition: color var(--dur-fast) ease;
 }
-.link:hover { opacity: 0.7; }
+.link:hover { color: var(--text); }
 
 /* ===== CARDS ===== */
 .card {
@@ -187,7 +188,7 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   color: var(--text-sec); white-space: nowrap;
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
 }
-.navbar__links a:hover { background: var(--input-bg); }
+.navbar__links a:hover { background: var(--input-bg); color: var(--text); }
 .navbar__links a[aria-current="page"] { color: var(--accent); }
 
 .navbar__actions {
@@ -494,12 +495,17 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   .navbar__actions .theme-toggle { display: none; }
 }
 
-/* ≤767px — the accordion goes full-height (page scroll is locked via JS). */
+/* ≤767px — the accordion goes full-height (page scroll is locked via JS).
+   min-height/justify-content sit on the base (not `.nav-open`-gated) rule:
+   gating them behind `.nav-open` made the content's box snap to its open
+   size/alignment the instant the class toggled — decoupled from (and faster
+   than) the `.nav-drop` grid-rows transition, so items jumped to the top
+   (and the border "caught up" after) on close. Keeping the box geometry
+   constant means only the clip window animates. */
 @media (max-width: 47.9375rem) {
-  .navbar.nav-open .nav-drop__content {
+  .nav-drop__content {
     min-height: calc(100dvh - var(--header-height) - 0.75rem);
     justify-content: center;
-    gap: var(--space-2xs);
   }
   .nav-drop a { font-size: var(--fs-700); padding-block: 0.5rem; }
   .nav-drop__lang { justify-content: center; margin-top: var(--space-sm); }
