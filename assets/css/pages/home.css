@@ -63,7 +63,7 @@
 /* Progressive heading scale (CLAUDE.md hero rules) */
 /* Monotonic decreasing — a wider breakpoint is never smaller than a narrower one. */
 @media (max-width: 64rem)   { .hero__text h1 { font-size: 3.25rem; } }
-@media (max-width: 48rem)   { .hero__text h1 { font-size: 2.75rem; } }
+@media (max-width: 47.9375rem)   { .hero__text h1 { font-size: 2.75rem; } }
 @media (max-width: 37.5rem) {
   /* Reduced a touch at the smallest tier; lead paragraph smaller. */
   .hero__text h1 { font-size: 2.5rem; line-height: 1.04; }
@@ -163,6 +163,7 @@ html.js .card.why-web__point.reveal.is-visible:hover,
    like the hero does at the same tier. */
 @media (max-width: 30rem) {
   .why-web .section-head--center { align-items: flex-start; text-align: left; margin-inline: 0; }
+  .why-web .section-head--center .t-center { text-align: left; }
 }
 
 
@@ -290,7 +291,7 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 .work-card__tags { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
 .work__footer { display: flex; justify-content: center; margin-top: var(--space-2xl); }
 
-@media (max-width: 48rem) {
+@media (max-width: 47.9375rem) {
   .features__head { flex-direction: column; align-items: flex-start; }
   .work__grid { grid-template-columns: 1fr; }
   .services__layout { gap: var(--space-xl); }

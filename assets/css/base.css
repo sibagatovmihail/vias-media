@@ -52,7 +52,7 @@ body, section, nav, footer,
 
 /* Progressive scale-down so the gaps don't get cavernous on small screens
    (CLAUDE.md "never single-step jumps"). */
-@media (max-width: 48rem)   { .section { padding-block: var(--space-4xl); } }
+@media (max-width: 47.9375rem)   { .section { padding-block: var(--space-4xl); } }
 @media (max-width: 37.5rem) { .section { padding-block: var(--space-3xl); } }
 
 /* ===== TYPOGRAPHY ===== */

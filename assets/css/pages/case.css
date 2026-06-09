@@ -301,8 +301,8 @@
   .case-results__inner { gap: var(--space-2xl); }
 }
 
-/* Tablet portrait ≤48rem — collapse the two-column blocks */
-@media (max-width: 48rem) {
+/* Tablet portrait ≤767px — collapse the two-column blocks */
+@media (max-width: 47.9375rem) {
   .case-overview__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
   .case-approach__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
   .case-results__inner { grid-template-columns: 1fr; gap: var(--space-xl); }

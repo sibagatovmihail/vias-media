@@ -25,12 +25,7 @@
   font-size: var(--fs-800); color: var(--accent); line-height: 1;
 }
 
-.cta-band {
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-lg);
-  text-align: center;
-}
-
-@media (max-width: 48rem) {
+@media (max-width: 47.9375rem) {
   .svc-row { grid-template-columns: 3rem 1fr; }
   .svc-row > .btn { grid-column: 1 / -1; justify-self: start; }
 }
