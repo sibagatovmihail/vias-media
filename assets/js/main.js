@@ -6,16 +6,16 @@
   'use strict';
 
   /* ---- Contact details — SINGLE SOURCE OF TRUTH ----------------------
-     TODO: replace these placeholders with the real numbers. Everything on
-     the site (hero buttons, contact page, sticky mobile bar) reads from here.
+     Everything on the site (hero buttons, contact page, sticky mobile bar)
+     reads from here.
        phoneHref  — full international number, digits + leading + only.
        phoneText  — how the number is shown to visitors.
        whatsapp   — number for wa.me, country code + number, NO + or spaces.
        waMessage  — pre-filled WhatsApp message (helps the hesitant owner start). */
   var CONTACT = {
-    phoneHref: '+490000000000',
-    phoneText: '+49 000 000 0000',
-    whatsapp:  '490000000000',
+    phoneHref: '+4916095761094',
+    phoneText: '+49 160 95761094',
+    whatsapp:  '4916095761094',
     waMessage: 'Hi Vias Media — I got your card and would like a free quote for my website.'
   };
   function wireContactLinks() {
@@ -50,9 +50,14 @@
     var wasScrolled = header.classList.contains('scrolled');
     if (wasScrolled) header.classList.remove('scrolled');
     var h = header.offsetHeight;
+    /* Expanded topbar height — collapsed away on scroll. The full-height phone
+       menu adds this back when .scrolled so it fills the space the topbar vacated. */
+    var topbar = header.querySelector('.topbar');
+    var topbarH = topbar ? topbar.offsetHeight : 0;
     if (wasScrolled) header.classList.add('scrolled');
     if (spacer) spacer.style.height = h + 'px';
     root.style.setProperty('--header-height', h / 16 + 'rem');
+    root.style.setProperty('--topbar-height', topbarH / 16 + 'rem');
   }
 
   /* ---- Scroll: toggle collapsed state (visual only) + parallax ---- */
@@ -66,6 +71,7 @@
       }
     }
     requestParallax();
+    requestShots();
   }
 
   /* ---- Menu ----
@@ -136,6 +142,33 @@
   function requestParallax() {
     if (prefersReduced || !parallaxEls.length) return;
     if (!ticking) { ticking = true; window.requestAnimationFrame(applyParallax); }
+  }
+
+  /* ---- Screenshot device parallax (case pages) ----
+     The plain [data-parallax] above translates by absolute scrollY, correct
+     only near the top of the page. Device frames sit mid-page, so this drives
+     them by their position RELATIVE TO THE VIEWPORT instead: each frame drifts
+     gently as it crosses the screen, giving the desktop + phone layers depth.
+     Subtle by design (speed ≈ 0.04–0.08 of the element's own height). Disabled
+     under reduced motion — the frames then sit perfectly still. */
+  var shotEls = [].slice.call(document.querySelectorAll('[data-shot-parallax]'));
+  var shotTicking = false;
+  function applyShots() {
+    shotTicking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    for (var i = 0; i < shotEls.length; i++) {
+      var el = shotEls[i];
+      var r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) continue;        /* off-screen — skip */
+      var speed = parseFloat(el.getAttribute('data-shot-parallax')) || 0;
+      /* progress: -1 entering from the bottom → +1 leaving past the top */
+      var progress = ((vh - r.top) / (vh + r.height)) * 2 - 1;
+      el.style.transform = 'translate3d(0,' + (-progress * el.offsetHeight * speed).toFixed(1) + 'px,0)';
+    }
+  }
+  function requestShots() {
+    if (prefersReduced || !shotEls.length) return;
+    if (!shotTicking) { shotTicking = true; window.requestAnimationFrame(applyShots); }
   }
 
   /* ---- Reveal-on-scroll ---- */
@@ -273,35 +306,57 @@
   initSuccessModal();
 
   /* ---- Why-us carousel: full-bleed snap scroll; arrows live in the head ---- */
-  function initWhySlider() {
-    var vp = document.querySelector('[data-why-viewport]');
-    if (!vp || !vp.children.length) return;
-    var prev = document.querySelector('[data-why-prev]');
-    var next = document.querySelector('[data-why-next]');
-    var controls = document.querySelector('[data-why-controls]');
+  function initSliders() {
+    /* Generic snap-scroll slider engine: looks up viewport/prev/next/controls
+       by a shared `data-slider="<name>"` value, since the arrow controls live
+       in the section head, not inside the slider element itself. */
+    document.querySelectorAll('[data-slider]').forEach(function (root) {
+      var name = root.getAttribute('data-slider');
+      function find(attr) { return document.querySelector('[' + attr + '="' + name + '"]'); }
+      var vp = find('data-slider-viewport');
+      if (!vp || !vp.children.length) return;
+      var prev = find('data-slider-prev');
+      var next = find('data-slider-next');
+      var controls = find('data-slider-controls');
 
-    function step() {
-      /* Advance by exactly one card (its width + the flex gap). */
-      var s = window.getComputedStyle(vp);
-      var gap = parseFloat(s.columnGap || s.gap) || 0;
-      return vp.children[0].getBoundingClientRect().width + gap;
-    }
-    function update() {
-      var max = vp.scrollWidth - vp.clientWidth;
-      if (controls) controls.hidden = max <= 2;          /* nothing to scroll */
-      if (prev) prev.disabled = vp.scrollLeft <= 2;
-      if (next) next.disabled = vp.scrollLeft >= max - 2;
-    }
-    if (prev) prev.addEventListener('click', function () { vp.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    if (next) next.addEventListener('click', function () { vp.scrollBy({ left: step(), behavior: 'smooth' }); });
+      /* Resting scrollLeft for each slide, so it lines up at the snap start.
+         Reads each child's real position instead of assuming a fixed card width,
+         so it works for equal-width cards (homepage) AND variable-width slides
+         (case-study gallery: wide laptop frame, narrow phone frame) alike. */
+      function positions() {
+        var base = vp.children[0].offsetLeft;
+        return [].map.call(vp.children, function (c) { return c.offsetLeft - base; });
+      }
+      /* Scroll to the next/previous slide relative to where we are now, so one
+         slide advances per click no matter how wide it is. */
+      function go(dir) {
+        var pos = positions(), cur = vp.scrollLeft, target = null, i;
+        if (dir > 0) {
+          for (i = 0; i < pos.length; i++) { if (pos[i] > cur + 2) { target = pos[i]; break; } }
+          if (target === null) target = pos[pos.length - 1];
+        } else {
+          for (i = pos.length - 1; i >= 0; i--) { if (pos[i] < cur - 2) { target = pos[i]; break; } }
+          if (target === null) target = 0;
+        }
+        vp.scrollTo({ left: target, behavior: 'smooth' });
+      }
+      function update() {
+        var max = vp.scrollWidth - vp.clientWidth;
+        if (controls) controls.hidden = max <= 2;          /* nothing to scroll */
+        if (prev) prev.disabled = vp.scrollLeft <= 2;
+        if (next) next.disabled = vp.scrollLeft >= max - 2;
+      }
+      if (prev) prev.addEventListener('click', function () { go(-1); });
+      if (next) next.addEventListener('click', function () { go(1); });
 
-    var raf;
-    vp.addEventListener('scroll', function () {
-      if (raf) window.cancelAnimationFrame(raf);
-      raf = window.requestAnimationFrame(update);
-    }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+      var raf;
+      vp.addEventListener('scroll', function () {
+        if (raf) window.cancelAnimationFrame(raf);
+        raf = window.requestAnimationFrame(update);
+      }, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    });
   }
 
   /* ---- FAQ accordion: click a question to expand; opening one closes others ---- */
@@ -414,8 +469,9 @@
   syncHeaderHeight();
   onScroll();
   initReveal();
-  initWhySlider();
+  initSliders();
   initFaq();
   initHeroType();
   requestParallax();
+  requestShots();
 })();

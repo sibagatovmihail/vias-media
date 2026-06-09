@@ -6,3 +6,13 @@
 api/
 middleware.js
 Vias Media (standalone).html
+
+# Agent / tooling artifacts — not part of the site
+.claude/skills/
+.claude/worktrees/
+.impeccable/
+.graphifyignore
+graphify-out/
+IMPECCABLE.md
+PRODUCT.md
+docs/superpowers/

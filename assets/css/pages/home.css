@@ -97,49 +97,74 @@
 .section-head { display: flex; flex-direction: column; gap: var(--space-md); max-width: 40rem; }
 .section-head--center { align-items: center; text-align: center; margin-inline: auto; }
 
-/* ===== WHY A WEBSITE (resolves "do I even need one?") — big, premium cards ===== */
+/* ===== WHY A WEBSITE — asymmetric bento: one tall lead point beside two
+   stacked supporting points, so the row reads as a composition rather than
+   three identical tiles. The lead carries the primary value prop. ===== */
 .why-web .section-head { margin-bottom: var(--space-2xl); }
 .why-web__grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xs);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-sm);
 }
 .why-web__point {
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; gap: var(--space-md);
   padding: var(--space-2xl) var(--space-xl);
-  min-height: 22rem;
   border: 1px solid var(--border-light);
 }
+/* Lead point spans both rows on the left and stretches to the combined height
+   of the two stacked points; copy anchors low so the extra height becomes
+   deliberate negative space behind the oversized watermark digit. */
+.why-web__point--lead {
+  grid-column: 1; grid-row: 1 / span 2;
+  justify-content: space-between;   /* numeral up top, copy anchored at the base */
+}
+/* Lead groups its heading + paragraph so space-between splits number vs copy. */
+.why-web__copy { display: flex; flex-direction: column; gap: var(--space-md); }
+.why-web__point:nth-child(2) { grid-column: 2; grid-row: 1; }
+.why-web__point:nth-child(3) { grid-column: 2; grid-row: 2; }
 html.js .card.why-web__point.reveal.is-visible:hover,
 .why-web__point:hover { transform: translateY(-0.375rem); }
 
-/* Giant index digit filling the whole card as a background watermark. */
+/* The index digit replaces the icon: a confident accent numeral leads each
+   point, so the section reads as a numbered set rather than another icon grid. */
 .why-web__num {
-  position: absolute; inset: 0; z-index: 0;
-  display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
-  font-size: 18rem; font-weight: 800; line-height: 1; letter-spacing: -0.06em;
-  color: var(--accent); opacity: 0.1;
-  pointer-events: none; overflow: hidden;
-  transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease);
+  font-size: 3rem; font-weight: 800; line-height: 0.9; letter-spacing: -0.04em;
+  color: var(--accent);
 }
-.why-web__point:hover .why-web__num { opacity: 0.16; transform: scale(1.06); }
+/* The lead point is taller, so its numeral is larger to hold the space. */
+.why-web__point--lead .why-web__num { font-size: 4.5rem; }
 
-.why-web__top {
-  display: flex; align-items: center;
-  position: relative; z-index: 1;
+/* ~700px & below: the bento unwinds to a single clean column. Pushed back
+   from 64rem — the asymmetric grid still reads fine at tablet widths, and
+   collapsing later keeps the bento composition visible longer. Once stacked,
+   each card sticks in place and gets overlaid by the next as you scroll, so
+   the set reads as a single deck rather than a long scroll of tall cards. */
+@media (max-width: 43.6875rem) {
+  .why-web__grid { grid-template-columns: 1fr; }
+  .why-web__point--lead,
+  .why-web__point:nth-child(2),
+  .why-web__point:nth-child(3) { grid-column: 1; grid-row: auto; }
+  .why-web__point--lead { justify-content: flex-start; }
+  .why-web__point {
+    padding: var(--space-xl);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-xl));
+  }
+  .why-web__point:nth-child(1) { z-index: 1; }
+  .why-web__point:nth-child(2) { z-index: 2; }
+  .why-web__point:nth-child(3) { z-index: 3; }
+  /* Stacked: the lead is no longer taller, so its numeral matches the rest. */
+  .why-web__point--lead .why-web__num { font-size: 3rem; }
 }
-.why-web__point .icon-box {
-  width: 4.75rem; height: 4.75rem; border-radius: var(--radius-md);
-}
-.why-web__point h3, .why-web__point p { position: relative; z-index: 1; }
 
-@media (max-width: 64rem) {
-  .why-web__point { min-height: 0; padding: var(--space-xl); }
-  .why-web__num { font-size: 14rem; }
+/* Small phone — the centred head reads cramped at this width; align it left
+   like the hero does at the same tier. */
+@media (max-width: 30rem) {
+  .why-web .section-head--center { align-items: flex-start; text-align: left; margin-inline: 0; }
 }
-@media (max-width: 48rem) {
-  .why-web__grid { grid-template-columns: 1fr; gap: var(--space-xs); }
-}
+
 
 /* ===== FLOW BAND — Why → Work → Services share one continuous gradient ===== */
 .flow-band { background: var(--gradient-flow); }
@@ -210,9 +235,32 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 }
 .services__head-cta { margin-top: var(--space-md); }
 .services__list { display: flex; flex-direction: column; gap: var(--space-md); }
-.service-card { display: flex; align-items: flex-start; gap: var(--space-md); }
-.service-card .icon-box { width: 3.5rem; height: 3.5rem; }
-.service-card__text { display: flex; flex-direction: column; gap: var(--space-2xs); }
+/* Each service is a link into the services page; the arrow + accent-on-hover
+   icon make that affordance obvious without a second button. */
+.service-card {
+  display: flex; align-items: flex-start; gap: var(--space-md);
+  color: inherit; text-decoration: none;
+}
+.service-card .icon-box {
+  width: 3.5rem; height: 3.5rem;
+  transition: background var(--dur-fast) ease;
+}
+.service-card .icon-box svg { transition: stroke var(--dur-fast) ease; }
+.service-card__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2xs); }
+.service-card__head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
+}
+.service-card__arrow {
+  flex-shrink: 0; display: flex; color: var(--text-muted);
+  transition: transform var(--dur-fast) var(--ease), color var(--dur-fast) ease;
+}
+.service-card:hover .icon-box--muted { background: var(--accent); }
+.service-card:hover .icon-box svg { stroke: var(--btn-on-accent); }
+.service-card:hover .service-card__arrow { transform: translateX(0.25rem); color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card__arrow { transition: color var(--dur-fast) ease; }
+}
 
 @media (max-width: 64rem) {
   .services__layout { grid-template-columns: 1fr; gap: var(--space-2xl); }
@@ -225,8 +273,16 @@ html.js .card.why-web__point.reveal.is-visible:hover,
   display: grid; grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   gap: var(--space-xl); margin-top: var(--space-2xl);
 }
-.work-card { display: flex; flex-direction: column; gap: var(--space-sm); }
-.work-card .placeholder { width: 100%; height: 25rem; border-radius: var(--radius-lg); }
+.work-card { display: flex; flex-direction: column; gap: var(--space-sm); color: inherit; }
+.work-card__media {
+  width: 100%; aspect-ratio: 1760 / 957; border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+.work-card__media img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  display: block; transition: transform var(--dur-base) var(--ease);
+}
+.work-card:hover .work-card__media img { transform: scale(1.03); }
 .work-card__meta {
   display: flex; justify-content: space-between; align-items: center;
   gap: var(--space-sm); flex-wrap: wrap;
@@ -237,7 +293,6 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 @media (max-width: 48rem) {
   .features__head { flex-direction: column; align-items: flex-start; }
   .work__grid { grid-template-columns: 1fr; }
-  .work-card .placeholder { height: 13.75rem; }
   .services__layout { gap: var(--space-xl); }
 }
 
@@ -248,6 +303,7 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 
 /* ===== TESTIMONIALS ===== */
 .testimonials {
+  display: none;             /* hidden for now — pending updated content */
   background: var(--gradient-testimonial);
   position: relative; overflow: hidden;
   padding-block: var(--space-5xl) var(--space-4xl);

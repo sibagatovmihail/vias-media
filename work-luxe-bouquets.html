@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="ember">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxe Bouquets Online Store — Vias Media</title>
+  <meta name="description" content="Case study: how Vias Media rebuilt a florist's online store around its photography and a date-picked checkout — lifting online orders 85%.">
+
+  <link rel="preload" href="assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/consent.css">
+  <link rel="stylesheet" href="assets/css/pages/case.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="topbar">
+      <div class="topbar__inner container">
+        <span class="topbar__text t-label" data-de="Mehr lokale Kunden gewinnen?">Need more local customers?</span>
+        <a href="contact.html" class="topbar__link t-label" data-de="Sprechen wir!">Let's Talk!</a>
+      </div>
+    </div>
+    <nav class="navbar" aria-label="Primary">
+      <div class="navbar__inner">
+        <a href="index.html" class="navbar__logo" aria-label="Vias Media home">
+          <img src="assets/img/logo-mark.png" alt="" class="logo-mark logo-mark--light">
+          <img src="assets/img/logo-mark-dark.png" alt="" class="logo-mark logo-mark--dark">
+          <span class="wordmark">vias<span class="dot">.</span></span>
+        </a>
+        <div class="navbar__links">
+          <a href="services.html" data-de="Leistungen">Services</a>
+          <a href="work.html" aria-current="page" data-de="Projekte">Work</a>
+          <a href="index.html#reviews" data-de="Bewertungen">Reviews</a>
+          <a href="contact.html" data-de="Kontakt">Contact</a>
+        </div>
+        <div class="navbar__actions">
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+            <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
+          </button>
+          <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Sprache wechseln">
+            <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
+          </button>
+          <a href="contact.html" class="btn btn--primary btn-cta">
+            <span data-de="Kostenlose Beratung">Free Consultation</span>
+            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrop">
+            <svg class="hamburger__icon hamburger__bars" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6H19M3 11H19M3 16H19"/></svg>
+            <svg class="hamburger__icon hamburger__x" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5L17 17M17 5L5 17"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="nav-drop" id="navDrop">
+        <div class="nav-drop__inner">
+          <div class="nav-drop__content">
+            <a href="services.html" data-de="Leistungen">Services</a>
+            <a href="work.html" aria-current="page" data-de="Projekte">Work</a>
+            <a href="index.html#reviews" data-de="Bewertungen">Reviews</a>
+            <a href="contact.html" data-de="Kontakt">Contact</a>
+            <div class="nav-drop__cta">
+              <a href="contact.html" class="btn btn--primary">
+                <span data-de="Kostenlose Beratung">Free Consultation</span>
+                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+              </a>
+            </div>
+            <div class="nav-drop__lang">
+              <button class="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
+                <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
+              </button>
+              <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+                <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+                <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div id="header-spacer"></div>
+
+  <main data-case="luxe">
+
+    <!-- HERO -->
+    <section class="case-hero">
+      <div class="hero-decor" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+      </div>
+      <div class="container">
+        <div class="case-hero__inner">
+          <nav class="case-crumb reveal" aria-label="Breadcrumb">
+            <a href="index.html" data-de="Start">Home</a>
+            <span class="case-crumb__sep" aria-hidden="true">/</span>
+            <a href="work.html" data-de="Projekte">Work</a>
+            <span class="case-crumb__sep" aria-hidden="true">/</span>
+            <span class="case-crumb__cur" aria-current="page">Luxe Bouquets</span>
+          </nav>
+          <div class="case-hero__head reveal">
+            <div><h1 class="t-xl case-hero__title">Luxe Bouquets Online Store</h1></div>
+            <div><p class="t-body-lg case-hero__lead">A florist's shop window, brought online — where the bouquets sell themselves and ordering for a specific day takes about a minute.</p></div>
+            <div class="case-hero__tags">
+              <span class="pill"><span class="t-label-md t-muted">Web Design</span></span>
+              <span class="pill"><span class="t-label-md t-muted">E-commerce</span></span>
+            </div>
+          </div>
+          <div class="case-meta reveal" data-delay="1">
+            <div class="case-meta__item"><span class="case-meta__k">Role</span><span class="case-meta__v">Design &amp; Build</span></div>
+            <div class="case-meta__item"><span class="case-meta__k">Sector</span><span class="case-meta__v">Florist</span></div>
+            <div class="case-meta__item"><span class="case-meta__k">Year</span><span class="case-meta__v">2024</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOWCASE -->
+    <section class="case-showcase container">
+      <div class="case-showcase__stage reveal">
+        <div class="device device--browser" data-shot-parallax="0.05">
+              <div class="device__bar">
+                <div class="device__dots"><span></span><span></span><span></span></div>
+                <div class="device__url">luxebouquets.com</div>
+              </div>
+              <div class="device__screen">
+                <img class="device__shot" src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="Luxe Bouquets florist homepage on desktop — editorial layout with flower photography" loading="lazy" decoding="async">
+              </div>
+            </div>
+        <div class="phone" data-shot-parallax="0.11">
+            <div class="phone__screen"><div class="phone__notch" aria-hidden="true"></div>
+              <img class="phone__shot" src="assets/img/portfolio/luxe-bouquets-mobile-1.webp" width="782" height="1598" alt="Luxe Bouquets homepage on a phone" loading="lazy" decoding="async"></div>
+          </div>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="case-approach__grid">
+          <div class="reveal">
+            <div><span class="pill case-block__eyebrow"><span class="t-label">Our approach</span></span></div>
+            <div><h2 class="t-lg case-block__title">Let the flowers do the selling</h2></div>
+            <div class="case-moves" style="margin-top: var(--space-lg);">
+              <div class="case-move">
+                <div class="case-move__n">1</div>
+                <div class="case-move__body">
+                  <div><span class="case-move__title">Photography-led layout</span></div>
+                  <div><p class="case-move__text">Full-bleed seasonal collections that feel like a print catalogue — and still load fast.</p></div>
+                </div>
+              </div>
+              <div class="case-move">
+                <div class="case-move__n">2</div>
+                <div class="case-move__body">
+                  <div><span class="case-move__title">Reassuring checkout</span></div>
+                  <div><p class="case-move__text">A simple, calm checkout with a delivery date you pick yourself.</p></div>
+                </div>
+              </div>
+              <div class="case-move">
+                <div class="case-move__n">3</div>
+                <div class="case-move__body">
+                  <div><span class="case-move__title">Order-for-today clarity</span></div>
+                  <div><p class="case-move__text">Made buying obvious on every screen, designed mobile-first.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reveal" data-delay="1">
+            <div class="device device--browser" data-shot-parallax="0.04">
+              <div class="device__bar">
+                <div class="device__dots"><span></span><span></span><span></span></div>
+                <div class="device__url">luxebouquets.com/shop</div>
+              </div>
+              <div class="device__screen">
+                <img class="device__shot" src="assets/img/portfolio/luxe-bouquets-2.webp" width="1760" height="957" alt="Luxe Bouquets shop layout on desktop" loading="lazy" decoding="async">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section">
+      <div class="container">
+        <div class="case-gallery__head reveal">
+          <div><span class="pill case-block__eyebrow"><span class="t-label">A closer look</span></span></div>
+          <div><h2 class="t-lg case-block__title">A catalogue you can shop</h2></div>
+        </div>
+        <div class="case-gallery__grid">
+          <div class="case-gallery__item--wide reveal">
+            <div class="device device--browser" data-shot-parallax="0.03">
+              <div class="device__bar">
+                <div class="device__dots"><span></span><span></span><span></span></div>
+                <div class="device__url">luxebouquets.com/shop</div>
+              </div>
+              <div class="device__screen">
+                <img class="device__shot" src="assets/img/portfolio/luxe-bouquets-3.webp" width="1760" height="957" alt="Luxe Bouquets shop collection on desktop" loading="lazy" decoding="async">
+              </div>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="device device--browser" data-shot-parallax="0.05">
+              <div class="device__bar">
+                <div class="device__dots"><span></span><span></span><span></span></div>
+                <div class="device__url">luxebouquets.com/fresh</div>
+              </div>
+              <div class="device__screen">
+                <img class="device__shot" src="assets/img/portfolio/luxe-bouquets-4.webp" width="1760" height="957" alt="Luxe Bouquets fresh flowers category on desktop" loading="lazy" decoding="async">
+              </div>
+            </div>
+          </div>
+          <div class="reveal" data-delay="1">
+            <div class="device device--browser" data-shot-parallax="0.04">
+              <div class="device__bar">
+                <div class="device__dots"><span></span><span></span><span></span></div>
+                <div class="device__url">luxebouquets.com/dried</div>
+              </div>
+              <div class="device__screen">
+                <img class="device__shot" src="assets/img/portfolio/luxe-bouquets-5.webp" width="1760" height="957" alt="Luxe Bouquets dried flowers category on desktop" loading="lazy" decoding="async">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="case-phones reveal" data-delay="1" style="margin-top: var(--space-xl);">
+          <div class="phone" data-shot-parallax="0.07">
+            <div class="phone__screen"><div class="phone__notch" aria-hidden="true"></div>
+              <img class="phone__shot" src="assets/img/portfolio/luxe-bouquets-mobile-2.webp" width="782" height="1598" alt="Luxe Bouquets collection on a phone" loading="lazy" decoding="async"></div>
+          </div>
+          <div class="phone" data-shot-parallax="0.09">
+            <div class="phone__screen"><div class="phone__notch" aria-hidden="true"></div>
+              <img class="phone__shot" src="assets/img/portfolio/luxe-bouquets-mobile-3.webp" width="782" height="1598" alt="Luxe Bouquets product page on a phone" loading="lazy" decoding="async"></div>
+          </div>
+          <div class="phone" data-shot-parallax="0.07">
+            <div class="phone__screen"><div class="phone__notch" aria-hidden="true"></div>
+              <img class="phone__shot" src="assets/img/portfolio/luxe-bouquets-mobile-5.webp" width="782" height="1598" alt="Luxe Bouquets checkout on a phone" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section case-results">
+      <div class="container">
+        <div class="case-results__inner">
+          <div class="reveal">
+            <div><span class="pill case-block__eyebrow"><span class="t-label">The results</span></span></div>
+            <div><h2 class="t-lg case-block__title">More orders, bigger baskets</h2></div>
+            <div class="case-stats">
+              <div class="case-stat"><span class="case-stat__num">+85%</span><span class="case-stat__label">Online orders</span></div>
+              <div class="case-stat"><span class="case-stat__num">+32%</span><span class="case-stat__label">Avg. order value</span></div>
+              <div class="case-stat"><span class="case-stat__num">Same-day</span><span class="case-stat__label">Delivery option</span></div>
+            </div>
+          </div>
+          <div class="case-quote reveal" data-delay="1">
+            <blockquote>&ldquo;Our website finally looks as good as our flowers, and people order from it now instead of just calling.&rdquo;</blockquote>
+            <div><span class="case-quote__by">Founder, Luxe Bouquets</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT PROJECT -->
+    <section class="section section--tight">
+      <div class="container">
+        <div class="case-next">
+          <a href="work-akkerman-stroy.html" class="case-nav-card case-nav-card--prev reveal">
+            <div><span class="case-nav-card__dir">← Previous</span></div>
+            <div class="case-nav-card__thumb"><img src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="957" alt="Akkerman Stroy" loading="lazy" decoding="async"></div>
+            <div><span class="case-nav-card__name">Akkerman Stroy</span></div>
+          </a>
+          <a href="work-safari.html" class="case-nav-card case-nav-card--next reveal" data-delay="1">
+            <div><span class="case-nav-card__dir">Next →</span></div>
+            <div class="case-nav-card__thumb"><img src="assets/img/portfolio/safari-1.webp" width="1760" height="957" alt="Safari" loading="lazy" decoding="async"></div>
+            <div><span class="case-nav-card__name">Safari</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer-wrap">
+    <section class="footer-cta">
+      <div class="container" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg);">
+        <div><span class="pill"><span class="t-label">Your project next</span></span></div>
+        <div><h2 class="t-xl footer-cta__title">Ready to be our next success story?</h2></div>
+        <a href="contact.html" class="btn btn--primary"><span>Start a Project</span>
+          <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+        </a>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__top">
+            <div style="display:flex; flex-direction:column; gap: var(--space-md);">
+              <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
+              <div><a href="services.html" class="btn btn--outline btn--sm"><span>View our services</span></a></div>
+            </div>
+            <div class="footer__wordmark">vias<span class="dot">.</span></div>
+          </div>
+          <div class="divider" style="margin-block: var(--space-lg);"></div>
+          <div class="footer__grid">
+            <div class="footer__col">
+              <div><span class="t-label-md">Services</span></div>
+              <a href="services.html">Web Design</a>
+              <a href="services.html">Development</a>
+              <a href="services.html">SEO</a>
+              <a href="services.html">Support</a>
+            </div>
+            <div class="footer__col">
+              <div><span class="t-label-md">Company</span></div>
+              <a href="work.html">Work</a>
+              <a href="index.html#reviews">Reviews</a>
+              <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer__col">
+              <div><span class="t-label-md">Connect</span></div>
+              <a href="contact.html">Start a project</a>
+              <a href="contact.html">Get a quote</a>
+            </div>
+          </div>
+          <div class="divider" style="margin-block: var(--space-lg) var(--space-md);"></div>
+          <div class="footer__bottom">
+            <div><span class="t-small">© 2026 Vias Media. All rights reserved.</span></div>
+            <div class="footer__legal">
+              <a href="datenschutz.html" class="t-small">Privacy</a>
+              <a href="impressum.html" class="t-small">Impressum</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/js/i18n.js" defer></script>  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/consent.js" defer></script>
+</body>
+</html>

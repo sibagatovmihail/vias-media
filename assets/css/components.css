@@ -507,6 +507,11 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
     min-height: calc(100dvh - var(--header-height) - 0.75rem);
     justify-content: center;
   }
+  /* Scrolled = topbar collapsed: the header is shorter by the topbar's height,
+     so add it back or the menu stops short of the viewport bottom. */
+  .header.scrolled .nav-drop__content {
+    min-height: calc(100dvh - var(--header-height) + var(--topbar-height, 3.5rem) - 0.75rem);
+  }
   .nav-drop a { font-size: var(--fs-700); padding-block: 0.5rem; }
   .nav-drop__lang { justify-content: center; margin-top: var(--space-sm); }
   .footer__top { flex-direction: column; }

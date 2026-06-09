@@ -1,0 +1,321 @@
+/* =====================================================================
+   CASE-STUDY (portfolio detail) PAGES
+   Shared scaffold for work-*.html. Each page sets data-case="…" on <main>
+   for its one bespoke "signature" block; everything else is shared here.
+   Reuses tokens, .container, .section, .pill, .btn, .reveal, .t-* type.
+   Device frames are the only overflow:hidden users; depth comes from a gentle
+   per-device parallax drift (data-shot-parallax → main.js initShotParallax).
+   ===================================================================== */
+
+/* ===== BREADCRUMB ===== */
+.case-crumb {
+  display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+.case-crumb a, .case-crumb span {
+  font-family: var(--font-display);
+  font-size: var(--fs-300); font-weight: 700; letter-spacing: -0.01em;
+}
+.case-crumb a { color: var(--text-muted); transition: color var(--dur-fast) ease; }
+.case-crumb a:hover { color: var(--accent); }
+.case-crumb .case-crumb__sep { color: var(--text-muted); opacity: 0.6; }
+.case-crumb .case-crumb__cur { color: var(--text-sec); }
+
+/* ===== HERO ===== */
+.case-hero {
+  position: relative;
+  padding-block: var(--space-2xl) var(--space-3xl);
+  background: var(--gradient-hero-img);
+  overflow: hidden;
+}
+.case-hero__inner { position: relative; z-index: 1; }
+.case-hero__head { max-width: 48rem; }
+.case-hero__title { margin-block: var(--space-xs) var(--space-sm); }
+.case-hero__lead { color: var(--text-sec); max-width: 42rem; }
+.case-hero__tags { display: flex; gap: var(--space-xs); flex-wrap: wrap; margin-top: var(--space-md); }
+
+/* meta row — Role · Year · Sector · Visit site */
+.case-meta {
+  display: flex; flex-wrap: wrap; gap: var(--space-xl);
+  margin-top: var(--space-xl); padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-light);
+}
+.case-meta__item { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.case-meta__k { color: var(--text-muted); font-size: var(--fs-200); letter-spacing: 0.04em; text-transform: uppercase; }
+.case-meta__v { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-400); color: var(--text); letter-spacing: -0.01em; }
+.case-meta__v a { color: var(--accent); display: inline-flex; align-items: center; gap: var(--space-2xs); }
+.case-meta__v a:hover { color: var(--accent-hover); }
+.case-meta__v a svg { width: 0.75rem; height: 0.75rem; }
+
+/* ===== DEVICE FRAMES ===== */
+/* Browser-chrome desktop frame. Aspect matches the source shots (1760×957)
+   so the screenshot shows whole — no crop into the site's own nav. */
+.device--browser {
+  border-radius: var(--radius-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  will-change: transform;
+}
+.device__bar {
+  display: flex; align-items: center; gap: var(--space-xs);
+  padding: 0.625rem 0.875rem;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border-light);
+}
+.device__dots { display: flex; gap: 0.375rem; flex-shrink: 0; }
+.device__dots span { width: 0.625rem; height: 0.625rem; border-radius: 50%; background: var(--border); }
+.device__url {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center;
+  height: 1.375rem; padding-inline: 0.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--input-bg);
+  font-family: var(--font-mono); font-size: var(--fs-100); color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.device__screen { position: relative; aspect-ratio: 1760 / 957; overflow: hidden; }
+.device__shot { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* Phone frame — tall portrait, matches the source shots (782×1598). */
+.phone {
+  border-radius: 1.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  padding: 0.4375rem;
+  will-change: transform;
+}
+.phone__screen { position: relative; aspect-ratio: 782 / 1598; border-radius: 1.375rem; overflow: hidden; }
+.phone__notch {
+  position: absolute; top: 0.5rem; left: 50%; transform: translateX(-50%);
+  width: 30%; height: 0.3125rem; border-radius: var(--radius-pill);
+  background: rgba(0,0,0,0.28); z-index: 2;
+}
+.phone__shot { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* ===== SHOWCASE (hero visual: desktop + overlapping phone) ===== */
+.case-showcase { padding-block: 0 var(--space-5xl); }
+.case-showcase__stage { position: relative; max-width: 64rem; margin-inline: auto; }
+.case-showcase .device--browser { position: relative; z-index: 1; }
+/* Phone overlaps the desktop's bottom-right corner. absolute = overlapping layer. */
+.case-showcase .phone {
+  position: absolute; right: -1rem; bottom: -2.5rem; z-index: 2;
+  width: 11.5rem;
+}
+
+/* ===== SHARED CONTENT BLOCKS ===== */
+.case-block__eyebrow { margin-bottom: var(--space-md); }
+.case-block__title { max-width: 38rem; }
+.case-block__lead { color: var(--text-sec); max-width: 42rem; margin-top: var(--space-sm); }
+
+/* Overview: narrative + facts */
+.case-overview__grid {
+  display: grid; grid-template-columns: 1.6fr 1fr; gap: var(--space-3xl);
+  align-items: start;
+}
+.case-overview__body { color: var(--text-sec); display: flex; flex-direction: column; gap: var(--space-md); }
+.case-overview__body .case-block__title { color: var(--text); }
+.case-facts {
+  display: flex; flex-direction: column;
+  background: var(--card); border: 1px solid var(--border-light);
+  border-radius: var(--radius-md); padding: var(--space-lg);
+}
+.case-facts__row {
+  display: flex; justify-content: space-between; gap: var(--space-md);
+  padding-block: var(--space-sm);
+  border-top: 1px solid var(--border-light);
+}
+.case-facts__row:first-child { border-top: none; padding-top: 0; }
+.case-facts__row:last-child { padding-bottom: 0; }
+.case-facts__k { color: var(--text-muted); font-size: var(--fs-300); }
+.case-facts__v { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-300); color: var(--text); text-align: right; letter-spacing: -0.01em; }
+
+/* Approach: three numbered moves + secondary screenshot */
+.case-approach__grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl);
+  align-items: center;
+}
+.case-moves { display: flex; flex-direction: column; gap: var(--space-lg); }
+.case-move { display: flex; gap: var(--space-md); }
+.case-move__n {
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: 50%;
+  background: var(--accent); color: var(--btn-on-accent);
+  font-family: var(--font-display); font-weight: 800; font-size: var(--fs-400);
+}
+.case-move__body { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: 0.25rem; }
+.case-move__title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-500); color: var(--text); letter-spacing: -0.02em; }
+.case-move__text { color: var(--text-sec); font-size: var(--fs-400); }
+
+/* ===== GALLERY ===== */
+.case-gallery__head {
+  margin-bottom: var(--space-2xl);
+  display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-lg);
+}
+.case-gallery__head > .section-head { flex: 1 1 auto; }
+
+/* Arrow controls live in the gallery head (this page doesn't load home.css, so
+   the homepage's `.why-slider__arrow` / `.features__nav` rules aren't present —
+   define them here). Square with a hint of radius to echo the cards. */
+.features__nav { display: flex; gap: var(--space-xs); flex-shrink: 0; }
+.features__nav[hidden] { display: none; }
+.why-slider__arrow {
+  width: 2.75rem; height: 2.75rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--card); color: var(--text);
+  cursor: pointer;
+  transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+}
+.why-slider__arrow:hover { background: var(--card-hover); border-color: var(--accent); }
+.why-slider__arrow:disabled { opacity: 0.35; cursor: default; }
+.why-slider__arrow:disabled:hover { background: var(--card); border-color: var(--border); }
+
+/* Snap-scroll slider — same recipe as the homepage "why vias media" carousel:
+   flex viewport, hidden scrollbar, head arrows drive the scroll. Each slide is
+   a raw screenshot (no device chrome) kept at its NATURAL width — wide laptop
+   shots, narrow phone shots — while every shot shares the SAME height, so the
+   track reads as one row and snaps one slide at a time no matter how wide. */
+.case-gallery-slider__viewport {
+  --slider-gutter: max(var(--space-lg), calc((100% - var(--container-max)) / 2 + var(--space-lg)));
+  --gallery-h: clamp(15rem, 30vw, 25rem);   /* shared shot height — every slide is exactly this tall */
+  display: flex; align-items: flex-start; gap: var(--space-lg);
+  /* overflow-x:auto alone makes the browser compute overflow-y as `auto` too,
+     which spawns a phantom vertical scrollbar on sub-pixel overflow — pin it. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;           /* don't chain horizontal scroll back to the page */
+  scroll-padding-inline-start: var(--slider-gutter);
+  padding-inline: var(--slider-gutter) var(--space-lg);
+  padding-block: var(--space-2xs);          /* room so the shot's shadow isn't clipped by overflow-y:hidden */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.case-gallery-slider__viewport::-webkit-scrollbar { display: none; }
+/* Height-driven shots: pin the height, let each width follow the image's own
+   aspect ratio so widths differ but heights match across laptop and phone. */
+.case-gallery-slider__shot {
+  scroll-snap-align: start;
+  flex: 0 0 auto;            /* natural width — never stretch or squash a slide */
+  height: var(--gallery-h);
+  width: auto;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  background: var(--card);
+}
+
+/* ===== RESULTS ===== */
+.case-results { background: var(--bg-alt); }
+.case-results__inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: center; }
+.case-stats { display: flex; flex-wrap: wrap; gap: var(--space-2xl); margin-top: var(--space-xl); }
+.case-stat { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.case-stat__num {
+  font-family: var(--font-display); font-weight: 800; line-height: 1;
+  font-size: var(--fs-1000); color: var(--accent);
+}
+.case-stat__label { color: var(--text-sec); font-size: var(--fs-300); max-width: 11rem; }
+/* Pull-quote, not a card: the client's words carry themselves as display type.
+   No box, no decorative glyph — real quotation marks live in the copy. */
+.case-quote { display: flex; flex-direction: column; gap: var(--space-md); }
+.case-quote blockquote {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: var(--fs-700); line-height: 1.35; letter-spacing: -0.01em;
+  color: var(--text); text-wrap: balance;
+}
+.case-quote__by { color: var(--text-sec); font-size: var(--fs-300); }
+
+/* ===== SIGNATURE BLOCKS (per-project) ===== */
+.case-sig {
+  display: flex; flex-direction: column; gap: var(--space-md);
+  background: var(--card); border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+}
+.case-sig__label { color: var(--text-muted); font-size: var(--fs-200); letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Eagle Air — Lighthouse ring gauge */
+.gauge { display: flex; align-items: center; gap: var(--space-lg); }
+.gauge__ring {
+  --val: 98;
+  flex-shrink: 0; width: 7.5rem; height: 7.5rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: conic-gradient(var(--accent) calc(var(--val) * 1%), var(--input-bg) 0);
+}
+.gauge__ring::before { content: ""; grid-area: 1/1; width: 5.75rem; height: 5.75rem; border-radius: 50%; background: var(--card); }
+.gauge__val { grid-area: 1/1; font-family: var(--font-display); font-weight: 800; font-size: var(--fs-800); color: var(--text); }
+.gauge__meta { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.gauge__meta strong { font-family: var(--font-display); font-size: var(--fs-500); color: var(--text); }
+.gauge__meta span { color: var(--text-sec); font-size: var(--fs-300); }
+
+/* Akkerman — faux SERP + rising bars */
+.serp { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-md); border-radius: var(--radius-md); background: var(--bg); border: 1px solid var(--border-light); }
+.serp__rank { display: inline-flex; align-items: center; gap: var(--space-xs); }
+.serp__badge { display: inline-flex; align-items: center; justify-content: center; min-width: 1.5rem; height: 1.5rem; padding-inline: 0.375rem; border-radius: var(--radius-sm); background: var(--accent); color: var(--btn-on-accent); font-family: var(--font-display); font-weight: 800; font-size: var(--fs-200); }
+.serp__url { color: var(--text-muted); font-size: var(--fs-200); }
+.serp__title { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-400); color: var(--text); }
+.serp__desc { color: var(--text-sec); font-size: var(--fs-200); }
+.bars { display: flex; align-items: flex-end; gap: var(--space-sm); height: 5rem; }
+.bars span { flex: 1; background: var(--accent); border-radius: var(--radius-sm) var(--radius-sm) 0 0; opacity: 0.85; }
+
+/* Luxe Bouquets — product card */
+.product { display: flex; gap: var(--space-md); align-items: center; }
+.product__img { flex-shrink: 0; width: 6rem; height: 6rem; border-radius: var(--radius-md); object-fit: cover; }
+.product__info { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.product__name { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-500); color: var(--text); }
+.product__price { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-600); color: var(--accent); }
+.product__cart { margin-top: var(--space-2xs); }
+
+/* Safari — checkout mock */
+.checkout { display: flex; flex-direction: column; gap: var(--space-sm); }
+.checkout__row { display: flex; align-items: center; gap: var(--space-sm); }
+.checkout__step { display: flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--accent); color: var(--btn-on-accent); font-family: var(--font-display); font-weight: 800; font-size: var(--fs-200); flex-shrink: 0; }
+.checkout__row span:last-child { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-300); color: var(--text); }
+.checkout__bar { height: 0.5rem; border-radius: var(--radius-pill); background: var(--input-bg); overflow: hidden; }
+.checkout__bar i { display: block; height: 100%; background: var(--accent); border-radius: var(--radius-pill); }
+
+/* ===== NEXT PROJECT ===== */
+.case-next { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+.case-nav-card {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  background: var(--card); border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg); padding: var(--space-lg);
+  transition: background-color var(--dur-base) ease, transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.case-nav-card:hover { background: var(--card-hover); transform: translateY(-0.125rem); box-shadow: var(--shadow-md); }
+.case-nav-card__dir { color: var(--text-muted); font-size: var(--fs-200); letter-spacing: 0.04em; text-transform: uppercase; }
+.case-nav-card--prev { text-align: left; }
+.case-nav-card--next { text-align: right; }
+.case-nav-card__name { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-600); color: var(--text); letter-spacing: -0.02em; }
+.case-nav-card__thumb { aspect-ratio: 16 / 9; border-radius: var(--radius-md); overflow: hidden; }
+.case-nav-card__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 64rem) {
+  .case-overview__grid,
+  .case-approach__grid,
+  .case-results__inner { gap: var(--space-2xl); }
+}
+
+/* Tablet portrait ≤48rem — collapse the two-column blocks */
+@media (max-width: 48rem) {
+  .case-overview__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .case-approach__grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .case-results__inner { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .case-showcase { padding-bottom: var(--space-4xl); }
+  .case-showcase .phone { width: 8.5rem; right: 0; bottom: -1.5rem; }
+  .case-stat__num { font-size: var(--fs-900); }
+}
+
+/* Phone ≤37.5rem */
+@media (max-width: 37.5rem) {
+  .case-meta { gap: var(--space-lg); }
+  .case-next { grid-template-columns: 1fr; gap: var(--space-md); }
+  .case-showcase .phone { width: 7rem; }
+  .gauge { flex-direction: column; align-items: flex-start; }
+  .product { flex-direction: column; align-items: flex-start; }
+}

@@ -103,28 +103,28 @@
     'From full builds to ongoing optimization, we cover everything needed to launch, grow, and scale your digital presence.':
       'Von der kompletten Umsetzung bis zur laufenden Optimierung decken wir alles ab, um Ihre digitale Präsenz zu starten, auszubauen und zu skalieren.',
     'Web Design': 'Webdesign',
-    'Conversion-focused websites designed to capture your brand and engage your audience.':
-      'Conversion-orientierte Websites, die Ihre Marke einfangen und Ihr Publikum begeistern.',
+    'A clean, fast site that shows your work and makes getting a quote obvious.':
+      'Eine klare, schnelle Website, die Ihre Arbeit zeigt und den Weg zur Anfrage offensichtlich macht.',
     'Web Development': 'Webentwicklung',
     'Development': 'Entwicklung',
-    'Robust, accessible front-end and full-stack development built for real-world performance.':
-      'Robuste, barrierefreie Front-End- und Full-Stack-Entwicklung für echte Performance.',
+    'Hand-built, accessible code that loads fast on every phone.':
+      'Handgebauter, barrierefreier Code, der auf jedem Smartphone schnell lädt.',
     'SEO Optimization': 'SEO-Optimierung',
-    'Search-first strategies to help your site rank higher and attract qualified organic traffic.':
-      'Such-orientierte Strategien, damit Ihre Website besser rankt und qualifizierten organischen Traffic gewinnt.',
+    'Local SEO so you show up when nearby customers search your trade and town.':
+      'Lokales SEO, damit Sie erscheinen, wenn Kunden in der Nähe nach Ihrem Gewerk und Ort suchen.',
     'Digital Consulting': 'Digitale Beratung',
     'Consulting': 'Beratung',
-    'Strategic guidance on technology, user experience, and sustainable digital growth.':
-      'Strategische Beratung zu Technologie, Nutzererlebnis und nachhaltigem digitalem Wachstum.',
+    'Straight answers on what your business needs online and what it\'ll cost.':
+      'Klare Antworten, was Ihr Betrieb online wirklich braucht und was es kostet.',
     'Accessibility Audits': 'Barrierefreiheits-Audits',
     'Accessibility Audit': 'Barrierefreiheits-Audit',
     'Accessibility': 'Barrierefreiheit',
-    'Ensure your site meets WCAG standards and provides an inclusive experience for every user.':
-      'Stellen Sie sicher, dass Ihre Website WCAG-Standards erfüllt und ein inklusives Erlebnis für alle bietet.',
+    'We test your site against WCAG so every customer can use it and you stay compliant.':
+      'Wir prüfen Ihre Website nach WCAG, damit jeder Kunde sie nutzen kann und Sie rechtssicher bleiben.',
     'Ongoing Support': 'Laufender Support',
     'Support': 'Support',
-    'Retainers and continuous optimization to keep your site improving month after month.':
-      'Retainer und kontinuierliche Optimierung, damit sich Ihre Website Monat für Monat verbessert.',
+    'Updates, fixes, and small improvements every month after launch.':
+      'Updates, Fehlerbehebungen und kleine Verbesserungen jeden Monat nach dem Launch.',
     'Everything you need to grow online': 'Alles, was Sie für Ihr Online-Wachstum brauchen',
     'We combine thoughtful web design, robust development, and local SEO to help small businesses and tradespeople win more work — from brand-new ventures to established local names.':
       'Wir verbinden durchdachtes Webdesign, robuste Entwicklung und lokales SEO, damit kleine Unternehmen und Handwerker mehr Aufträge gewinnen – vom brandneuen Betrieb bis zum etablierten lokalen Namen.',
@@ -162,17 +162,17 @@
       'Ein such-orientierter Neuaufbau, der ein wachsendes Bauunternehmen für die relevanten Suchanfragen sichtbar machte.',
     'Organic traffic': 'Organischer Traffic',
     'For target keywords': 'Für Ziel-Keywords',
-    'Bloom Studio Portfolio': 'Bloom Studio Portfolio',
-    "An inclusive, WCAG-compliant portfolio that opened a creative studio's work to a wider audience.":
-      'Ein inklusives, WCAG-konformes Portfolio, das die Arbeit eines Kreativstudios einem breiteren Publikum öffnete.',
-    'WCAG conformance': 'WCAG-Konformität',
-    'Time on site': 'Verweildauer',
-    'Northline Digital Rebrand': 'Northline Digital Rebranding',
-    'A full rebrand and build that gave an agency a confident, conversion-ready presence.':
-      'Ein komplettes Rebranding samt Umsetzung, das einer Agentur einen selbstbewussten, conversion-starken Auftritt verlieh.',
-    'Design to launch': 'Design bis Launch',
-    'Qualified leads': 'Qualifizierte Leads',
-    'Branding': 'Branding',
+    'Luxe Bouquets Online Store': 'Luxe Bouquets Online-Shop',
+    "A florist's store rebuilt around its photography and a date-picked checkout — beautiful, and built to sell.":
+      'Ein Floristik-Shop, neu gebaut rund um die Fotografie und einen Checkout mit Wunsch-Lieferdatum — schön und zum Verkaufen gemacht.',
+    'Online orders': 'Online-Bestellungen',
+    'Avg. order value': 'Ø Bestellwert',
+    'Safari Online Clothing Shop': 'Safari Online-Modeshop',
+    'A fast, mobile-first fashion storefront with a single-page checkout that turns browsers into buyers.':
+      'Ein schneller, mobil-first gebauter Mode-Shop mit Ein-Seiten-Checkout, der aus Besuchern Käufer macht.',
+    'Conversion rate': 'Conversion-Rate',
+    'Cart abandonment': 'Kaufabbrüche',
+    'E-commerce': 'E-Commerce',
     'See all work': 'Alle Projekte ansehen',
     'Your project next': 'Ihr Projekt als Nächstes',
     'Ready to be our next success story?': 'Bereit, unsere nächste Erfolgsgeschichte zu werden?',
@@ -186,9 +186,9 @@
     'Professional, responsive, and detail-oriented. They delivered exactly what we needed and were always available for questions.':
       'Professionell, reaktionsschnell und detailorientiert. Sie lieferten genau das, was wir brauchten, und waren immer für Fragen erreichbar.',
     'Marketing — Akkerman Stroy': 'Marketing — Akkerman Stroy',
-    'The accessibility improvements they made opened our business to a whole new audience. Highly recommended.':
-      'Die Verbesserungen bei der Barrierefreiheit öffneten unser Geschäft für ein völlig neues Publikum. Sehr zu empfehlen.',
-    'Founder — Bloom Studio': 'Gründerin — Bloom Studio',
+    'Our new shop looks as good as our flowers — and customers actually order online now instead of just calling.':
+      'Unser neuer Shop sieht so gut aus wie unsere Blumen — und Kund:innen bestellen jetzt online, statt nur anzurufen.',
+    'Founder — Luxe Bouquets': 'Gründerin — Luxe Bouquets',
     "Our SEO rankings improved significantly within three months of working together. They know exactly what they're doing.":
       'Unsere SEO-Rankings verbesserten sich innerhalb von drei Monaten deutlich. Sie wissen genau, was sie tun.',
     'MD — Sterling Properties': 'Geschäftsführer — Sterling Properties',
@@ -233,7 +233,184 @@
     'Your full name': 'Ihr vollständiger Name',
     'Company (optional)': 'Unternehmen (optional)',
     'Phone (optional)': 'Telefon (optional)',
-    'Tell us about your project, goals, and timeline…': 'Erzählen Sie uns von Ihrem Projekt, Ihren Zielen und dem Zeitplan…'
+    'Tell us about your project, goals, and timeline…': 'Erzählen Sie uns von Ihrem Projekt, Ihren Zielen und dem Zeitplan…',
+
+    /* ===== Case-study pages (work-*.html) ===== */
+    /* Page titles */
+    'Eagle Air HVAC Website Redesign — Vias Media': 'Eagle Air HVAC Website-Relaunch — Vias Media',
+    'Akkerman Stroy Digital Presence — Vias Media': 'Akkerman Stroy Digitale Präsenz — Vias Media',
+    'Luxe Bouquets Online Store — Vias Media': 'Luxe Bouquets Online-Shop — Vias Media',
+    'Safari Online Clothing Shop — Vias Media': 'Safari Online-Modeshop — Vias Media',
+
+    /* Shared scaffold labels */
+    'Web Design & Development': 'Webdesign & Entwicklung',
+    'Web Design & SEO': 'Webdesign & SEO',
+    'Web Design & E-commerce': 'Webdesign & E-Commerce',
+    'Overview': 'Überblick',
+    'The challenge': 'Die Herausforderung',
+    'Our approach': 'Unser Vorgehen',
+    'A closer look': 'Genauer hingeschaut',
+    'The results': 'Die Ergebnisse',
+    '← Previous': '← Zurück',
+    'Next →': 'Weiter →',
+
+    /* Meta + facts */
+    'Role': 'Rolle',
+    'Sector': 'Branche',
+    'Year': 'Jahr',
+    'Client': 'Kunde',
+    'Timeline': 'Zeitrahmen',
+    'Platform': 'Plattform',
+    'Markets': 'Regionen',
+    'Design & Build': 'Design & Umsetzung',
+    'Heating & Cooling': 'Heizung & Klima',
+    'Design & SEO': 'Design & SEO',
+    'Construction': 'Bau',
+    'Florist': 'Floristik',
+    'Fashion Retail': 'Modehandel',
+    'Fashion retail': 'Modehandel',
+    'Design, Development': 'Design, Entwicklung',
+    'Web Design, SEO': 'Webdesign, SEO',
+    'Web Design, E-commerce': 'Webdesign, E-Commerce',
+    '3 weeks': '3 Wochen',
+    '4 weeks': '4 Wochen',
+    '5 weeks': '5 Wochen',
+    'Hand-coded static': 'Handcodiert, statisch',
+
+    /* Stat labels */
+    'Load time on 4G': 'Ladezeit im 4G-Netz',
+    'Service-area pages': 'Seiten je Einzugsgebiet',
+    'Delivery option': 'Lieferoption',
+    'Load time': 'Ladezeit',
+
+    /* Eagle Air */
+    "A dated brochure, rebuilt into a lead engine that loads in under a second — and turns Sarasota's hot-day panic searches into booked visits.":
+      'Eine veraltete Broschüren-Website, neu gebaut zur Lead-Maschine, die in unter einer Sekunde lädt — und aus Panik-Suchen an heißen Tagen in Sarasota gebuchte Termine macht.',
+    'A team that shows up fast — with a site to match': 'Ein Team, das schnell zur Stelle ist — mit einer Website, die mithält',
+    "Eagle Air are Sarasota's trusted HVAC crew: same-day repairs, flat-rate pricing, fifteen years on the tools. But their old website didn't say any of that quickly. It was a five-year-old template — heavy, slow, and hard to use on a phone, which is exactly where a homeowner with a dead AC starts looking.":
+      'Eagle Air ist Sarasotas vertraute HLK-Crew: Reparatur am selben Tag, Festpreise, fünfzehn Jahre Erfahrung. Doch ihre alte Website sagte all das nicht schnell genug. Sie war eine fünf Jahre alte Vorlage — schwer, langsam und am Handy kaum bedienbar, genau dort, wo Hausbesitzer mit defekter Klimaanlage zu suchen beginnen.',
+    'We rebuilt it around a single job: make it obvious that Eagle Air can help, and make booking a visit one tap away.':
+      'Wir haben sie um eine einzige Aufgabe herum neu gebaut: klar zu machen, dass Eagle Air helfen kann — und einen Termin nur einen Fingertipp entfernt.',
+    'Slow, and invisible where it mattered': 'Langsam und unsichtbar, wo es zählte',
+    "The old site took over four seconds to load on 4G and buried the phone number. Prospective customers couldn't tell what Eagle Air did or how to reach them — so on a 35° afternoon, they tapped the next result instead.":
+      'Die alte Seite lud im 4G-Netz über vier Sekunden und versteckte die Telefonnummer. Interessenten erkannten weder, was Eagle Air macht, noch wie man sie erreicht — und tippten an einem 35-°C-Nachmittag einfach auf das nächste Ergebnis.',
+    'Strip it back to one job': 'Auf eine Aufgabe reduziert',
+    'Mobile-first rebuild': 'Neubau mobile-first',
+    'Hand-coded from scratch, designed for the phone first — the page does one thing: get a quote.':
+      'Von Grund auf handcodiert, fürs Handy zuerst gestaltet — die Seite tut eine Sache: ein Angebot einholen.',
+    'Booking always in reach': 'Buchen immer griffbereit',
+    'The phone number and a "Book a visit" button stay within thumb reach on every screen.':
+      'Telefonnummer und ein „Termin buchen"-Button bleiben auf jedem Bildschirm in Daumenreichweite.',
+    'Tuned for speed': 'Auf Tempo getrimmt',
+    'Compressed imagery, lazy loading, and trimmed third-party scripts to hit a 98 Lighthouse score.':
+      'Komprimierte Bilder, Lazy Loading und reduzierte Drittanbieter-Skripte für einen Lighthouse-Wert von 98.',
+    'Built for speed': 'Auf Tempo gebaut',
+    'Fast enough to win the click': 'Schnell genug für den Klick',
+    'On mobile, every second of load time costs customers. We measured relentlessly and shipped a site that loads in under a second on a normal phone connection.':
+      'Am Handy kostet jede Sekunde Ladezeit Kunden. Wir haben unermüdlich gemessen und eine Seite ausgeliefert, die bei normaler Mobilverbindung in unter einer Sekunde lädt.',
+    'Down from 4.2 seconds on the old site': 'Vorher 4,2 Sekunden auf der alten Seite',
+    'Across every screen': 'Auf jedem Bildschirm',
+    'A site that pays for itself': 'Eine Website, die sich auszahlt',
+
+    /* Akkerman Stroy */
+    'A search-first rebuild that put a growing construction firm on the map for the queries that matter — across Mecklenburg-Vorpommern and Berlin.':
+      'Ein such-orientierter Neubau, der ein wachsendes Bauunternehmen für die relevanten Suchanfragen sichtbar machte — in Mecklenburg-Vorpommern und Berlin.',
+    'Real craft that nobody could find': 'Echtes Handwerk, das niemand fand',
+    'Akkerman Stroy do meticulous work — Trockenbau, flooring, tiling, full renovations — for clients across Mecklenburg-Vorpommern and Berlin. Their reputation travelled by word of mouth, but online they were almost invisible: competitors ranked for every local search while their own name barely surfaced.':
+      'Akkerman Stroy arbeitet akribisch — Trockenbau, Bodenverlegung, Fliesen, Komplettsanierungen — für Kunden in Mecklenburg-Vorpommern und Berlin. Ihr Ruf verbreitete sich mündlich, online aber waren sie fast unsichtbar: Mitbewerber rankten für jede lokale Suche, während ihr eigener Name kaum auftauchte.',
+    'We rebuilt the site around how people actually search for a Handwerker — by trade and by town — so the right customers find Akkerman first.':
+      'Wir haben die Seite darum herum gebaut, wie Menschen wirklich nach einem Handwerker suchen — nach Gewerk und nach Ort — damit die richtigen Kunden Akkerman zuerst finden.',
+    'Invisible to the people searching for them': 'Unsichtbar für die, die sie suchten',
+    'There was no structure for Google to index and nothing aimed at the towns Akkerman serve. A firm with a waiting list of happy clients was losing new ones to whoever showed up first.':
+      'Es gab keine Struktur, die Google indexieren konnte, und nichts, was auf die Orte zugeschnitten war, die Akkerman bedient. Ein Betrieb mit Warteliste zufriedener Kunden verlor neue an die, die zuerst auftauchten.',
+    'Build for the search, not the slideshow': 'Für die Suche gebaut, nicht für die Bildershow',
+    'Search-first structure': 'Such-orientierte Struktur',
+    'One clear page per service and service area, so every local query has a page to land on.':
+      'Eine klare Seite je Leistung und Einzugsgebiet, damit jede lokale Suche eine Landeseite hat.',
+    'Local content & markup': 'Lokale Inhalte & Markup',
+    'Wrote real landing copy and added schema, a sitemap, and clean metadata Google can read.':
+      'Echte Landing-Texte geschrieben und Schema, Sitemap sowie saubere Metadaten ergänzt, die Google lesen kann.',
+    'Earned the rankings': 'Rankings verdient',
+    'Tuned page speed and mobile usability, then tracked positions weekly and refined.':
+      'Ladezeit und mobile Bedienbarkeit optimiert, dann wöchentlich die Positionen verfolgt und nachgeschärft.',
+    'Found first': 'Zuerst gefunden',
+    'From nowhere to number one': 'Vom Nichts auf Platz eins',
+    'Within months, Akkerman ranked top for their core trades in the regions they serve — and the organic traffic climbed steadily with it.':
+      'Binnen Monaten rankte Akkerman für seine Kerngewerke in den bedienten Regionen ganz oben — und der organische Traffic stieg stetig mit.',
+    'Google — local search': 'Google — lokale Suche',
+    'Organic traffic — 6 months': 'Organischer Traffic — 6 Monate',
+    'Seen by the right people': 'Von den Richtigen gesehen',
+
+    /* Luxe Bouquets */
+    "A florist's shop window, brought online — where the bouquets sell themselves and ordering for a specific day takes about a minute.":
+      'Das Schaufenster einer Floristin, online gebracht — wo die Sträuße sich selbst verkaufen und das Bestellen für einen bestimmten Tag etwa eine Minute dauert.',
+    'Flowers worth photographing, finally online': 'Blumen, die ein Foto wert sind — endlich online',
+    "Luxe Bouquets is a modern floral studio: fresh and dried arrangements, plants, and gifts, delivered across the city. Their flowers were beautiful — their website wasn't doing them justice.":
+      'Luxe Bouquets ist ein modernes Floristik-Studio: frische und getrocknete Gestecke, Pflanzen und Geschenke, in der ganzen Stadt geliefert. Ihre Blumen waren wunderschön — ihre Website wurde ihnen nicht gerecht.',
+    'We rebuilt the store around the photography and around the one thing customers want: to choose something lovely and have it arrive on the right day.':
+      'Wir haben den Shop um die Fotografie herum neu gebaut — und um das eine, was Kunden wollen: etwas Schönes auswählen und es am richtigen Tag erhalten.',
+    'Small photos, clunky orders': 'Kleine Fotos, umständliche Bestellung',
+    "The old site showed dull, small images and offered only a fiddly enquiry form — with no way to buy for a specific delivery date. Customers rang up to order, or quietly didn't order at all.":
+      'Die alte Seite zeigte matte, kleine Bilder und bot nur ein umständliches Anfrageformular — ohne Möglichkeit, für ein bestimmtes Lieferdatum zu kaufen. Kunden riefen zum Bestellen an oder bestellten still gar nicht.',
+    'Let the flowers do the selling': 'Die Blumen verkaufen lassen',
+    'Photography-led layout': 'Fotografie-geführtes Layout',
+    'Full-bleed seasonal collections that feel like a print catalogue — and still load fast.':
+      'Randlose Saison-Kollektionen, die sich wie ein Printkatalog anfühlen — und trotzdem schnell laden.',
+    'Reassuring checkout': 'Checkout, der Sicherheit gibt',
+    'A simple, calm checkout with a delivery date you pick yourself.':
+      'Ein einfacher, ruhiger Checkout mit selbst gewähltem Lieferdatum.',
+    'Order-for-today clarity': 'Klarheit fürs Bestellen heute',
+    'Made buying obvious on every screen, designed mobile-first.':
+      'Das Kaufen auf jedem Bildschirm offensichtlich gemacht, mobile-first gestaltet.',
+    'Made to buy': 'Zum Kaufen gemacht',
+    'From browsing to bought in a tap': 'Vom Stöbern zum Kauf mit einem Tipp',
+    'Every arrangement is one tap from the cart, with delivery you can schedule — so admiring a bouquet turns straight into an order.':
+      'Jedes Gesteck ist einen Tipp vom Warenkorb entfernt, mit planbarer Lieferung — so wird aus dem Bewundern eines Straußes direkt eine Bestellung.',
+    'Product — ready to order': 'Produkt — sofort bestellbar',
+    'Seasonal Bouquet': 'Saison-Strauß',
+    'Add to cart': 'In den Warenkorb',
+    'Same-day delivery': 'Lieferung am selben Tag',
+    'A catalogue you can shop': 'Ein Katalog zum Einkaufen',
+    'More orders, bigger baskets': 'Mehr Bestellungen, größere Warenkörbe',
+    'Same-day': 'Taggleich',
+    'Our website finally looks as good as our flowers — and people order from it now instead of just calling.':
+      'Unsere Website sieht endlich so gut aus wie unsere Blumen — und die Leute bestellen jetzt darüber, statt nur anzurufen.',
+
+    /* Safari */
+    'An online clothing store built to browse fast and check out faster — a premium feel that holds up on the phone, where most of the shopping happens.':
+      'Ein Online-Modeshop, gebaut für schnelles Stöbern und noch schnelleren Checkout — ein Premium-Gefühl, das am Handy hält, wo der Großteil des Einkaufs passiert.',
+    'A storefront that feels as good as it looks': 'Ein Shop, der sich so gut anfühlt, wie er aussieht',
+    "Safari sells clothes, shoes, and accessories online with a bold, confident brand. The look was there — the shopping experience wasn't keeping up, especially on mobile.":
+      'Safari verkauft Kleidung, Schuhe und Accessoires online mit einer mutigen, selbstbewussten Marke. Der Look war da — das Einkaufserlebnis hielt nicht mit, vor allem mobil.',
+    'We rebuilt the storefront to be fast to browse and effortless to buy from, end to end.':
+      'Wir haben den Shop neu gebaut: schnell zu durchstöbern und mühelos zu kaufen, von Anfang bis Ende.',
+    'Slow to browse, easy to abandon': 'Langsam beim Stöbern, leicht zum Abbrechen',
+    'The old shop was fiddly on a phone — endless scrolling, a confusing cart, and a checkout that lost people halfway. Most visitors browsed on mobile and left without buying.':
+      'Der alte Shop war am Handy umständlich — endloses Scrollen, ein verwirrender Warenkorb und ein Checkout, der die Leute auf halbem Weg verlor. Die meisten Besucher stöberten mobil und gingen, ohne zu kaufen.',
+    'Make browsing and buying effortless': 'Stöbern und Kaufen mühelos machen',
+    'Fast, filterable storefront': 'Schneller, filterbarer Shop',
+    'Rebuilt mobile-first so collections load instantly and filter without a reload.':
+      'Mobile-first neu gebaut, damit Kollektionen sofort laden und ohne Neuladen filtern.',
+    'Single-page checkout': 'Ein-Seiten-Checkout',
+    'Collapsed the cart and checkout into one calm, fast step.':
+      'Warenkorb und Checkout zu einem ruhigen, schnellen Schritt zusammengefasst.',
+    'Instant-feel imagery': 'Bilder, die sofort wirken',
+    'Tuned product photography and load speed so browsing never stalls.':
+      'Produktfotografie und Ladegeschwindigkeit optimiert, damit das Stöbern nie stockt.',
+    'Built to convert': 'Auf Conversion gebaut',
+    'Fewer steps, more sales': 'Weniger Schritte, mehr Verkäufe',
+    'A single-page checkout removed the friction that lost customers — so more of the people browsing actually finish buying.':
+      'Ein Ein-Seiten-Checkout beseitigte die Reibung, die Kunden verlor — so schließen mehr der Stöbernden den Kauf tatsächlich ab.',
+    'Checkout — one page': 'Checkout — eine Seite',
+    'Bag': 'Warenkorb',
+    'Details': 'Daten',
+    'Pay': 'Zahlen',
+    'after the single-page checkout went live': 'nachdem der Ein-Seiten-Checkout live ging',
+    'Shop it on any screen': 'Auf jedem Bildschirm shoppen',
+    'Browsing that turns into buying': 'Stöbern, das zum Kauf wird',
+    'Sales jumped the month we launched. The new shop is fast, it looks premium, and customers actually finish checking out now.':
+      'Die Verkäufe sprangen im Launch-Monat nach oben. Der neue Shop ist schnell, wirkt edel, und Kunden schließen den Checkout jetzt wirklich ab.',
+    'Owner — Safari': 'Inhaber — Safari'
   };
 
   function norm(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
