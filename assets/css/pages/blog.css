@@ -1,0 +1,65 @@
+/* ===== BLOG ===== */
+
+/* Article */
+.post__container { max-width: 44rem; }     /* readable measure */
+.post__head { display: flex; flex-direction: column; gap: var(--space-sm); margin: var(--space-2xl) 0 var(--space-xl); }
+.post__cat { color: var(--accent); letter-spacing: 0.06em; }
+.post__title { letter-spacing: -0.02em; }
+.post__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs); color: var(--text-muted); }
+.post__dot { color: var(--text-muted); }
+
+.post__body { display: flex; flex-direction: column; gap: var(--space-md); font-size: var(--fs-500); line-height: 1.7; }
+.post__body h2 { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-700); letter-spacing: -0.01em; margin-top: var(--space-lg); }
+.post__body h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-600); margin-top: var(--space-md); }
+.post__body p { color: var(--text-sec); }
+.post__body a { color: var(--accent); text-decoration: underline; text-underline-offset: 0.15em; }
+.post__body ul, .post__body ol { display: flex; flex-direction: column; gap: var(--space-xs); padding-left: 1.25rem; color: var(--text-sec); }
+.post__body li { list-style: disc; }
+.post__body ol li { list-style: decimal; }
+.post__body blockquote { border-left: 3px solid var(--accent); padding-left: var(--space-md); color: var(--text); font-style: italic; }
+.post__body img { width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--border-light); }
+.post__body code { font-family: var(--font-mono); background: var(--input-bg); padding: 0.1rem 0.35rem; border-radius: var(--radius-sm); font-size: 0.9em; }
+
+/* Related case-study card */
+.post__case {
+  display: flex; gap: var(--space-lg); align-items: center;
+  margin-top: var(--space-2xl); padding: var(--space-lg);
+  background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+  color: inherit; text-decoration: none; transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+.post__case:hover { background: var(--card-hover); transform: translateY(-0.125rem); }
+.post__case-stat { display: flex; flex-direction: column; }
+.post__case-num { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-800); color: var(--accent); line-height: 1; }
+.post__case-text { display: flex; flex-direction: column; gap: var(--space-2xs); }
+
+/* End-of-article CTA */
+.post__cta {
+  display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;
+  margin: var(--space-2xl) 0 var(--space-4xl); padding: var(--space-xl);
+  background: var(--bg-alt); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+}
+
+/* Blog index */
+.blog-hero { padding: var(--space-4xl) 0 var(--space-2xl); }
+.blog-hero .container { display: flex; flex-direction: column; gap: var(--space-sm); }
+.blog-list { padding-bottom: var(--space-5xl); }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: var(--space-xl); }
+.blog-card {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+  overflow: hidden; color: inherit; text-decoration: none;
+  transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+.blog-card:hover { transform: translateY(-0.25rem); box-shadow: var(--shadow-md); }
+.blog-card__media { aspect-ratio: 16 / 9; overflow: hidden; }
+.blog-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.blog-card__body { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-lg); }
+.blog-card__cat { color: var(--accent); }
+.blog-card__meta { color: var(--text-muted); margin-top: var(--space-2xs); }
+.blog-card__more { margin-top: var(--space-xs); }
+.blog-card:hover .blog-card__more .link { color: var(--accent); }
+
+@media (max-width: 47.9375rem) {
+  .blog-grid { grid-template-columns: 1fr; }
+  .post__case { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+}
