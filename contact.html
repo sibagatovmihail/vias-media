@@ -6,6 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Start a Project with Vias Media</title>
   <meta name="description" content="Tell us about your project. Vias Media replies within one business day — web design, development, SEO, and ongoing support for ambitious brands.">
+  <link rel="canonical" href="https://viasmedia.com/contact.html">
+
+  <!-- Favicons & PWA -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#E8593A">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#FEF8EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vias Media">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="de_DE">
+  <meta property="og:title" content="Contact — Start a Project with Vias Media">
+  <meta property="og:description" content="Tell us about your project. Vias Media replies within one business day — web design, development, SEO, and ongoing support for ambitious brands.">
+  <meta property="og:url" content="https://viasmedia.com/contact.html">
+  <meta property="og:image" content="https://viasmedia.com/assets/img/og/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact — Start a Project with Vias Media">
+  <meta name="twitter:description" content="Tell us about your project. Vias Media replies within one business day — web design, development, SEO, and ongoing support for ambitious brands.">
+  <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/og-default.png">
 
   <link rel="preload" href="assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
@@ -17,6 +47,7 @@
   <link rel="stylesheet" href="assets/css/pages/contact.css">
 </head>
 <body>
+  <a class="skip-link" href="#main" data-de="Zum Inhalt springen">Skip to content</a>
 
   <header class="header" id="header">
     <div class="topbar">
@@ -87,7 +118,7 @@
 
   <div id="header-spacer"></div>
 
-  <main>
+  <main id="main" tabindex="-1">
     <section class="subhero">
       <div class="container">
         <div class="subhero__inner reveal">
@@ -143,46 +174,46 @@
             <div class="contact__row">
               <div class="field">
                 <label class="field__label" for="contact-name">Name</label>
-                <div><input type="text" id="contact-name" name="name" placeholder="Your full name" required></div>
+                <div><input type="text" id="contact-name" name="name" placeholder="Your full name" autocomplete="name" required></div>
               </div>
               <div class="field">
                 <label class="field__label" for="contact-company">Company</label>
-                <div><input type="text" id="contact-company" name="company" placeholder="Company (optional)"></div>
+                <div><input type="text" id="contact-company" name="company" placeholder="Company (optional)" autocomplete="organization"></div>
               </div>
             </div>
 
             <div class="contact__row">
               <div class="field">
                 <label class="field__label" for="contact-email">Email</label>
-                <div><input type="email" id="contact-email" name="email" placeholder="you@email.com" required>
-                  <span class="field__error" id="contact-email-error" hidden>Please enter a valid email address.</span>
+                <div><input type="email" id="contact-email" name="email" placeholder="you@email.com" autocomplete="email" aria-describedby="contact-email-error" required>
+                  <span class="field__error" id="contact-email-error" role="alert" hidden>Please enter a valid email address.</span>
                 </div>
               </div>
               <div class="field">
                 <label class="field__label" for="contact-phone">Phone</label>
-                <div><input type="tel" id="contact-phone" name="phone" placeholder="Phone (optional)">
-                  <span class="field__error" id="contact-phone-error" hidden>Please enter a valid phone number.</span>
+                <div><input type="tel" id="contact-phone" name="phone" placeholder="Phone (optional)" autocomplete="tel" aria-describedby="contact-phone-error">
+                  <span class="field__error" id="contact-phone-error" role="alert" hidden>Please enter a valid phone number.</span>
                 </div>
               </div>
             </div>
 
             <div class="field">
-              <label class="field__label" for="contact-service">What do you need?</label>
+              <label class="field__label" for="contact-service" id="service-label" data-de="Was brauchen Sie?">What do you need?</label>
               <div class="form-select" id="service-select">
-                <button type="button" class="form-select__trigger" aria-haspopup="listbox" aria-expanded="false">
+                <button type="button" class="form-select__trigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="service-listbox" aria-labelledby="service-label">
                   <span class="form-select__value form-select__value--placeholder">Select a service…</span>
                   <svg class="form-select__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </button>
-                <ul class="form-select__menu" role="listbox">
-                  <li class="form-select__option" role="option" data-value="Web Design">Web Design</li>
-                  <li class="form-select__option" role="option" data-value="Web Development">Web Development</li>
-                  <li class="form-select__option" role="option" data-value="SEO Optimization">SEO Optimization</li>
-                  <li class="form-select__option" role="option" data-value="Digital Consulting">Digital Consulting</li>
-                  <li class="form-select__option" role="option" data-value="Accessibility Audit">Accessibility Audit</li>
-                  <li class="form-select__option" role="option" data-value="Ongoing Support">Ongoing Support</li>
-                  <li class="form-select__option" role="option" data-value="Not sure yet">Not sure yet</li>
+                <ul class="form-select__menu" role="listbox" id="service-listbox" tabindex="-1" aria-labelledby="service-label">
+                  <li class="form-select__option" id="svc-opt-0" role="option" aria-selected="false" data-value="Web Design">Web Design</li>
+                  <li class="form-select__option" id="svc-opt-1" role="option" aria-selected="false" data-value="Web Development">Web Development</li>
+                  <li class="form-select__option" id="svc-opt-2" role="option" aria-selected="false" data-value="SEO Optimization">SEO Optimization</li>
+                  <li class="form-select__option" id="svc-opt-3" role="option" aria-selected="false" data-value="Digital Consulting">Digital Consulting</li>
+                  <li class="form-select__option" id="svc-opt-4" role="option" aria-selected="false" data-value="Accessibility Audit">Accessibility Audit</li>
+                  <li class="form-select__option" id="svc-opt-5" role="option" aria-selected="false" data-value="Ongoing Support">Ongoing Support</li>
+                  <li class="form-select__option" id="svc-opt-6" role="option" aria-selected="false" data-value="Not sure yet">Not sure yet</li>
                 </ul>
                 <input type="hidden" name="service" id="contact-service">
               </div>

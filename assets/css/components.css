@@ -370,7 +370,11 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
 }
 .form-select__option:hover,
+.form-select__option.is-active,
 .form-select__option[aria-selected="true"] { background: var(--input-bg); color: var(--text); }
+/* Keyboard active option gets a clear accent ring so focus is visible inside the listbox. */
+.form-select__option.is-active { box-shadow: inset 0 0 0 0.125rem var(--accent); }
+.form-select__menu:focus { outline: none; }
 
 /* =====================================================================
    FOOTER

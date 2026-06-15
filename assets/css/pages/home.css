@@ -270,30 +270,165 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 
 /* ===== WORK teaser ===== */
 .work { background: transparent; }
-.work__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  gap: var(--space-xl); margin-top: var(--space-2xl);
+/* Project showcase.
+   Mobile (base): a swipeable, scroll-snapping slider, one card at a time.
+   Desktop (hover + wide): a hover-expand accordion. Collapsed panels are
+   image-only; the name + tags + arrow reveal on hover / keyboard focus. */
+.folio {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: var(--space-2xl);
+  /* Full-bleed: the slider breaks out of the container padding so cards run
+     to the screen edges; padding keeps the first/last card aligned to content. */
+  margin-inline: calc(-1 * var(--space-lg));
+  padding-inline: var(--space-lg);
+  scroll-padding-inline: var(--space-lg);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.work-card { display: flex; flex-direction: column; gap: var(--space-sm); color: inherit; }
-.work-card__media {
-  width: 100%; aspect-ratio: 1760 / 957; border-radius: var(--radius-lg); overflow: hidden;
+.folio::-webkit-scrollbar { display: none; }
+.folio__panel {
+  position: relative;
+  flex: 0 0 86%;
+  scroll-snap-align: start;
+  aspect-ratio: 1760 / 957;   /* phone cards keep the screenshot's shape (no crop) */
+  overflow: hidden;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
+  color: #fff;
+  text-decoration: none;
 }
-.work-card__media img {
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
-  display: block; transition: transform var(--dur-base) var(--ease);
+.folio__img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
 }
-.work-card:hover .work-card__media img { transform: scale(1.03); }
-.work-card__meta {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: var(--space-sm); flex-wrap: wrap;
+/* Dark legibility scrim — strong at the bottom, so text reads on any image. */
+.folio__panel::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.38) 36%, rgba(0,0,0,0) 68%);
 }
-.work-card__tags { display: flex; gap: var(--space-xs); flex-wrap: wrap; }
+.folio__content {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.35rem 1.4rem;
+}
+.folio__name {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: var(--fs-600); line-height: 1.04; letter-spacing: -0.02em;
+  white-space: nowrap; text-shadow: 0 1px 12px rgba(0,0,0,0.5);
+}
+.folio__tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.folio__tag {
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.24);
+  color: #fff; padding: 0.22rem 0.6rem; border-radius: 1.5rem;
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+}
+.folio__go {
+  position: absolute; top: 1rem; right: 1rem; z-index: 1;
+  width: 2.1rem; height: 2.1rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff;
+}
+
+/* Desktop: hover-expand accordion. Collapsed = image only (no labels);
+   title + tags + arrow appear on hover / keyboard focus. */
+@media (hover: hover) and (min-width: 48rem) {
+  .folio {
+    overflow: visible;
+    scroll-snap-type: none;
+    gap: 0.5rem;
+    height: clamp(22rem, 46vh, 30rem);
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+  .folio__panel {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    scroll-snap-align: none;
+    transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .folio__img { transition: transform 0.7s var(--ease); }
+  .folio__name { font-size: var(--fs-700); }
+  .folio__content {
+    opacity: 0; transform: translateY(0.6rem);
+    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  }
+  .folio__go {
+    opacity: 0; transform: scale(0.8);
+    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  }
+  /* expanded: hover, keyboard focus, or the default-featured (.is-active) panel */
+  .folio__panel:hover,
+  .folio__panel:focus-visible,
+  .folio__panel.is-active { flex-grow: 5.2; }
+  .folio__panel:hover .folio__img,
+  .folio__panel:focus-visible .folio__img,
+  .folio__panel.is-active .folio__img { transform: scale(1.04); }
+  .folio__panel:hover .folio__content,
+  .folio__panel:focus-visible .folio__content,
+  .folio__panel.is-active .folio__content { opacity: 1; transform: none; }
+  .folio__panel:hover .folio__go,
+  .folio__panel:focus-visible .folio__go,
+  .folio__panel.is-active .folio__go { opacity: 1; transform: none; }
+  /* the default-featured panel yields (collapses, hides its label) when another is engaged */
+  .folio:hover .folio__panel.is-active:not(:hover),
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) { flex-grow: 1; }
+  .folio:hover .folio__panel.is-active:not(:hover) .folio__content,
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__content { opacity: 0; transform: translateY(0.6rem); }
+  .folio:hover .folio__panel.is-active:not(:hover) .folio__go,
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__go { opacity: 0; transform: scale(0.8); }
+  .folio:hover .folio__panel.is-active:not(:hover) .folio__img,
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__img { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .folio__panel, .folio__img, .folio__content, .folio__go { transition-duration: 0.001ms; }
+}
+
+/* Phone (≤600px): the panel stops being an image-with-overlay and becomes a
+   stacked card — screenshot on top, a solid card-background footer carrying the
+   name + tags below. The scrim and white-on-dark text are dropped because the
+   labels now sit on the card surface, not the image. */
+@media (max-width: 37.5rem) {
+  .folio__panel {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;            /* height = image + footer, not a fixed ratio */
+    color: var(--text);            /* was #fff for the overlay */
+    background: var(--card);
+  }
+  .folio__img {
+    position: static;              /* back into flow, at the top of the card */
+    aspect-ratio: 1760 / 957;      /* keep the screenshot's shape */
+    height: auto;
+  }
+  .folio__panel::after { content: none; }   /* drop the dark legibility scrim */
+  .folio__content {
+    position: static;              /* sits below the image, in normal flow */
+    padding: 1rem 1.1rem 1.15rem;
+  }
+  .folio__name {
+    color: var(--text);
+    text-shadow: none;
+    white-space: normal;           /* allow a long name to wrap on the card */
+  }
+  .folio__tag {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-muted);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+}
+
 .work__footer { display: flex; justify-content: center; margin-top: var(--space-2xl); }
 
 @media (max-width: 47.9375rem) {
   .features__head { flex-direction: column; align-items: flex-start; }
-  .work__grid { grid-template-columns: 1fr; }
   .services__layout { gap: var(--space-xl); }
 }
 

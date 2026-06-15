@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#1C1917">
+  <title>Vias Media</title>
+  <!-- hull -->
+  <path d="M4 46 H60 C57 53 50 57.5 42 57.5 H22 C14 57.5 7 53 4 46 Z"/>
+  <!-- mast -->
+  <rect x="30.5" y="9" width="3" height="36" rx="1.4"/>
+  <!-- boom -->
+  <rect x="14" y="44" width="40" height="3" rx="1.5"/>
+  <!-- mainsail (right of mast) -->
+  <path d="M35 13 L35 43.5 L53.5 43.5 Z"/>
+  <!-- jib (left of mast), curved luff -->
+  <path d="M29 16 L29 43.5 L13.5 43.5 C19 37 25 27 29 16 Z"/>
+</svg>

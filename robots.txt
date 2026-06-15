@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /teacher.html
+
+Sitemap: https://viasmedia.com/sitemap.xml

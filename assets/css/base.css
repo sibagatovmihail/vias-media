@@ -133,3 +133,24 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .divider { height: 1px; background: var(--border-light); width: 100%; }
+
+/* Skip-to-content link (WCAG 2.4.1 Bypass Blocks) — off-screen until focused. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 9999;
+  padding: 0.625rem 1.125rem;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-200);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transform: translateY(-160%);
+  transition: transform var(--dur-base) var(--ease);
+}
+.skip-link:focus { transform: translateY(0); }
+/* Land the target below the sticky header (height is set on :root by main.js). */
+#main { scroll-margin-top: var(--header-height, 5rem); }

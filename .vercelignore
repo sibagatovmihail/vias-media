@@ -1,0 +1,22 @@
+# Keep the deployed artifact to the actual site.
+# (Site files, /api, middleware.js, and the new SEO/icon files all ship.)
+
+.DS_Store
+**/.DS_Store
+.git
+.vercel
+
+# Agent / tooling artifacts — never part of the site
+.claude
+.fallow
+.impeccable
+.graphifyignore
+graphify-out
+docs
+CLAUDE.md
+IMPECCABLE.md
+PRODUCT.md
+
+# Heavy, unreferenced source art / dumps (flagged by the audit)
+visuals
+Vias Media (standalone).html

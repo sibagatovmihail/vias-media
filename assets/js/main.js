@@ -194,18 +194,28 @@
   var contactForm = document.getElementById('contact-form');
 
   function showFieldError(input, errorEl) {
-    if (input) input.closest('.field') && input.closest('.field').classList.add('field--error');
-    if (errorEl) errorEl.hidden = false;
+    if (input) {
+      if (input.closest('.field')) input.closest('.field').classList.add('field--error');
+      input.setAttribute('aria-invalid', 'true');   /* announce invalid state to AT */
+    }
+    if (errorEl) errorEl.hidden = false;              /* role="alert" -> announced on reveal */
   }
   function clearFieldError(input, errorEl) {
-    if (input && input.closest('.field')) input.closest('.field').classList.remove('field--error');
+    if (input) {
+      if (input.closest('.field')) input.closest('.field').classList.remove('field--error');
+      input.removeAttribute('aria-invalid');
+    }
     if (errorEl) errorEl.hidden = true;
   }
+  var lastFocusedBeforeModal = null;
   function showSuccessModal() {
     var overlay = document.getElementById('form-success-overlay');
     if (!overlay) return;
+    lastFocusedBeforeModal = document.activeElement;   /* restore on close */
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
+    var closeBtn = document.getElementById('form-success-close');
+    if (closeBtn) closeBtn.focus();                    /* move focus into the dialog */
   }
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -255,11 +265,18 @@
     var overlay = document.getElementById('form-success-overlay');
     var closeBtn = document.getElementById('form-success-close');
     if (!overlay) return;
-    function close() { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); }
+    function close() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      if (lastFocusedBeforeModal && lastFocusedBeforeModal.focus) lastFocusedBeforeModal.focus();
+    }
     if (closeBtn) closeBtn.addEventListener('click', close);
     overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') { close(); return; }
+      /* Single-control dialog: keep Tab focus on the close button (focus trap). */
+      if (e.key === 'Tab' && closeBtn) { e.preventDefault(); closeBtn.focus(); }
     });
   }
   /* ---- Custom service dropdown (replaces native <select>) ---- */
@@ -270,27 +287,74 @@
     var menu    = wrapper.querySelector('.form-select__menu');
     var valueEl = wrapper.querySelector('.form-select__value');
     var hidden  = wrapper.querySelector('input[type="hidden"]');
-    var options = wrapper.querySelectorAll('.form-select__option');
+    var options = Array.prototype.slice.call(wrapper.querySelectorAll('.form-select__option'));
+    var activeIndex = -1;
 
-    function open()  { menu.classList.add('open');    trigger.setAttribute('aria-expanded', 'true'); }
-    function close() { menu.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+    function isOpen() { return menu.classList.contains('open'); }
+    function setActive(i) {
+      if (i < 0) i = options.length - 1;
+      if (i >= options.length) i = 0;
+      activeIndex = i;
+      options.forEach(function (o, idx) { o.classList.toggle('is-active', idx === i); });
+      menu.setAttribute('aria-activedescendant', options[i].id);
+      if (options[i].scrollIntoView) options[i].scrollIntoView({ block: 'nearest' });
+    }
+    function selectedIndex() {
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].getAttribute('aria-selected') === 'true') return i;
+      }
+      return -1;
+    }
+    function open() {
+      menu.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      var sel = selectedIndex();
+      setActive(sel >= 0 ? sel : 0);
+      menu.focus();
+    }
+    function close(returnFocus) {
+      menu.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+      menu.removeAttribute('aria-activedescendant');
+      options.forEach(function (o) { o.classList.remove('is-active'); });
+      if (returnFocus) trigger.focus();
+    }
+    function choose(opt) {
+      options.forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
+      opt.setAttribute('aria-selected', 'true');
+      valueEl.textContent = opt.textContent;
+      valueEl.classList.remove('form-select__value--placeholder');
+      hidden.value = opt.getAttribute('data-value');
+    }
 
     trigger.addEventListener('click', function (e) {
       e.stopPropagation();
-      menu.classList.contains('open') ? close() : open();
+      isOpen() ? close(false) : open();
+    });
+    /* Open from the keyboard (button Enter/Space already fire click, so guard) */
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!isOpen()) open(); }
     });
     options.forEach(function (opt) {
-      opt.addEventListener('click', function () {
-        options.forEach(function (o) { o.removeAttribute('aria-selected'); });
-        opt.setAttribute('aria-selected', 'true');
-        valueEl.textContent = opt.textContent;
-        valueEl.classList.remove('form-select__value--placeholder');
-        hidden.value = opt.getAttribute('data-value');
-        close();
+      opt.addEventListener('click', function () { choose(opt); close(true); });
+      opt.addEventListener('mousemove', function () {
+        var idx = options.indexOf(opt);
+        if (idx !== activeIndex) setActive(idx);
       });
     });
-    document.addEventListener('click', function (e) { if (!wrapper.contains(e.target)) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    menu.addEventListener('keydown', function (e) {
+      switch (e.key) {
+        case 'ArrowDown': e.preventDefault(); setActive(activeIndex + 1); break;
+        case 'ArrowUp':   e.preventDefault(); setActive(activeIndex - 1); break;
+        case 'Home':      e.preventDefault(); setActive(0); break;
+        case 'End':       e.preventDefault(); setActive(options.length - 1); break;
+        case 'Enter':
+        case ' ':         e.preventDefault(); if (activeIndex >= 0) { choose(options[activeIndex]); close(true); } break;
+        case 'Escape':    e.preventDefault(); close(true); break;
+        case 'Tab':       close(false); break;
+      }
+    });
+    document.addEventListener('click', function (e) { if (!wrapper.contains(e.target)) close(false); });
   }
   initFormSelect_serviceSelect();
 

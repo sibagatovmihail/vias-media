@@ -410,7 +410,88 @@
     'Browsing that turns into buying': 'Stöbern, das zum Kauf wird',
     'Sales jumped the month we launched. The new shop is fast, it looks premium, and customers actually finish checking out now.':
       'Die Verkäufe sprangen im Launch-Monat nach oben. Der neue Shop ist schnell, wirkt edel, und Kunden schließen den Checkout jetzt wirklich ab.',
-    'Owner — Safari': 'Inhaber — Safari'
+    'Owner — Safari': 'Inhaber — Safari',
+
+    /* ===== Bilingual completeness (audit follow-up) ===== */
+
+    /* FAQ (home) */
+    'Questions, answered': 'Fragen, beantwortet',
+    'How much does a website cost?': 'Was kostet eine Website?',
+    "Every project is priced individually. After a free consultation where we discuss your goals, scope, and requirements, we send you a clear fixed quote — no hourly guesswork, no surprises.":
+      'Jedes Projekt wird individuell kalkuliert. Nach einem kostenlosen Beratungsgespräch zu Zielen, Umfang und Anforderungen erhalten Sie ein klares Festpreisangebot — keine Stundenschätzungen, keine Überraschungen.',
+    'How long does a project take?': 'Wie lange dauert ein Projekt?',
+    'Most small-business sites launch in 2–4 weeks. The exact timeline depends on scope and how quickly we get your content and feedback; we map it out together at the start.':
+      'Die meisten Websites für kleine Unternehmen gehen in 2–4 Wochen live. Der genaue Zeitplan hängt vom Umfang ab und davon, wie schnell wir Inhalte und Feedback erhalten; wir planen ihn gemeinsam zu Beginn.',
+    'What do I need to get started?': 'Was brauche ich für den Start?',
+    "Just your goals and any branding you already have (logo, photos, text). Don't have those yet? We'll guide you through it — many clients start from scratch.":
+      'Nur Ihre Ziele und vorhandenes Branding (Logo, Fotos, Texte). Noch nichts davon? Wir begleiten Sie Schritt für Schritt — viele Kunden starten bei null.',
+    'Do you work with trades and new local businesses?': 'Arbeiten Sie mit Handwerkern und neuen lokalen Unternehmen?',
+    "Yes — that's our focus. We help tradespeople, Handwerker, and growing local businesses get found on Google and turn visitors into booked jobs.":
+      'Ja — genau das ist unser Schwerpunkt. Wir helfen Handwerkern und wachsenden lokalen Unternehmen, bei Google gefunden zu werden und aus Besuchern Aufträge zu machen.',
+    'What happens after launch?': 'Was passiert nach dem Launch?',
+    "We don't disappear. We offer ongoing support, updates, and optimization so your site keeps performing month after month.":
+      'Wir verschwinden nicht. Wir bieten laufende Betreuung, Updates und Optimierung, damit Ihre Seite Monat für Monat performt.',
+    'Will my site be found on Google?': 'Wird meine Seite bei Google gefunden?',
+    'Local SEO is built into every project, so nearby customers find you first when they search for what you do.':
+      'Lokales SEO ist in jedem Projekt enthalten, damit Kunden in der Nähe Sie zuerst finden, wenn sie nach Ihrem Angebot suchen.',
+
+    /* services.html — service-card descriptions */
+    'Conversion-focused websites designed to capture your brand and engage your audience.':
+      'Conversion-orientierte Websites, die Ihre Marke einfangen und Ihr Publikum begeistern.',
+    'Robust, accessible front-end and full-stack development built for real-world performance.':
+      'Robuste, barrierefreie Front-End- und Full-Stack-Entwicklung, gebaut für echte Performance.',
+    'Search-first strategies to help your site rank higher and attract qualified organic traffic.':
+      'Search-First-Strategien, damit Ihre Seite höher rankt und qualifizierten organischen Traffic gewinnt.',
+    'Strategic guidance on technology, user experience, and sustainable digital growth.':
+      'Strategische Beratung zu Technologie, Nutzererlebnis und nachhaltigem digitalem Wachstum.',
+    'Ensure your site meets WCAG standards and provides an inclusive experience for every user.':
+      'Stellt sicher, dass Ihre Seite WCAG-Standards erfüllt und allen Nutzern ein inklusives Erlebnis bietet.',
+    'Retainers and continuous optimization to keep your site improving month after month.':
+      'Betreuung und laufende Optimierung, damit Ihre Seite Monat für Monat besser wird.',
+
+    /* case studies — CTA + attributions (comma form, exactly as rendered) */
+    'Visit the site': 'Zur Website',
+    'Director, Eagle Air HVAC': 'Geschäftsführer, Eagle Air HVAC',
+    'Owner, Safari': 'Inhaber, Safari',
+    'Marketing team, Akkerman Stroy': 'Marketing-Team, Akkerman Stroy',
+    'Founder, Luxe Bouquets': 'Gründerin, Luxe Bouquets',
+
+    /* case studies — testimonials (curly-quoted exactly as rendered) */
+    '“Vias Media completely transformed our online presence. The new site is faster, cleaner, and our inquiries have doubled since launch.”':
+      '„Vias Media hat unseren Online-Auftritt komplett verändert. Die neue Seite ist schneller, klarer — und unsere Anfragen haben sich seit dem Launch verdoppelt.“',
+    '“Sales jumped the month we launched. The new shop is fast, it looks premium, and customers actually finish checking out now.”':
+      '„Im Launch-Monat sind die Verkäufe sprunghaft gestiegen. Der neue Shop ist schnell, wirkt edel — und Kunden schließen den Checkout jetzt wirklich ab.“',
+    '“Professional, responsive, and detail-oriented. They delivered exactly what we needed.”':
+      '„Professionell, reaktionsschnell und detailverliebt. Sie haben genau das geliefert, was wir brauchten.“',
+    '“Our website finally looks as good as our flowers, and people order from it now instead of just calling.”':
+      '„Unsere Website sieht endlich so gut aus wie unsere Blumen — und die Leute bestellen jetzt darüber, statt nur anzurufen.“',
+
+    /* footer / legal misc */
+    'SEO': 'SEO',
+    'Legal': 'Rechtliches',
+
+    /* contact form — select placeholder + validation messages */
+    'Select a service…': 'Leistung wählen…',
+    'Please enter a valid email address.': 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+    'Please enter a valid phone number.': 'Bitte geben Sie eine gültige Telefonnummer ein.',
+
+    /* meta descriptions — swapped via the meta-description handler in apply() */
+    'Vias Media builds fast, professional websites for new and small local businesses — with a focus on trades and Handwerker. Get found on Google and turn visitors into booked jobs.':
+      'Vias Media baut schnelle, professionelle Websites für neue und kleine lokale Unternehmen — mit Fokus auf Handwerk. Werden Sie bei Google gefunden und machen Sie aus Besuchern Aufträge.',
+    'Web design, development, local SEO, consulting, accessibility audits, and ongoing support — everything a small business or tradesperson needs to get online and get noticed.':
+      'Webdesign, Entwicklung, lokales SEO, Beratung, Barrierefreiheits-Audits und laufende Betreuung — alles, was kleine Unternehmen und Handwerker brauchen, um online sichtbar zu werden.',
+    'Selected web design and development projects by Vias Media — case studies with real, measurable results.':
+      'Ausgewählte Webdesign- und Entwicklungsprojekte von Vias Media — Fallstudien mit echten, messbaren Ergebnissen.',
+    'Tell us about your project. Vias Media replies within one business day — web design, development, SEO, and ongoing support for ambitious brands.':
+      'Erzählen Sie uns von Ihrem Projekt. Vias Media antwortet innerhalb eines Werktags — Webdesign, Entwicklung, SEO und laufende Betreuung für ambitionierte Marken.',
+    'Case study: how Vias Media rebuilt a dated HVAC brochure site into a fast, mobile-first lead engine — 2× inquiries and a 98 Lighthouse score.':
+      'Fallstudie: Wie Vias Media eine veraltete HLK-Broschürenseite in eine schnelle, mobile-first Lead-Maschine verwandelt hat — 2× Anfragen und 98 Lighthouse-Punkte.',
+    'Case study: how Vias Media rebuilt a fashion storefront mobile-first with a single-page checkout — +38% conversion and 45% less cart abandonment.':
+      'Fallstudie: Wie Vias Media einen Mode-Onlineshop mobile-first mit Single-Page-Checkout neu gebaut hat — +38 % Conversion und 45 % weniger Kaufabbrüche.',
+    'Case study: how Vias Media gave a regional construction firm a search-first website that ranks #1 locally — and lifted organic traffic 140%.':
+      'Fallstudie: Wie Vias Media einem regionalen Bauunternehmen eine suchorientierte Website gab, die lokal auf Platz 1 rankt — und den organischen Traffic um 140 % steigerte.',
+    "Case study: how Vias Media rebuilt a florist's online store around its photography and a date-picked checkout — lifting online orders 85%.":
+      'Fallstudie: Wie Vias Media den Onlineshop eines Floristen rund um seine Fotografie und einen Termin-Checkout neu gebaut hat — 85 % mehr Online-Bestellungen.'
   };
 
   function norm(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
@@ -419,6 +500,7 @@
   var enHtml = new WeakMap();   // element -> original English innerHTML (data-de-html)
   var enPh = new WeakMap();     // element -> original English placeholder
   var enTitle = document.title;
+  var enMetaDesc = null;        // original English <meta name="description"> content
 
   var LEAF_SEL = 'h1,h2,h3,h4,h5,h6,p,span,a,li,button,blockquote,figcaption,label,option';
   var current = 'en';
@@ -461,6 +543,14 @@
 
     /* 4 — document title */
     document.title = (de && DE[enTitle]) ? DE[enTitle] : enTitle;
+
+    /* 4b — meta description (for German SERP snippets) */
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      if (enMetaDesc === null) enMetaDesc = metaDesc.getAttribute('content');
+      metaDesc.setAttribute('content',
+        (de && Object.prototype.hasOwnProperty.call(DE, enMetaDesc)) ? DE[enMetaDesc] : enMetaDesc);
+    }
 
     /* 5 — toggle display (current first, other second) — every .lang-toggle
        (navbar + the one packed into the hamburger overlay) stays in sync */
