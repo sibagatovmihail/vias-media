@@ -20,3 +20,8 @@ PRODUCT.md
 # Heavy, unreferenced source art / dumps (flagged by the audit)
 visuals
 Vias Media (standalone).html
+
+# Blog source + generator — only the generated blog/ HTML ships
+content
+build_blog.py
+tests
