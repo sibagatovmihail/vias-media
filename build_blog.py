@@ -2,6 +2,7 @@
 """Vias Media blog generator. Markdown -> static HTML + sitemap."""
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 import markdown as _md
@@ -11,6 +12,8 @@ ROOT = Path(__file__).resolve().parent
 
 MONTHS_DE = ["", "Januar", "Februar", "März", "April", "Mai", "Juni",
              "Juli", "August", "September", "Oktober", "November", "Dezember"]
+
+_INLINE_MD = re.compile(r"[*_`\[\]()]")
 
 CASES = {
     "eagle-air":      {"href": "work-eagle-air.html",      "name": "Eagle Air HVAC",  "stat": "2×",    "stat_label": "Anfragen seit Launch"},
@@ -84,6 +87,7 @@ def excerpt(meta, body):
     for para in body.split("\n\n"):
         para = para.strip()
         if para and not para.startswith(("#", "!", ">", "-", "|")):
+            para = _INLINE_MD.sub("", para)
             return re.sub(r"\s+", " ", para)
     return ""
 
@@ -93,6 +97,8 @@ def load_post(path):
     meta, body = parse_front_matter(text)
     if meta.get("draft"):
         return None
+    if not meta.get("date"):
+        raise ValueError(f"{path.name}: missing required field 'date'")
     slug = meta.get("slug") or path.stem
     return {
         "slug": slug,
@@ -104,7 +110,6 @@ def load_post(path):
         "image": meta.get("image", "").strip(),
         "related_case": meta.get("related_case", "").strip(),
         "reading_time": reading_time(body),
-        "body_html": "",               # filled by render step later
         "excerpt": excerpt(meta, body),
         "url": f"/blog/{slug}",
         "_body": body,                 # raw markdown, used by the renderer
@@ -210,7 +215,6 @@ def _url_tag(loc, lastmod, changefreq, priority):
 
 
 def build_sitemap(posts, today=None):
-    from datetime import date
     today = today or date.today().isoformat()
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']

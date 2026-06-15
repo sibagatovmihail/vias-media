@@ -36,6 +36,10 @@ class TestFrontMatter(unittest.TestCase):
         with self.assertRaises(ValueError):
             parse_front_matter("kein front-matter hier")
 
+    def test_unterminated_front_matter_raises(self):
+        with self.assertRaises(ValueError):
+            parse_front_matter("---\ntitle: T\n")
+
 
 # ---------------------------------------------------------------------------
 # Task 2: reading time + German date helpers
@@ -65,6 +69,12 @@ class TestExcerpt(unittest.TestCase):
     def test_falls_back_to_first_paragraph(self):
         out = excerpt({}, "## Überschrift\n\nDer erste echte Absatz hier.\n\nZweiter.")
         self.assertEqual(out, "Der erste echte Absatz hier.")
+
+    def test_fallback_strips_inline_markdown(self):
+        out = excerpt({}, "Ein **fetter** und [verlinkter](x) Absatz.")
+        self.assertNotIn("*", out)
+        self.assertNotIn("[", out)
+        self.assertIn("fetter", out)
 
 
 class TestLoadPost(unittest.TestCase):
