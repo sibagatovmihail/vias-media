@@ -22,11 +22,11 @@ Eine Website ist kein fertiges Produkt aus dem Regal, sondern ein Werkzeug für 
 
 ## Womit Sie rechnen können
 
-Für die meisten kleinen Unternehmen und Handwerksbetriebe liegt eine professionelle, schnelle Website im **mittleren bis oberen dreistelligen bis kleinen vierstelligen Bereich** — als einmaliges Festpreis-Projekt, nicht als laufende Kosten. Entscheidend ist nicht der niedrigste Preis, sondern was die Seite **wieder einspielt**: Eine Website, die Ihnen regelmäßig neue Anfragen bringt, hat sich oft schon nach wenigen Aufträgen bezahlt gemacht.
+Für die meisten kleinen Unternehmen und Handwerksbetriebe liegt eine professionelle, schnelle Website im **höheren dreistelligen bis niedrigen vierstelligen Bereich** — als einmaliges Festpreis-Projekt, nicht als laufende Kosten. Entscheidend ist nicht der niedrigste Preis, sondern was die Seite **wieder einspielt**: Eine Website, die Ihnen regelmäßig neue Anfragen bringt, hat sich oft schon nach wenigen Aufträgen bezahlt gemacht.
 
 ## Festpreis statt Stundenschätzung
 
-Bei Vias Media bekommen Sie nach einem kostenlosen Erstgespräch ein **klares Festpreisangebot** — kein Stundenraten, keine Überraschungen. Sie wissen vorher genau, was Sie bekommen und was es kostet. Und die fertige Website gehört vollständig Ihnen.
+Bei Vias Media bekommen Sie nach einem kostenlosen Erstgespräch ein **klares Festpreisangebot** — keine Stundenschätzungen, keine Überraschungen. Sie wissen vorher genau, was Sie bekommen und was es kostet. Und die fertige Website gehört vollständig Ihnen.
 
 ## Der nächste Schritt
 
