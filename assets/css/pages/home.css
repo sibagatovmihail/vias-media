@@ -33,15 +33,18 @@
 
 /* Typing animation — every glyph is laid out up front (JS wraps each in a
    .char span) and revealed one by one, so the title's wrapping and centring
-   stay fixed: it never reflows or jumps. Untyped glyphs are hidden but keep
-   their space. The caret is absolutely positioned on the current glyph, so it
-   adds no layout of its own. */
-/* font-kerning: none keeps glyph advances identical between the typing state
-   (each glyph isolated in its own .char span, so pair kerning is absent) and
-   the reverted plain-text leaf (where kerning would otherwise apply). Without
-   this, Safari recomputes the kerned width on collapse and the centred title
-   shifts a hair — the slight jump. Inherited by the .char spans. */
-.hero__title { font-kerning: none; }
+   are fixed from the first frame. Untyped glyphs are hidden but keep their
+   space. The caret is absolutely positioned on the current glyph, so it adds
+   no layout of its own. The spans are kept after typing (never collapsed back
+   to a text node), so the resting layout equals the final typed frame. */
+/* Two things stop the line from re-flowing the instant typing ends:
+   - text-wrap: wrap overrides .t-xl's text-wrap: balance. Safari only applies
+     `balance` once the content stops mutating, then re-wraps the finished
+     title (e.g. "direkt" dropping to the next line) — a visible jump. Greedy
+     wrapping is deterministic, so the breaks match during typing and after.
+   - font-kerning: none keeps each .char span's advance stable (isolated
+     glyphs don't pair-kern), so nothing nudges sideways either. */
+.hero__title { font-kerning: none; text-wrap: wrap; }
 .hero__title .char { position: relative; }
 .hero__title.is-typing .char:not(.typed) { visibility: hidden; }
 .hero__title.is-typing .char.cursor::after {
@@ -354,37 +357,43 @@ html.js .card.why-web__point.reveal.is-visible:hover,
     transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .folio__name { font-size: var(--fs-700); }
+  /* The label is absolutely positioned (left:0/right:0), so its tags re-flow
+     on every frame while the panel widens — revealing during that grow makes
+     the text jump around. So hold it hidden until the panel-widen (flex-grow
+     0.55s above) has finished, then fade it in at the final width. Hiding has
+     NO delay, so leaving or yielding clears the label instantly — labels never
+     linger or overlap. */
   .folio__content {
     opacity: 0;
-    transition: opacity 0.35s var(--ease);
+    transition: opacity 0.3s var(--ease);
   }
   .folio__go {
     opacity: 0;
-    transition: opacity 0.35s var(--ease);
+    transition: opacity 0.3s var(--ease);
   }
   /* expanded: hover, keyboard focus, or the default-featured (.is-active) panel.
-     The label fades in place — no slide-up, and the image no longer zooms — so
-     the only motion is the panel widening. Keeps the reveal quiet instead of
-     stacking transforms on top of the accordion. */
+     The label fades in place (no slide-up) only after the card has finished
+     expanding; the image no longer zooms — the only motion is the widen. */
   .folio__panel:hover,
   .folio__panel:focus-visible,
   .folio__panel.is-active { flex-grow: 5.2; }
   .folio__panel:hover .folio__content,
   .folio__panel:focus-visible .folio__content,
-  .folio__panel.is-active .folio__content { opacity: 1; }
+  .folio__panel.is-active .folio__content { opacity: 1; transition-delay: 0.55s; }
   .folio__panel:hover .folio__go,
   .folio__panel:focus-visible .folio__go,
-  .folio__panel.is-active .folio__go { opacity: 1; }
-  /* the default-featured panel yields (collapses, hides its label) when another is engaged */
+  .folio__panel.is-active .folio__go { opacity: 1; transition-delay: 0.55s; }
+  /* the default-featured panel yields (collapses, hides its label) when another
+     is engaged — hide with no delay so two labels are never visible at once */
   .folio:hover .folio__panel.is-active:not(:hover),
   .folio:focus-within .folio__panel.is-active:not(:focus-visible) { flex-grow: 1; }
   .folio:hover .folio__panel.is-active:not(:hover) .folio__content,
-  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__content { opacity: 0; }
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__content { opacity: 0; transition-delay: 0s; }
   .folio:hover .folio__panel.is-active:not(:hover) .folio__go,
-  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__go { opacity: 0; }
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__go { opacity: 0; transition-delay: 0s; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .folio__panel, .folio__img, .folio__content, .folio__go { transition-duration: 0.001ms; }
+  .folio__panel, .folio__img, .folio__content, .folio__go { transition-duration: 0.001ms; transition-delay: 0s; }
 }
 
 /* Phone (≤600px): the panel stops being an image-with-overlay and becomes a
