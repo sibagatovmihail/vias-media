@@ -353,38 +353,35 @@ html.js .card.why-web__point.reveal.is-visible:hover,
     scroll-snap-align: none;
     transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .folio__img { transition: transform 0.7s var(--ease); }
   .folio__name { font-size: var(--fs-700); }
   .folio__content {
-    opacity: 0; transform: translateY(0.6rem);
-    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
   }
   .folio__go {
-    opacity: 0; transform: scale(0.8);
-    transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+    opacity: 0;
+    transition: opacity 0.35s var(--ease);
   }
-  /* expanded: hover, keyboard focus, or the default-featured (.is-active) panel */
+  /* expanded: hover, keyboard focus, or the default-featured (.is-active) panel.
+     The label fades in place — no slide-up, and the image no longer zooms — so
+     the only motion is the panel widening. Keeps the reveal quiet instead of
+     stacking transforms on top of the accordion. */
   .folio__panel:hover,
   .folio__panel:focus-visible,
   .folio__panel.is-active { flex-grow: 5.2; }
-  .folio__panel:hover .folio__img,
-  .folio__panel:focus-visible .folio__img,
-  .folio__panel.is-active .folio__img { transform: scale(1.04); }
   .folio__panel:hover .folio__content,
   .folio__panel:focus-visible .folio__content,
-  .folio__panel.is-active .folio__content { opacity: 1; transform: none; }
+  .folio__panel.is-active .folio__content { opacity: 1; }
   .folio__panel:hover .folio__go,
   .folio__panel:focus-visible .folio__go,
-  .folio__panel.is-active .folio__go { opacity: 1; transform: none; }
+  .folio__panel.is-active .folio__go { opacity: 1; }
   /* the default-featured panel yields (collapses, hides its label) when another is engaged */
   .folio:hover .folio__panel.is-active:not(:hover),
   .folio:focus-within .folio__panel.is-active:not(:focus-visible) { flex-grow: 1; }
   .folio:hover .folio__panel.is-active:not(:hover) .folio__content,
-  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__content { opacity: 0; transform: translateY(0.6rem); }
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__content { opacity: 0; }
   .folio:hover .folio__panel.is-active:not(:hover) .folio__go,
-  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__go { opacity: 0; transform: scale(0.8); }
-  .folio:hover .folio__panel.is-active:not(:hover) .folio__img,
-  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__img { transform: none; }
+  .folio:focus-within .folio__panel.is-active:not(:focus-visible) .folio__go { opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .folio__panel, .folio__img, .folio__content, .folio__go { transition-duration: 0.001ms; }

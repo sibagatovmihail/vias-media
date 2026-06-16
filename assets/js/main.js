@@ -480,17 +480,30 @@
       var i = 0, prev = null;
       (function tick() {
         if (i < glyphs.length) {
+          /* If the title's text was swapped out from under us — e.g. the user
+             toggled EN/DE while typing — our spans are detached. Stop quietly
+             so we never write the stale language back over the new one. */
+          if (!glyphs[i].isConnected) return;
           if (prev) prev.classList.remove('cursor');
           glyphs[i].classList.add('typed', 'cursor');
           prev = glyphs[i];
           i++;
           window.setTimeout(tick, 30);
         } else {
-          /* Let the caret blink a moment, then collapse back to a plain text
-             node — a clean leaf so i18n can translate it on later toggles. */
+          /* Done. Let the caret blink a moment, then drop it — but KEEP the
+             glyph spans exactly as laid out. Do NOT revert to a plain text
+             node: that revert re-shapes the whole line (kerning and
+             text-wrap:balance recomputed over one run instead of the per-glyph
+             boxes), which nudged the centred title the instant typing
+             finished — the "jump at the end", worst on iOS Safari. Leaving the
+             DOM untouched after the final typed frame makes the resting state
+             pixel-identical to it, so nothing is left to jump. i18n still
+             translates: its apply() sets el.textContent on an EN/DE toggle,
+             replacing these spans wholesale. */
           window.setTimeout(function () {
+            if (!glyphs.length || !glyphs[0].isConnected) return;  // text replaced meanwhile — leave it
+            if (prev) prev.classList.remove('cursor');
             el.classList.remove('is-typing');
-            el.textContent = full;
           }, 900);
         }
       })();
@@ -500,15 +513,30 @@
        standing WebKit Font Loading API timing bug — invisible on desktop
        Chrome's mobile emulation, which uses Blink). That lets typing start
        (and finish) in the fallback font; when Raveo Display then arrives,
-       WebKit repaints with different glyph metrics — the slight jump only
-       seen on real iOS Safari. Explicitly requesting that exact face makes
-       the wait track its real load state, not the unreliable aggregate. */
+       WebKit repaints with different glyph metrics — the line reflows as it
+       types, the breakage only seen on real iOS Safari. The fix is to wait
+       for the EXACT face the title paints in. .hero__title is .t-xl, i.e.
+       font-weight 800 → raveo-display-extrabold.woff2 (a *different* file
+       from the 700 bold face) — so the weight is read straight from the
+       title's computed style rather than hard-coded, which keeps this in
+       sync if the heading class ever changes. The visible text is passed to
+       fonts.load() so the *subset* face's actual glyphs are confirmed
+       resolved, not just any glyph of the family. (The extrabold face is
+       also <link rel=preload>ed in the page head so this wait is near-instant
+       on a cold load instead of racing the swap.) */
     function whenFontReady(cb) {
       if (!(document.fonts && document.fonts.load && document.fonts.ready)) { cb(); return; }
+      var weight = '800';
+      try { weight = window.getComputedStyle(el).fontWeight || '800'; } catch (e) {}
       Promise.all([
-        document.fonts.load('700 1em "Raveo Display"').catch(function () {}),
+        document.fonts.load(weight + ' 1em "Raveo Display"', full).catch(function () {}),
         document.fonts.ready
-      ]).then(cb);
+      ]).then(function () {
+        /* Two frames so WebKit has actually committed the font-swap paint
+           before the first glyph is revealed — without this settle, iOS
+           Safari can begin typing one frame early, still in the fallback. */
+        window.requestAnimationFrame(function () { window.requestAnimationFrame(cb); });
+      });
     }
     whenFontReady(reveal);
   }
