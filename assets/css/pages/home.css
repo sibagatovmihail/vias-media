@@ -31,20 +31,22 @@
 
 .hero__pill .pill { gap: var(--space-xs); }
 
-/* Typing animation — every glyph is laid out up front (JS wraps each in a
-   .char span) and revealed one by one, so the title's wrapping and centring
-   are fixed from the first frame. Untyped glyphs are hidden but keep their
-   space. The caret is absolutely positioned on the current glyph, so it adds
-   no layout of its own. The spans are kept after typing (never collapsed back
-   to a text node), so the resting layout equals the final typed frame. */
-/* Two things stop the line from re-flowing the instant typing ends:
-   - text-wrap: wrap overrides .t-xl's text-wrap: balance. Safari only applies
-     `balance` once the content stops mutating, then re-wraps the finished
-     title (e.g. "direkt" dropping to the next line) — a visible jump. Greedy
-     wrapping is deterministic, so the breaks match during typing and after.
-   - font-kerning: none keeps each .char span's advance stable (isolated
-     glyphs don't pair-kern), so nothing nudges sideways either. */
-.hero__title { font-kerning: none; text-wrap: wrap; }
+/* Typing animation — JS measures the title's balanced line breaks, then
+   rebuilds it with those breaks locked as hard <br>s and every glyph in a
+   .char span (revealed one by one). Untyped glyphs are hidden but keep their
+   space, so wrapping and centring are fixed from the first frame. The caret is
+   absolutely positioned on the current glyph, so it adds no layout. Spans are
+   kept after typing (never collapsed to a text node), so the resting layout
+   equals the final typed frame. */
+/* The title keeps .t-xl's text-wrap: balance for even line breaks. The catch
+   on Safari: per-glyph spans defeat balance (it only settles once the content
+   stops mutating, which re-wraps the finished title — the end jump, e.g.
+   "direkt" dropping a line). So main.js measures those balanced breaks up front
+   and locks them in as <br>; forced breaks can't be re-flowed, so the balanced
+   layout holds through the whole animation. font-kerning: none makes each .char
+   span's advance match the measured plain text (isolated glyphs don't
+   pair-kern), so the locked lines fit exactly as measured. */
+.hero__title { font-kerning: none; }
 .hero__title .char { position: relative; }
 .hero__title.is-typing .char:not(.typed) { visibility: hidden; }
 .hero__title.is-typing .char.cursor::after {

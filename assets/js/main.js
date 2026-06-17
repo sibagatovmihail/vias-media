@@ -446,37 +446,72 @@
   }
 
   /* ---- Hero title typing animation ----
-     Reveals the hero <h1> one glyph at a time. Every character is laid out up
-     front (each glyph in a <span>, hidden via visibility; spaces stay as text
-     so words wrap at the same points), so the line wrapping and centring are
-     fixed from the first frame — the title never reflows or jumps as it types.
-     The caret is an absolutely-positioned ::after on the current glyph, so it
-     adds no layout. i18n captured the English key on load (before this runs);
-     we restore a plain text node when done so EN/DE toggles still translate.
-     Skipped under reduced motion. */
+     Reveals the hero <h1> one glyph at a time. The hard part is keeping the
+     wrapping identical from the first frame to the last: per-glyph spans defeat
+     `text-wrap: balance` (Safari only re-balances once the content stops
+     mutating, so the finished title would re-wrap — "direkt" jumping to the
+     next line at the end). So we first read the browser's BALANCED line breaks
+     off the static title with a Range (no DOM mutation), then rebuild the title
+     with those breaks LOCKED in as <br>, each glyph a <span> hidden via
+     visibility. Hard breaks can't be re-flowed, so the layout is balanced AND
+     fixed for good. The caret is an absolutely-positioned ::after on the
+     current glyph, so it adds no layout. Spans are kept after typing (never
+     collapsed back to a text node) so the resting layout equals the final
+     frame. i18n captured the English key on load (before this runs) and
+     translates by replacing el.textContent wholesale on a toggle. Skipped
+     under reduced motion. */
   function initHeroType() {
     var el = document.querySelector('.hero__title');
     if (!el || el.children.length) return;          // pure-text leaf only
     var full = el.textContent;
     if (prefersReduced || !full.trim()) return;     // a11y: keep full title
 
-    el.textContent = '';
-    var glyphs = [];
-    for (var c = 0; c < full.length; c++) {
-      if (full[c] === ' ') { el.appendChild(document.createTextNode(' ')); continue; }
-      var s = document.createElement('span');
-      s.className = 'char';
-      s.textContent = full[c];
-      el.appendChild(s);
-      glyphs.push(s);
+    /* Read how the browser balanced the (still static) title: walk it char by
+       char with a Range and group by vertical position. No DOM mutation, so we
+       capture the real balanced break points to lock in. */
+    function balancedLines() {
+      var node = el.firstChild;
+      if (!node || node.nodeType !== 3) return [full];
+      var range = document.createRange();
+      var lines = [], cur = '', top0 = null;
+      for (var i = 0; i < full.length; i++) {
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        var rs = range.getClientRects();
+        var r = rs.length ? rs[rs.length - 1] : null;
+        if (r && r.height) {
+          if (top0 === null) top0 = r.top;
+          else if (r.top > top0 + 1) { lines.push(cur); cur = ''; top0 = r.top; }
+        }
+        cur += full.charAt(i);
+      }
+      if (cur) lines.push(cur);
+      return lines
+        .map(function (l) { return l.replace(/^\s+|\s+$/g, ''); })  // drop the soft-wrap spaces at line edges
+        .filter(function (l) { return l.length; });
     }
-    el.classList.add('is-typing');
 
-    /* Reveal only once the web font is ready. If glyphs are laid out in the
-       fallback font, the final collapse back to plain text (now in the web
-       font) shifts the lines slightly — the "jump at the end". Waiting makes
-       the typing layout and the final layout use the same font, so they match. */
-    function reveal() {
+    /* Rebuild: a <br> between each balanced line, every glyph in its own .char
+       span (spaces stay text nodes). Returns the glyphs in type order. */
+    function build(lines) {
+      el.textContent = '';
+      var glyphs = [];
+      for (var li = 0; li < lines.length; li++) {
+        if (li > 0) el.appendChild(document.createElement('br'));
+        var line = lines[li];
+        for (var c = 0; c < line.length; c++) {
+          if (line.charAt(c) === ' ') { el.appendChild(document.createTextNode(' ')); continue; }
+          var s = document.createElement('span');
+          s.className = 'char';
+          s.textContent = line.charAt(c);
+          el.appendChild(s);
+          glyphs.push(s);
+        }
+      }
+      return glyphs;
+    }
+
+    function reveal(glyphs) {
       var i = 0, prev = null;
       (function tick() {
         if (i < glyphs.length) {
@@ -490,16 +525,8 @@
           i++;
           window.setTimeout(tick, 30);
         } else {
-          /* Done. Let the caret blink a moment, then drop it — but KEEP the
-             glyph spans exactly as laid out. Do NOT revert to a plain text
-             node: that revert re-shapes the whole line (kerning and
-             text-wrap:balance recomputed over one run instead of the per-glyph
-             boxes), which nudged the centred title the instant typing
-             finished — the "jump at the end", worst on iOS Safari. Leaving the
-             DOM untouched after the final typed frame makes the resting state
-             pixel-identical to it, so nothing is left to jump. i18n still
-             translates: its apply() sets el.textContent on an EN/DE toggle,
-             replacing these spans wholesale. */
+          /* Let the caret blink a moment, then drop it — keep the spans exactly
+             as laid out (no collapse) so the resting state is the final frame. */
           window.setTimeout(function () {
             if (!glyphs.length || !glyphs[0].isConnected) return;  // text replaced meanwhile — leave it
             if (prev) prev.classList.remove('cursor');
@@ -508,22 +535,16 @@
         }
       })();
     }
-    /* Safari/WebKit can resolve `document.fonts.ready` before the exact face
-       the title uses has actually finished loading and painted (a long-
-       standing WebKit Font Loading API timing bug — invisible on desktop
-       Chrome's mobile emulation, which uses Blink). That lets typing start
-       (and finish) in the fallback font; when Raveo Display then arrives,
-       WebKit repaints with different glyph metrics — the line reflows as it
-       types, the breakage only seen on real iOS Safari. The fix is to wait
-       for the EXACT face the title paints in. .hero__title is .t-xl, i.e.
-       font-weight 800 → raveo-display-extrabold.woff2 (a *different* file
-       from the 700 bold face) — so the weight is read straight from the
-       title's computed style rather than hard-coded, which keeps this in
-       sync if the heading class ever changes. The visible text is passed to
-       fonts.load() so the *subset* face's actual glyphs are confirmed
-       resolved, not just any glyph of the family. (The extrabold face is
-       also <link rel=preload>ed in the page head so this wait is near-instant
-       on a cold load instead of racing the swap.) */
+
+    /* Wait for the EXACT face the title paints in before measuring AND typing.
+       .hero__title is .t-xl → font-weight 800 → raveo-display-extrabold.woff2
+       (a *different* file from the 700 bold face); the weight is read from
+       computed style so it can't drift from the CSS, and the visible text is
+       passed so the *subset* face's actual glyphs are confirmed loaded. The
+       face is also <link rel=preload>ed, so this is near-instant on a cold
+       load. Measuring only after it resolves (and after two frames, so
+       text-wrap:balance has settled) means the breaks we lock in are the real,
+       balanced, web-font breaks — not the fallback's. */
     function whenFontReady(cb) {
       if (!(document.fonts && document.fonts.load && document.fonts.ready)) { cb(); return; }
       var weight = '800';
@@ -532,13 +553,19 @@
         document.fonts.load(weight + ' 1em "Raveo Display"', full).catch(function () {}),
         document.fonts.ready
       ]).then(function () {
-        /* Two frames so WebKit has actually committed the font-swap paint
-           before the first glyph is revealed — without this settle, iOS
-           Safari can begin typing one frame early, still in the fallback. */
         window.requestAnimationFrame(function () { window.requestAnimationFrame(cb); });
       });
     }
-    whenFontReady(reveal);
+
+    /* Hide the un-typed title (it stays laid out, so it can still be measured)
+       until the font is ready; then lock the balanced breaks in and type. */
+    el.style.visibility = 'hidden';
+    whenFontReady(function () {
+      var glyphs = build(balancedLines());
+      el.classList.add('is-typing');
+      el.style.visibility = '';
+      reveal(glyphs);
+    });
   }
 
   /* ---- Wire up ---- */
