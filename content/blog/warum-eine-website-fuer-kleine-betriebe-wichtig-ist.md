@@ -1,5 +1,5 @@
 ---
-title: Ohne Website verlieren Sie täglich Kunden
+title: Warum braucht ein Unternehmen eine Webseite?
 description: Warum kleine Betriebe in Neubrandenburg ohne gute Website jeden Tag Aufträge verlieren — und warum Sie diesen Verlust nie zu sehen bekommen.
 date: 2026-06-19
 category: Ratgeber
