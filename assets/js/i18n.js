@@ -531,10 +531,25 @@
       el.innerHTML = de ? el.getAttribute('data-de-html') : enHtml.get(el);
     });
 
+    /* 1c — German-source leaves: the markup is German by default and the
+       English original rides on data-en (German-default pages, e.g. the
+       homepage). Mirror image of section 1 above. */
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      if (el.tagName === 'TITLE' || el.tagName === 'META') return; // titles/meta handled in 4/4b
+      if (!enText.has(el)) enText.set(el, el.textContent);         // cache the German original
+      el.textContent = de ? enText.get(el) : el.getAttribute('data-en');
+    });
+
+    /* 1d — German-source rich leaves: German innerHTML by default, English in data-en-html */
+    document.querySelectorAll('[data-en-html]').forEach(function (el) {
+      if (!enHtml.has(el)) enHtml.set(el, el.innerHTML);
+      el.innerHTML = de ? enHtml.get(el) : el.getAttribute('data-en-html');
+    });
+
     /* 2 — leaf text via dictionary */
     document.querySelectorAll(LEAF_SEL).forEach(function (el) {
-      if (el.hasAttribute('data-de')) return;   // handled above
-      if (el.closest('[data-de-html]')) return; // inside a rich-markup element
+      if (el.hasAttribute('data-de') || el.hasAttribute('data-en')) return;     // handled above
+      if (el.closest('[data-de-html]') || el.closest('[data-en-html]')) return; // inside a rich element
       if (el.children.length) return;           // leaf only
       var key = enText.has(el) ? enText.get(el) : norm(el.textContent);
       if (!Object.prototype.hasOwnProperty.call(DE, key)) return;
