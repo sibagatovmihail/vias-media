@@ -12,8 +12,8 @@
 
   /* English → German. Anything not listed simply stays English. */
   var DE = {
-    /* Titles */
-    'Vias Media — Web Design & Development Agency': 'Vias Media — Agentur für Webdesign & Entwicklung',
+    /* Titles (homepage title/description are German-default in the HTML now,
+       localized via data-en in i18n's title/meta handler — not via this dict) */
     'Services — Vias Media': 'Leistungen — Vias Media',
     'Work — Vias Media': 'Projekte — Vias Media',
     'Contact — Start a Project with Vias Media': 'Kontakt — Projekt starten mit Vias Media',
@@ -475,9 +475,8 @@
     'Please enter a valid email address.': 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
     'Please enter a valid phone number.': 'Bitte geben Sie eine gültige Telefonnummer ein.',
 
-    /* meta descriptions — swapped via the meta-description handler in apply() */
-    'Vias Media builds fast, professional websites for new and small local businesses — with a focus on trades and Handwerker. Get found on Google and turn visitors into booked jobs.':
-      'Vias Media baut schnelle, professionelle Websites für neue und kleine lokale Unternehmen — mit Fokus auf Handwerk. Werden Sie bei Google gefunden und machen Sie aus Besuchern Aufträge.',
+    /* meta descriptions — swapped via the meta-description handler in apply()
+       (the homepage description is German-default in the HTML and localized via data-en) */
     'Web design, development, local SEO, consulting, accessibility audits, and ongoing support — everything a small business or tradesperson needs to get online and get noticed.':
       'Webdesign, Entwicklung, lokales SEO, Beratung, Barrierefreiheits-Audits und laufende Betreuung — alles, was kleine Unternehmen und Handwerker brauchen, um online sichtbar zu werden.',
     'Selected web design and development projects by Vias Media — case studies with real, measurable results.':
@@ -499,13 +498,23 @@
   var enText = new WeakMap();   // element -> original English textContent
   var enHtml = new WeakMap();   // element -> original English innerHTML (data-de-html)
   var enPh = new WeakMap();     // element -> original English placeholder
-  var enTitle = document.title;
-  var enMetaDesc = null;        // original English <meta name="description"> content
+  /* Title + <meta description> localize two ways:
+     - English-source pages: the static value is English; German comes from the DE dict.
+     - German-default pages (e.g. the homepage, so German SERP snippets are correct):
+       the static value is German and the English equivalent rides on a data-en attribute.
+       There German is the durable default — it only switches to English when the visitor
+       *explicitly* picks EN, so crawlers and first visits keep the German title/snippet. */
+  var titleEl = document.querySelector('title');
+  var srcTitle = document.title;                                       // static source value
+  var enTitleAttr = titleEl ? titleEl.getAttribute('data-en') : null;  // English override (de-default pages)
+  var metaDescEl = document.querySelector('meta[name="description"]');
+  var srcMetaDesc = metaDescEl ? metaDescEl.getAttribute('content') : null;
+  var enMetaDescAttr = metaDescEl ? metaDescEl.getAttribute('data-en') : null;
 
   var LEAF_SEL = 'h1,h2,h3,h4,h5,h6,p,span,a,li,button,blockquote,figcaption,label,option';
   var current = 'en';
 
-  function apply(lang) {
+  function apply(lang, explicit) {
     var de = (lang === 'de');
     document.documentElement.lang = de ? 'de' : 'en';
 
@@ -542,14 +551,22 @@
     });
 
     /* 4 — document title */
-    document.title = (de && DE[enTitle]) ? DE[enTitle] : enTitle;
+    if (enTitleAttr) {
+      /* German-default page: German is the durable default; show English only on an
+         explicit EN choice (keeps the German title for crawlers and first visits). */
+      document.title = (de || !explicit) ? srcTitle : enTitleAttr;
+    } else {
+      document.title = (de && DE[srcTitle]) ? DE[srcTitle] : srcTitle;
+    }
 
-    /* 4b — meta description (for German SERP snippets) */
-    var metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      if (enMetaDesc === null) enMetaDesc = metaDesc.getAttribute('content');
-      metaDesc.setAttribute('content',
-        (de && Object.prototype.hasOwnProperty.call(DE, enMetaDesc)) ? DE[enMetaDesc] : enMetaDesc);
+    /* 4b — meta description (for SERP snippets) */
+    if (metaDescEl) {
+      if (enMetaDescAttr) {
+        metaDescEl.setAttribute('content', (de || !explicit) ? srcMetaDesc : enMetaDescAttr);
+      } else if (srcMetaDesc !== null) {
+        metaDescEl.setAttribute('content',
+          (de && Object.prototype.hasOwnProperty.call(DE, srcMetaDesc)) ? DE[srcMetaDesc] : srcMetaDesc);
+      }
     }
 
     /* 5 — toggle display (current first, other second) — every .lang-toggle
@@ -565,30 +582,19 @@
     try { localStorage.setItem(KEY, lang); } catch (e) {}
   }
 
-  /* Init — use the saved choice if present; otherwise auto-detect from the
-     browser's preferred languages (German speakers land in German on the
-     first visit). The manual toggle always overrides and is then persisted. */
-  function detectLang() {
-    try {
-      var langs = navigator.languages && navigator.languages.length
-        ? navigator.languages
-        : [navigator.language || navigator.userLanguage || 'en'];
-      for (var i = 0; i < langs.length; i++) {
-        if (/^de\b/i.test(langs[i])) return 'de';
-        if (/^en\b/i.test(langs[i])) return 'en';
-      }
-    } catch (e) {}
-    return 'en';
-  }
-
+  /* Init — German is the site's default language; English is an opt-in
+     translation toggle. Everyone (and rendering crawlers) starts in German;
+     we only switch to English when the visitor explicitly chooses it. That
+     choice is persisted and overrides the German default on later visits. */
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) {}
-  var initial = saved === 'de' || saved === 'en' ? saved : detectLang();
-  apply(initial);
+  var explicitChoice = (saved === 'de' || saved === 'en');
+  var initial = explicitChoice ? saved : 'de';
+  apply(initial, explicitChoice);
 
   document.querySelectorAll('.lang-toggle').forEach(function (toggle) {
     toggle.addEventListener('click', function () {
-      apply(current === 'en' ? 'de' : 'en');
+      apply(current === 'en' ? 'de' : 'en', true);
     });
   });
 })();
