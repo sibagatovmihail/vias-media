@@ -63,3 +63,25 @@
   .blog-grid { grid-template-columns: 1fr; }
   .post__case { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
 }
+
+/* ===== Article tables =====
+   Wide tables scroll inside their own container instead of forcing the
+   page to scroll horizontally on a phone. */
+.post__body .tbl {
+  overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
+  /* Scroll shadows: the edge gradients are pinned to the scroller (`local`), the
+     shadows to the viewport (`scroll`), so a shadow shows only on a side that
+     still has content off-screen. Signals swipeability without JS. */
+  background:
+    linear-gradient(to right, var(--bg), transparent) left center / 1.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--bg), transparent) right center / 1.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.13), transparent) left center / 0.6rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.13), transparent) right center / 0.6rem 100% no-repeat scroll;
+}
+.post__body table { width: 100%; min-width: 28rem; border-collapse: collapse; font-size: var(--fs-400); }
+.post__body th, .post__body td { text-align: left; padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+.post__body th { color: var(--text); font-weight: 700; }
+.post__body td { color: var(--text-sec); }

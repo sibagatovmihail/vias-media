@@ -54,22 +54,52 @@
       "@type": "ProfessionalService",
       "@id": "https://viasmedia.com/#organization",
       "name": "Vias Media",
+      "alternateName": "Vias Media Webdesign Neubrandenburg",
       "url": "https://viasmedia.com/",
       "image": "https://viasmedia.com/assets/img/og/og-default.png",
-      "logo": "https://viasmedia.com/icon-512.png",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://viasmedia.com/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
       "description": "Vias Media gestaltet schnelle, handgemachte Websites für kleine Unternehmen und Handwerksbetriebe in Neubrandenburg und Umgebung. Persönlich betreut, lokales SEO inklusive, zum klaren Festpreis.",
+      "slogan": "Webseiten direkt in Neubrandenburg – persönlich für Sie da.",
       "email": "mykhailo@viasmedia.com",
       "telephone": "+4916095761094",
       "priceRange": "$$",
+      "currenciesAccepted": "EUR",
       "founder": {
         "@type": "Person",
-        "name": "Mykhailo Sibahatov"
+        "@id": "https://viasmedia.com/#mykhailo",
+        "name": "Mykhailo Sibahatov",
+        "jobTitle": "Webdesigner und Webentwickler",
+        "worksFor": {
+          "@id": "https://viasmedia.com/#organization"
+        },
+        "knowsAbout": [
+          "Webdesign",
+          "Webentwicklung",
+          "Lokales SEO",
+          "Barrierefreiheit im Web",
+          "Core Web Vitals"
+        ],
+        "knowsLanguage": [
+          "de",
+          "en",
+          "uk",
+          "ru"
+        ]
+      },
+      "employee": {
+        "@id": "https://viasmedia.com/#mykhailo"
       },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Robert-Koch-Str. 15",
         "postalCode": "17036",
         "addressLocality": "Neubrandenburg",
+        "addressRegion": "Mecklenburg-Vorpommern",
         "addressCountry": "DE"
       },
       "contactPoint": {
@@ -77,6 +107,7 @@
         "telephone": "+4916095761094",
         "email": "mykhailo@viasmedia.com",
         "contactType": "sales",
+        "areaServed": "DE",
         "availableLanguage": [
           "de",
           "en"
@@ -88,13 +119,139 @@
           "name": "Neubrandenburg"
         },
         {
+          "@type": "City",
+          "name": "Neustrelitz"
+        },
+        {
+          "@type": "City",
+          "name": "Waren (Müritz)"
+        },
+        {
+          "@type": "City",
+          "name": "Altentreptow"
+        },
+        {
+          "@type": "City",
+          "name": "Friedland"
+        },
+        {
+          "@type": "City",
+          "name": "Malchin"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Landkreis Mecklenburgische Seenplatte"
+        },
+        {
           "@type": "AdministrativeArea",
           "name": "Mecklenburg-Vorpommern"
         }
       ],
+      "knowsAbout": [
+        "Webdesign für kleine Unternehmen",
+        "Webentwicklung",
+        "Lokales SEO",
+        "Google Unternehmensprofil",
+        "Barrierefreiheit im Web (BFSG)",
+        "Core Web Vitals und Ladezeit",
+        "Website-Betreuung und Wartung",
+        "Websites für Handwerksbetriebe"
+      ],
       "knowsLanguage": [
         "de",
         "en"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Leistungen von Vias Media",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#webdesign",
+              "name": "Webdesign",
+              "serviceType": "Webdesign",
+              "description": "Individuelles Website-Design für kleine Unternehmen und Handwerksbetriebe — kein Baukasten, kein Template. Jede Seite wird auf die Zielgruppe und die Angebote des Betriebs zugeschnitten.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "Mecklenburg-Vorpommern"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#webentwicklung",
+              "name": "Webentwicklung",
+              "serviceType": "Webentwicklung",
+              "description": "Handgeschriebener HTML-, CSS- und JavaScript-Code ohne Page-Builder. Ergebnis sind schnelle Ladezeiten, saubere Technik und Seiten, die auf jedem Gerät funktionieren.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#seo",
+              "name": "SEO-Optimierung",
+              "serviceType": "Suchmaschinenoptimierung",
+              "description": "Lokales SEO ist in jedem Projekt enthalten: Keyword-Recherche für die Region, technisches SEO, strukturierte Daten und Google-Unternehmensprofil, damit Kunden in der Nähe den Betrieb zuerst finden.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#beratung",
+              "name": "Digitale Beratung",
+              "serviceType": "Digitalberatung",
+              "description": "Beratung zu Online-Präsenz, Angebotsdarstellung und Kundengewinnung für Betriebe, die noch keine Website oder nur eine veraltete Seite haben.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#barrierefreiheit",
+              "name": "Barrierefreiheits-Audits",
+              "serviceType": "Accessibility Audit",
+              "description": "Prüfung bestehender Websites auf Barrierefreiheit nach WCAG 2.2 und BFSG — mit konkreter Mängelliste und Umsetzungsplan.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "@id": "https://viasmedia.com/services.html#support",
+              "name": "Laufender Support",
+              "serviceType": "Website-Betreuung",
+              "description": "Laufende Betreuung nach dem Launch: Updates, Inhaltsänderungen, Monitoring und Optimierung, damit die Seite Monat für Monat Anfragen bringt.",
+              "provider": {
+                "@id": "https://viasmedia.com/#organization"
+              }
+            }
+          }
+        ]
+      },
+      "additionalType": [
+        "https://www.productontology.org/id/Web_design",
+        "https://www.productontology.org/id/Search_engine_optimization"
       ]
     },
     {
@@ -108,6 +265,34 @@
       ],
       "publisher": {
         "@id": "https://viasmedia.com/#organization"
+      },
+      "alternateName": "Vias Media Webdesign",
+      "description": "Vias Media gestaltet schnelle, handgemachte Websites für kleine Unternehmen und Handwerksbetriebe in Neubrandenburg und Umgebung. Persönlich betreut, lokales SEO inklusive, zum klaren Festpreis."
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://viasmedia.com/#webpage",
+      "url": "https://viasmedia.com/",
+      "name": "Webdesign Neubrandenburg für kleine Unternehmen | Vias Media",
+      "description": "Schnelle, professionelle Websites für kleine Unternehmen und Handwerksbetriebe in Neubrandenburg und Umgebung. Bei Google gefunden werden, zum fairen Festpreis.",
+      "isPartOf": {
+        "@id": "https://viasmedia.com/#website"
+      },
+      "about": {
+        "@id": "https://viasmedia.com/#organization"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://viasmedia.com/assets/img/og/og-default.png"
+      },
+      "inLanguage": "de-DE",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".hero__text",
+          ".faq-item__answer",
+          "h2"
+        ]
       }
     },
     {
@@ -161,7 +346,12 @@
             "text": "Lokales SEO ist in jedem Projekt enthalten, damit Kunden in der Nähe Sie zuerst finden, wenn sie nach Ihrem Angebot suchen."
           }
         }
-      ]
+      ],
+      "@id": "https://viasmedia.com/#faq",
+      "inLanguage": "de-DE",
+      "isPartOf": {
+        "@id": "https://viasmedia.com/#webpage"
+      }
     }
   ]
 }

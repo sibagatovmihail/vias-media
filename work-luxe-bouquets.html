@@ -48,25 +48,108 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
+  "@graph": [
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Startseite",
-      "item": "https://viasmedia.com/"
+      "@type": "BreadcrumbList",
+      "@id": "https://viasmedia.com/work-luxe-bouquets.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://viasmedia.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projekte",
+          "item": "https://viasmedia.com/work.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Luxe Bouquets",
+          "item": "https://viasmedia.com/work-luxe-bouquets.html"
+        }
+      ]
     },
     {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Projekte",
-      "item": "https://viasmedia.com/work.html"
+      "@type": [
+        "Article",
+        "CreativeWork"
+      ],
+      "@id": "https://viasmedia.com/work-luxe-bouquets.html#casestudy",
+      "url": "https://viasmedia.com/work-luxe-bouquets.html",
+      "headline": "Luxe Bouquets Online-Shop",
+      "name": "Luxe Bouquets Online-Shop",
+      "description": "Fallstudie: Online-Shop für einen Floristen mit Fokus auf Produktdarstellung und Checkout — +85 % Online-Bestellungen.",
+      "articleSection": "Fallstudie",
+      "genre": "Case study",
+      "inLanguage": "de-DE",
+      "author": {
+        "@id": "https://viasmedia.com/#mykhailo"
+      },
+      "creator": {
+        "@id": "https://viasmedia.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://viasmedia.com/#organization"
+      },
+      "about": {
+        "@type": "Organization",
+        "name": "Luxe Bouquets",
+        "description": "Floristik und E-Commerce"
+      },
+      "locationCreated": {
+        "@type": "Place",
+        "name": "Online"
+      },
+      "mentions": [
+        {
+          "@type": "Service",
+          "name": "Webdesign"
+        },
+        {
+          "@type": "Service",
+          "name": "Webentwicklung"
+        }
+      ],
+      "abstract": "+85 % Online-Bestellungen",
+      "isPartOf": {
+        "@id": "https://viasmedia.com/work.html#caselist"
+      },
+      "breadcrumb": {
+        "@id": "https://viasmedia.com/work-luxe-bouquets.html#breadcrumb"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://viasmedia.com/work-luxe-bouquets.html"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".subhero__lead",
+          "h2",
+          "p.t-body"
+        ]
+      }
     },
     {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Luxe Bouquets",
-      "item": "https://viasmedia.com/work-luxe-bouquets.html"
+      "@type": "Person",
+      "@id": "https://viasmedia.com/#mykhailo",
+      "name": "Mykhailo Sibahatov",
+      "jobTitle": "Webdesigner und Webentwickler",
+      "url": "https://viasmedia.com/",
+      "worksFor": {
+        "@id": "https://viasmedia.com/#organization"
+      },
+      "knowsAbout": [
+        "Webdesign",
+        "Webentwicklung",
+        "Lokales SEO",
+        "Barrierefreiheit im Web",
+        "Core Web Vitals"
+      ]
     }
   ]
 }

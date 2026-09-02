@@ -67,8 +67,16 @@ def parse_front_matter(text):
 # Task 2: reading time + German date helpers
 # ---------------------------------------------------------------------------
 
+def _prose(body):
+    """Body text without inline <style>/HTML blocks or table pipes, so reading
+    time and schema wordCount measure prose rather than markup."""
+    b = re.sub(r"<style>.*?</style>", " ", body, flags=re.S)
+    b = re.sub(r"<[^>]*>", " ", b)
+    return b.replace("|", " ")
+
+
 def reading_time(body):
-    words = len(re.findall(r"\w+", body))
+    words = len(re.findall(r"\w+", _prose(body)))
     return max(1, round(words / 200))
 
 
@@ -105,11 +113,13 @@ def load_post(path):
         "title": meta.get("title", "").strip(),
         "description": meta.get("description", "").strip(),
         "date": meta.get("date", "").strip(),
+        "updated": (meta.get("updated") or "").strip() or None,
         "date_de": format_date_de(meta["date"]) if meta.get("date") else "",
         "category": meta.get("category", "").strip(),
         "image": meta.get("image", "").strip(),
         "related_case": meta.get("related_case", "").strip(),
         "reading_time": reading_time(body),
+        "word_count": len(re.findall(r"\w+", _prose(body))),
         "excerpt": excerpt(meta, body),
         "url": f"/blog/{slug}",
         "_body": body,                 # raw markdown, used by the renderer
@@ -143,20 +153,61 @@ def _related_case_html(key):
 
 
 def _jsonld(post, canonical, og_image):
-    data = {
-        "@context": "https://schema.org",
+    """Full @graph: BlogPosting + Person author + BreadcrumbList.
+
+    AI answer engines resolve entities through @id cross-references, so the
+    author/publisher nodes point at the same @ids used on the homepage.
+    """
+    article = {
         "@type": "BlogPosting",
+        "@id": canonical + "#article",
+        "url": canonical,
         "headline": post["title"],
+        "name": post["title"],
         "description": post["description"],
         "datePublished": post["date"],
-        "dateModified": post["date"],
-        "author": {"@type": "Person", "name": "Mykhailo Sibahatov"},
-        "publisher": {"@type": "Organization", "name": "Vias Media"},
-        "image": og_image,
+        "dateModified": post.get("updated") or post["date"],
+        "author": {"@id": f"{SITE}/#mykhailo"},
+        "publisher": {"@id": f"{SITE}/#organization"},
+        "isPartOf": {"@id": f"{SITE}/blog#blog"},
+        "image": {"@type": "ImageObject", "url": og_image, "width": 1200, "height": 630},
         "mainEntityOfPage": {"@type": "WebPage", "@id": canonical},
-        "inLanguage": "de",
+        "breadcrumb": {"@id": canonical + "#breadcrumb"},
+        "articleSection": post["category"],
+        "wordCount": post.get("word_count"),
+        "timeRequired": f"PT{post['reading_time']}M",
+        "inLanguage": "de-DE",
+        "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [".post__lead", ".post__body h2", ".post__body p"],
+        },
     }
-    return json.dumps(data, ensure_ascii=False)
+    article = {k: v for k, v in article.items() if v is not None}
+
+    author = {
+        "@type": "Person",
+        "@id": f"{SITE}/#mykhailo",
+        "name": "Mykhailo Sibahatov",
+        "jobTitle": "Webdesigner und Webentwickler",
+        "url": f"{SITE}/",
+        "worksFor": {"@id": f"{SITE}/#organization"},
+        "knowsAbout": ["Webdesign", "Webentwicklung", "Lokales SEO",
+                       "Barrierefreiheit im Web", "Core Web Vitals"],
+        "knowsLanguage": ["de", "en"],
+    }
+
+    crumbs = {
+        "@type": "BreadcrumbList",
+        "@id": canonical + "#breadcrumb",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Startseite", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE}/blog"},
+            {"@type": "ListItem", "position": 3, "name": post["title"], "item": canonical},
+        ],
+    }
+
+    return json.dumps({"@context": "https://schema.org",
+                       "@graph": [article, author, crumbs]}, ensure_ascii=False)
 
 
 def render_article(post, template):
@@ -199,10 +250,44 @@ def _card_html(post):
     )
 
 
+def _index_jsonld(posts):
+    ordered = sorted(posts, key=lambda p: p["date"], reverse=True)
+    blog = {
+        "@type": "Blog",
+        "@id": f"{SITE}/blog#blog",
+        "url": f"{SITE}/blog",
+        "name": "Vias Media Blog",
+        "description": ("Ratgeber zu Websites, lokaler Sichtbarkeit bei Google und "
+                        "Online-Marketing für kleine Unternehmen und Handwerksbetriebe "
+                        "in Mecklenburg-Vorpommern."),
+        "inLanguage": "de-DE",
+        "publisher": {"@id": f"{SITE}/#organization"},
+        "isPartOf": {"@id": f"{SITE}/#website"},
+        "blogPost": [
+            {"@type": "BlogPosting", "@id": f"{SITE}{p['url']}#article",
+             "headline": p["title"], "url": f"{SITE}{p['url']}",
+             "datePublished": p["date"], "description": p["description"],
+             "author": {"@id": f"{SITE}/#mykhailo"}}
+            for p in ordered
+        ],
+    }
+    crumbs = {
+        "@type": "BreadcrumbList",
+        "@id": f"{SITE}/blog#breadcrumb",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Startseite", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{SITE}/blog"},
+        ],
+    }
+    return json.dumps({"@context": "https://schema.org", "@graph": [blog, crumbs]},
+                      ensure_ascii=False)
+
+
 def render_index(posts, template):
     ordered = sorted(posts, key=lambda p: p["date"], reverse=True)
     cards = "\n".join(_card_html(p) for p in ordered)
-    return template.replace("{{CARDS}}", cards)
+    out = template.replace("{{CARDS}}", cards)
+    return out.replace("{{JSONLD}}", _index_jsonld(posts))
 
 
 # ---------------------------------------------------------------------------

@@ -1,6 +1,74 @@
+# https://viasmedia.com/robots.txt
+
+# ---- Standard search crawlers ----
 User-agent: *
 Allow: /
 Disallow: /login.html
 Disallow: /teacher.html
+
+# ---- AI answer engines: explicitly allowed (Tier 1) ----
+User-agent: GPTBot
+Allow: /
+Disallow: /login.html
+Disallow: /teacher.html
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ---- AI answer engines: allowed (Tier 2) ----
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# ---- Bulk scrapers with no referral value: blocked ----
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# ---- Content usage preferences (IETF Content-Signal draft) ----
+Content-Signal: search=yes, ai-train=yes, ai-retrieval=yes
 
 Sitemap: https://viasmedia.com/sitemap.xml

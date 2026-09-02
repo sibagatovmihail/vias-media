@@ -1,0 +1,48 @@
+# Vias Media
+
+> Vias Media is a one-person web design studio in Neubrandenburg, Germany, building fast, hand-coded websites and local SEO for small businesses and tradespeople (Handwerksbetriebe) in Mecklenburg-Vorpommern.
+
+## Services
+
+- [Leistungen / Services](https://viasmedia.com/services.html): Six services — web design, web development, local SEO, digital consulting, accessibility audits, and ongoing support — with the four-stage project process (Discover, Design, Develop, Grow).
+- [Webdesign Neubrandenburg (homepage)](https://viasmedia.com/): What Vias Media does, who it serves, the six services, four case studies, client reviews, and eleven FAQs on pricing, timelines and post-launch support.
+- [Kontakt / Contact](https://viasmedia.com/contact.html): Project enquiry form and direct contact details. Every enquiry gets a reply within one business day; the first consultation is free.
+
+## Case Studies
+
+- [Projekte / Work](https://viasmedia.com/work.html): Index of four client case studies with the measured result for each.
+- [Eagle Air HVAC](https://viasmedia.com/work-eagle-air.html): Relaunch of a Sarasota, Florida HVAC contractor's brochure site as a mobile-first lead engine — 2x enquiries, 98 Lighthouse performance score.
+- [Akkerman Stroy](https://viasmedia.com/work-akkerman-stroy.html): Digital presence and multi-city local SEO for a Berlin/Mecklenburg-Vorpommern renovation contractor — +140% organic traffic.
+- [Luxe Bouquets](https://viasmedia.com/work-luxe-bouquets.html): Online shop build for a florist — +85% online orders.
+- [Safari](https://viasmedia.com/work-safari.html): Online fashion shop redesign — +38% conversion rate.
+
+## Blog
+
+- [Blog](https://viasmedia.com/blog): German-language articles on websites, local visibility and online marketing for small businesses in Mecklenburg-Vorpommern.
+- [Was kostet eine Website?](https://viasmedia.com/blog/was-kostet-eine-website): Honest price ranges for a professional small-business website in Neubrandenburg and what actually drives the cost up or down.
+- [Warum eine Website für kleine Betriebe wichtig ist](https://viasmedia.com/blog/warum-eine-website-fuer-kleine-betriebe-wichtig-ist): Why small trade businesses lose customers without a website, and what a customer checks before calling.
+
+## Legal
+
+- [Impressum](https://viasmedia.com/impressum.html): Legal disclosure under § 5 DDG — operator, address, contact and responsible person.
+- [Datenschutz](https://viasmedia.com/datenschutz.html): GDPR/DSGVO privacy policy covering hosting, forms, cookies and analytics consent.
+
+## Key Facts
+
+- Business: Vias Media — web design and web development studio (ProfessionalService)
+- Founder and sole operator: Mykhailo Sibahatov
+- Location: Robert-Koch-Str. 15, 17036 Neubrandenburg, Germany
+- Service area: Neubrandenburg, the Mecklenburgische Seenplatte district and Mecklenburg-Vorpommern; remote clients accepted
+- Specialisation: small businesses and Handwerksbetriebe (trades) — HVAC, construction and renovation, retail, local services
+- Pricing model: fixed price per project, quoted after a free consultation — never hourly
+- Typical delivery time: 2–4 weeks from kickoff to launch for a small-business website
+- Local SEO is included in every project, not sold as an add-on
+- Languages: German (default) and English — the site serves both from the same URLs
+- Technology: hand-coded static HTML/CSS/JS, no page builders, deployed on Vercel
+
+## Contact
+
+- Website: https://viasmedia.com
+- Email: mykhailo@viasmedia.com
+- Phone: +49 160 95761094
+- Enquiry form: https://viasmedia.com/contact.html
