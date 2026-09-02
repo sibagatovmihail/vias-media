@@ -496,3 +496,37 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 }
 
 /* Footer wrapper gradient now lives in components.css (shared across pages). */
+
+/* ===== Flow dots on the lead bento card (hover) =====
+   The lead point is mostly deliberate negative space behind the watermark
+   digit, so it can carry a texture the two smaller points cannot. Masked, so
+   the ink follows the theme; fades in on hover and on keyboard focus, and is
+   skipped entirely under reduced-motion. */
+.why-web__point--lead { position: relative; overflow: hidden; isolation: isolate; }
+.why-web__point--lead::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-color: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease);
+  -webkit-mask-image: url("../../img/decor/flow-dots.svg"), radial-gradient(ellipse 88% 76% at 70% 60%, #000 20%, transparent 82%);
+          mask-image: url("../../img/decor/flow-dots.svg"), radial-gradient(ellipse 88% 76% at 70% 60%, #000 20%, transparent 82%);
+  -webkit-mask-size: cover, 100% 100%;
+          mask-size: cover, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+          mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+.why-web__point--lead:hover::after,
+.why-web__point--lead:focus-visible::after { opacity: 0.28; }
+
+[data-palette="ember-dark"] .why-web__point--lead:hover::after,
+[data-palette="ember-dark"] .why-web__point--lead:focus-visible::after { opacity: 0.38; }
+
+@media (prefers-reduced-motion: reduce) {
+  .why-web__point--lead::after { transition: none; }
+}

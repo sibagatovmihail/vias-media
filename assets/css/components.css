@@ -620,3 +620,97 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   .faq-item__panel, .faq-item__icon { transition: none; }
 }
 
+
+/* =====================================================================
+   GENERATIVE DECOR
+   Three plotter-style SVGs used as CSS masks rather than images: the mask
+   reads only the alpha channel, so the ink colour comes from a theme token
+   and every one of them follows dark mode for free. One file each, no
+   light/dark duplicates.
+   Always paired with a radial mask-composite so the pattern fades out
+   instead of ending on a hard edge, and always behind content
+   (pointer-events: none, z-index 0).
+   ===================================================================== */
+
+/* --- Bloom: hero backdrop, replaces the old radial-gradient dot grid ---
+   Attached to .hero itself rather than the .hero-decor markup, so it survives
+   whichever hero variant is in play. */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(64rem, 128vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  background-color: var(--accent);
+  opacity: 0.16;
+  -webkit-mask-image: url("../img/decor/bloom.svg"), radial-gradient(closest-side, #000 38%, transparent 78%);
+          mask-image: url("../img/decor/bloom.svg"), radial-gradient(closest-side, #000 38%, transparent 78%);
+  -webkit-mask-size: 100% 100%, 100% 100%;
+          mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+          mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;   /* pattern ∩ soft circle = faded edges */
+}
+/* The old dot grid would sit on top of the bloom; the element stays in the
+   markup but no longer paints. */
+.hero-grid { background-image: none; }
+
+[data-palette="ember-dark"] .hero::before { opacity: 0.22; }
+
+/* --- Truchet: subtle section texture ---
+   Reintroduces rhythm between sections now that every one of them sits on the
+   same flat --bg, without going back to alternating background colours. */
+.has-decor-truchet { position: relative; isolation: isolate; }
+.has-decor-truchet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-color: var(--text);
+  opacity: 0.035;
+  -webkit-mask-image: url("../img/decor/truchet.svg"), linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+          mask-image: url("../img/decor/truchet.svg"), linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  -webkit-mask-size: 34rem 34rem, 100% 100%;
+          mask-size: 34rem 34rem, 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+          mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+[data-palette="ember-dark"] .has-decor-truchet::before { opacity: 0.055; }
+
+/* --- Flow dots: the marquee strip ---
+   Sits under the logos and drifts with them, so the strip reads as one moving
+   band instead of a row of items on empty ground. */
+.trust .marquee { position: relative; }
+.trust .marquee::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-color: var(--text);
+  opacity: 0.1;
+  -webkit-mask-image: url("../img/decor/flow-dots.svg"), linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+          mask-image: url("../img/decor/flow-dots.svg"), linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-size: 26rem auto, 100% 100%;
+          mask-size: 26rem auto, 100% 100%;
+  -webkit-mask-position: center, center;
+          mask-position: center, center;
+  -webkit-mask-repeat: repeat-x, no-repeat;
+          mask-repeat: repeat-x, no-repeat;
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+}
+.trust .marquee__track, .trust .marquee__edge { position: relative; z-index: 1; }
+[data-palette="ember-dark"] .trust .marquee::before { opacity: 0.1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .trust .marquee::before { animation: none; }
+}
