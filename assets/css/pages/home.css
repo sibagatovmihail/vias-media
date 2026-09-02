@@ -98,9 +98,7 @@
   text-transform: uppercase; color: var(--text-muted); white-space: nowrap; opacity: 0.75;
 }
 
-/* ===== Shared section header ===== */
-.section-head { display: flex; flex-direction: column; gap: var(--space-md); max-width: 40rem; }
-.section-head--center { align-items: center; text-align: center; margin-inline: auto; }
+/* Section header now lives in components.css (used by 5 pages, not just home). */
 
 /* ===== WHY A WEBSITE — asymmetric bento: one tall lead point beside two
    stacked supporting points, so the row reads as a composition rather than
