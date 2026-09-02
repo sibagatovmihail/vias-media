@@ -56,10 +56,19 @@
       + '</figcaption></figure>';
   }
 
+  function reveal() {
+    var section = document.getElementById('reviews');
+    if (section) section.classList.add('is-live');
+    /* The nav link is pointless while the section is hidden. */
+    document.querySelectorAll('a[href="#reviews"], a[href$="index.html#reviews"]')
+      .forEach(function (a) { a.hidden = false; });
+  }
+
   function render(d) {
     /* ×2 so the marquee loop stays seamless, same as the static markup. */
     track.innerHTML = d.reviews.map(function (r) { return card(r, false); }).join('')
                     + d.reviews.map(function (r) { return card(r, true); }).join('');
+    reveal();
 
     if (ratingEl && d.rating && d.total) {
       ratingEl.innerHTML = stars(Math.round(d.rating))
@@ -67,6 +76,11 @@
         + d.total + ' Google-Rezensionen</span>';
       ratingEl.hidden = false;
     }
+  }
+
+  function hideNav() {
+    document.querySelectorAll('a[href="#reviews"], a[href$="index.html#reviews"]')
+      .forEach(function (a) { a.hidden = true; });
   }
 
   var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
@@ -78,6 +92,7 @@
     .then(function (d) {
       clearTimeout(timer);
       if (d && d.ok && d.reviews && d.reviews.length) { render(d); return; }
+      hideNav();
       /* eslint-disable-next-line no-console */
       console.info('[reviews] Keine Live-Google-Rezensionen — '
         + (d && d.configured === false
@@ -87,6 +102,7 @@
     })
     .catch(function (e) {
       clearTimeout(timer);
+      hideNav();
       /* eslint-disable-next-line no-console */
       console.info('[reviews] Abruf von ' + ENDPOINT + ' fehlgeschlagen ('
         + (e && e.name === 'AbortError' ? 'Zeitüberschreitung' : (e && e.message))

@@ -444,7 +444,12 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 }
 
 /* ===== TESTIMONIALS ===== */
-.testimonials {
+/* Hidden until real Google reviews load. reviews.js adds .is-live once
+   /api/reviews returns data, so the section (and its nav link) appear on their
+   own as soon as the Business Profile is verified and the env vars are set —
+   no code change needed then. */
+.testimonials { display: none; }
+.testimonials.is-live {
   display: block;
   background: var(--bg);     /* flat: shares the one page ground */
   position: relative; overflow: hidden;
