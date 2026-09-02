@@ -57,11 +57,11 @@
   }
 
   function reveal() {
+    /* Only ever reveals. The nav link stays put on every page either way —
+       hiding it from here would only affect index.html, which is the one page
+       this script loads on, and that made the nav differ between pages. */
     var section = document.getElementById('reviews');
     if (section) section.classList.add('is-live');
-    /* The nav link is pointless while the section is hidden. */
-    document.querySelectorAll('a[href="#reviews"], a[href$="index.html#reviews"]')
-      .forEach(function (a) { a.hidden = false; });
   }
 
   function render(d) {
@@ -78,11 +78,6 @@
     }
   }
 
-  function hideNav() {
-    document.querySelectorAll('a[href="#reviews"], a[href$="index.html#reviews"]')
-      .forEach(function (a) { a.hidden = true; });
-  }
-
   var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
   var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
 
@@ -92,7 +87,6 @@
     .then(function (d) {
       clearTimeout(timer);
       if (d && d.ok && d.reviews && d.reviews.length) { render(d); return; }
-      hideNav();
       /* eslint-disable-next-line no-console */
       console.info('[reviews] Keine Live-Google-Rezensionen — '
         + (d && d.configured === false
@@ -102,7 +96,6 @@
     })
     .catch(function (e) {
       clearTimeout(timer);
-      hideNav();
       /* eslint-disable-next-line no-console */
       console.info('[reviews] Abruf von ' + ENDPOINT + ' fehlgeschlagen ('
         + (e && e.name === 'AbortError' ? 'Zeitüberschreitung' : (e && e.message))
