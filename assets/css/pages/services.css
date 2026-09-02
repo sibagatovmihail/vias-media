@@ -14,7 +14,7 @@
 .svc-card { display: flex; flex-direction: column; gap: var(--space-sm); }
 .svc-card .icon-box { width: 3.5rem; height: 3.5rem; }
 
-.process { background: var(--bg-alt); }
+.process { background: var(--bg); }   /* flat: shares the one page ground */
 .process__grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: var(--space-lg); margin-top: var(--space-2xl);

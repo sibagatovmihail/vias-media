@@ -445,8 +445,8 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 
 /* ===== TESTIMONIALS ===== */
 .testimonials {
-  display: none;             /* hidden for now — pending updated content */
-  background: var(--gradient-testimonial);
+  display: block;
+  background: var(--bg);     /* flat: shares the one page ground */
   position: relative; overflow: hidden;
   padding-block: var(--space-5xl) var(--space-4xl);
 }
@@ -470,6 +470,14 @@ html.js .card.why-web__point.reveal.is-visible:hover,
   display: flex; flex-direction: column; align-items: center; gap: var(--space-md);
   text-align: center; margin-bottom: var(--space-2xl);
 }
+.testimonials__rating {
+  display: flex; align-items: center; gap: var(--space-xs);
+  color: var(--text-sec);
+}
+.testimonials__rating .testimonial-card__stars,
+.testimonial-card__stars { display: inline-flex; gap: 0.09375rem; }
+.testimonial-card__stars svg { display: block; }
+
 .testimonials__track { display: flex; gap: var(--space-xs); width: max-content; }
 .testimonial-card {
   width: 21.25rem; min-height: 23.75rem; flex-shrink: 0;

@@ -3,7 +3,11 @@
 **/.DS_Store
 
 # Excluded from this project's repo (per project owner)
-api/
+# Narrowed from `api/` to the two auth functions: a whole ignored directory
+# meant no serverless function could ever deploy (/api/* returned 404 in
+# production), so api/reviews.js could not work. The auth functions stay out.
+api/login.js
+api/logout.js
 middleware.js
 Vias Media (standalone).html
 

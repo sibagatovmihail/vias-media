@@ -426,7 +426,7 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
 .subhero {
   position: relative;
   padding-block: var(--space-3xl);     /* #header-spacer already clears the fixed header */
-  background: var(--gradient-hero-img);
+  background: var(--bg);               /* flat: every section shares one ground, top to footer */
   overflow: hidden;
 }
 .subhero__inner {
