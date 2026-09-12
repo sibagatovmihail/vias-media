@@ -140,23 +140,17 @@ html.js .card.why-web__point.reveal.is-visible:hover,
 
 /* ~700px & below: the bento unwinds to a single clean column. Pushed back
    from 64rem — the asymmetric grid still reads fine at tablet widths, and
-   collapsing later keeps the bento composition visible longer. Once stacked,
-   each card sticks in place and gets overlaid by the next as you scroll, so
-   the set reads as a single deck rather than a long scroll of tall cards. */
+   collapsing later keeps the bento composition visible longer. Cards stack
+   in normal flow (no sticky/overlap) so each one scrolls fully into view —
+   the earlier sticky "deck" made card 1 get permanently covered by card 2
+   after only a few pixels of scroll, cutting its text off mid-sentence. */
 @media (max-width: 43.6875rem) {
   .why-web__grid { grid-template-columns: 1fr; }
   .why-web__point--lead,
   .why-web__point:nth-child(2),
   .why-web__point:nth-child(3) { grid-column: 1; grid-row: auto; }
   .why-web__point--lead { justify-content: flex-start; }
-  .why-web__point {
-    padding: var(--space-xl);
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-xl));
-  }
-  .why-web__point:nth-child(1) { z-index: 1; }
-  .why-web__point:nth-child(2) { z-index: 2; }
-  .why-web__point:nth-child(3) { z-index: 3; }
+  .why-web__point { padding: var(--space-xl); }
   /* Stacked: the lead is no longer taller, so its numeral matches the rest. */
   .why-web__point--lead .why-web__num { font-size: 3rem; }
 }
