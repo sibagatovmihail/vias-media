@@ -116,13 +116,12 @@
   border: 1px solid var(--border-light);
 }
 /* Lead point spans both rows on the left and stretches to the combined height
-   of the two stacked points; copy anchors low so the extra height becomes
-   deliberate negative space behind the oversized watermark digit. */
+   of the two stacked points; copy stays top-anchored right under the numeral
+   like the other two points, so the extra height becomes plain negative
+   space below the copy instead of pushing it out of view. */
 .why-web__point--lead {
   grid-column: 1; grid-row: 1 / span 2;
-  justify-content: space-between;   /* numeral up top, copy anchored at the base */
 }
-/* Lead groups its heading + paragraph so space-between splits number vs copy. */
 .why-web__copy { display: flex; flex-direction: column; gap: var(--space-md); }
 .why-web__point:nth-child(2) { grid-column: 2; grid-row: 1; }
 .why-web__point:nth-child(3) { grid-column: 2; grid-row: 2; }
