@@ -45,7 +45,6 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/consent.css">
-  <link rel="stylesheet" href="assets/css/pages/services.css">
   <link rel="stylesheet" href="assets/css/pages/landing.css">
   <script type="application/ld+json">
 {
@@ -222,130 +221,358 @@
   </header>
 
   <main id="main" tabindex="-1">
-    <!-- Subhero -->
-    <section class="subhero">
+    <!-- ===== HERO (full viewport height, same block as the homepage) ===== -->
+    <section class="hero" id="top">
+      <div class="hero-decor" aria-hidden="true" data-parallax-root>
+        <div class="hero-grid" data-parallax="0.15"></div>
+        <div class="hero-glow" data-parallax="0.3"></div>
+        <div class="hero-cursor" data-parallax="0.5" style="top:24%; left:9%; animation: vm-float-a 7s ease-in-out infinite;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--accent)" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M5.5 3.2 L5.5 19.6 L9.9 15.3 L12.7 21.5 L15.2 20.4 L12.4 14.2 L18.4 14.2 Z"/></svg>
+          <span class="hero-cursor__tag" style="background: var(--accent); color: var(--btn-on-accent);">Designer</span>
+        </div>
+        <div class="hero-cursor" data-parallax="0.4" style="top:58%; right:9%; animation: vm-float-b 6s ease-in-out infinite; animation-delay: 0.6s;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M5.5 3.2 L5.5 19.6 L9.9 15.3 L12.7 21.5 L15.2 20.4 L12.4 14.2 L18.4 14.2 Z"/></svg>
+          <span class="hero-cursor__tag" style="background: var(--text); color: var(--bg);" data-en="Developer">Entwickler</span>
+        </div>
+        <div class="hero-ring" data-parallax="0.6" style="top:19%; right:15%; width:3.5rem; height:3.5rem; animation: vm-spin 18s linear infinite;"></div>
+        <div class="hero-diamond" data-parallax="0.7" style="bottom:26%; left:16%; width:1.125rem; height:1.125rem; animation: vm-bob 5.5s ease-in-out infinite;"></div>
+      </div>
+
+      <div class="container hero__container">
+        <div class="hero__text reveal">
+          <div class="hero__pill">
+            <span class="pill">
+              <span class="pill--filled"><span class="t-label" data-en="Web Agency">Webagentur</span></span>
+              <span class="t-small">Neubrandenburg</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4L10 8L6 12"/></svg>
+            </span>
+          </div>
+
+          <h1 class="t-xl hero__title" data-en="A web agency in Neubrandenburg — websites that bring customers.">Webagentur in Neubrandenburg – Webseiten, die Kunden bringen.</h1>
+
+          <div><p class="t-body-lg hero__lead t-muted-body" data-en-html="Fast, hand-coded websites for small businesses and trades — at a <span class='em'>fixed price</span>, with local SEO included, and usually <span class='em'>live within 2–4 weeks</span>.">Schnelle, handgemachte Websites für kleine Unternehmen und Handwerksbetriebe – zum <span class='em'>Festpreis</span>, mit lokalem SEO inklusive und in der Regel <span class='em'>in 2–4 Wochen online</span>.</p></div>
+        </div>
+
+        <div class="hero__actions reveal" data-delay="1">
+          <a href="contact.html" class="btn btn--primary">
+            <span data-en="Free first consultation">Kostenloses Erstgespräch</span>
+            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+          <a data-contact="whatsapp" href="#" class="btn btn--outline" aria-label="Message us on WhatsApp">
+            <span class="btn__ico"><svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
+            <span>WhatsApp</span>
+          </a>
+          <div class="cta-reassure" style="width:100%; justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12l4 4 8-9"/></svg>
+            <span data-en="Free, no-obligation quote — you own everything we build.">Kostenloses, unverbindliches Angebot – die fertige Website gehört ganz Ihnen.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICE-AREA MARQUEE (same strip as the homepage's client list) ===== -->
+    <section class="trust" aria-label="Einzugsgebiet">
+      <div class="marquee">
+        <div class="marquee__edge marquee__edge--l"></div>
+        <div class="marquee__edge marquee__edge--r"></div>
+        <div class="marquee__track" style="--marquee-speed: 40s;">
+          <span class="trust__item">Neubrandenburg</span>
+          <span class="trust__item">Neustrelitz</span>
+          <span class="trust__item">Waren (Müritz)</span>
+          <span class="trust__item">Altentreptow</span>
+          <span class="trust__item">Friedland</span>
+          <span class="trust__item">Malchin</span>
+          <span class="trust__item">Burg Stargard</span>
+          <span class="trust__item">Penzlin</span>
+          <span class="trust__item">Woldegk</span>
+          <span class="trust__item">Demmin</span>
+          <!-- duplicate for seamless loop -->
+          <span class="trust__item" aria-hidden="true">Neubrandenburg</span>
+          <span class="trust__item" aria-hidden="true">Neustrelitz</span>
+          <span class="trust__item" aria-hidden="true">Waren (Müritz)</span>
+          <span class="trust__item" aria-hidden="true">Altentreptow</span>
+          <span class="trust__item" aria-hidden="true">Friedland</span>
+          <span class="trust__item" aria-hidden="true">Malchin</span>
+          <span class="trust__item" aria-hidden="true">Burg Stargard</span>
+          <span class="trust__item" aria-hidden="true">Penzlin</span>
+          <span class="trust__item" aria-hidden="true">Woldegk</span>
+          <span class="trust__item" aria-hidden="true">Demmin</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHAT A LOCAL AGENCY DOES DIFFERENTLY — numbered bento ===== -->
+    <section class="section why-web">
       <div class="container">
-        <div class="subhero__inner reveal">
-          <div><h1 class="t-xl" data-en="Web agency in Neubrandenburg: websites that bring customers">Webagentur in Neubrandenburg: Websites, die Kunden bringen</h1></div>
-          <div><p class="t-body-lg subhero__lead" data-en="Vias Media is your web agency right here in Neubrandenburg. We build fast, hand-coded websites for small businesses and trades — at a fixed price, with local SEO included, and usually live within 2–4 weeks.">Vias Media ist Ihre Webagentur vor Ort in Neubrandenburg. Wir erstellen schnelle, handgemachte Websites für kleine Unternehmen und Handwerksbetriebe – zum Festpreis, mit lokalem SEO inklusive und in der Regel in 2–4 Wochen online.</p></div>
-          <div class="hero__actions">
-            <a href="contact.html" class="btn btn--primary"><span data-en="Free first consultation">Kostenloses Erstgespräch</span>
-              <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+        <div class="section-head section-head--center reveal">
+          <div><h2 class="t-lg t-center" data-en="What a local web agency does differently">Was eine Webagentur vor Ort anders macht</h2></div>
+          <div><p class="t-body t-muted-body" data-en-html="Three things you get from a web agency in Neubrandenburg that <span class='em'>a template builder or a big-city agency</span> cannot give you.">Drei Dinge, die Sie von einer Webagentur in Neubrandenburg bekommen und die <span class='em'>ein Baukasten oder eine Großstadt-Agentur</span> nicht liefern.</p></div>
+        </div>
+
+        <div class="why-web__grid reveal">
+          <div class="why-web__point why-web__point--lead card">
+            <span class="why-web__num" aria-hidden="true">01</span>
+            <div class="why-web__copy">
+              <div><h3 class="t-md" data-en="One contact, right here">Ein Ansprechpartner vor Ort</h3></div>
+              <div><p class="t-body-lg" data-en="You talk directly to the person who designs and builds your website — no project manager in between, no ticket system. We meet in Neubrandenburg or on a video call, whichever suits you.">Sie sprechen direkt mit dem Menschen, der Ihre Website gestaltet und baut – ohne Projektmanager dazwischen, ohne Ticketsystem. Wir treffen uns in Neubrandenburg oder per Videoanruf, wie es Ihnen passt.</p></div>
+            </div>
+          </div>
+
+          <div class="why-web__point card">
+            <span class="why-web__num" aria-hidden="true">02</span>
+            <div><h3 class="t-md" data-en="Fixed price, not timesheets">Festpreis statt Stundenzettel</h3></div>
+            <div><p class="t-body-lg" data-en="The price is agreed before the work starts — no surcharges, no monthly licence fee. The finished website belongs entirely to you.">Der Preis steht, bevor die Arbeit beginnt – keine Nachschläge, keine monatliche Lizenzgebühr. Die fertige Website gehört vollständig Ihnen.</p></div>
+          </div>
+
+          <div class="why-web__point card">
+            <span class="why-web__num" aria-hidden="true">03</span>
+            <div><h3 class="t-md" data-en="Local SEO included">Lokales SEO inklusive</h3></div>
+            <div><p class="t-body-lg" data-en="Regional keywords, structured data and your Google Business Profile are part of every build — no surcharge, no add-on package.">Regionale Keywords, strukturierte Daten und Ihr Google-Unternehmensprofil gehören zu jedem Projekt – kein Aufpreis, kein Zusatzpaket.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FLOW BAND: process → references → services share one gradient ===== -->
+    <div class="flow-band">
+
+    <!-- ===== PROCESS — same slider block as the homepage's "why us" ===== -->
+    <section class="section features" id="ablauf">
+      <div class="container">
+        <div class="features__head reveal">
+          <div class="section-head">
+            <div><h2 class="t-lg" data-en="Getting a website built — how it works">Website erstellen lassen – so läuft es ab</h2></div>
+            <div><p class="t-body t-muted-body" data-en-html="Four steps from the first conversation to a live website. You always know <span class='em'>what happens next and what it costs</span>.">Vier Schritte vom ersten Gespräch bis zur fertigen Website. Sie wissen jederzeit, <span class='em'>was als Nächstes passiert und was es kostet</span>.</p></div>
+          </div>
+          <div class="features__nav" data-slider-controls="process">
+            <button class="why-slider__arrow" type="button" data-slider-prev="process" aria-label="Vorherige Schritte">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4L6 9L11 14"/></svg>
+            </button>
+            <button class="why-slider__arrow" type="button" data-slider-next="process" aria-label="Nächste Schritte">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4L12 9L7 14"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-slider reveal" data-slider="process">
+        <div class="why-slider__viewport" data-slider-viewport="process">
+          <article class="card feature-card">
+            <div class="icon-box icon-box--accent"><span class="step-num" aria-hidden="true">01</span></div>
+            <div class="feature-card__body">
+              <div><h3 class="t-sm" data-en="Free first consultation">Kostenloses Erstgespräch</h3></div>
+              <div><p class="t-body-lg" data-en="We clarify goals, target customers, scope and what already exists — logo, texts, photos. You receive a fixed-price quote within one business day.">Wir klären Ziele, Zielgruppe, Umfang und was schon vorhanden ist – Logo, Texte, Fotos. Innerhalb eines Werktags erhalten Sie ein Festpreisangebot.</p></div>
+            </div>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box icon-box--accent"><span class="step-num" aria-hidden="true">02</span></div>
+            <div class="feature-card__body">
+              <div><h3 class="t-sm">Design</h3></div>
+              <div><p class="t-body-lg" data-en="You see a draft of the homepage and sub-pages before a single line of code is written. Revisions are part of the process, not an extra.">Sie sehen einen Entwurf für Startseite und Unterseiten, bevor eine Zeile Code entsteht. Anpassungen sind Teil des Prozesses, kein Extra.</p></div>
+            </div>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box icon-box--accent"><span class="step-num" aria-hidden="true">03</span></div>
+            <div class="feature-card__body">
+              <div><h3 class="t-sm" data-en="Development">Entwicklung</h3></div>
+              <div><p class="t-body-lg" data-en="Hand-written HTML, CSS and JavaScript with no page builder: fast on every phone, accessible, and technically clean for Google.">Handgeschriebener HTML-, CSS- und JavaScript-Code ohne Baukasten: schnell auf jedem Handy, barrierefrei und technisch sauber für Google.</p></div>
+            </div>
+          </article>
+
+          <article class="card feature-card">
+            <div class="icon-box icon-box--accent"><span class="step-num" aria-hidden="true">04</span></div>
+            <div class="feature-card__body">
+              <div><h3 class="t-sm" data-en="Launch and support">Launch und Betreuung</h3></div>
+              <div><p class="t-body-lg" data-en="We take the site live, set up your Google Business Profile and Search Console, and stay reachable afterwards — for changes, updates and questions.">Wir schalten die Website live, richten Google-Unternehmensprofil und Search Console ein und bleiben danach erreichbar – für Änderungen, Updates und Fragen.</p></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REFERENCES — same folio block as the homepage ===== -->
+    <section class="section work" id="referenzen">
+      <div class="container">
+        <div class="section-head reveal">
+          <div><h2 class="t-xl" data-en="References with measured results">Referenzen mit gemessenen Ergebnissen</h2></div>
+        </div>
+
+        <div class="folio reveal">
+          <a href="work-akkerman-stroy.html" class="folio__panel is-active" aria-label="Akkerman Stroy — Fallstudie ansehen">
+            <img class="folio__img" src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
+            <span class="folio__content">
+              <span class="folio__name">Akkerman Stroy</span>
+              <span class="folio__tags">
+                <span class="folio__tag t-label-md">+140 % Traffic</span>
+                <span class="folio__tag t-label-md" data-en="Renovation">Sanierung</span>
+              </span>
+            </span>
+            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+
+          <a href="work-eagle-air.html" class="folio__panel" aria-label="Eagle Air HVAC — Fallstudie ansehen">
+            <img class="folio__img" src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
+            <span class="folio__content">
+              <span class="folio__name">Eagle Air HVAC</span>
+              <span class="folio__tags">
+                <span class="folio__tag t-label-md" data-en="2x enquiries">2× Anfragen</span>
+                <span class="folio__tag t-label-md">Relaunch</span>
+              </span>
+            </span>
+            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+
+          <a href="work-luxe-bouquets.html" class="folio__panel" aria-label="Luxe Bouquets — Fallstudie ansehen">
+            <img class="folio__img" src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
+            <span class="folio__content">
+              <span class="folio__name">Luxe Bouquets</span>
+              <span class="folio__tags">
+                <span class="folio__tag t-label-md" data-en="+85% orders">+85 % Bestellungen</span>
+                <span class="folio__tag t-label-md">Shop</span>
+              </span>
+            </span>
+            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+
+          <a href="work-safari.html" class="folio__panel" aria-label="Safari — Fallstudie ansehen">
+            <img class="folio__img" src="assets/img/portfolio/safari-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
+            <span class="folio__content">
+              <span class="folio__name">Safari</span>
+              <span class="folio__tags">
+                <span class="folio__tag t-label-md" data-en="+38% conversion">+38 % Conversion</span>
+                <span class="folio__tag t-label-md">E-Commerce</span>
+              </span>
+            </span>
+            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+        </div>
+
+        <div class="work__footer reveal">
+          <a href="work.html" class="btn btn--outline"><span data-en="See all work">Alle Projekte ansehen</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES — same sticky-head teaser as the homepage ===== -->
+    <section class="section has-decor-truchet services" id="leistungen">
+      <div class="container">
+        <div class="services__layout">
+          <div class="services__head reveal">
+            <div><h2 class="t-lg" data-en="What our web agency does for you">Leistungen unserer Webagentur</h2></div>
+            <div><p class="t-body t-muted-body" data-en-html="Everything a small business needs online, <span class='em'>from one place</span> — and from one person.">Alles, was ein kleines Unternehmen online braucht, <span class='em'>aus einer Hand</span> – und von einer Person.</p></div>
+            <div class="services__head-cta">
+              <a href="services.html" class="btn btn--primary">
+                <span data-en="Explore all services">Alle Leistungen entdecken</span>
+                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+              </a>
+            </div>
+          </div>
+
+          <div class="services__list">
+            <a href="services.html#webdesign" class="card service-card reveal">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="4"/><path d="M4 12H28"/><circle cx="20" cy="20" r="5"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card">Webdesign</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="Individual design for your business — no template, no builder.">Individuelles Design für Ihren Betrieb – kein Template, kein Baukasten.</p></div>
+              </div>
             </a>
-            <a href="work.html" class="btn btn--outline"><span data-en="See our work">Referenzen ansehen</span></a>
+
+            <a href="services.html#webentwicklung" class="card service-card reveal" data-delay="1">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10L6 16L12 22"/><path d="M20 10L26 16L20 22"/><path d="M17 8L15 24"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card" data-en="Web Development">Webentwicklung</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="Hand-coded, fast and stable on every device.">Handgeschrieben, schnell und stabil auf jedem Gerät.</p></div>
+              </div>
+            </a>
+
+            <a href="services.html#seo" class="card service-card reveal" data-delay="2">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="12" r="3"/><path d="M16 4V9"/><path d="M16 15V28"/><path d="M8 20L16 15L24 20"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card" data-en="Local SEO">Lokales SEO</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="Show up when customers in Neubrandenburg search for your trade.">Erscheinen, wenn Kunden in Neubrandenburg nach Ihrem Gewerk suchen.</p></div>
+              </div>
+            </a>
+
+            <a href="services.html#beratung" class="card service-card reveal">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7H27V21H14L8 26V21H5Z"/><path d="M11 12H21"/><path d="M11 16H17"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card" data-en="Digital Consulting">Digitale Beratung</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="Which pages, which texts, which Google profile — a clear plan before we build.">Welche Seiten, welche Texte, welches Google-Profil – ein klarer Plan, bevor wir bauen.</p></div>
+              </div>
+            </a>
+
+            <a href="services.html#barrierefreiheit" class="card service-card reveal" data-delay="1">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="10" r="2"/><path d="M10 14H22"/><path d="M16 14V22"/><path d="M12 26L16 22L20 26"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card" data-en="Accessibility Audits">Barrierefreiheits-Audits</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="WCAG 2.2 and BFSG check for existing websites, with a concrete fix list.">WCAG-2.2- und BFSG-Prüfung bestehender Websites mit konkreter Mängelliste.</p></div>
+              </div>
+            </a>
+
+            <a href="services.html#support" class="card service-card reveal" data-delay="2">
+              <div class="icon-box icon-box--muted">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28C16 28 25 20 25 13A9 9 0 0 0 7 13C7 20 16 28 16 28Z"/><circle cx="16" cy="13" r="3.5"/></svg>
+              </div>
+              <div class="service-card__text">
+                <div class="service-card__head">
+                  <div><h3 class="t-card" data-en="Ongoing Support">Laufender Support</h3></div>
+                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
+                </div>
+                <div><p class="t-body" data-en="Updates, content changes and monitoring after launch.">Updates, Inhaltsänderungen und Monitoring nach dem Launch.</p></div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Why a local agency -->
+    </div><!-- /.flow-band -->
+
+    <!-- ===== PRICE ===== -->
     <section class="section">
       <div class="container">
         <div class="section-head reveal">
-          <div><h2 class="t-lg" data-en="What a local web agency does differently">Was eine Webagentur vor Ort anders macht</h2></div>
-          <div><p class="t-body t-muted-body" data-en="Three things you get from a web agency in Neubrandenburg that a template builder or a big-city agency can't give you.">Drei Dinge, die Sie von einer Webagentur in Neubrandenburg bekommen und die ein Baukasten oder eine Großstadt-Agentur nicht liefern.</p></div>
-        </div>
-        <div class="lp-cols">
-          <div class="card lp-card reveal">
-            <div><h3 class="t-card" data-en="One contact, based in Neubrandenburg">Ein Ansprechpartner in Neubrandenburg</h3></div>
-            <div><p class="t-body" data-en="You talk directly to the person who designs and builds your website — no project manager in between, no ticket system. We meet in Neubrandenburg or on a video call, whichever suits you.">Sie sprechen direkt mit dem Menschen, der Ihre Website gestaltet und baut – ohne Projektmanager dazwischen, ohne Ticketsystem. Wir treffen uns in Neubrandenburg oder per Videoanruf, wie es Ihnen passt.</p></div>
-          </div>
-          <div class="card lp-card reveal" data-delay="1">
-            <div><h3 class="t-card" data-en="Fixed price instead of timesheets">Festpreis statt Stundenzettel</h3></div>
-            <div><p class="t-body" data-en="After a free first consultation you receive a fixed-price quote. The price is set before the work starts — no surcharges, no monthly licence fee. The finished website belongs entirely to you.">Nach einem kostenlosen Erstgespräch erhalten Sie ein Festpreisangebot. Der Preis steht, bevor die Arbeit beginnt – keine Nachschläge, keine monatliche Lizenzgebühr. Die fertige Website gehört vollständig Ihnen.</p></div>
-          </div>
-          <div class="card lp-card reveal" data-delay="2">
-            <div><h3 class="t-card" data-en="Local SEO is included">Lokales SEO ist inklusive</h3></div>
-            <div><p class="t-body" data-en="Every website is built from day one to be found on Google in and around Neubrandenburg: regional keywords, structured data, Google Business Profile and clean technical foundations. No surcharge, no add-on package.">Jede Website wird von Anfang an dafür gebaut, bei Google in Neubrandenburg und Umgebung gefunden zu werden: regionale Keywords, strukturierte Daten, Google-Unternehmensprofil und saubere Technik. Kein Aufpreis, kein Zusatzpaket.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Process -->
-    <section class="section has-decor-truchet process">
-      <div class="container">
-        <div class="section-head reveal">
-          <div><h2 class="t-lg" data-en="Getting a website built in Neubrandenburg — how it works">Website erstellen lassen in Neubrandenburg – so läuft es ab</h2></div>
-          <div><p class="t-body t-muted-body" data-en="Four steps from the first conversation to a live website. You always know what happens next and what it costs.">Vier Schritte vom ersten Gespräch bis zur fertigen Website. Sie wissen jederzeit, was als Nächstes passiert und was es kostet.</p></div>
-        </div>
-        <div class="process__grid">
-          <div class="process-step reveal">
-            <div><span class="process-step__num">01</span></div>
-            <div><h3 class="t-card" data-en="Free first consultation">Kostenloses Erstgespräch</h3></div>
-            <div><p class="t-body" data-en="We clarify goals, target customers, scope and what already exists: logo, texts, photos. You then receive a fixed-price quote within one business day.">Wir klären Ziele, Zielgruppe, Umfang und was schon vorhanden ist: Logo, Texte, Fotos. Danach erhalten Sie innerhalb eines Werktags ein Festpreisangebot.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="1">
-            <div><span class="process-step__num">02</span></div>
-            <div><h3 class="t-card" data-en="Design">Design</h3></div>
-            <div><p class="t-body" data-en="You see a draft of the homepage and sub-pages before a single line of code is written. Revisions are part of the process, not an extra.">Sie sehen einen Entwurf für Startseite und Unterseiten, bevor eine Zeile Code entsteht. Anpassungen sind Teil des Prozesses, kein Extra.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="2">
-            <div><span class="process-step__num">03</span></div>
-            <div><h3 class="t-card" data-en="Development">Entwicklung</h3></div>
-            <div><p class="t-body" data-en="Hand-written HTML, CSS and JavaScript with no page builder: fast on every phone, accessible, and technically clean for Google.">Handgeschriebener HTML-, CSS- und JavaScript-Code ohne Baukasten: schnell auf jedem Handy, barrierefrei und technisch sauber für Google.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="3">
-            <div><span class="process-step__num">04</span></div>
-            <div><h3 class="t-card" data-en="Launch and support">Launch und Betreuung</h3></div>
-            <div><p class="t-body" data-en="We take the site live, set up your Google Business Profile and Search Console, and stay reachable afterwards — for changes, updates and questions.">Wir schalten die Website live, richten Google-Unternehmensprofil und Search Console ein und bleiben danach erreichbar – für Änderungen, Updates und Fragen.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <div><h2 class="t-lg" data-en="What our web agency does for you">Leistungen unserer Webagentur</h2></div>
-          <div><p class="t-body t-muted-body" data-en="Everything a small business needs online, from one place. Details for each service are on the services page.">Alles, was ein kleines Unternehmen online braucht, aus einer Hand. Details zu jeder Leistung finden Sie auf der Leistungsseite.</p></div>
-        </div>
-        <div class="lp-list">
-          <a href="services.html#webdesign" class="card lp-list__item reveal">
-            <div><h3 class="t-card" data-en="Web design">Webdesign</h3></div>
-            <div><p class="t-body" data-en="Individual design for your business — no template, no builder.">Individuelles Design für Ihren Betrieb – kein Template, kein Baukasten.</p></div>
-          </a>
-          <a href="services.html#webentwicklung" class="card lp-list__item reveal" data-delay="1">
-            <div><h3 class="t-card" data-en="Web development">Webentwicklung</h3></div>
-            <div><p class="t-body" data-en="Hand-coded, fast and stable on every device.">Handgeschrieben, schnell und stabil auf jedem Gerät.</p></div>
-          </a>
-          <a href="services.html#seo" class="card lp-list__item reveal" data-delay="2">
-            <div><h3 class="t-card" data-en="Local SEO">Lokales SEO</h3></div>
-            <div><p class="t-body" data-en="Show up when customers in Neubrandenburg search for your trade.">Erscheinen, wenn Kunden in Neubrandenburg nach Ihrem Gewerk suchen.</p></div>
-          </a>
-          <a href="services.html#beratung" class="card lp-list__item reveal">
-            <div><h3 class="t-card" data-en="Digital consulting">Digitale Beratung</h3></div>
-            <div><p class="t-body" data-en="Which pages, which texts, which Google profile — a clear plan before we build.">Welche Seiten, welche Texte, welches Google-Profil – ein klarer Plan, bevor wir bauen.</p></div>
-          </a>
-          <a href="services.html#barrierefreiheit" class="card lp-list__item reveal" data-delay="1">
-            <div><h3 class="t-card" data-en="Accessibility audits">Barrierefreiheits-Audits</h3></div>
-            <div><p class="t-body" data-en="WCAG 2.2 and BFSG check for existing websites, with a concrete fix list.">WCAG-2.2- und BFSG-Prüfung bestehender Websites mit konkreter Mängelliste.</p></div>
-          </a>
-          <a href="services.html#support" class="card lp-list__item reveal" data-delay="2">
-            <div><h3 class="t-card" data-en="Ongoing support">Laufender Support</h3></div>
-            <div><p class="t-body" data-en="Updates, content changes and monitoring after launch.">Updates, Inhaltsänderungen und Monitoring nach dem Launch.</p></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing -->
-    <section class="section">
-      <div class="container">
-        <div class="lp-prose reveal">
           <div><h2 class="t-lg" data-en="What does a website from a web agency in Neubrandenburg cost?">Was kostet eine Website bei einer Webagentur in Neubrandenburg?</h2></div>
-          <div><p class="t-body" data-en="At Vias Media, a professional website for a small business or trade company sits in the high three-figure to low four-figure euro range — as a one-off fixed price. Four things drive the price: the number of sub-pages, whether texts and photos already exist, extra functions such as online booking or a shop, and how much local SEO groundwork the site needs.">Eine professionelle Website für ein kleines Unternehmen oder einen Handwerksbetrieb liegt bei Vias Media im höheren dreistelligen bis niedrigen vierstelligen Euro-Bereich – als einmaliger Festpreis. Vier Faktoren bestimmen den Preis: die Anzahl der Unterseiten, ob Texte und Fotos schon vorhanden sind, Zusatzfunktionen wie Online-Terminbuchung oder Shop, und wie viel lokale SEO-Grundarbeit nötig ist.</p></div>
-          <div><p class="t-body" data-en="What is never added on top: monthly licence fees, hourly rates or hidden extras. Hosting and domain run in your name. You'll find detailed price ranges in our guide on what a website costs.">Was nie dazukommt: monatliche Lizenzgebühren, Stundensätze oder versteckte Zusatzkosten. Hosting und Domain laufen auf Ihren Namen. Ausführliche Richtwerte finden Sie im Ratgeber <a href="blog/was-kostet-eine-website" class="link" data-en="What does a website cost?">„Was kostet eine Website?“</a>.</p></div>
+        </div>
+        <div class="lp-prose reveal">
+          <div><p class="t-body-lg" data-en="At Vias Media, a professional website for a small business or trade company sits in the high three-figure to low four-figure euro range — as a one-off fixed price. Four things drive it: the number of sub-pages, whether texts and photos already exist, extra functions such as online booking or a shop, and how much local SEO groundwork the site needs.">Eine professionelle Website für ein kleines Unternehmen oder einen Handwerksbetrieb liegt bei Vias Media im höheren dreistelligen bis niedrigen vierstelligen Euro-Bereich – als einmaliger Festpreis. Vier Faktoren bestimmen ihn: die Anzahl der Unterseiten, ob Texte und Fotos schon vorhanden sind, Zusatzfunktionen wie Online-Terminbuchung oder Shop, und wie viel lokale SEO-Grundarbeit nötig ist.</p></div>
+          <div><p class="t-body t-muted-body" data-en-html="What is never added on top: monthly licence fees, hourly rates or hidden extras. Detailed ranges are in the guide <a href='blog/was-kostet-eine-website' class='link'>&quot;What does a website cost?&quot;</a>.">Was nie dazukommt: monatliche Lizenzgebühren, Stundensätze oder versteckte Zusatzkosten. Ausführliche Richtwerte stehen im Ratgeber <a href='blog/was-kostet-eine-website' class='link'>„Was kostet eine Website?“</a>.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- Comparison -->
+    <!-- ===== COMPARISON ===== -->
     <section class="section">
       <div class="container">
         <div class="section-head reveal">
-          <div><h2 class="t-lg" data-en="Web agency, freelancer or website builder — which fits your business?">Webagentur, Freelancer oder Baukasten – was passt zu Ihrem Betrieb?</h2></div>
+          <div><h2 class="t-lg" data-en="Web agency, freelancer or website builder?">Webagentur, Freelancer oder Baukasten?</h2></div>
           <div><p class="t-body t-muted-body" data-en="An honest comparison of the three ways a small business in Neubrandenburg gets a website.">Ein ehrlicher Vergleich der drei Wege, auf denen ein kleiner Betrieb in Neubrandenburg zu einer Website kommt.</p></div>
         </div>
         <div class="lp-tbl reveal">
@@ -353,22 +580,22 @@
             <thead>
               <tr>
                 <th scope="col" data-en="Criterion">Kriterium</th>
-                <th scope="col" data-en="Website builder (Wix, Jimdo)">Baukasten (Wix, Jimdo)</th>
+                <th scope="col" data-en="Website builder">Baukasten</th>
                 <th scope="col" data-en="Large agency">Große Agentur</th>
-                <th scope="col" data-en="Vias Media (local web agency)">Vias Media (Webagentur vor Ort)</th>
+                <th scope="col">Vias Media</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td data-en="Speed and technology">Ladezeit und Technik</td>
-                <td data-en="Pre-built templates with a lot of surplus code">Vorgefertigte Vorlagen mit viel überflüssigem Code</td>
-                <td data-en="Usually a CMS such as WordPress; quality depends on the team">Meist ein CMS wie WordPress, Qualität je nach Team</td>
-                <td data-en="Hand-written code, optimised for speed">Handgeschriebener Code, auf Geschwindigkeit optimiert</td>
+                <td data-en="Templates with a lot of surplus code">Vorlagen mit viel überflüssigem Code</td>
+                <td data-en="Usually a CMS; quality depends on the team">Meist ein CMS, Qualität je nach Team</td>
+                <td data-en="Hand-written code, optimised for speed">Handgeschriebener Code, auf Tempo optimiert</td>
               </tr>
               <tr>
                 <td data-en="Costs">Kosten</td>
                 <td data-en="Monthly fee, for as long as the site exists">Monatliche Gebühr, solange die Seite existiert</td>
-                <td data-en="Larger project budgets, often billed hourly">Höhere Projektbudgets, oft nach Stunden abgerechnet</td>
+                <td data-en="Larger budgets, often billed hourly">Höhere Budgets, oft nach Stunden</td>
                 <td data-en="One-off fixed price">Einmaliger Festpreis</td>
               </tr>
               <tr>
@@ -385,15 +612,15 @@
               </tr>
               <tr>
                 <td data-en="Ownership">Eigentum an der Website</td>
-                <td data-en="Tied to the platform; hard to move">An die Plattform gebunden, schwer umzuziehen</td>
+                <td data-en="Tied to the platform, hard to move">An die Plattform gebunden, schwer umzuziehen</td>
                 <td data-en="Depends on the contract">Je nach Vertrag</td>
                 <td data-en="Belongs entirely to you">Gehört vollständig Ihnen</td>
               </tr>
               <tr>
                 <td data-en="Best suited for">Passt am besten für</td>
-                <td data-en="A first test page on a very small budget">Eine erste Testseite mit sehr kleinem Budget</td>
+                <td data-en="A first test page on a tiny budget">Eine erste Testseite mit kleinem Budget</td>
                 <td data-en="Corporations and large campaigns">Konzerne und große Kampagnen</td>
-                <td data-en="Small businesses and trades in Mecklenburg-Vorpommern">Kleine Unternehmen und Handwerksbetriebe in Mecklenburg-Vorpommern</td>
+                <td data-en="Small businesses and trades in MV">Kleine Betriebe und Handwerker in MV</td>
               </tr>
             </tbody>
           </table>
@@ -401,81 +628,25 @@
       </div>
     </section>
 
-    <!-- Audience -->
-    <section class="section">
-      <div class="container">
-        <div class="lp-prose reveal">
-          <div><h2 class="t-lg" data-en="Who we build websites for">Für wen wir Websites bauen</h2></div>
-          <div><p class="t-body" data-en="Our focus is on trades and small local businesses: heating, plumbing and electrical contractors, construction and renovation firms, local service providers, retailers and small online shops. Businesses whose customers search on Google first and then call — and who need a website that turns that search into an enquiry.">Unser Schwerpunkt sind Handwerksbetriebe und kleine lokale Unternehmen: Heizungs-, Sanitär- und Elektrobetriebe, Bau- und Sanierungsfirmen, lokale Dienstleister, Einzelhändler und kleine Online-Shops. Betriebe, deren Kunden zuerst bei Google suchen und dann anrufen – und die eine Website brauchen, die aus dieser Suche eine Anfrage macht.</p></div>
-          <div><p class="t-body" data-en="If you're not sure whether your business needs a website at all, read our guide on why a website matters for small businesses.">Wenn Sie unsicher sind, ob Ihr Betrieb überhaupt eine Website braucht, lesen Sie unseren Ratgeber <a href="blog/warum-eine-website-fuer-kleine-betriebe-wichtig-ist" class="link" data-en="Why a website matters for small businesses">„Warum eine Website für kleine Betriebe wichtig ist“</a>.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- References -->
+    <!-- ===== REGION + NAP ===== -->
     <section class="section">
       <div class="container">
         <div class="section-head reveal">
-          <div><h2 class="t-lg" data-en="References: websites from Neubrandenburg and beyond">Referenzen: Websites aus Neubrandenburg und darüber hinaus</h2></div>
-          <div><p class="t-body t-muted-body" data-en="Four projects with measured results. Each case study shows what was built and what changed afterwards.">Vier Projekte mit gemessenen Ergebnissen. Jede Fallstudie zeigt, was gebaut wurde und was sich danach verändert hat.</p></div>
-        </div>
-        <div class="lp-refs">
-          <a href="work-akkerman-stroy.html" class="card lp-ref reveal">
-            <div><span class="lp-ref__stat">+140 %</span></div>
-            <div><span class="t-small" data-en="organic traffic">organischer Traffic</span></div>
-            <div><h3 class="t-card">Akkerman Stroy</h3></div>
-            <div><p class="t-body" data-en="Renovation contractor, Neubrandenburg and Berlin">Sanierungsbetrieb, Neubrandenburg und Berlin</p></div>
-          </a>
-          <a href="work-eagle-air.html" class="card lp-ref reveal" data-delay="1">
-            <div><span class="lp-ref__stat">2×</span></div>
-            <div><span class="t-small" data-en="enquiries since launch">Anfragen seit Launch</span></div>
-            <div><h3 class="t-card">Eagle Air HVAC</h3></div>
-            <div><p class="t-body" data-en="HVAC contractor, website relaunch">Klimatechnik-Betrieb, Website-Relaunch</p></div>
-          </a>
-          <a href="work-luxe-bouquets.html" class="card lp-ref reveal" data-delay="2">
-            <div><span class="lp-ref__stat">+85 %</span></div>
-            <div><span class="t-small" data-en="online orders">Online-Bestellungen</span></div>
-            <div><h3 class="t-card">Luxe Bouquets</h3></div>
-            <div><p class="t-body" data-en="Florist, online shop">Floristin, Online-Shop</p></div>
-          </a>
-          <a href="work-safari.html" class="card lp-ref reveal" data-delay="3">
-            <div><span class="lp-ref__stat">+38 %</span></div>
-            <div><span class="t-small" data-en="conversion rate">Conversion-Rate</span></div>
-            <div><h3 class="t-card">Safari</h3></div>
-            <div><p class="t-body" data-en="Fashion shop, redesign">Modeshop, Redesign</p></div>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Region -->
-    <section class="section">
-      <div class="container">
-        <div class="lp-prose reveal">
           <div><h2 class="t-lg" data-en="Web agency for Neubrandenburg and the Mecklenburg Lake District">Webagentur für Neubrandenburg und die Mecklenburgische Seenplatte</h2></div>
-          <div><p class="t-body" data-en="Vias Media is based at Robert-Koch-Str. 15 in Neubrandenburg. Businesses from the whole Mecklenburg Lake District are welcome to meet in person; everyone else we serve by video call across Mecklenburg-Vorpommern, Berlin and beyond.">Vias Media sitzt in der Robert-Koch-Str. 15 in Neubrandenburg. Betriebe aus der gesamten Mecklenburgischen Seenplatte treffen wir gern persönlich; alle anderen betreuen wir per Videoanruf in ganz Mecklenburg-Vorpommern, Berlin und darüber hinaus.</p></div>
-          <div class="lp-towns" aria-label="Orte im Einzugsgebiet">
-            <span class="pill">Neubrandenburg</span>
-            <span class="pill">Neustrelitz</span>
-            <span class="pill">Waren (Müritz)</span>
-            <span class="pill">Altentreptow</span>
-            <span class="pill">Friedland</span>
-            <span class="pill">Malchin</span>
-            <span class="pill">Burg Stargard</span>
-            <span class="pill">Penzlin</span>
-            <span class="pill">Woldegk</span>
-            <span class="pill">Demmin</span>
-          </div>
-          <div class="lp-nap">
-            <div><span class="t-body">Vias Media · Mykhailo Sibahatov</span></div>
-            <div><span class="t-body">Robert-Koch-Str. 15, 17036 Neubrandenburg</span></div>
-            <div><a href="tel:+4916095761094" class="link t-body">+49 160 95761094</a> · <a href="mailto:mykhailo@viasmedia.com" class="link t-body">mykhailo@viasmedia.com</a></div>
+          <div><p class="t-body t-muted-body" data-en="Businesses from the whole lake district are welcome in person; everyone else we serve by video call — in German, English, Ukrainian or Russian.">Betriebe aus der gesamten Seenplatte treffen wir gern persönlich; alle anderen betreuen wir per Videoanruf – auf Deutsch, Englisch, Ukrainisch oder Russisch.</p></div>
+        </div>
+        <div class="lp-nap card reveal">
+          <div><span class="t-card">Vias Media · Mykhailo Sibahatov</span></div>
+          <div><p class="t-body">Robert-Koch-Str. 15, 17036 Neubrandenburg</p></div>
+          <div class="lp-nap__links">
+            <a href="tel:+4916095761094" class="link t-body">+49 160 95761094</a>
+            <a href="mailto:mykhailo@viasmedia.com" class="link t-body">mykhailo@viasmedia.com</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- ===== FAQ ===== -->
     <section class="section faq" id="faq">
       <div class="container">
         <div class="section-head section-head--center faq__head reveal">

@@ -1,86 +1,88 @@
 /* =============================================================================
    Vias Media — local landing pages (webagentur-neubrandenburg.html)
-   Reuses .section / .container / .card / .pill / .faq from base + components.
-   Everything here is layout only; type comes from the .t-* scale in base.css.
+   -----------------------------------------------------------------------------
+   The page is built from the shared section components in components.css — the
+   same hero, trust strip, numbered bento, feature slider, folio and services
+   teaser the homepage uses. Only the three blocks that exist nowhere else live
+   here: the numbered step badge, the comparison table and the NAP card.
    ============================================================================= */
 
-/* --- Three-up value cards ------------------------------------------------- */
-.lp-cols {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--space-md);
-  margin-top: var(--space-2xl);
+/* --- Step numeral inside the accent icon box (process slider) --------------
+   The homepage feature cards carry an icon; a process carries an order, so the
+   same accent square holds the step number instead. Sized to fill the box the
+   way the 32px icon does. */
+.step-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-800);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--btn-on-accent);
 }
-.lp-card { display: flex; flex-direction: column; gap: var(--space-sm); }
 
-/* --- Prose block (pricing, region, audience) ------------------------------ */
-.lp-prose { display: flex; flex-direction: column; gap: var(--space-md); max-width: 46rem; }
-.lp-prose--center { margin-inline: auto; text-align: center; align-items: center; }
-
-/* --- Service list (links into services.html#anchors) ---------------------- */
-.lp-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--space-xs);
-  margin-top: var(--space-2xl);
+/* --- Prose block (price) --------------------------------------------------- */
+.lp-prose {
+  display: flex; flex-direction: column; gap: var(--space-md);
+  max-width: 46rem; margin-top: var(--space-xl);
 }
-.lp-list__item {
-  display: flex; flex-direction: column; gap: var(--space-2xs);
-  text-decoration: none; color: inherit;
-}
-.lp-list__item:hover { background: var(--bg-alt); }
 
-/* --- Comparison table: scrolls inside its own box, never the page --------- */
+/* --- Comparison table: scrolls inside its own box, never the page ----------
+   Same scroll-shadow technique as the blog tables (pages/blog.css): the edge
+   gradients are pinned to the scroller (`local`), the shadows to the viewport
+   (`scroll`), so a shadow shows only on a side that still has content
+   off-screen — it signals swipeability without JS. */
 .lp-tbl {
   overflow-x: auto;
   max-width: 100%;
   min-width: 0;
   margin-top: var(--space-2xl);
   -webkit-overflow-scrolling: touch;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
+  background:
+    linear-gradient(to right, var(--card), transparent) left center / 1.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--card), transparent) right center / 1.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.13), transparent) left center / 0.6rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.13), transparent) right center / 0.6rem 100% no-repeat scroll,
+    var(--card);
 }
-.lp-tbl table { width: 100%; min-width: 42rem; border-collapse: collapse; }
-.lp-tbl th, .lp-tbl td {
+.lp-tbl table { width: 100%; min-width: 44rem; border-collapse: collapse; }
+.lp-tbl th,
+.lp-tbl td {
   text-align: left; vertical-align: top;
   padding: var(--space-sm) var(--space-md);
-  border-bottom: 1px solid var(--border);
-  font-size: var(--fs-300); line-height: 1.45;
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--fs-300); line-height: 1.5; color: var(--text-sec);
 }
-.lp-tbl tr:last-child td { border-bottom: 0; }
-.lp-tbl th { font-weight: 700; color: var(--text); background: var(--bg-alt); }
-.lp-tbl th:first-child, .lp-tbl td:first-child { font-weight: 700; color: var(--text); }
-.lp-tbl th:last-child, .lp-tbl td:last-child { background: var(--card); }
-
-/* --- Reference strip ------------------------------------------------------ */
-.lp-refs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: var(--space-xs);
-  margin-top: var(--space-2xl);
+.lp-tbl tbody tr:last-child td { border-bottom: 0; }
+/* Head row and first column carry the display face, matching the card titles. */
+.lp-tbl th {
+  font-family: var(--font-display); font-weight: 700;
+  letter-spacing: -0.015em; color: var(--text);
 }
-.lp-ref { display: flex; flex-direction: column; gap: var(--space-2xs); text-decoration: none; color: inherit; }
-.lp-ref:hover { background: var(--bg-alt); }
-.lp-ref__stat {
-  font-family: var(--font-display); font-weight: 800;
-  font-size: var(--fs-800); line-height: 1; color: var(--accent);
+.lp-tbl td:first-child { font-weight: 700; color: var(--text); }
+/* Our own column is the answer the table builds to — accent it. */
+.lp-tbl th:last-child { color: var(--accent); }
+.lp-tbl td:last-child { color: var(--text); }
+
+/* --- NAP card (name, address, phone) --------------------------------------
+   Same details as impressum.html and the site footer; Google reads all three,
+   so they must stay identical. */
+.lp-nap {
+  display: flex; flex-direction: column; gap: var(--space-xs);
+  max-width: 34rem; margin-top: var(--space-xl);
 }
-
-/* --- Town chips ----------------------------------------------------------- */
-.lp-towns { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-lg); }
-.lp-towns .pill { font-size: var(--fs-300); }
-
-/* --- NAP line under the region text --------------------------------------- */
-.lp-nap { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.lp-nap__links { display: flex; flex-wrap: wrap; gap: var(--space-md); }
 
 /* Progressive tightening, never a single-step jump */
 @media (max-width: 64rem) {
-  .lp-cols, .lp-list, .lp-refs { margin-top: var(--space-xl); }
+  .lp-prose, .lp-nap { margin-top: var(--space-lg); }
+  .lp-tbl { margin-top: var(--space-xl); }
 }
 @media (max-width: 47.9375rem) {
-  .lp-cols { gap: var(--space-sm); }
   .lp-tbl th, .lp-tbl td { padding: var(--space-xs) var(--space-sm); }
 }
 @media (max-width: 37.5rem) {
-  .lp-cols, .lp-list, .lp-refs, .lp-tbl { margin-top: var(--space-lg); }
+  .lp-tbl { margin-top: var(--space-lg); }
+  .lp-nap__links { flex-direction: column; gap: var(--space-2xs); }
 }
