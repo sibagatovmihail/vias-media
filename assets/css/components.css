@@ -414,6 +414,10 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
 .footer__col { display: flex; flex-direction: column; gap: var(--space-sm); }
 .footer__col a { font-size: var(--fs-300); color: var(--text-muted); transition: color var(--dur-fast) ease; }
 .footer__col a:hover { color: var(--text); }
+/* NAP block (name, address, phone) — same details as impressum.html; keep them identical
+   everywhere Google sees them: here, the Impressum, the Google Business Profile. */
+.footer__nap { display: flex; flex-direction: column; gap: var(--space-2xs); margin-top: var(--space-xs); }
+.footer__nap span { font-size: var(--fs-300); color: var(--text-muted); }
 .footer__bottom {
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: var(--space-sm);

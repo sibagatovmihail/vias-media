@@ -1,0 +1,86 @@
+/* =============================================================================
+   Vias Media — local landing pages (webagentur-neubrandenburg.html)
+   Reuses .section / .container / .card / .pill / .faq from base + components.
+   Everything here is layout only; type comes from the .t-* scale in base.css.
+   ============================================================================= */
+
+/* --- Three-up value cards ------------------------------------------------- */
+.lp-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-2xl);
+}
+.lp-card { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+/* --- Prose block (pricing, region, audience) ------------------------------ */
+.lp-prose { display: flex; flex-direction: column; gap: var(--space-md); max-width: 46rem; }
+.lp-prose--center { margin-inline: auto; text-align: center; align-items: center; }
+
+/* --- Service list (links into services.html#anchors) ---------------------- */
+.lp-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--space-xs);
+  margin-top: var(--space-2xl);
+}
+.lp-list__item {
+  display: flex; flex-direction: column; gap: var(--space-2xs);
+  text-decoration: none; color: inherit;
+}
+.lp-list__item:hover { background: var(--bg-alt); }
+
+/* --- Comparison table: scrolls inside its own box, never the page --------- */
+.lp-tbl {
+  overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
+  margin-top: var(--space-2xl);
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.lp-tbl table { width: 100%; min-width: 42rem; border-collapse: collapse; }
+.lp-tbl th, .lp-tbl td {
+  text-align: left; vertical-align: top;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-300); line-height: 1.45;
+}
+.lp-tbl tr:last-child td { border-bottom: 0; }
+.lp-tbl th { font-weight: 700; color: var(--text); background: var(--bg-alt); }
+.lp-tbl th:first-child, .lp-tbl td:first-child { font-weight: 700; color: var(--text); }
+.lp-tbl th:last-child, .lp-tbl td:last-child { background: var(--card); }
+
+/* --- Reference strip ------------------------------------------------------ */
+.lp-refs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--space-xs);
+  margin-top: var(--space-2xl);
+}
+.lp-ref { display: flex; flex-direction: column; gap: var(--space-2xs); text-decoration: none; color: inherit; }
+.lp-ref:hover { background: var(--bg-alt); }
+.lp-ref__stat {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: var(--fs-800); line-height: 1; color: var(--accent);
+}
+
+/* --- Town chips ----------------------------------------------------------- */
+.lp-towns { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-top: var(--space-lg); }
+.lp-towns .pill { font-size: var(--fs-300); }
+
+/* --- NAP line under the region text --------------------------------------- */
+.lp-nap { display: flex; flex-direction: column; gap: var(--space-2xs); }
+
+/* Progressive tightening, never a single-step jump */
+@media (max-width: 64rem) {
+  .lp-cols, .lp-list, .lp-refs { margin-top: var(--space-xl); }
+}
+@media (max-width: 47.9375rem) {
+  .lp-cols { gap: var(--space-sm); }
+  .lp-tbl th, .lp-tbl td { padding: var(--space-xs) var(--space-sm); }
+}
+@media (max-width: 37.5rem) {
+  .lp-cols, .lp-list, .lp-refs, .lp-tbl { margin-top: var(--space-lg); }
+}
