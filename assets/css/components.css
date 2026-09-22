@@ -288,6 +288,9 @@ html.js .card.reveal.is-visible:hover { transform: translateY(-0.125rem); }
   animation: marquee var(--marquee-speed, 40s) linear infinite;
 }
 .marquee:hover .marquee__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
 .marquee__edge {
   position: absolute; top: 0; bottom: 0; width: 5rem; z-index: 1; pointer-events: none;
 }

@@ -112,6 +112,9 @@ def load_post(path):
     return {
         "slug": slug,
         "title": meta.get("title", "").strip(),
+        # Optional shorter <title> for search results (Google cuts off at ~580 px);
+        # the H1 and og:title keep the full title.
+        "seo_title": meta.get("seo_title", "").strip() or f'{meta.get("title", "").strip()} — Vias Media',
         "description": meta.get("description", "").strip(),
         "date": meta.get("date", "").strip(),
         "updated": (meta.get("updated") or "").strip() or None,
@@ -216,6 +219,7 @@ def render_article(post, template):
     og_image = f"{SITE}/{post['image']}" if post.get("image") else f"{SITE}/assets/img/og/blog-default.png"
     body_html = render_body(post["_body"])
     out = template
+    out = out.replace("{{SEO_TITLE}}", post["seo_title"])
     out = out.replace("{{TITLE}}", post["title"])
     out = out.replace("{{DESCRIPTION}}", post["description"])
     out = out.replace("{{CANONICAL}}", canonical)

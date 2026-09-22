@@ -1,6 +1,6 @@
 ---
 title: Warum braucht ein Unternehmen eine Webseite?
-description: Warum kleine Betriebe in Neubrandenburg ohne gute Website jeden Tag Aufträge verlieren, warum Google-Profil und Facebook das nicht ersetzen und welche rechtlichen Pflichten seit 2024 und 2025 gelten.
+description: Warum kleine Betriebe ohne gute Website täglich Aufträge verlieren, warum Google-Profil und Facebook sie nicht ersetzen und welche Pflichten gelten.
 date: 2026-06-19
 updated: 2026-09-01
 category: Ratgeber

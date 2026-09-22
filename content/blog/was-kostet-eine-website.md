@@ -1,6 +1,7 @@
 ---
 title: Was kostet eine Website für ein kleines Unternehmen in Neubrandenburg?
-description: Was eine professionelle Website wirklich kostet, wovon der Preis abhängt und welche laufenden Kosten nach dem Launch bleiben — mit ehrlichen Richtwerten für kleine Betriebe in Mecklenburg-Vorpommern.
+seo_title: Was kostet eine Website in Neubrandenburg? — Vias Media
+description: Was eine professionelle Website kostet, wovon der Preis abhängt und welche laufenden Kosten bleiben – ehrliche Richtwerte für kleine Betriebe in MV.
 date: 2026-06-15
 updated: 2026-09-01
 category: Ratgeber

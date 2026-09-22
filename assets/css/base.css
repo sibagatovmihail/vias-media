@@ -116,15 +116,29 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 .reveal[data-delay="2"] { transition-delay: 0.16s; }
 .reveal[data-delay="3"] { transition-delay: 0.24s; }
 
-/* Accessibility: honour reduced motion globally */
+/* Accessibility: honour reduced motion.
+   Reduced motion means LESS motion, not NO motion. We drop the things that
+   actually trigger vestibular discomfort — scroll-jacking, parallax, the
+   entrance slide, looping animations — and keep the small colour/opacity
+   transitions that carry state (hover, focus, open/closed), because removing
+   those makes the interface feel broken rather than calm.
+
+   Every large motion is switched off at its own component instead: see the
+   `prefers-reduced-motion` blocks in components.css (marquee, typing cursor,
+   FAQ panel, service-card arrow, folio panels, why-web lead card), plus the
+   `prefersReduced` gate in main.js that disables parallax and the shot drift.
+
+   Do NOT reintroduce a blanket `*, *::before, *::after { transition-duration:
+   0.001ms !important }` here. It silently kills every hover, focus ring and
+   menu transition on the whole site for anyone whose OS reports reduced
+   motion — including Windows machines set to "Adjust for best performance",
+   where the user never asked for it and has no idea why the site feels dead. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  /* Entrance: show everything outright. `opacity: 1` here is also the safety
+     net for "JS loaded but threw before initReveal()" — without it a script
+     error would leave every .reveal section permanently invisible. */
   .reveal { opacity: 1; transform: none; transition: none; }
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
 }
 
 /* ===== helpers ===== */

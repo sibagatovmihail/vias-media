@@ -1,6 +1,7 @@
 ---
 title: Wie Handwerksbetriebe bei Google gefunden werden
-description: Lokales SEO für Handwerksbetriebe — Google-Unternehmensprofil, einheitliche NAP-Daten, eigene Seiten je Leistung und Ort, Bewertungen und realistische Zeiträume, bis es wirkt.
+seo_title: Wie Handwerker bei Google gefunden werden — Vias Media
+description: Lokales SEO für Handwerksbetriebe: Google-Unternehmensprofil, NAP-Daten, Seiten je Leistung und Ort, Bewertungen – und wie lange es dauert.
 date: 2026-09-01
 category: Ratgeber
 related_case: akkerman-stroy
