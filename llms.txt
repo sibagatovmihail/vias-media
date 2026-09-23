@@ -11,11 +11,12 @@
 
 ## Case Studies
 
-- [Projekte / Work](https://viasmedia.com/work.html): Index of four client case studies with the measured result for each.
+- [Projekte / Work](https://viasmedia.com/work.html): Index of five client case studies with the measured result for each.
 - [Eagle Air HVAC](https://viasmedia.com/work-eagle-air.html): Relaunch of a Sarasota, Florida HVAC contractor's brochure site as a mobile-first lead engine — 2x enquiries, 98 Lighthouse performance score.
 - [Akkerman Stroy](https://viasmedia.com/work-akkerman-stroy.html): Digital presence and multi-city local SEO for a Berlin/Mecklenburg-Vorpommern renovation contractor — +140% organic traffic.
 - [Luxe Bouquets](https://viasmedia.com/work-luxe-bouquets.html): Online shop build for a florist — +85% online orders.
 - [Safari](https://viasmedia.com/work-safari.html): Online fashion shop redesign — +38% conversion rate.
+- [Jesus Punkt](https://viasmedia.com/work-jesus-punkt.html): Trilingual (German/English/Ukrainian) website for a church in Neubrandenburg, with events synced automatically from ChurchTools and an online donation-receipt form.
 
 ## Blog
 

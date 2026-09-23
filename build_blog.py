@@ -20,6 +20,7 @@ CASES = {
     "akkerman-stroy": {"href": "work-akkerman-stroy.html", "name": "Akkerman Stroy",   "stat": "+140%", "stat_label": "organischer Traffic"},
     "luxe-bouquets":  {"href": "work-luxe-bouquets.html",  "name": "Luxe Bouquets",    "stat": "+85%",  "stat_label": "Online-Bestellungen"},
     "safari":         {"href": "work-safari.html",         "name": "Safari",           "stat": "+38%",  "stat_label": "Conversion-Rate"},
+    "jesus-punkt":    {"href": "work-jesus-punkt.html",    "name": "Jesus Punkt",      "stat": "3",     "stat_label": "Sprachen"},
 }
 
 STATIC_PAGES = [
@@ -33,6 +34,7 @@ STATIC_PAGES = [
     ("/work-safari.html", "yearly", "0.7"),
     ("/work-akkerman-stroy.html", "yearly", "0.7"),
     ("/work-luxe-bouquets.html", "yearly", "0.7"),
+    ("/work-jesus-punkt.html", "yearly", "0.7"),
 ]
 
 
