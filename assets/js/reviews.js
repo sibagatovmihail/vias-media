@@ -44,8 +44,8 @@
     return t.length > max ? t.slice(0, max).replace(/\s\S*$/, '') + '…' : t;
   }
 
-  function card(r, dupe) {
-    return '<figure class="card testimonial-card"' + (dupe ? ' aria-hidden="true"' : '') + '>'
+  function card(r) {
+    return '<figure class="card testimonial-card">'
       + QUOTE_SVG
       + stars(Math.round(r.rating || 5))
       + '<blockquote class="t-body" style="color: var(--text-sec);" title="' + esc(r.text) + '">'
@@ -65,9 +65,9 @@
   }
 
   function render(d) {
-    /* ×2 so the marquee loop stays seamless, same as the static markup. */
-    track.innerHTML = d.reviews.map(function (r) { return card(r, false); }).join('')
-                    + d.reviews.map(function (r) { return card(r, true); }).join('');
+    /* One set; main.js appends the aria-hidden copy for the seamless loop. */
+    track.innerHTML = d.reviews.map(card).join('');
+    if (window.viasFillMarquee) window.viasFillMarquee(track);
     reveal();
 
     if (ratingEl && d.rating && d.total) {

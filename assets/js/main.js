@@ -568,6 +568,31 @@
     });
   }
 
+  /* ---- Marquee copies ----
+     The CSS loop scrolls the track by -50%, so it needs every item twice.
+     The second set is made here rather than written into the HTML: crawlers
+     read each quote and name once (hard-coded copies were flagged as
+     duplicate text). Copies drop their data-en* attributes so i18n.js never
+     caches them, and are rebuilt from the localized originals after each
+     language switch. reviews.js calls fillMarquee after it swaps the cards. */
+  function fillMarquee(track) {
+    track.querySelectorAll('[data-marquee-copy]').forEach(function (el) { el.remove(); });
+    Array.prototype.slice.call(track.children).forEach(function (el) {
+      var copy = el.cloneNode(true);
+      copy.setAttribute('data-marquee-copy', '');
+      copy.setAttribute('aria-hidden', 'true');
+      [copy].concat(Array.prototype.slice.call(copy.querySelectorAll('*'))).forEach(function (n) {
+        ['data-en', 'data-en-html', 'data-de', 'data-de-html'].forEach(function (a) { n.removeAttribute(a); });
+      });
+      track.appendChild(copy);
+    });
+  }
+  function initMarquees() {
+    document.querySelectorAll('.marquee__track').forEach(fillMarquee);
+  }
+  window.viasFillMarquee = fillMarquee;
+  document.addEventListener('vias:lang', initMarquees);
+
   /* ---- Wire up ---- */
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -587,6 +612,7 @@
   }
   syncHeaderHeight();
   onScroll();
+  initMarquees();
   initReveal();
   initSliders();
   initFaq();

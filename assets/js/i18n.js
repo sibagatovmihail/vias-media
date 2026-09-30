@@ -595,6 +595,8 @@
 
     current = lang;
     try { localStorage.setItem(KEY, lang); } catch (e) {}
+    /* main.js rebuilds the marquee copies from the freshly localized originals */
+    document.dispatchEvent(new CustomEvent('vias:lang', { detail: lang }));
   }
 
   /* Init — German is the site's default language; English is an opt-in

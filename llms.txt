@@ -5,8 +5,8 @@
 ## Services
 
 - [Webagentur Neubrandenburg](https://viasmedia.com/webagentur-neubrandenburg.html): Local landing page — what a web agency in Neubrandenburg does differently, the four-step process, price range, an honest comparison of website builders vs. large agencies vs. Vias Media, references, service area towns and seven FAQs.
-- [Leistungen / Services](https://viasmedia.com/services.html): Six services — web design, web development, local SEO, digital consulting, accessibility audits, and ongoing support — with the four-stage project process (Discover, Design, Develop, Grow).
-- [Webdesign Neubrandenburg (homepage)](https://viasmedia.com/): What Vias Media does, who it serves, the six services, four case studies, client reviews, and eleven FAQs on pricing, timelines and post-launch support.
+- [Leistungen / Services](https://viasmedia.com/services.html): Websites, online shops and landing pages; web development, local SEO and AI visibility, digital consulting (by phone or on site), accessibility audits (WCAG 2.2 / BFSG) and ongoing support with hosting on servers in Germany — with the four-stage fixed-price project process (Discover, Design, Develop, Grow).
+- [Webdesign Neubrandenburg (homepage)](https://viasmedia.com/): What Vias Media does, who it serves, the six services, four case studies, client reviews, and FAQs on pricing, timelines, on-site meetings, hosting in Germany and post-launch support. One personal contact based in Neubrandenburg; every site is accessible under the BFSG.
 - [Kontakt / Contact](https://viasmedia.com/contact.html): Project enquiry form and direct contact details. Every enquiry gets a reply within one business day; the first consultation is free.
 
 ## Case Studies
@@ -23,6 +23,10 @@
 - [Blog](https://viasmedia.com/blog): German-language articles on websites, local visibility and online marketing for small businesses in Mecklenburg-Vorpommern.
 - [Was kostet eine Website?](https://viasmedia.com/blog/was-kostet-eine-website): Honest price ranges for a professional small-business website in Neubrandenburg and what actually drives the cost up or down.
 - [Warum eine Website für kleine Betriebe wichtig ist](https://viasmedia.com/blog/warum-eine-website-fuer-kleine-betriebe-wichtig-ist): Why small trade businesses lose customers without a website, and what a customer checks before calling.
+- [BFSG: Muss meine Website jetzt barrierefrei sein?](https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht): Who the German Accessibility Act (BFSG, in force since 28 June 2025) applies to, the micro-enterprise exemption, the WCAG requirements, penalties, and a 10-minute self-test.
+- [Drei Website-Fehler, die Anfragen kosten](https://viasmedia.com/blog/website-fehler-die-kunden-kosten): Slow loading, weak mobile view and no clear next step — how each costs enquiries and how a business owner can test for it in 10 minutes.
+- [Handwerk, Arztpraxis, Ferienwohnung](https://viasmedia.com/blog/website-handwerk-praxis-ferienwohnung-seenplatte): What trades, medical practices and holiday rentals in the Mecklenburg Lake District each need from their website, including legal requirements and direct-booking economics.
+- [Website-Wartung](https://viasmedia.com/blog/website-wartung-sicherheit): What a website needs after launch — updates, TLS certificate lifetimes, backups, DDG/TDDDG legal updates, form monitoring — and what owners can do themselves.
 
 ## Legal
 

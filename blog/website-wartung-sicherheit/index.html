@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de" data-palette="ember">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website-Wartung & Sicherheit — Vias Media</title>
+  <meta name="description" content="Updates, SSL-Zertifikat, Backups, Impressum nach DDG, ein Formular, das still kaputtgeht – was eine Website nach dem Launch braucht und was Sie selbst erledigen können.">
+  <link rel="canonical" href="https://viasmedia.com/blog/website-wartung-sicherheit">
+
+  <!-- Favicons & PWA -->
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="mask-icon" href="../../mask-icon.svg" color="#E8593A">
+  <link rel="manifest" href="../../site.webmanifest">
+  <meta name="theme-color" content="#FEF8EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Vias Media">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss — Vias Media">
+  <meta property="og:description" content="Updates, SSL-Zertifikat, Backups, Impressum nach DDG, ein Formular, das still kaputtgeht – was eine Website nach dem Launch braucht und was Sie selbst erledigen können.">
+  <meta property="og:url" content="https://viasmedia.com/blog/website-wartung-sicherheit">
+  <meta property="og:image" content="https://viasmedia.com/assets/img/og/blog-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss — Vias Media">
+  <meta name="twitter:description" content="Updates, SSL-Zertifikat, Backups, Impressum nach DDG, ein Formular, das still kaputtgeht – was eine Website nach dem Launch braucht und was Sie selbst erledigen können.">
+  <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/blog-default.png">
+
+  <link rel="preload" href="../../assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/fonts.css">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/consent.css">
+  <link rel="stylesheet" href="../../assets/css/pages/blog.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://viasmedia.com/blog/website-wartung-sicherheit#article", "url": "https://viasmedia.com/blog/website-wartung-sicherheit", "headline": "Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss", "name": "Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss", "description": "Updates, SSL-Zertifikat, Backups, Impressum nach DDG, ein Formular, das still kaputtgeht – was eine Website nach dem Launch braucht und was Sie selbst erledigen können.", "datePublished": "2026-09-30", "dateModified": "2026-09-30", "author": {"@id": "https://viasmedia.com/#mykhailo"}, "publisher": {"@id": "https://viasmedia.com/#organization"}, "isPartOf": {"@id": "https://viasmedia.com/blog#blog"}, "image": {"@type": "ImageObject", "url": "https://viasmedia.com/assets/img/og/blog-default.png", "width": 1200, "height": 630}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://viasmedia.com/blog/website-wartung-sicherheit"}, "breadcrumb": {"@id": "https://viasmedia.com/blog/website-wartung-sicherheit#breadcrumb"}, "articleSection": "Ratgeber", "wordCount": 1159, "timeRequired": "PT6M", "inLanguage": "de-DE", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".post__lead", ".post__body h2", ".post__body p"]}}, {"@type": "Person", "@id": "https://viasmedia.com/#mykhailo", "name": "Mykhailo Sibahatov", "jobTitle": "Webdesigner und Webentwickler", "url": "https://viasmedia.com/", "worksFor": {"@id": "https://viasmedia.com/#organization"}, "knowsAbout": ["Webdesign", "Webentwicklung", "Lokales SEO", "Barrierefreiheit im Web", "Core Web Vitals"], "knowsLanguage": ["de", "en"]}, {"@type": "BreadcrumbList", "@id": "https://viasmedia.com/blog/website-wartung-sicherheit#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://viasmedia.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://viasmedia.com/blog"}, {"@type": "ListItem", "position": 3, "name": "Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss", "item": "https://viasmedia.com/blog/website-wartung-sicherheit"}]}]}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-en="Skip to content">Zum Inhalt springen</a>
+
+  <!-- ===== HEADER: topbar + floating nav ===== -->
+  <header class="header" id="header">
+    <div class="topbar">
+      <div class="topbar__inner container">
+        <span class="topbar__text t-label" data-en="Need more local customers?">Mehr lokale Kunden gewinnen?</span>
+        <a href="../../contact.html" class="topbar__link t-label" data-en="Let's Talk!">Sprechen wir!</a>
+      </div>
+    </div>
+    <nav class="navbar" aria-label="Primary">
+      <div class="navbar__inner">
+        <a href="../../index.html" class="navbar__logo" aria-label="Vias Media home">
+          <img src="../../assets/img/logo-mark.png" alt="Vias Media Logo" class="logo-mark logo-mark--light">
+          <img src="../../assets/img/logo-mark-dark.png" alt="Vias Media Logo" class="logo-mark logo-mark--dark">
+          <span class="wordmark">vias<span class="dot">.</span></span>
+        </a>
+        <div class="navbar__links">
+          <a href="../../services.html" data-en="Services">Leistungen</a>
+          <a href="../../work.html" data-en="Work">Projekte</a>
+          <a href="../../index.html#reviews" data-en="Reviews">Bewertungen</a>
+          <a href="../../contact.html" data-en="Contact">Kontakt</a>
+        </div>
+        <div class="navbar__actions">
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+            <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+            <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
+          </button>
+          <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Sprache wechseln">
+            <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
+          </button>
+          <a href="../../contact.html" class="btn btn--primary btn-cta">
+            <span data-en="Free Consultation">Kostenlose Beratung</span>
+            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrop">
+            <svg class="hamburger__icon hamburger__bars" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6H19M3 11H19M3 16H19"/></svg>
+            <svg class="hamburger__icon hamburger__x" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5L17 17M17 5L5 17"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="nav-drop" id="navDrop">
+        <div class="nav-drop__inner">
+          <div class="nav-drop__content">
+            <a href="../../services.html" data-en="Services">Leistungen</a>
+            <a href="../../work.html" data-en="Work">Projekte</a>
+            <a href="../../index.html#reviews" data-en="Reviews">Bewertungen</a>
+            <a href="../../contact.html" data-en="Contact">Kontakt</a>
+            <div class="nav-drop__cta">
+              <a href="../../contact.html" class="btn btn--primary">
+                <span data-en="Free Consultation">Kostenlose Beratung</span>
+                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+              </a>
+            </div>
+            <div class="nav-drop__lang">
+              <button class="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
+                <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
+              </button>
+              <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+                <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+                <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <div id="header-spacer"></div>
+
+  <main id="main" tabindex="-1">
+    <article class="post">
+      <div class="container post__container">
+        <header class="post__head">
+          <div><span class="post__cat t-label-md">Ratgeber</span></div>
+          <div><h1 class="t-lg post__title">Website-Wartung: Was nach dem Launch wirklich gepflegt werden muss</h1></div>
+          <div class="post__meta">
+            <span class="t-small">30. September 2026</span>
+            <span class="post__dot" aria-hidden="true">·</span>
+            <span class="t-small">6 Min. Lesezeit</span>
+            <span class="post__dot" aria-hidden="true">·</span>
+            <span class="t-small">von Mykhailo Sibahatov</span>
+          </div>
+        </header>
+
+        <div class="post__body">
+          <p>Eine Website ist nach dem Launch nicht fertig, sondern in Betrieb. Wie ein Firmenwagen braucht sie keine tägliche Aufmerksamkeit, aber regelmäßige Inspektion — sonst merken Sie ein Problem erst, wenn ein Kunde anruft und fragt, warum Ihre Seite als „Nicht sicher" angezeigt wird. Dieser Artikel erklärt, was Website-Wartung konkret umfasst, warum gerade kleine Websites angegriffen werden, welche Pflichten sich seit 2024 geändert haben und welche Aufgaben Sie ohne Agentur selbst übernehmen können.</p>
+<h2>Was umfasst Website-Wartung?</h2>
+<p>Website-Wartung ist die regelmäßige technische, rechtliche und inhaltliche Pflege einer Website nach dem Launch. Sie besteht aus sechs Bereichen:</p>
+<ol>
+<li><strong>Software-Updates</strong> — für das Content-Management-System, Plugins und Themes, sofern die Seite so gebaut ist.</li>
+<li><strong>Verschlüsselung</strong> — ein gültiges SSL/TLS-Zertifikat, das sich rechtzeitig erneuert.</li>
+<li><strong>Backups</strong> — regelmäßige Sicherungen, die sich im Ernstfall auch zurückspielen lassen.</li>
+<li><strong>Überwachung</strong> — Erreichbarkeit, Ladezeit und die Frage, ob das Kontaktformular noch zustellt.</li>
+<li><strong>Rechtstexte</strong> — Impressum, Datenschutzerklärung und Cookie-Hinweis passend zur aktuellen Rechtslage.</li>
+<li><strong>Inhalte</strong> — Öffnungszeiten, Preise, Leistungen, Referenzen und Ansprechpartner.</li>
+</ol>
+<p>Wie viel Aufwand jeder Bereich macht, hängt stark davon ab, wie die Website technisch gebaut ist. Darauf kommt dieser Artikel weiter unten zurück.</p>
+<h2>Warum werden gerade kleine Websites gehackt?</h2>
+<p>Kleine Websites werden nicht gezielt ausgesucht, sondern automatisch gefunden. Angreifer lassen Programme rund um die Uhr das gesamte Netz nach bekannten Sicherheitslücken absuchen. Welcher Betrieb dahintersteht, spielt keine Rolle — entscheidend ist nur, ob eine veraltete Software-Version läuft. Das trifft vor allem Websites auf Basis von WordPress, das laut W3Techs rund <strong>43 Prozent aller Websites</strong> antreibt. Der Sicherheitsdienstleister Patchstack zählte für das Jahr 2024 <strong>7.966 neu entdeckte Sicherheitslücken</strong> im WordPress-Umfeld, davon <strong>96 Prozent in Plugins</strong> und nur eine Handvoll im WordPress-Kern selbst. Eine gehackte Seite verteilt dann etwa Schadsoftware, leitet Besucher auf Betrugsseiten um oder verschickt Spam über Ihren Server. Google warnt Besucher in solchen Fällen mit einem roten Hinweis vor dem Aufruf — für einen lokalen Betrieb ist das ein Vertrauensschaden, der deutlich länger nachwirkt als die technische Reparatur.</p>
+<h2>Was ist ein SSL-Zertifikat und warum läuft es ab?</h2>
+<p>Ein SSL-Zertifikat — genauer: TLS-Zertifikat — verschlüsselt die Verbindung zwischen Besucher und Website und ist am <code>https://</code> in der Adresse zu erkennen. Ohne gültiges Zertifikat zeigt Chrome „Nicht sicher" an, Formulare übertragen Daten unverschlüsselt, und Google bewertet die Seite schlechter. Zertifikate kosten heute meist nichts: Anbieter wie Let's Encrypt stellen sie kostenlos aus. Der Knackpunkt ist die <strong>Laufzeit</strong>, denn sie wird schrittweise verkürzt. Das CA/Browser Forum, in dem Browserhersteller und Zertifizierungsstellen die Regeln festlegen, hat im April 2025 folgenden Zeitplan beschlossen:</p>
+<div class="tbl">
+<table>
+<thead>
+<tr>
+<th>Ausgestellt ab</th>
+<th>Maximale Laufzeit eines Zertifikats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bis 14. März 2026</td>
+<td>398 Tage</td>
+</tr>
+<tr>
+<td>15. März 2026</td>
+<td>200 Tage</td>
+</tr>
+<tr>
+<td>15. März 2027</td>
+<td>100 Tage</td>
+</tr>
+<tr>
+<td>15. März 2029</td>
+<td>47 Tage</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Ein Zertifikat einmal im Jahr von Hand zu verlängern, funktioniert damit nicht mehr. Die Erneuerung muss automatisch laufen — und jemand muss bemerken, wenn sie fehlschlägt.</p>
+<h2>Wie oft sollte eine Website gesichert werden?</h2>
+<p>So oft, wie sich die Website ändert — und immer vor jedem Update. Für eine Website, die sich selten ändert, reicht eine wöchentliche Sicherung; ein Onlineshop mit täglichen Bestellungen braucht tägliche Backups. Bewährt hat sich die <strong>3-2-1-Regel</strong>: drei Kopien der Daten, auf zwei unterschiedlichen Speichermedien, davon eine an einem anderen Ort als der Server. Ein Backup, das auf demselben Server liegt wie die Website, ist bei einem Serverausfall oder Angriff wertlos. Genauso wichtig und fast immer vergessen: <strong>das Zurückspielen testen</strong>. Ein Backup, das nie wiederhergestellt wurde, ist nur eine Hoffnung. Einmal im Jahr sollte eine Sicherung probeweise eingespielt werden, um zu prüfen, ob sie vollständig ist.</p>
+<h2>Welche rechtlichen Änderungen betreffen meine Website?</h2>
+<p>Seit dem <strong>14. Mai 2024</strong> ist das Telemediengesetz (TMG) durch das <strong>Digitale-Dienste-Gesetz (DDG)</strong> ersetzt, und das TTDSG heißt seitdem <strong>TDDDG</strong>. Viele Impressen verweisen trotzdem noch auf „§ 5 TMG" — ein Gesetz, das es nicht mehr gibt. Das ist ein kleiner Fehler, zeigt aber jedem aufmerksamen Besucher und Mitbewerber, dass die Seite nicht gepflegt wird. Weitere typische Auslöser für eine Aktualisierung der Rechtstexte:</p>
+<ul>
+<li><strong>Ein neuer Dienst wird eingebunden</strong> — Google Maps, ein Terminbuchungstool, ein Video, eine Schriftart von einem fremden Server. Jeder davon gehört in die Datenschutzerklärung und braucht oft eine Einwilligung.</li>
+<li><strong>Die Firmendaten ändern sich</strong> — Adresse, Rechtsform, Telefonnummer, Umsatzsteuer-ID.</li>
+<li><strong>Neue Pflichten</strong> wie das Barrierefreiheitsstärkungsgesetz, das seit Juni 2025 für Onlineshops und Buchungssysteme gilt.</li>
+</ul>
+<p>Die DSGVO verlangt in Art. 32 außerdem technische Schutzmaßnahmen „unter Berücksichtigung des Stands der Technik". Eine Website mit jahrelang ungepatchter Software erfüllt das kaum.</p>
+<h2>Welche Wartungsaufgaben kann ich selbst übernehmen?</h2>
+<p>Mehr, als die meisten denken. Die folgende Übersicht zeigt, was wie oft anfällt und was ohne Fachwissen machbar ist:</p>
+<div class="tbl">
+<table>
+<thead>
+<tr>
+<th>Aufgabe</th>
+<th>Wie oft</th>
+<th>Selbst machbar?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kontaktformular testen (Anfrage an sich selbst)</td>
+<td>monatlich</td>
+<td>ja</td>
+</tr>
+<tr>
+<td>Öffnungszeiten, Preise, Urlaub prüfen</td>
+<td>monatlich</td>
+<td>ja</td>
+</tr>
+<tr>
+<td>Impressum und Datenschutz auf Aktualität prüfen</td>
+<td>halbjährlich</td>
+<td>teilweise</td>
+</tr>
+<tr>
+<td>Software- und Plugin-Updates</td>
+<td>wöchentlich bis monatlich</td>
+<td>eher nicht</td>
+</tr>
+<tr>
+<td>Backups anlegen und Wiederherstellung testen</td>
+<td>wöchentlich / jährlich</td>
+<td>eher nicht</td>
+</tr>
+<tr>
+<td>Zertifikat, Erreichbarkeit und Ladezeit überwachen</td>
+<td>laufend, automatisch</td>
+<td>nein</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Der wichtigste Punkt steht ganz oben: <strong>Kontaktformulare gehen still kaputt.</strong> Ein geändertes E-Mail-Passwort, eine volle Mailbox oder ein abgelaufener Formulardienst — und Anfragen landen wochenlang im Nichts, ohne Fehlermeldung. Schicken Sie sich einmal im Monat selbst eine Anfrage. Das dauert eine Minute und ist die wirksamste Wartung überhaupt.</p>
+<h2>Warum brauchen manche Websites weniger Wartung als andere?</h2>
+<p>Weil der Wartungsaufwand vor allem von der Technik abhängt, auf der eine Website läuft. Eine Website auf Basis eines Content-Management-Systems besteht aus Datenbank, Login-Bereich, Theme und oft zwanzig oder mehr Plugins — jedes davon ein Bauteil, das Updates braucht und eine mögliche Lücke ist. Eine <strong>statische Website</strong> besteht dagegen aus fertigen HTML-Dateien: Es gibt keine Datenbank, die angegriffen werden kann, keinen Login, der erraten werden kann, und keine Plugins, die veralten. Die größte Gruppe der Sicherheitslücken aus dem Abschnitt oben entfällt damit vollständig. Vias Media baut jede Website auf diese Weise von Hand, gehostet auf Servern in Deutschland. Wartungsfrei ist auch eine statische Website nicht: Domain, Zertifikat, Formular, Rechtstexte und Inhalte bleiben. Aber aus einer wöchentlichen Update-Pflicht wird eine überschaubare Pflege, die sich planen lässt.</p>
+<h2>Was kostet Website-Wartung?</h2>
+<p>Am Markt werden Wartungspakete für kleine Websites meist zwischen etwa <strong>30 und 150 Euro im Monat</strong> angeboten, abhängig davon, ob nur technische Updates oder auch Inhaltsänderungen und Support enthalten sind. Bei CMS-Websites mit vielen Plugins ist ein solches Paket kaum verzichtbar, weil die Updates nicht warten. Bei Vias Media ist die Betreuung <strong>optional</strong>: Die Website gehört Ihnen und läuft auch ohne Vertrag weiter. Wer Betreuung möchte, bekommt Updates, Überwachung, Inhaltsänderungen und einen festen Ansprechpartner direkt in Neubrandenburg, der Ihre Website kennt. Die meisten Kunden starten mit einer kleinen Betreuung für die ersten sechs Monate nach dem Launch und entscheiden dann neu. Beim Heizungs- und Klimabetrieb <strong>Eagle Air HVAC</strong> läuft die Seite seit dem Relaunch mit einem Lighthouse-Wert von <strong>98 von 100</strong> — ohne einziges Plugin. Wenn Sie wissen möchten, in welchem Zustand Ihre aktuelle Website ist, melden Sie sich für einen kostenlosen Website-Check. Ich prüfe Zertifikat, Formular, Rechtstexte und Ladezeit und sage Ihnen, was davon wirklich dringend ist.</p>
+        </div>
+
+        <a class="post__case" href="../../work-eagle-air.html"><div class="post__case-stat"><span class="post__case-num">2×</span><span class="t-small">Anfragen seit Launch</span></div><div class="post__case-text"><span class="t-label-md t-muted">Fallstudie</span><span class="t-card">Eagle Air HVAC</span><span class="link">Fallstudie ansehen →</span></div></a>
+
+        <aside class="post__cta">
+          <div>
+            <h2 class="t-md">Kostenloser Website-Check für Ihren Betrieb</h2>
+            <div><p class="t-body t-muted-body">Ich schaue mir Ihre aktuelle Website (oder Ihren Auftritt bei Google) an und sage Ihnen konkret, wo Sie Anfragen verlieren — unverbindlich und kostenlos.</p></div>
+          </div>
+          <a href="../../contact.html" class="btn btn--primary">
+            <span>Website-Check anfragen</span>
+            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+        </aside>
+      </div>
+    </article>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer-wrap">
+    <section class="footer-cta">
+      <div class="container" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg);">
+        <div><h2 class="t-xl t-center footer-cta__title" data-en="Ready to win more local customers?">Bereit für mehr lokale Kunden?</h2></div>
+        <div class="hero__actions">
+          <a href="../../contact.html" class="btn btn--primary">
+            <span data-en="Start a Project">Projekt starten</span>
+            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          </a>
+          <a href="../../services.html" class="btn btn--outline"><span data-en="View services">Leistungen ansehen</span></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__top">
+            <div style="display:flex; flex-direction:column; gap: var(--space-md);">
+              <div class="stars" aria-label="5 star review rating">
+                <div class="stars__icons" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
+                </div>
+                <div><span class="t-small" data-en="5 Star Review Rating">5-Sterne-Bewertung</span></div>
+              </div>
+              <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
+              <div><a href="../../services.html" class="btn btn--outline btn--sm"><span data-en="View our services">Unsere Leistungen ansehen</span></a></div>
+            </div>
+            <div class="footer__wordmark">vias<span class="dot">.</span></div>
+          </div>
+
+          <div class="divider" style="margin-block: var(--space-lg);"></div>
+
+          <div class="footer__grid">
+            <div class="footer__col">
+              <div><span class="t-label-md" data-en="Services">Leistungen</span></div>
+              <a href="../../services.html" data-en="Web Design">Webdesign</a>
+              <a href="../../services.html" data-en="Development">Entwicklung</a>
+              <a href="../../services.html" data-en="SEO">SEO</a>
+              <a href="../../services.html" data-en="Consulting">Beratung</a>
+              <a href="../../services.html" data-en="Accessibility">Barrierefreiheit</a>
+              <a href="../../services.html" data-en="Support">Support</a>
+              <a href="../../webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
+            </div>
+
+            <div class="footer__col">
+              <div><span class="t-label-md" data-en="Company">Unternehmen</span></div>
+              <a href="../../work.html" data-en="Work">Projekte</a>
+              <a href="../../blog/index.html" data-en="Blog">Blog</a>
+              <a href="../../index.html#reviews" data-en="Reviews">Bewertungen</a>
+              <a href="../../contact.html" data-en="Contact">Kontakt</a>
+            </div>
+
+            <div class="footer__col">
+              <div><span class="t-label-md" data-en="Connect">Verbinden</span></div>
+              <a href="../../contact.html" data-en="Start a project">Projekt starten</a>
+              <a href="../../contact.html" data-en="Get a quote">Angebot anfordern</a>
+              <div class="footer__nap">
+                <div><span class="t-small">Vias Media · Robert-Koch-Str. 15, 17036 Neubrandenburg</span></div>
+                <div><a href="tel:+4916095761094">+49 160 95761094</a></div>
+                <div><a href="mailto:mykhailo@viasmedia.com">mykhailo@viasmedia.com</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider" style="margin-block: var(--space-lg) var(--space-md);"></div>
+
+          <div class="footer__bottom">
+            <div><span class="t-small" data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></div>
+            <div class="footer__legal">
+              <a href="../../datenschutz.html" class="t-small" data-en="Privacy">Datenschutz</a>
+              <a href="../../impressum.html" class="t-small">Impressum</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../../assets/js/i18n.js" defer></script>  <script src="../../assets/js/main.js" defer></script>
+  <script src="../../assets/js/consent.js" defer></script>
+</body>
+</html>
