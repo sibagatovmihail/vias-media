@@ -6,6 +6,7 @@ date: 2026-06-15
 updated: 2026-09-01
 category: Ratgeber
 related_case: eagle-air
+llms: Honest price ranges for a professional small-business website in Neubrandenburg and what actually drives the cost up or down.
 draft: false
 ---
 

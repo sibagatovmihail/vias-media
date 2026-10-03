@@ -5,6 +5,7 @@ description: Updates, SSL-Zertifikat, Backups, Impressum nach DDG, ein Formular,
 date: 2026-09-30
 category: Ratgeber
 related_case: eagle-air
+llms: What a website needs after launch — updates, TLS certificate lifetimes, backups, DDG/TDDDG legal updates, form monitoring — and what owners can do themselves.
 draft: false
 ---
 

@@ -5,6 +5,7 @@ description: Langsame Ladezeit, schwache Handy-Ansicht, kein klarer nächster Sc
 date: 2026-09-30
 category: Ratgeber
 related_case: eagle-air
+llms: Slow loading, weak mobile view and no clear next step — how each costs enquiries and how a business owner can test for it in 10 minutes.
 draft: false
 ---
 

@@ -5,6 +5,7 @@ description: Seit 28. Juni 2025 gilt das BFSG. Wen es trifft, wer als Kleinstunt
 date: 2026-09-30
 category: Ratgeber
 related_case: luxe-bouquets
+llms: Who the German Accessibility Act (BFSG, in force since 28 June 2025) applies to, the micro-enterprise exemption, the WCAG requirements, penalties, and a 10-minute self-test.
 draft: false
 ---
 

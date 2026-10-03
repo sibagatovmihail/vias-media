@@ -5,6 +5,7 @@ description: Eine Handwerker-Website sucht Fachkräfte, eine Praxis-Website entl
 date: 2026-09-30
 category: Ratgeber
 related_case: akkerman-stroy
+llms: What trades, medical practices and holiday rentals in the Mecklenburg Lake District each need from their website, including legal requirements and direct-booking economics.
 draft: false
 ---
 

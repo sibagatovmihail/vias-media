@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Vias Media blog generator. Markdown -> static HTML + sitemap."""
 import json
+import os
 import re
-from datetime import date
+from datetime import date, datetime
+from email.utils import format_datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import markdown as _md
 
@@ -14,6 +17,14 @@ MONTHS_DE = ["", "Januar", "Februar", "März", "April", "Mai", "Juni",
              "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
 _INLINE_MD = re.compile(r"[*_`\[\]()]")
+
+BERLIN = ZoneInfo("Europe/Berlin")
+FAQ_HEADING = re.compile(r"^## Häufige Fragen.*$", re.M)
+
+
+def today_berlin():
+    """Publishing day in Berlin. BLOG_TODAY=YYYY-MM-DD overrides it (tests, previews)."""
+    return os.environ.get("BLOG_TODAY") or datetime.now(BERLIN).date().isoformat()
 
 CASES = {
     "eagle-air":      {"href": "work-eagle-air.html",      "name": "Eagle Air HVAC",  "stat": "2×",    "stat_label": "Anfragen seit Launch"},
@@ -128,8 +139,33 @@ def load_post(path):
         "word_count": len(re.findall(r"\w+", _prose(body))),
         "excerpt": excerpt(meta, body),
         "url": f"/blog/{slug}",
+        "related": [r.strip() for r in meta.get("related", "").split(",") if r.strip()],
+        # English one-line summary for llms.txt (falls back to the description).
+        "llms": meta.get("llms", "").strip(),
+        "faq": extract_faq(body),
         "_body": body,                 # raw markdown, used by the renderer
     }
+
+
+def extract_faq(body):
+    """Question/answer pairs from a '## Häufige Fragen' section: each '### ' heading
+    is a question, the text up to the next heading its answer. Feeds FAQPage JSON-LD."""
+    m = FAQ_HEADING.search(body)
+    if not m:
+        return []
+    section = body[m.end():]
+    nxt = re.search(r"^## ", section, re.M)
+    if nxt:
+        section = section[:nxt.start()]
+    faq = []
+    for block in re.split(r"^### ", section, flags=re.M)[1:]:
+        q, _, a = block.partition("\n")
+        a = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", a)      # keep link text only
+        a = re.sub(r"[*_`]", "", a)
+        a = re.sub(r"\s+", " ", a).strip()
+        if q.strip() and a:
+            faq.append((q.strip(), a))
+    return faq
 
 
 # ---------------------------------------------------------------------------
@@ -212,16 +248,55 @@ def _jsonld(post, canonical, og_image):
         ],
     }
 
-    return json.dumps({"@context": "https://schema.org",
-                       "@graph": [article, author, crumbs]}, ensure_ascii=False)
+    graph = [article, author, crumbs]
+    if post.get("faq"):
+        graph.append({
+            "@type": "FAQPage",
+            "@id": canonical + "#faq",
+            "isPartOf": {"@id": canonical + "#article"},
+            "mainEntity": [
+                {"@type": "Question", "name": q,
+                 "acceptedAnswer": {"@type": "Answer", "text": a}}
+                for q, a in post["faq"]
+            ],
+        })
+    return json.dumps({"@context": "https://schema.org", "@graph": graph},
+                      ensure_ascii=False)
 
 
-def render_article(post, template):
+def pick_related(post, posts, limit=2):
+    """Explicit `related:` slugs first (only published ones), then the newest
+    other posts, so older articles keep linking to whatever was published later."""
+    by_slug = {p["slug"]: p for p in posts}
+    picked = [by_slug[s] for s in post.get("related", []) if s in by_slug and s != post["slug"]]
+    for p in sorted(posts, key=lambda x: x["date"], reverse=True):
+        if len(picked) >= limit:
+            break
+        if p["slug"] != post["slug"] and p not in picked:
+            picked.append(p)
+    return picked[:limit]
+
+
+def _related_posts_html(post, posts):
+    picked = pick_related(post, posts) if posts else []
+    if not picked:
+        return ""
+    cards = "".join(_card_html(p, prefix="../..", heading="h3") for p in picked)
+    return (
+        '<aside class="post__related" aria-labelledby="related-title">'
+        '<div><h2 class="t-md" id="related-title">Passende Artikel</h2></div>'
+        f'<div class="blog-grid post__related-grid">{cards}</div></aside>'
+    )
+
+
+def render_article(post, template, posts=None):
     canonical = f"{SITE}{post['url']}"
     og_image = f"{SITE}/{post['image']}" if post.get("image") else f"{SITE}/assets/img/og/blog-default.png"
     body_html = render_body(post["_body"])
     out = template
-    out = out.replace("{{SEO_TITLE}}", post["seo_title"])
+    out = out.replace("{{SEO_TITLE}}", post.get("seo_title") or f'{post["title"]} — Vias Media')
+    out = out.replace("{{DATE_ISO}}", post["date"])
+    out = out.replace("{{MODIFIED_ISO}}", post.get("updated") or post["date"])
     out = out.replace("{{TITLE}}", post["title"])
     out = out.replace("{{DESCRIPTION}}", post["description"])
     out = out.replace("{{CANONICAL}}", canonical)
@@ -231,6 +306,7 @@ def render_article(post, template):
     out = out.replace("{{READING_TIME}}", str(post["reading_time"]))
     out = out.replace("{{BODY}}", body_html)
     out = out.replace("{{RELATED_CASE}}", _related_case_html(post["related_case"]))
+    out = out.replace("{{RELATED_POSTS}}", _related_posts_html(post, posts))
     out = out.replace("{{JSONLD}}", _jsonld(post, canonical, og_image))
     return out
 
@@ -239,15 +315,15 @@ def render_article(post, template):
 # Task 8: render_index
 # ---------------------------------------------------------------------------
 
-def _card_html(post):
-    thumb = (f'<div class="blog-card__media"><img src="../{post["image"]}" alt="" '
+def _card_html(post, prefix="..", heading="h2"):
+    thumb = (f'<div class="blog-card__media"><img src="{prefix}/{post["image"]}" alt="" '
              f'loading="lazy" decoding="async"></div>') if post.get("image") else ""
     return (
-        f'<a class="blog-card" href="..{post["url"]}">'
+        f'<a class="blog-card" href="{prefix}{post["url"]}">'
         f'{thumb}'
         f'<div class="blog-card__body">'
         f'<div><span class="blog-card__cat t-label-md t-muted">{post["category"]}</span></div>'
-        f'<div><h2 class="t-card">{post["title"]}</h2></div>'
+        f'<div><{heading} class="t-card">{post["title"]}</{heading}></div>'
         f'<div><p class="t-body t-muted-body">{post["excerpt"]}</p></div>'
         f'<div class="blog-card__meta"><span class="t-small">{post["date_de"]}</span>'
         f'<span aria-hidden="true"> · </span>'
@@ -273,7 +349,7 @@ def _index_jsonld(posts):
         "blogPost": [
             {"@type": "BlogPosting", "@id": f"{SITE}{p['url']}#article",
              "headline": p["title"], "url": f"{SITE}{p['url']}",
-             "datePublished": p["date"], "description": p["description"],
+             "datePublished": p["date"], "description": p.get("description", ""),
              "author": {"@id": f"{SITE}/#mykhailo"}}
             for p in ordered
         ],
@@ -313,9 +389,54 @@ def build_sitemap(posts, today=None):
     for loc, cf, pr in STATIC_PAGES:
         lines.append(_url_tag(loc, today, cf, pr))
     for p in sorted(posts, key=lambda x: x["date"], reverse=True):
-        lines.append(_url_tag(p["url"], p["date"], "monthly", "0.6"))
+        lines.append(_url_tag(p["url"], p.get("updated") or p["date"], "monthly", "0.6"))
     lines.append("</urlset>")
     return "\n".join(lines) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# RSS feed + llms.txt blog section
+# ---------------------------------------------------------------------------
+
+def _xml(s):
+    return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+             .replace('"', "&quot;"))
+
+
+def build_feed(posts, limit=20):
+    ordered = sorted(posts, key=lambda p: p["date"], reverse=True)[:limit]
+
+    def rfc822(iso):
+        y, m, d = (int(x) for x in iso.split("-"))
+        return format_datetime(datetime(y, m, d, 7, 0, tzinfo=BERLIN))
+
+    items = "".join(
+        f"    <item><title>{_xml(p['title'])}</title><link>{SITE}{p['url']}</link>"
+        f"<guid isPermaLink=\"true\">{SITE}{p['url']}</guid>"
+        f"<pubDate>{rfc822(p['date'])}</pubDate>"
+        f"<description>{_xml(p.get('description', ''))}</description></item>\n"
+        for p in ordered)
+    last = rfc822(ordered[0]["date"]) if ordered else ""
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n'
+            f'  <title>Vias Media Blog</title><link>{SITE}/blog</link>\n'
+            f'  <atom:link href="{SITE}/blog/feed.xml" rel="self" type="application/rss+xml"/>\n'
+            '  <description>Ratgeber zu Websites, lokaler Sichtbarkeit und Kundengewinnung '
+            'für Handwerksbetriebe und kleine Unternehmen in Mecklenburg-Vorpommern.</description>\n'
+            f'  <language>de-de</language><lastBuildDate>{last}</lastBuildDate>\n'
+            f'{items}</channel></rss>\n')
+
+
+def update_llms(text, posts):
+    """Rewrite the article lines of the '## Blog' section; keeps the section's
+    first line (the blog index) and everything outside the section untouched."""
+    m = re.search(r"^## Blog\n\n(- \[Blog\][^\n]*\n)(.*?)(?=^## )", text, re.S | re.M)
+    if not m:
+        return text
+    lines = "".join(
+        f"- [{p['title']}]({SITE}{p['url']}): {p.get('llms') or p.get('description', '')}\n"
+        for p in sorted(posts, key=lambda p: p["date"], reverse=True))
+    return text[:m.start(2)] + lines + "\n" + text[m.end(2):].lstrip("\n")
 
 
 # ---------------------------------------------------------------------------
@@ -328,23 +449,31 @@ def main():
     art_tpl = (tpl_dir / "article.html").read_text(encoding="utf-8")
     idx_tpl = (tpl_dir / "index.html").read_text(encoding="utf-8")
 
+    today = today_berlin()
     posts = []
     for md in sorted(content.glob("*.md")):
         post = load_post(md)
         if post is None:
             print(f"  skip (draft): {md.name}")
             continue
+        if post["date"] > today:
+            print(f"  skip (scheduled {post['date']}): {md.name}")
+            continue
         posts.append(post)
 
     for post in posts:
         out_dir = ROOT / "blog" / post["slug"]
         out_dir.mkdir(parents=True, exist_ok=True)
-        (out_dir / "index.html").write_text(render_article(post, art_tpl), encoding="utf-8")
+        (out_dir / "index.html").write_text(render_article(post, art_tpl, posts), encoding="utf-8")
         print(f"  built: /blog/{post['slug']}")
 
     (ROOT / "blog").mkdir(exist_ok=True)
     (ROOT / "blog" / "index.html").write_text(render_index(posts, idx_tpl), encoding="utf-8")
     (ROOT / "sitemap.xml").write_text(build_sitemap(posts), encoding="utf-8")
+    (ROOT / "blog" / "feed.xml").write_text(build_feed(posts), encoding="utf-8")
+    llms = ROOT / "llms.txt"
+    if llms.exists():
+        llms.write_text(update_llms(llms.read_text(encoding="utf-8"), posts), encoding="utf-8")
     print(f"Done: {len(posts)} post(s), blog/index.html, sitemap.xml")
 
 

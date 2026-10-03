@@ -5,6 +5,7 @@ date: 2026-06-19
 updated: 2026-09-01
 category: Ratgeber
 related_case: akkerman-stroy
+llms: Why small trade businesses lose customers without a website, and what a customer checks before calling.
 draft: false
 ---
 

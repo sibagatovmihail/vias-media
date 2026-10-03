@@ -5,6 +5,7 @@ description: Lokales SEO für Handwerksbetriebe: Google-Unternehmensprofil, NAP-
 date: 2026-09-01
 category: Ratgeber
 related_case: akkerman-stroy
+llms: Local SEO for trade businesses: Google Business Profile setup, NAP consistency, pages per service and town, reviews, and a realistic 3–6 month timeline.
 draft: false
 ---
 
