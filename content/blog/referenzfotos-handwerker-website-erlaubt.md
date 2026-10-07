@@ -77,4 +77,4 @@ Gebäude von öffentlichen Straßen aus zu fotografieren erlaubt die Panoramafre
 
 Mehrere Handwerkskammern, etwa die Handwerkskammer Dortmund, stellen Musterformulare für Referenzfotos bereit. Ihre eigene Handwerkskammer berät Mitgliedsbetriebe außerdem kostenlos zu Rechtsfragen.
 
-Projektseiten mit Vorher-Nachher-Bildern, automatisch entfernten Metadaten und Alt-Texten gehören bei Vias Media zu jeder Handwerker-Website. [Fragen Sie unverbindlich an](/contact.html).
+Projektseiten mit Vorher-Nachher-Bildern, Bildern ohne Metadaten und beschreibenden Alt-Texten baue ich für Ihren Betrieb gern mit ein. [Fragen Sie unverbindlich an](/contact.html).

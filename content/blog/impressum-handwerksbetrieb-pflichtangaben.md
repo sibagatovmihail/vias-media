@@ -76,4 +76,4 @@ Generatoren decken die allgemeinen Angaben meist gut ab, kennen aber die Besonde
 
 Nein. Ins Impressum gehört nur eine Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer, falls vorhanden. Die normale Steuernummer sollten Sie aus Gründen des Missbrauchsschutzes nicht veröffentlichen.
 
-Ein aktuelles Impressum und eine passende Datenschutzerklärung sind bei jeder Website von Vias Media technisch eingebunden, und bei laufender Betreuung prüfe ich sie bei Gesetzesänderungen mit — wie im Artikel [Website-Wartung](/blog/website-wartung-sicherheit) beschrieben. [Kostenloser Website-Check](/contact.html) für Ihr bestehendes Impressum.
+Impressum und Datenschutzerklärung sind bei jeder Website von Vias Media eingebunden und von jeder Seite aus verlinkt, und bei laufender Betreuung prüfe ich sie bei Gesetzesänderungen mit — wie im Artikel [Website-Wartung](/blog/website-wartung-sicherheit) beschrieben. [Kostenloser Website-Check](/contact.html) für Ihr bestehendes Impressum.

@@ -82,4 +82,4 @@ Eine llms.txt ist eine Textdatei im Stammverzeichnis der Website, die KI-Systeme
 
 Das lässt sich nicht genau vorhersagen, weil jeder Dienst seine Quellen anders aktualisiert. Wer die Grundlagen für die lokale Google-Suche schafft, legt aber auch für KI-Antworten die Basis — realistisch über einige Monate.
 
-Jede Website von Vias Media ist für KI-Crawler freigegeben, mit strukturierten Daten für Ihren Betriebstyp ausgezeichnet und nach Leistungen und Orten gegliedert. Ich teste gern, ob ChatGPT Ihren Betrieb heute schon kennt — [im kostenlosen Website-Check](/contact.html).
+Die Handwerker-Websites von Vias Media sind für KI-Crawler freigegeben, mit strukturierten Daten für den Betriebstyp ausgezeichnet und nach Leistungen und Orten gegliedert. Ich teste gern, ob ChatGPT Ihren Betrieb heute schon kennt — [im kostenlosen Website-Check](/contact.html).
