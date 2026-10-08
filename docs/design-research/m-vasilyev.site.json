@@ -1,0 +1,198 @@
+{
+  "source": "https://m-vasilyev.site/",
+  "captured": {
+    "date": "2026-10-07",
+    "viewport": "1440x900",
+    "pages": 1,
+    "page_height_px": 22018,
+    "platform": "Tilda Zero Block + GSAP ScrollTrigger + Lenis"
+  },
+  "tokens": {
+    "spacing": {
+      "scale": [
+        6,
+        10,
+        15,
+        20
+      ],
+      "base_unit": 10,
+      "page_margin": "10px",
+      "card_joint": "6px"
+    },
+    "typography": {
+      "families": [
+        "RF Dewi Expanded"
+      ],
+      "scale": [
+        {
+          "role": "mask-word",
+          "size": "290px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "footer-word",
+          "size": "218px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "hero",
+          "size": "180px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "h2",
+          "size": "50px",
+          "weight": "400",
+          "family": "RF Dewi Expanded",
+          "line_height": "45px",
+          "letter_spacing": "-3px"
+        },
+        {
+          "role": "row-title",
+          "size": "20px",
+          "weight": "400",
+          "family": "RF Dewi Expanded",
+          "line_height": "20px"
+        },
+        {
+          "role": "body",
+          "size": "10px",
+          "weight": "400",
+          "family": "RF Dewi Expanded",
+          "line_height": "12px"
+        },
+        {
+          "role": "label",
+          "size": "8px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "role": "background",
+        "value": "#000000",
+        "note": "reads as ~#151515 under the grain overlay"
+      },
+      {
+        "role": "text-primary",
+        "value": "#FEE9CE"
+      },
+      {
+        "role": "accent",
+        "value": "#EF5143"
+      },
+      {
+        "role": "accent-secondary",
+        "value": "#FFB261"
+      },
+      {
+        "role": "section-light",
+        "value": "#FEE9CE"
+      },
+      {
+        "role": "marker",
+        "value": "#FFF705",
+        "note": "0.4% of surface"
+      }
+    ],
+    "radius": [
+      "1px",
+      "30px",
+      "500px"
+    ],
+    "shadows": [],
+    "image_ratios": [
+      {
+        "usage": "case video loop",
+        "ratio": "16:9 (515x290)"
+      },
+      {
+        "usage": "portrait video",
+        "ratio": "2:3 (380x567)"
+      },
+      {
+        "usage": "client logo tile",
+        "ratio": "1:1 (200x200)"
+      },
+      {
+        "usage": "course card photo",
+        "ratio": "3:4 (350x470)"
+      }
+    ],
+    "grid": {
+      "max_width": "none (full bleed)",
+      "columns": 4,
+      "gutter": "6px",
+      "column_width": "350px",
+      "margin": "10px"
+    },
+    "motion": {
+      "scroll_driven_elements": 59,
+      "hover_elements": 26,
+      "pinned_blocks_px": [
+        9000,
+        4400
+      ],
+      "hero_pan": "translateX -2980px over 3700px of scroll",
+      "mask_zoom": "scale 22.4 over 2000px of scroll",
+      "marquee": "20s and 50s linear infinite",
+      "micro": "color/background 0.2s ease-in-out",
+      "reduced_motion": false
+    }
+  },
+  "taste": [
+    {
+      "name": "Size instead of weight",
+      "trigger": "When one typeface had to carry hero, headings, body and labels",
+      "decision": "Chose a single weight (400) with an 18x size jump between hero and body over a bold/regular pairing",
+      "reason": "A wide letterform at 180px already fills the screen; making it bold as well would read as shouting, while thin strokes at that size read as calm",
+      "evidence": [
+        "304 of 317 text nodes at weight 400",
+        "hero 180px vs body 10px",
+        "only 5 working sizes: 180/50/20/10/8px",
+        "h2 line-height 45px on 50px type, letter-spacing -3px"
+      ]
+    },
+    {
+      "name": "The scroll is the showreel",
+      "trigger": "When the studio had to prove it can do motion before showing a single case",
+      "decision": "Chose a 9000px pinned scene driven by the visitor's own scroll over a static portfolio grid",
+      "reason": "Someone shopping for an animated site believes what moves under their own finger more than a list of logos",
+      "evidence": [
+        "block of 9000px page height pinned to one screen",
+        "hero stage 3900px wide pans -2980px",
+        "word 'Portfolio' pans -5070px then scales 22.4x until the photo inside the letters becomes the frame",
+        "cost: about 9 screens of scrolling before the first case text"
+      ]
+    },
+    {
+      "name": "No box around anything",
+      "trigger": "When listing advantages, prices and reviews",
+      "decision": "Chose hairline rows and cards separated by 6px joints over elevated cards with shadows",
+      "reason": "On a grainy near-black ground a shadow has nothing to fall on; lines keep the eye on the words",
+      "evidence": [
+        "0 box-shadows on the page",
+        "radius 1px on 54 of 78 rounded elements",
+        "advantage rows on an 87px pitch with 1px rules",
+        "4 price cards 350px wide with 6px gaps"
+      ]
+    },
+    {
+      "name": "Three warm inks, one of them a pointing finger",
+      "trigger": "When colouring a dark page that runs 22 screens",
+      "decision": "Chose cream text plus orange labels plus a coral reserved for start, end and the one action over white text with several accent hues",
+      "reason": "Cream on near-black glares less over a long scroll, and a colour that appears rarely is read as 'here'",
+      "evidence": [
+        "#FEE9CE on 233 text nodes",
+        "#FFB261 on 33",
+        "#EF5143 on 23: hero headline, the footer word, and the 0-rouble consultation card among four price cards",
+        "coral backgrounds cover 2% of surface"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "source": "https://flowers-sim.ru/",
+  "captured": {
+    "date": "2026-10-07",
+    "viewport": "1440x900",
+    "pages": 1,
+    "page_height_px": 14865,
+    "platform": "Tilda Zero Block + GSAP ScrollTrigger + SplitType"
+  },
+  "tokens": {
+    "spacing": {
+      "scale": [
+        6,
+        10,
+        20
+      ],
+      "base_unit": 10,
+      "page_margin": "10px",
+      "card_joint": "6px"
+    },
+    "typography": {
+      "families": [
+        "VC Garamond Condensed",
+        "SF Mono"
+      ],
+      "scale": [
+        {
+          "role": "footer-wordmark",
+          "size": "272px",
+          "weight": "400",
+          "family": "VC Garamond Condensed"
+        },
+        {
+          "role": "headline-and-statement",
+          "size": "50px",
+          "weight": "300",
+          "family": "VC Garamond Condensed",
+          "note": "emphasis by italic inside the line"
+        },
+        {
+          "role": "name",
+          "size": "30px",
+          "weight": "400",
+          "family": "VC Garamond Condensed"
+        },
+        {
+          "role": "nav",
+          "size": "15px",
+          "weight": "400",
+          "family": "SF Mono"
+        },
+        {
+          "role": "body",
+          "size": "13px",
+          "weight": "400",
+          "family": "SF Mono"
+        },
+        {
+          "role": "caption",
+          "size": "10px",
+          "weight": "400",
+          "family": "SF Mono"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "role": "background",
+        "value": "#000000",
+        "note": "reads as ~#111111 under the grain overlay"
+      },
+      {
+        "role": "text-primary",
+        "value": "#FFFFFF"
+      },
+      {
+        "role": "caption-block",
+        "value": "#A72D25",
+        "note": "0.7% of surface"
+      },
+      {
+        "role": "caption-block-alt",
+        "value": "#FFFFFF"
+      }
+    ],
+    "radius": [
+      "0px",
+      "500px (40px inline image circles)"
+    ],
+    "shadows": [],
+    "image_ratios": [
+      {
+        "usage": "hero and pinned backgrounds",
+        "ratio": "16:10 (1440x900 full bleed)"
+      },
+      {
+        "usage": "use-case card",
+        "ratio": "330x400: photo 330x230 over caption 330x170"
+      },
+      {
+        "usage": "product tile",
+        "ratio": "0.89:1"
+      },
+      {
+        "usage": "catalogue thumbnail in header",
+        "ratio": "175x110"
+      }
+    ],
+    "grid": {
+      "max_width": "none (full bleed)",
+      "columns": 4,
+      "gutter": "6px",
+      "column_width": "350px",
+      "margin": "10px",
+      "column_x": [
+        10,
+        366,
+        722,
+        1078
+      ]
+    },
+    "motion": {
+      "scroll_driven_elements": 17,
+      "intoview_elements": 55,
+      "hover_elements": 73,
+      "pinned_block_px": 4686,
+      "pinned": "full-bleed blurred enlargement of each card photo crossfades while the card slides sideways",
+      "text": "line-by-line reveal (SplitType), 1s linear",
+      "hover": "scale 0.9 and backdrop-filter: blur(3px)",
+      "header": "fixed, mix-blend-mode: difference",
+      "reduced_motion": false
+    }
+  },
+  "taste": [
+    {
+      "name": "Photographs do the colouring",
+      "trigger": "When a flower shop needed a palette",
+      "decision": "Chose white text on black plus one red caption block and left every other hue to the photos, over coloured panels and gradients",
+      "reason": "Flowers are bought with the eyes, and any interface colour would compete with a petal",
+      "evidence": [
+        "text #FFFFFF on 1179 nodes",
+        "red #A72D25 on 0.7% of surface",
+        "hero is one 1440x900 photo with type set directly on it",
+        "0 shadows, 0 gradients in the UI"
+      ]
+    },
+    {
+      "name": "One serif size, emphasis by italic",
+      "trigger": "When headlines, statements and list titles all needed a voice",
+      "decision": "Chose a condensed serif at a single 50px size with italic phrases over a six-step scale with bold",
+      "reason": "A condensed serif fits a full sentence into 3-5 lines at 50px, so the brand speaks in sentences instead of slogans, and the 13px mono beside it keeps it from turning into wedding stationery",
+      "evidence": [
+        "1007 text nodes at 50px",
+        "VC Garamond Condensed weights 300 and 400 only",
+        "italic used for 2-4 words per headline",
+        "body SF Mono 13px, captions 10px"
+      ]
+    },
+    {
+      "name": "The picture escapes its card",
+      "trigger": "When four use cases (home, office, gift, event) needed a section",
+      "decision": "Chose a 4686px pinned scene where each card's photo is repeated full-bleed and blurred behind it, over a four-card grid",
+      "reason": "One subject at full screen gives each use case its own mood; four cards side by side would have averaged them",
+      "evidence": [
+        "pinned block of 4686px",
+        "card 330x400 over a 1440x800 enlargement of the same photo",
+        "cards slide sideways while backgrounds crossfade",
+        "caption blocks alternate red, black, white"
+      ]
+    },
+    {
+      "name": "Navigation dissolved into the grid",
+      "trigger": "When the hero photo was supposed to reach the top edge",
+      "decision": "Chose to hang logo, socials, links and a catalogue thumbnail from the four column lines over a navbar strip",
+      "reason": "With no bar, the photograph owns the whole first screen. The cost is real: the stacked links collide with headlines mid-scroll",
+      "evidence": [
+        "logo at x=10, socials at x=366, four links stacked at x=722, 175x110 thumbnail at x=1255",
+        "links 15px mono on a 15px line",
+        "mix-blend-mode: difference",
+        "overlap with headlines visible at scroll positions 1164 and 3491"
+      ]
+    }
+  ]
+}

@@ -2,7 +2,11 @@
 <html lang="de" data-palette="ember">
 <head>
   <meta charset="UTF-8">
-  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
+  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
+  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* if main.js never arrives, nothing may stay hidden */
+  window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Web Agency Neubrandenburg: Web Design & SEO | Vias Media">Webagentur Neubrandenburg: Webdesign & SEO | Vias Media</title>
   <meta name="description" content="Webagentur in Neubrandenburg: barrierefreie, schnelle Websites, Onlineshops und Landingpages für Betriebe in der Seenplatte – mit lokalem SEO, zum Festpreis." data-en="Web agency in Neubrandenburg: accessible, fast websites, online shops and landing pages for businesses in the Lake District — with local SEO, at a fixed price.">
@@ -16,8 +20,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="mask-icon" href="/mask-icon.svg" color="#E8593A">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#FEF8EF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ECEBE8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141312" media="(prefers-color-scheme: dark)">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -37,15 +41,12 @@
   <meta name="twitter:description" content="Webagentur in Neubrandenburg: schnelle Websites für kleine Betriebe und Handwerker, mit lokalem SEO für mehr Kunden über Google. Zum Festpreis.">
   <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/og-default.png">
 
-  <link rel="preload" href="assets/fonts/raveo-display-extrabold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css">
-  <link rel="stylesheet" href="assets/css/tokens.css">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/consent.css">
-  <link rel="stylesheet" href="assets/css/pages/home.css">
+  <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261008">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261008">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261008">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261008">
+  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261008">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -54,7 +55,11 @@
       "@type": "ProfessionalService",
       "@id": "https://viasmedia.com/#organization",
       "name": "Vias Media",
-      "alternateName": ["viasmedia", "Vias Media Webagentur Neubrandenburg", "Vias Media Webdesign Neubrandenburg"],
+      "alternateName": [
+        "viasmedia",
+        "Vias Media Webagentur Neubrandenburg",
+        "Vias Media Webdesign Neubrandenburg"
+      ],
       "url": "https://viasmedia.com/",
       "image": "https://viasmedia.com/assets/img/og/og-default.png",
       "logo": {
@@ -241,7 +246,7 @@
               "@id": "https://viasmedia.com/services.html#support",
               "name": "Laufender Support",
               "serviceType": "Website-Betreuung",
-              "description": "Laufende Betreuung nach dem Launch: Updates, Inhaltsänderungen, Monitoring, Optimierung und Hosting auf Servern in Deutschland, damit die Seite Monat für Monat Anfragen bringt.",
+              "description": "Laufende Betreuung nach dem Launch: Updates, Inhaltsänderungen, Monitoring und Optimierung, damit die Seite Monat für Monat Anfragen bringt.",
               "provider": {
                 "@id": "https://viasmedia.com/#organization"
               }
@@ -266,7 +271,11 @@
       "publisher": {
         "@id": "https://viasmedia.com/#organization"
       },
-      "alternateName": ["viasmedia", "viasmedia.com", "Vias Media Webdesign"],
+      "alternateName": [
+        "viasmedia",
+        "viasmedia.com",
+        "Vias Media Webdesign"
+      ],
       "description": "Vias Media gestaltet schnelle, handgemachte Websites für kleine Unternehmen und Handwerksbetriebe in Neubrandenburg und Umgebung. Persönlich betreut, lokales SEO inklusive, zum klaren Festpreis."
     },
     {
@@ -289,7 +298,8 @@
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
-          ".hero__text",
+          ".hero__title",
+          ".hero__lead",
           ".faq-item__answer",
           "h2"
         ]
@@ -353,14 +363,6 @@
             "@type": "Answer",
             "text": "Ja. In Neubrandenburg und der Mecklenburgischen Seenplatte komme ich gern zum Erstgespräch oder zu Fotos und Abstimmungen direkt zu Ihnen – in die Werkstatt, die Praxis oder den Laden. Wer es lieber schnell mag, klärt das meiste per Telefon, WhatsApp oder Videocall."
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Wo wird meine Website gehostet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Auf Servern in Deutschland – DSGVO-konform, schnell und ohne Umweg über Drittländer. Auf Wunsch übernehme ich Hosting, Domain und SSL-Zertifikat komplett für Sie, damit Sie sich um nichts Technisches kümmern müssen."
-          }
         }
       ],
       "@id": "https://viasmedia.com/#faq",
@@ -376,534 +378,399 @@
 <body>
   <a class="skip-link" href="#main" data-en="Skip to content">Zum Inhalt springen</a>
 
-  <!-- ===== HEADER: topbar + floating nav ===== -->
-  <header class="header" id="header">
-    <div class="topbar">
-      <div class="topbar__inner container">
-        <span class="topbar__text t-label" data-en="Need more local customers?">Mehr lokale Kunden gewinnen?</span>
-        <a href="contact.html" class="topbar__link t-label" data-en="Let's Talk!">Sprechen wir!</a>
+  <!-- icon sprite (Heroicons outline 24 + WhatsApp glyph) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
+  </svg>
+
+  <!-- page ground: registration marks, grain, bottom fog -->
+  <div class="marks" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="hdr" id="header">
+    <div class="wrap hdr__bar">
+      <a href="index.html" class="hdr__logo" aria-label="Vias Media – Startseite">
+        <img src="assets/img/logo-mark.png" alt="" width="1019" height="947" class="logo-mark logo-mark--light">
+        <img src="assets/img/logo-mark-dark.png" alt="" width="1019" height="947" class="logo-mark logo-mark--dark">
+        <span class="wordmark">vias<span class="dot">.</span></span>
+      </a>
+      <nav class="hdr__nav" aria-label="Hauptnavigation">
+        <a href="services.html" class="blink"><span data-en="Services">Leistungen</span></a>
+        <a href="work.html" class="blink"><span data-en="Work">Projekte</span></a>
+        <a href="contact.html" class="blink"><span data-en="Contact">Kontakt</span></a>
+      </nav>
+      <div class="hdr__tools">
+        <button class="lang-toggle" type="button">
+          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+        </button>
+        <button class="theme-toggle" type="button" aria-label="Hell/Dunkel umschalten">
+          <svg class="ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <a href="contact.html" class="btn btn--accent hdr__cta">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+        </a>
+        <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span>
+        </button>
       </div>
     </div>
-    <nav class="navbar" aria-label="Primary">
-      <div class="navbar__inner">
-        <a href="index.html" class="navbar__logo" aria-label="Vias Media home">
-          <img src="assets/img/logo-mark.png" alt="Vias Media Logo" class="logo-mark logo-mark--light">
-          <img src="assets/img/logo-mark-dark.png" alt="Vias Media Logo" class="logo-mark logo-mark--dark">
-          <span class="wordmark">vias<span class="dot">.</span></span>
-        </a>
-        <div class="navbar__links">
-          <a href="services.html" data-en="Services">Leistungen</a>
-          <a href="work.html" data-en="Work">Projekte</a>
-          <a href="contact.html" data-en="Contact">Kontakt</a>
-        </div>
-        <div class="navbar__actions">
-          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-            <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-            <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-          </button>
-          <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Sprache wechseln">
-            <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-          </button>
-          <a href="contact.html" class="btn btn--primary btn-cta">
-            <span data-en="Free Consultation">Kostenlose Beratung</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
-          <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrop">
-            <svg class="hamburger__icon hamburger__bars" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6H19M3 11H19M3 16H19"/></svg>
-            <svg class="hamburger__icon hamburger__x" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5L17 17M17 5L5 17"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="nav-drop" id="navDrop">
-        <div class="nav-drop__inner">
-          <div class="nav-drop__content">
-            <a href="services.html" data-en="Services">Leistungen</a>
-            <a href="work.html" data-en="Work">Projekte</a>
-            <a href="contact.html" data-en="Contact">Kontakt</a>
-            <div class="nav-drop__cta">
-              <a href="contact.html" class="btn btn--primary">
-                <span data-en="Free Consultation">Kostenlose Beratung</span>
-                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-              </a>
-            </div>
-            <div class="nav-drop__lang">
-              <button class="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
-                <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-              </button>
-              <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-                <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-                <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
   </header>
 
-
-  <div id="header-spacer"></div>
+  <!-- ===== MENU SHEET (≤ 999px) ===== -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__panel">
+      <nav class="menu__list" aria-label="Menü">
+        <a href="services.html" class="menu__row"><span data-en="Services">Leistungen</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="work.html" class="menu__row"><span data-en="Work">Projekte</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="blog/index.html" class="menu__row"><span>Blog</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="contact.html" class="menu__row"><span data-en="Contact">Kontakt</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+      <div class="menu__foot">
+        <div class="menu__prefs">
+          <button class="lang-toggle" type="button">
+            <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+          </button>
+          <button class="theme-toggle" type="button" aria-label="Hell/Dunkel umschalten">
+            <svg class="ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+            <svg class="ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          </button>
+        </div>
+        <a href="contact.html" class="btn btn--accent">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+        </a>
+        <a data-contact="call" href="tel:+4916095761094" class="btn">
+          <span data-en="Call">Anrufen</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <main id="main" tabindex="-1">
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="top">
-      <div class="hero-decor" aria-hidden="true" data-parallax-root>
-        <div class="hero-grid" data-parallax="0.15"></div>
-        <div class="hero-glow" data-parallax="0.3"></div>
-        <div class="hero-cursor" data-parallax="0.5" style="top:24%; left:9%; animation: vm-float-a 7s ease-in-out infinite;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--accent)" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M5.5 3.2 L5.5 19.6 L9.9 15.3 L12.7 21.5 L15.2 20.4 L12.4 14.2 L18.4 14.2 Z"/></svg>
-          <span class="hero-cursor__tag" style="background: var(--accent); color: var(--btn-on-accent);">Designer</span>
+      <div class="wrap hero__wrap">
+        <div class="hero__text">
+          <h1 class="hero__title rv-lines" data-split data-en="Your web agency in Neubrandenburg – websites that bring customers.">Ihre Webagentur in Neubrandenburg – Webseiten, die Kunden bringen.</h1>
         </div>
-        <div class="hero-cursor" data-parallax="0.4" style="top:58%; right:9%; animation: vm-float-b 6s ease-in-out infinite; animation-delay: 0.6s;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--text)" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M5.5 3.2 L5.5 19.6 L9.9 15.3 L12.7 21.5 L15.2 20.4 L12.4 14.2 L18.4 14.2 Z"/></svg>
-          <span class="hero-cursor__tag" style="background: var(--text); color: var(--bg);" data-en="Developer">Entwickler</span>
-        </div>
-        <div class="hero-ring" data-parallax="0.6" style="top:19%; right:15%; width:3.5rem; height:3.5rem; animation: vm-spin 18s linear infinite;"></div>
-        <div class="hero-diamond" data-parallax="0.7" style="bottom:26%; left:16%; width:1.125rem; height:1.125rem; animation: vm-bob 5.5s ease-in-out infinite;"></div>
-      </div>
-
-      <div class="container hero__container">
-        <div class="hero__text reveal">
-          <div class="hero__pill">
-            <span class="pill">
-              <span class="pill--filled"><span class="t-label" data-en="Web Studio">Web Studio</span></span>
-              <span class="t-small" data-en="Local &amp; personal">Regional &amp; persönlich</span>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4L10 8L6 12"/></svg>
-            </span>
+        <div class="grid hero__info">
+          <div class="hero__meta rv">
+            <p class="tag" data-en="Web Studio">Web Studio</p>
+            <p class="mono"><span data-en="Local &amp; personal">Regional &amp; persönlich</span></p>
+            <p class="mono"><span data-en="Neubrandenburg · Mecklenburg Lake District">Neubrandenburg · Mecklenburgische Seenplatte</span></p>
           </div>
-
-          <h1 class="t-xl hero__title" data-en="Your web agency in Neubrandenburg — websites that bring customers.">Ihre Webagentur in Neubrandenburg – Webseiten, die Kunden bringen.</h1>
-
-          <div><p class="t-body-lg hero__lead t-muted-body" data-en-html="I design and build websites, online shops and landing pages for businesses in Neubrandenburg and the Mecklenburg Lake District — accessible, fast on every phone, and built so <span class='em'>Google and AI assistants find you</span>. One dedicated contact instead of an anonymous agency, so <span class='em'>visitors turn into booked jobs</span>.">Ich gestalte und entwickle Websites, Onlineshops und Landingpages für Betriebe aus Neubrandenburg und der Mecklenburgischen Seenplatte – barrierefrei, schnell auf jedem Handy und so gebaut, dass <span class='em'>Google und KI-Assistenten Sie finden</span>. Ein fester Ansprechpartner statt anonymer Agentur, damit <span class='em'>aus Besuchern echte Aufträge werden</span>.</p></div>
-        </div>
-
-        <div class="hero__actions reveal" data-delay="1">
-          <a href="contact.html" class="btn btn--primary">
-            <span data-en="Get a free quote">Kostenloses Angebot</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
-          <a data-contact="whatsapp" href="#" class="btn btn--outline" aria-label="Message us on WhatsApp">
-            <span class="btn__ico"><svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg></span>
-            <span>WhatsApp</span>
-          </a>
-          <div class="cta-reassure" style="width:100%; justify-content:center;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12l4 4 8-9"/></svg>
-            <span data-en="Free first meeting, fixed-price quote — the finished site is entirely yours.">Kostenloses Erstgespräch, Festpreis-Angebot – die fertige Website gehört ganz Ihnen.</span>
+          <div class="hero__lead-cover rv">
+            <p class="hero__lead" data-en-html="I design and build websites, online shops and landing pages for businesses in Neubrandenburg and the Mecklenburg Lake District — accessible, fast on every phone, and built so <span class='em'>Google and AI assistants find you</span>. One dedicated contact instead of an anonymous agency, so <span class='em'>visitors turn into booked jobs</span>.">Ich gestalte und entwickle Websites, Onlineshops und Landingpages für Betriebe aus Neubrandenburg und der Mecklenburgischen Seenplatte – barrierefrei, schnell auf jedem Handy und so gebaut, dass <span class='em'>Google und KI-Assistenten Sie finden</span>. Ein fester Ansprechpartner statt anonymer Agentur, damit <span class='em'>aus Besuchern echte Aufträge werden</span>.</p>
+          </div>
+          <div class="hero__actions rv">
+            <a href="contact.html" class="btn btn--lg btn--accent">
+              <span data-en="Get a free quote">Kostenloses Angebot</span>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+            </a>
+            <a data-contact="whatsapp" href="https://wa.me/4916095761094" class="btn btn--lg" aria-label="WhatsApp-Nachricht schreiben">
+              <svg class="ico-wa" aria-hidden="true"><use href="#i-wa"/></svg>
+              <span>WhatsApp</span>
+            </a>
+            <p class="mono hero__reassure"><span data-en="Free first meeting, fixed-price quote — the finished site is entirely yours.">Kostenloses Erstgespräch, Festpreis-Angebot – die fertige Website gehört ganz Ihnen.</span></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== TRUST MARQUEE ===== -->
-    <section class="trust" aria-label="Trusted by">
-      <div class="marquee">
-        <div class="marquee__edge marquee__edge--l"></div>
-        <div class="marquee__edge marquee__edge--r"></div>
-        <div class="marquee__track" style="--marquee-speed: 30s;">
-          <span class="trust__item">Eagle Air HVAC</span>
-          <span class="trust__item">Akkerman Stroy</span>
-          <span class="trust__item">Luxe Bouquets</span>
-          <span class="trust__item">Safari</span>
-          <span class="trust__item">Sterling Properties</span>
-          <span class="trust__item">Meridian Health</span>
+    <!-- ===== REEL: projects. Plain list by default; main.js turns it into the pinned scene ===== -->
+    <section class="reel" id="work" data-reel aria-labelledby="reel-title">
+      <h2 class="vh" id="reel-title" data-en="My latest projects">Meine neuesten Projekte</h2>
+      <div class="reel__stage">
+        <div class="reel__frame">
+          <div class="ticker reel__ticker" aria-hidden="true">
+            <div class="ticker__track">
+              <div class="ticker__set">
+                <span>+++</span><span>[ <span data-en="Work">Projekte</span> ]</span>
+                <span>+++</span><span>[ Eagle Air HVAC ]</span>
+                <span>+++</span><span>[ Jesus Punkt ]</span>
+                <span>+++</span><span>[ Akkerman Stroy ]</span>
+                <span>+++</span><span>[ Luxe Bouquets ]</span>
+              </div>
+            </div>
+          </div>
+          <ol class="reel__list">
+            <li class="reel__item is-in is-active">
+              <div class="reel__pic">
+                <picture>
+                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/eagle-air-mobile-1.webp" width="800" height="1635">
+                  <img src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="Website von Eagle Air HVAC, gestaltet von Vias Media" decoding="async" fetchpriority="high">
+                </picture>
+              </div>
+              <div class="reel__cap">
+                <p class="mono reel__count">[ 01 / 04 ]</p>
+                <div class="display reel__name"><h3><span>Eagle Air HVAC</span></h3></div>
+                <p class="mono reel__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Development">Entwicklung</span></p>
+                <a href="work-eagle-air.html" class="btn btn--on-media" data-cur="Ansehen" data-cur-en="View">
+                  <span class="vh">Eagle Air HVAC: </span><span data-en="View case study">Fallstudie ansehen</span>
+                  <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+                </a>
+              </div>
+            </li>
+            <li class="reel__item">
+              <div class="reel__pic">
+                <picture>
+                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/jesus-punkt-mobile-1.webp" width="660" height="1420">
+                  <img src="assets/img/portfolio/jesus-punkt-1.webp" width="1760" height="958" alt="Website der Gemeinde Jesus Punkt, gestaltet von Vias Media" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <div class="reel__cap">
+                <p class="mono reel__count">[ 02 / 04 ]</p>
+                <div class="display reel__name"><h3><span>Jesus Punkt</span></h3></div>
+                <p class="mono reel__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Multilingual">Mehrsprachig</span></p>
+                <a href="work-jesus-punkt.html" class="btn btn--on-media" data-cur="Ansehen" data-cur-en="View">
+                  <span class="vh">Jesus Punkt: </span><span data-en="View case study">Fallstudie ansehen</span>
+                  <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+                </a>
+              </div>
+            </li>
+            <li class="reel__item">
+              <div class="reel__pic">
+                <picture>
+                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/akkerman-stroy-mobile-1.webp" width="800" height="1639">
+                  <img src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="961" alt="Website von Akkerman Stroy, gestaltet von Vias Media" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <div class="reel__cap">
+                <p class="mono reel__count">[ 03 / 04 ]</p>
+                <div class="display reel__name"><h3><span>Akkerman Stroy</span></h3></div>
+                <p class="mono reel__tags"><span data-en="Web Design">Webdesign</span> · <span>SEO</span></p>
+                <a href="work-akkerman-stroy.html" class="btn btn--on-media" data-cur="Ansehen" data-cur-en="View">
+                  <span class="vh">Akkerman Stroy: </span><span data-en="View case study">Fallstudie ansehen</span>
+                  <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+                </a>
+              </div>
+            </li>
+            <li class="reel__item">
+              <div class="reel__pic">
+                <picture>
+                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/luxe-bouquets-mobile-1.webp" width="800" height="1635">
+                  <img src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="Onlineshop von Luxe Bouquets, gestaltet von Vias Media" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <div class="reel__cap">
+                <p class="mono reel__count">[ 04 / 04 ]</p>
+                <div class="display reel__name"><h3><span>Luxe Bouquets</span></h3></div>
+                <p class="mono reel__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="E-commerce">E-Commerce</span></p>
+                <a href="work-luxe-bouquets.html" class="btn btn--on-media" data-cur="Ansehen" data-cur-en="View">
+                  <span class="vh">Luxe Bouquets: </span><span data-en="View case study">Fallstudie ansehen</span>
+                  <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+                </a>
+              </div>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
+    <div class="wrap reel-more">
+      <a href="work.html" class="btn">
+        <span data-en="See all work">Alle Projekte ansehen</span>
+        <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+      </a>
+    </div>
 
-    <!-- ===== WHY A WEBSITE — resolves "do I even need one?" ===== -->
-    <section class="section why-web">
-      <div class="container">
-        <div class="section-head section-head--center reveal">
-          <div><h2 class="t-lg t-center" data-en="Most customers check you online before they call">Die meisten Kunden prüfen Sie online, bevor sie anrufen</h2></div>
-          <div><p class="t-body t-muted-body" data-en-html="If they can't find you — or what they find looks dated — they call the next name on the list. A clear, fast website <span class='em'>turns that search into a booked job</span>.">Wenn sie Sie nicht finden – oder das Gefundene veraltet wirkt – rufen sie den nächsten Namen auf der Liste an. Eine klare, schnelle Website <span class='em'>macht aus dieser Suche einen festen Auftrag</span>.</p></div>
+    <!-- ===== WHY A WEBSITE ===== -->
+    <section class="s" id="warum">
+      <div class="wrap grid why">
+        <div class="s__label"><p class="tag" data-en="Why a website">Warum eine Website</p></div>
+        <div class="s__head">
+          <h2 class="display statement fill" data-fill data-en="Most customers check you online before they call">Die meisten Kunden prüfen Sie online, bevor sie anrufen</h2>
         </div>
-
-        <div class="why-web__grid reveal">
-          <div class="why-web__point why-web__point--lead card">
-            <span class="why-web__num" aria-hidden="true">01</span>
-            <div class="why-web__copy">
-              <div><h3 class="t-md" data-en="Found first">Zuerst gefunden</h3></div>
-              <div><p class="t-body-lg" data-en="When someone searches your trade and town, you want to be the result they tap — not the competitor who showed up instead.">Wenn jemand nach Ihrem Gewerk und Ort sucht, wollen Sie das Ergebnis sein, das angetippt wird – nicht der Mitbewerber, der stattdessen erschien.</p></div>
-            </div>
-          </div>
-
-          <div class="why-web__point card">
-            <span class="why-web__num" aria-hidden="true">02</span>
-            <div><h3 class="t-md" data-en="Trusted faster">Schneller Vertrauen</h3></div>
-            <div><p class="t-body-lg" data-en="A professional site answers &quot;are these people legit?&quot; before you've even spoken — so the enquiries you get are already warm.">Eine professionelle Website beantwortet „sind die seriös?" schon vor dem ersten Gespräch – die Anfragen, die Sie erhalten, sind also bereits vorgewärmt.</p></div>
-          </div>
-
-          <div class="why-web__point card">
-            <span class="why-web__num" aria-hidden="true">03</span>
-            <div><h3 class="t-md" data-en="Working 24/7">Rund um die Uhr aktiv</h3></div>
-            <div><p class="t-body-lg" data-en="Your site quotes, reassures, and captures enquiries while you're on the tools or asleep — no missed calls, no lost jobs.">Ihre Website informiert, überzeugt und sammelt Anfragen, während Sie arbeiten oder schlafen – keine verpassten Anrufe, keine verlorenen Aufträge.</p></div>
-          </div>
+        <div class="why__lead rv">
+          <p class="lead" data-en-html="If they can't find you — or what they find looks dated — they call the next name on the list. A clear, fast website <span class='em'>turns that search into a booked job</span>.">Wenn sie Sie nicht finden – oder das Gefundene veraltet wirkt – rufen sie den nächsten Namen auf der Liste an. Eine klare, schnelle Website <span class='em'>macht aus dieser Suche einen festen Auftrag</span>.</p>
         </div>
+        <ol class="rows why__rows">
+          <li class="row">
+            <span class="row__n" aria-hidden="true">01</span>
+            <div class="row__t"><h3 class="display d3" data-en="Found first">Zuerst gefunden</h3></div>
+            <div class="row__d"><p data-en="When someone searches your trade and town, you want to be the result they tap — not the competitor who showed up instead.">Wenn jemand nach Ihrem Gewerk und Ort sucht, wollen Sie das Ergebnis sein, das angetippt wird – nicht der Mitbewerber, der stattdessen erschien.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">02</span>
+            <div class="row__t"><h3 class="display d3" data-en="Trusted faster">Schneller Vertrauen</h3></div>
+            <div class="row__d"><p data-en="A professional site answers &quot;are these people legit?&quot; before you've even spoken — so the enquiries you get are already warm.">Eine professionelle Website beantwortet „sind die seriös?" schon vor dem ersten Gespräch – die Anfragen, die Sie erhalten, sind also bereits vorgewärmt.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">03</span>
+            <div class="row__t"><h3 class="display d3" data-en="Working 24/7">Rund um die Uhr aktiv</h3></div>
+            <div class="row__d"><p data-en="Your site quotes, reassures, and captures enquiries while you're on the tools or asleep — no missed calls, no lost jobs.">Ihre Website informiert, überzeugt und sammelt Anfragen, während Sie arbeiten oder schlafen – keine verpassten Anrufe, keine verlorenen Aufträge.</p></div>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- ===== FLOW BAND: Why → Work → Services share one gradient ===== -->
-    <div class="flow-band">
-
-    <!-- ===== FEATURES — Why Vias Media ===== -->
-    <section class="section features" id="why">
-      <div class="container">
-        <div class="features__head reveal">
-          <div class="section-head">
-            <div><h2 class="t-lg" data-en="Built for how local businesses really work">Gemacht für die Art, wie lokale Unternehmen wirklich arbeiten</h2></div>
-            <div><p class="t-body t-muted-body" data-en-html="As a web agency in Neubrandenburg, I build websites that bring customers — for trades, practices and small businesses across the Lake District, focused on <span class='em'>getting you found</span>, earning trust, and <span class='em'>turning clicks into calls</span>.">Als Webagentur in Neubrandenburg baue ich Webseiten, die Kunden bringen – für Handwerk, Praxen und kleine Unternehmen in der Seenplatte, mit Fokus darauf, <span class='em'>gefunden zu werden</span>, Vertrauen zu schaffen und <span class='em'>aus Klicks Anrufe zu machen</span>.</p></div>
-          </div>
-          <div class="features__nav" data-slider-controls="why">
-            <button class="why-slider__arrow" type="button" data-slider-prev="why" aria-label="Previous slides">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4L6 9L11 14"/></svg>
-            </button>
-            <button class="why-slider__arrow" type="button" data-slider-next="why" aria-label="Next slides">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4L12 9L7 14"/></svg>
-            </button>
-          </div>
+    <!-- ===== FEATURES: how I work ===== -->
+    <section class="s s--tight-top" id="why">
+      <div class="wrap grid features">
+        <div class="s__label"><p class="tag" data-en="How I work">So arbeite ich</p></div>
+        <div class="s__head features__head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="Built for how local businesses really work">Gemacht für die Art, wie lokale Unternehmen wirklich arbeiten</h2></div>
+          <div class="rv"><p class="lead" data-en-html="As a web agency in Neubrandenburg, I build websites that bring customers — for trades, practices and small businesses across the Lake District, focused on <span class='em'>getting you found</span>, earning trust, and <span class='em'>turning clicks into calls</span>.">Als Webagentur in Neubrandenburg baue ich Webseiten, die Kunden bringen – für Handwerk, Praxen und kleine Unternehmen in der Seenplatte, mit Fokus darauf, <span class='em'>gefunden zu werden</span>, Vertrauen zu schaffen und <span class='em'>aus Klicks Anrufe zu machen</span>.</p></div>
         </div>
-      </div>
-
-      <div class="why-slider reveal" data-slider="why">
-        <div class="why-slider__viewport" data-slider-viewport="why">
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="4"/><path d="M4 12H28"/><circle cx="8" cy="8" r="1.5" fill="var(--btn-on-accent)"/><circle cx="13" cy="8" r="1.5" fill="var(--btn-on-accent)"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Design made to measure">Design nach Maß</h3></div>
-              <div><p class="t-body-lg" data-en="No template, no page builder. Every site is designed for your business and leads visitors straight to the enquiry.">Keine Vorlage, kein Baukasten. Jede Seite wird für Ihren Betrieb entworfen und führt Besucher direkt zur Anfrage.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10L6 16L12 22"/><path d="M20 10L26 16L20 22"/><path d="M17 8L15 24"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Accessible from day one">Barrierefrei von Anfang an</h3></div>
-              <div><p class="t-body-lg" data-en="Contrast, keyboard use and alt text to WCAG are part of every project — no surcharge, and in line with the BFSG.">Kontraste, Tastaturbedienung und Alternativtexte nach WCAG gehören zu jedem Projekt – ohne Aufpreis und passend zum BFSG.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16L14 24L26 8"/><path d="M4 8H12"/><path d="M20 24H28"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="One fixed contact">Ein fester Ansprechpartner</h3></div>
-              <div><p class="t-body-lg" data-en="You always talk to me — from the first call to long after launch. No changing account managers, no hotline, and on-site visits if you like.">Sie sprechen immer mit mir – vom ersten Gespräch bis lange nach dem Launch. Keine wechselnden Zuständigkeiten, keine Hotline, gern auch vor Ort.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 28L12 18L18 22L28 8"/><path d="M22 8H28V14"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Results-driven">Ergebnisorientiert</h3></div>
-              <div><p class="t-body-lg" data-en="Search Console and your Business Profile are set up at launch, so you see how many people find you and call — in numbers, not guesses.">Search Console und Unternehmensprofil sind ab dem Launch eingerichtet – Sie sehen, wie viele Menschen Sie finden und anrufen, in Zahlen statt Vermutungen.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28C16 28 25 20 25 13A9 9 0 0 0 7 13C7 20 16 28 16 28Z"/><circle cx="16" cy="13" r="3.5"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Found on Google and AI">Bei Google und KI gefunden</h3></div>
-              <div><p class="t-body-lg" data-en="Local SEO and structured data, so Google and assistants like ChatGPT recommend you when someone nearby searches for what you do.">Lokales SEO und strukturierte Daten, damit Google und Assistenten wie ChatGPT Sie empfehlen, wenn jemand in Ihrer Nähe nach Ihrer Leistung sucht.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4L8 17H15L14 28L24 15H17L18 4Z"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Fast on every phone">Schnell auf jedem Handy</h3></div>
-              <div><p class="t-body-lg" data-en="Built to load instantly on mobile, where most local searches actually happen.">Gebaut, um auf dem Smartphone sofort zu laden – wo die meisten lokalen Suchanfragen stattfinden.</p></div>
-            </div>
-          </article>
-
-          <article class="card feature-card">
-            <div class="icon-box icon-box--accent">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7H27V21H14L8 26V21H5Z"/><path d="M11 12H21"/><path d="M11 16H17"/></svg>
-            </div>
-            <div class="feature-card__body">
-              <div><h3 class="t-sm" data-en="Support that sticks around">Support, der bleibt</h3></div>
-              <div><p class="t-body-lg" data-en="I'm still here after launch — with updates, changes and hosting on servers in Germany.">Ich bin auch nach dem Launch da – mit Updates, Änderungen und Hosting auf Servern in Deutschland.</p></div>
-            </div>
-          </article>
-        </div>
+        <ul class="rows features__rows">
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Design made to measure">Design nach Maß</h3></div>
+            <div class="row__d"><p data-en="No template, no page builder. Every site is designed for your business and leads visitors straight to the enquiry.">Keine Vorlage, kein Baukasten. Jede Seite wird für Ihren Betrieb entworfen und führt Besucher direkt zur Anfrage.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Accessible from day one">Barrierefrei von Anfang an</h3></div>
+            <div class="row__d"><p data-en="Contrast, keyboard use and alt text to WCAG are part of every project — no surcharge, and in line with the BFSG.">Kontraste, Tastaturbedienung und Alternativtexte nach WCAG gehören zu jedem Projekt – ohne Aufpreis und passend zum BFSG.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="One fixed contact">Ein fester Ansprechpartner</h3></div>
+            <div class="row__d"><p data-en="You always talk to me — from the first call to long after launch. No changing account managers, no hotline, and on-site visits if you like.">Sie sprechen immer mit mir – vom ersten Gespräch bis lange nach dem Launch. Keine wechselnden Zuständigkeiten, keine Hotline, gern auch vor Ort.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Results-driven">Ergebnisorientiert</h3></div>
+            <div class="row__d"><p data-en="Search Console and your Business Profile are set up at launch, so you see how many people find you and call — in numbers, not guesses.">Search Console und Unternehmensprofil sind ab dem Launch eingerichtet – Sie sehen, wie viele Menschen Sie finden und anrufen, in Zahlen statt Vermutungen.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Found on Google and AI">Bei Google und KI gefunden</h3></div>
+            <div class="row__d"><p data-en="Local SEO and structured data, so Google and assistants like ChatGPT recommend you when someone nearby searches for what you do.">Lokales SEO und strukturierte Daten, damit Google und Assistenten wie ChatGPT Sie empfehlen, wenn jemand in Ihrer Nähe nach Ihrer Leistung sucht.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Fast on every phone">Schnell auf jedem Handy</h3></div>
+            <div class="row__d"><p data-en="Built to load instantly on mobile, where most local searches actually happen.">Gebaut, um auf dem Smartphone sofort zu laden – wo die meisten lokalen Suchanfragen stattfinden.</p></div>
+          </li>
+          <li class="row">
+            <div class="row__t"><h3 class="display d3" data-en="Support that sticks around">Support, der bleibt</h3></div>
+            <div class="row__d"><p data-en="I'm still here after launch — with updates and changes.">Ich bin auch nach dem Launch da – mit Updates und Änderungen.</p></div>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ===== WORK teaser ===== -->
-    <section class="section work" id="work">
-      <div class="container">
-        <div class="section-head reveal">
-          <div><h2 class="t-xl" data-en="My latest projects">Meine neuesten Projekte</h2></div>
+    <!-- ===== SERVICES ===== -->
+    <section class="s s--tight-top" id="services">
+      <div class="wrap grid services">
+        <div class="s__label"><p class="tag" data-en="Services">Leistungen</p></div>
+        <div class="s__head services__head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="How I help your business grow">Wie ich Ihrem Betrieb beim Wachsen helfe</h2></div>
+          <div class="rv"><p class="lead" data-en-html="Websites, online shops and landing pages from one hand — <span class='em'>from the first sketch to ongoing support</span>, as a <a href='webagentur-neubrandenburg.html' class='link'>web agency right here in Neubrandenburg</a>.">Websites, Onlineshops und Landingpages aus einer Hand – <span class='em'>vom ersten Entwurf bis zur laufenden Betreuung</span>, als <a href='webagentur-neubrandenburg.html' class='link'>Webagentur direkt in Neubrandenburg</a>.</p></div>
         </div>
-
-        <div class="folio reveal">
-          <a href="work-eagle-air.html" class="folio__panel is-active" aria-label="Eagle Air HVAC — view case study">
-            <img class="folio__img" src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="Website von Eagle Air HVAC, gestaltet von Vias Media" loading="lazy" decoding="async">
-            <span class="folio__content">
-              <span class="folio__name">Eagle Air HVAC</span>
-              <span class="folio__tags">
-                <span class="folio__tag t-label-md" data-en="Web Design">Webdesign</span>
-                <span class="folio__tag t-label-md" data-en="Development">Entwicklung</span>
-              </span>
-            </span>
-            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+        <div class="rows services__rows">
+          <a href="services.html#webdesign" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">01</span>
+            <div class="row__t"><h3 class="display" data-en="Web Design">Webdesign</h3></div>
+            <div class="row__d"><p data-en="Websites, online shops and landing pages that show your work and make getting in touch obvious.">Websites, Onlineshops und Landingpages, die Ihre Arbeit zeigen und den Weg zur Anfrage offensichtlich machen.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
           </a>
-
-          <a href="work-jesus-punkt.html" class="folio__panel" aria-label="Jesus Punkt church website — view case study">
-            <img class="folio__img" src="assets/img/portfolio/jesus-punkt-1.webp" width="1760" height="958" alt="Website der Gemeinde Jesus Punkt, gestaltet von Vias Media" loading="lazy" decoding="async">
-            <span class="folio__content">
-              <span class="folio__name">Jesus Punkt</span>
-              <span class="folio__tags">
-                <span class="folio__tag t-label-md" data-en="Web Design">Webdesign</span>
-                <span class="folio__tag t-label-md" data-en="Multilingual">Mehrsprachig</span>
-              </span>
-            </span>
-            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          <a href="services.html#webentwicklung" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">02</span>
+            <div class="row__t"><h3 class="display" data-en="Web Development">Webentwicklung</h3></div>
+            <div class="row__d"><p data-en="Hand-built, accessible code that loads fast on every phone.">Handgebauter, barrierefreier Code, der auf jedem Smartphone schnell lädt.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
           </a>
-
-          <a href="work-akkerman-stroy.html" class="folio__panel" aria-label="Akkerman Stroy digital presence — view case study">
-            <img class="folio__img" src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="957" alt="Website von Akkerman Stroy, gestaltet von Vias Media" loading="lazy" decoding="async">
-            <span class="folio__content">
-              <span class="folio__name">Akkerman Stroy</span>
-              <span class="folio__tags">
-                <span class="folio__tag t-label-md" data-en="Web Design">Webdesign</span>
-                <span class="folio__tag t-label-md" data-en="SEO">SEO</span>
-              </span>
-            </span>
-            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          <a href="services.html#seo" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">03</span>
+            <div class="row__t"><h3 class="display" data-en="SEO Optimization">SEO-Optimierung</h3></div>
+            <div class="row__d"><p data-en="Local SEO so you show up when nearby customers search your trade and town.">Lokales SEO, damit Sie erscheinen, wenn Kunden in der Nähe nach Ihrem Gewerk und Ort suchen.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
           </a>
-
-          <a href="work-luxe-bouquets.html" class="folio__panel" aria-label="Luxe Bouquets online store — view case study">
-            <img class="folio__img" src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="Onlineshop von Luxe Bouquets, gestaltet von Vias Media" loading="lazy" decoding="async">
-            <span class="folio__content">
-              <span class="folio__name">Luxe Bouquets</span>
-              <span class="folio__tags">
-                <span class="folio__tag t-label-md" data-en="Web Design">Webdesign</span>
-                <span class="folio__tag t-label-md" data-en="E-commerce">E-Commerce</span>
-              </span>
-            </span>
-            <span class="folio__go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+          <a href="services.html#beratung" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">04</span>
+            <div class="row__t"><h3 class="display" data-en="Digital Consulting">Digitale Beratung</h3></div>
+            <div class="row__d"><p data-en="Straight answers on what your business needs online and what it costs — on the phone or at your place.">Klare Antworten, was Ihr Betrieb online wirklich braucht und was es kostet – am Telefon oder bei Ihnen vor Ort.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
           </a>
-        </div>
-
-        <div class="work__footer reveal">
-          <a href="work.html" class="btn btn--outline"><span data-en="See all work">Alle Projekte ansehen</span></a>
+          <a href="services.html#barrierefreiheit" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">05</span>
+            <div class="row__t"><h3 class="display" data-en="Accessibility Audits">Barrierefreiheits-Audits</h3></div>
+            <div class="row__d"><p data-en="I test existing sites against WCAG and the BFSG — with a clear list of issues and a plan to fix them.">Ich prüfe bestehende Websites nach WCAG und BFSG – mit klarer Mängelliste und Plan zur Umsetzung.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+          </a>
+          <a href="services.html#support" class="row" data-cur="Öffnen" data-cur-en="Open">
+            <span class="row__n" aria-hidden="true">06</span>
+            <div class="row__t"><h3 class="display" data-en="Ongoing Support">Laufender Support</h3></div>
+            <div class="row__d"><p data-en="Updates, fixes and content changes — so your site stays secure and current.">Updates, Fehlerbehebungen und Inhaltsänderungen – damit Ihre Seite sicher und aktuell bleibt.</p></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+          </a>
         </div>
       </div>
     </section>
-
-    <!-- ===== SERVICES teaser ===== -->
-    <section class="section has-decor-truchet services" id="services">
-      <div class="container">
-        <div class="services__layout">
-          <div class="services__head reveal">
-            <div><h2 class="t-lg" data-en="How I help your business grow">Wie ich Ihrem Betrieb beim Wachsen helfe</h2></div>
-            <div><p class="t-body t-muted-body" data-en-html="Websites, online shops and landing pages from one hand — <span class='em'>from the first sketch to ongoing support</span>, as a <a href='webagentur-neubrandenburg.html' class='link'>web agency right here in Neubrandenburg</a>.">Websites, Onlineshops und Landingpages aus einer Hand – <span class='em'>vom ersten Entwurf bis zur laufenden Betreuung</span>, als <a href='webagentur-neubrandenburg.html' class='link'>Webagentur direkt in Neubrandenburg</a>.</p></div>
-            <div class="services__head-cta">
-              <a href="services.html" class="btn btn--primary">
-                <span data-en="Explore all services">Alle Leistungen entdecken</span>
-                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-              </a>
-            </div>
-          </div>
-
-          <div class="services__list">
-            <a href="services.html" class="card service-card reveal">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="4"/><path d="M4 12H28"/><circle cx="20" cy="20" r="5"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="Web Design">Webdesign</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="Websites, online shops and landing pages that show your work and make getting in touch obvious.">Websites, Onlineshops und Landingpages, die Ihre Arbeit zeigen und den Weg zur Anfrage offensichtlich machen.</p></div>
-              </div>
-            </a>
-
-            <a href="services.html" class="card service-card reveal" data-delay="1">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 10L5 16L11 22"/><path d="M21 10L27 16L21 22"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="Web Development">Webentwicklung</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="Hand-built, accessible code that loads fast on every phone.">Handgebauter, barrierefreier Code, der auf jedem Smartphone schnell lädt.</p></div>
-              </div>
-            </a>
-
-            <a href="services.html" class="card service-card reveal" data-delay="2">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="9"/><path d="M21 21L28 28"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="SEO Optimization">SEO-Optimierung</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="Local SEO so you show up when nearby customers search your trade and town.">Lokales SEO, damit Sie erscheinen, wenn Kunden in der Nähe nach Ihrem Gewerk und Ort suchen.</p></div>
-              </div>
-            </a>
-
-            <a href="services.html" class="card service-card reveal" data-delay="3">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="12" r="3"/><path d="M16 4V9"/><path d="M16 15V28"/><path d="M8 20L16 15L24 20"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="Digital Consulting">Digitale Beratung</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="Straight answers on what your business needs online and what it costs — on the phone or at your place.">Klare Antworten, was Ihr Betrieb online wirklich braucht und was es kostet – am Telefon oder bei Ihnen vor Ort.</p></div>
-              </div>
-            </a>
-
-            <a href="services.html" class="card service-card reveal" data-delay="1">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="8" r="3"/><path d="M16 14V22"/><path d="M8 16H24"/><path d="M12 28L16 22L20 28"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="Accessibility Audits">Barrierefreiheits-Audits</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="I test existing sites against WCAG and the BFSG — with a clear list of issues and a plan to fix them.">Ich prüfe bestehende Websites nach WCAG und BFSG – mit klarer Mängelliste und Plan zur Umsetzung.</p></div>
-              </div>
-            </a>
-
-            <a href="services.html" class="card service-card reveal" data-delay="2">
-              <div class="icon-box icon-box--muted">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="4"/><path d="M16 4V8"/><path d="M16 24V28"/><path d="M4 16H8"/><path d="M24 16H28"/></svg>
-              </div>
-              <div class="service-card__text">
-                <div class="service-card__head">
-                  <div><h3 class="t-card" data-en="Ongoing Support">Laufender Support</h3></div>
-                  <span class="service-card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11M10 5l4 4-4 4"/></svg></span>
-                </div>
-                <div><p class="t-body" data-en="Updates, fixes, content changes and hosting in Germany — so your site stays secure and current.">Updates, Fehlerbehebungen, Inhaltsänderungen und Hosting in Deutschland – damit Ihre Seite sicher und aktuell bleibt.</p></div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    </div><!-- /.flow-band -->
-
 
     <!-- ===== FAQ ===== -->
-    <section class="section faq" id="faq">
-      <div class="container">
-        <div class="section-head section-head--center faq__head reveal">
-          <div><h2 class="t-lg t-center" data-en="Questions, answered">Fragen, beantwortet</h2></div>
-          <div><p class="t-body t-muted-body" data-en-html="The things local businesses ask us most — from <span class='em'>pricing</span> to <span class='em'>timelines</span> to what happens after launch.">Die häufigsten Fragen lokaler Unternehmen – von <span class='em'>Preisen</span> über <span class='em'>Zeitpläne</span> bis zu dem, was nach dem Launch passiert.</p></div>
+    <section class="s s--tight-top" id="faq">
+      <div class="wrap grid faq">
+        <div class="faq__head">
+          <div><p class="tag" data-en="Questions">Fragen</p></div>
+          <div><h2 class="display d1 rv-lines" data-split data-en="Questions, answered">Fragen, beantwortet</h2></div>
+          <div class="rv"><p class="lead" data-en-html="The things local businesses ask me most — from <span class='em'>pricing</span> to <span class='em'>timelines</span> to what happens after launch.">Die häufigsten Fragen lokaler Unternehmen – von <span class='em'>Preisen</span> über <span class='em'>Zeitpläne</span> bis zu dem, was nach dem Launch passiert.</p></div>
         </div>
-
-        <div class="faq__list reveal">
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-1" id="faq-trigger-1">
-              <span class="t-card" data-en="How much does a website cost?">Was kostet eine Website?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+        <div class="faq__list" data-faq>
+          <div class="faq-item is-open">
+            <button class="faq-item__q" type="button" aria-expanded="true" aria-controls="faq-panel-1" id="faq-trigger-1">
+              <span class="display d3" data-en="How much does a website cost?">Was kostet eine Website?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1">
-              <div class="faq-item__answer"><p class="t-body" data-en="Every project is priced individually. After a free consultation about your goals, scope and requirements, I send you a clear fixed-price quote — no hourly guesswork, no hidden items, no monthly licence fee.">Jedes Projekt wird individuell kalkuliert. Nach einem kostenlosen Beratungsgespräch zu Zielen, Umfang und Anforderungen erhalten Sie von mir ein klares Festpreisangebot — keine Stundenschätzungen, keine versteckten Positionen, keine monatliche Lizenzgebühr.</p></div>
+              <div class="faq-item__answer"><p data-en="Every project is priced individually. After a free consultation about your goals, scope and requirements, I send you a clear fixed-price quote — no hourly guesswork, no hidden items, no monthly licence fee.">Jedes Projekt wird individuell kalkuliert. Nach einem kostenlosen Beratungsgespräch zu Zielen, Umfang und Anforderungen erhalten Sie von mir ein klares Festpreisangebot — keine Stundenschätzungen, keine versteckten Positionen, keine monatliche Lizenzgebühr.</p></div>
             </div>
           </div>
-
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2">
-              <span class="t-card" data-en="How long does a project take?">Wie lange dauert ein Projekt?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="How long does a project take?">Wie lange dauert ein Projekt?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2">
-              <div class="faq-item__answer"><p class="t-body" data-en="Most small-business sites launch in 2–4 weeks. The exact timeline depends on scope and how quickly I get your content and feedback; you get a binding schedule with the quote.">Die meisten Websites für kleine Unternehmen gehen in 2–4 Wochen live. Der genaue Zeitplan hängt vom Umfang ab und davon, wie schnell ich Inhalte und Feedback erhalte; einen verbindlichen Zeitrahmen nenne ich Ihnen im Angebot.</p></div>
+              <div class="faq-item__answer"><p data-en="Most small-business sites launch in 2–4 weeks. The exact timeline depends on scope and how quickly I get your content and feedback; you get a binding schedule with the quote.">Die meisten Websites für kleine Unternehmen gehen in 2–4 Wochen live. Der genaue Zeitplan hängt vom Umfang ab und davon, wie schnell ich Inhalte und Feedback erhalte; einen verbindlichen Zeitrahmen nenne ich Ihnen im Angebot.</p></div>
             </div>
           </div>
-
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3">
-              <span class="t-card" data-en="What do I need to get started?">Was brauche ich für den Start?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="What do I need to get started?">Was brauche ich für den Start?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3">
-              <div class="faq-item__answer"><p class="t-body" data-en="Just your goals and any branding you already have (logo, photos, text). Don't have those yet? I'll guide you step by step, from draft texts to photo suggestions — many clients start from scratch.">Nur Ihre Ziele und vorhandenes Branding (Logo, Fotos, Texte). Noch nichts davon? Ich begleite Sie Schritt für Schritt, von Textentwürfen bis zu Bildvorschlägen — viele Kunden starten bei null.</p></div>
+              <div class="faq-item__answer"><p data-en="Just your goals and any branding you already have (logo, photos, text). Don't have those yet? I'll guide you step by step, from draft texts to photo suggestions — many clients start from scratch.">Nur Ihre Ziele und vorhandenes Branding (Logo, Fotos, Texte). Noch nichts davon? Ich begleite Sie Schritt für Schritt, von Textentwürfen bis zu Bildvorschlägen — viele Kunden starten bei null.</p></div>
             </div>
           </div>
-
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4">
-              <span class="t-card" data-en="Do you work with trades and new local businesses?">Arbeiten Sie mit Handwerkern und neuen lokalen Unternehmen?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="Do you work with trades and new local businesses?">Arbeiten Sie mit Handwerkern und neuen lokalen Unternehmen?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4">
-              <div class="faq-item__answer"><p class="t-body" data-en="Yes — that's my focus. I help tradespeople, practices and growing local businesses in the Lake District get found on Google and turn visitors into booked jobs.">Ja — genau das ist mein Schwerpunkt. Ich helfe Handwerkern, Praxen und wachsenden lokalen Unternehmen in der Seenplatte, bei Google gefunden zu werden und aus Besuchern Aufträge zu machen.</p></div>
+              <div class="faq-item__answer"><p data-en="Yes — that's my focus. I help tradespeople, practices and growing local businesses in the Lake District get found on Google and turn visitors into booked jobs.">Ja — genau das ist mein Schwerpunkt. Ich helfe Handwerkern, Praxen und wachsenden lokalen Unternehmen in der Seenplatte, bei Google gefunden zu werden und aus Besuchern Aufträge zu machen.</p></div>
             </div>
           </div>
-
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-5" id="faq-trigger-5">
-              <span class="t-card" data-en="What happens after launch?">Was passiert nach dem Launch?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="What happens after launch?">Was passiert nach dem Launch?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5">
-              <div class="faq-item__answer"><p class="t-body" data-en="I don't disappear. You keep the same contact for ongoing support, updates and optimization, so your site stays secure and keeps performing month after month.">Ich verschwinde nicht. Sie behalten denselben Ansprechpartner für Betreuung, Updates und Optimierung, damit Ihre Seite sicher bleibt und Monat für Monat performt.</p></div>
+              <div class="faq-item__answer"><p data-en="I don't disappear. You keep the same contact for ongoing support, updates and optimization, so your site stays secure and keeps performing month after month.">Ich verschwinde nicht. Sie behalten denselben Ansprechpartner für Betreuung, Updates und Optimierung, damit Ihre Seite sicher bleibt und Monat für Monat performt.</p></div>
             </div>
           </div>
-
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6">
-              <span class="t-card" data-en="Will my site be found on Google?">Wird meine Seite bei Google gefunden?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="Will my site be found on Google?">Wird meine Seite bei Google gefunden?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6">
-              <div class="faq-item__answer"><p class="t-body" data-en="Local SEO is built into every project — plus structured data so AI assistants like ChatGPT understand your business — so nearby customers find you first.">Lokales SEO ist in jedem Projekt enthalten – dazu strukturierte Daten, damit auch KI-Assistenten wie ChatGPT Ihren Betrieb verstehen – damit Kunden in der Nähe Sie zuerst finden.</p></div>
+              <div class="faq-item__answer"><p data-en="Local SEO is built into every project — plus structured data so AI assistants like ChatGPT understand your business — so nearby customers find you first.">Lokales SEO ist in jedem Projekt enthalten – dazu strukturierte Daten, damit auch KI-Assistenten wie ChatGPT Ihren Betrieb verstehen – damit Kunden in der Nähe Sie zuerst finden.</p></div>
             </div>
           </div>
           <div class="faq-item">
             <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-7" id="faq-trigger-7">
-              <span class="t-card" data-en="Do you come to my business in person?">Kommen Sie auch zu mir in den Betrieb?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
+              <span class="display d3" data-en="Do you come to my business in person?">Kommen Sie auch zu mir in den Betrieb?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
             </button>
             <div class="faq-item__panel" id="faq-panel-7" role="region" aria-labelledby="faq-trigger-7">
-              <div class="faq-item__answer"><p class="t-body" data-en="Yes. In Neubrandenburg and the Mecklenburg Lake District I'm happy to come to you for the first meeting, photos or reviews — at your workshop, practice or shop. If you prefer it quick, most things can be settled by phone, WhatsApp or video call.">Ja. In Neubrandenburg und der Mecklenburgischen Seenplatte komme ich gern zum Erstgespräch oder zu Fotos und Abstimmungen direkt zu Ihnen – in die Werkstatt, die Praxis oder den Laden. Wer es lieber schnell mag, klärt das meiste per Telefon, WhatsApp oder Videocall.</p></div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-8" id="faq-trigger-8">
-              <span class="t-card" data-en="Where is my website hosted?">Wo wird meine Website gehostet?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="faq-panel-8" role="region" aria-labelledby="faq-trigger-8">
-              <div class="faq-item__answer"><p class="t-body" data-en="On servers in Germany — GDPR-compliant, fast, and without routing through third countries. If you like, I take care of hosting, domain and SSL certificate for you entirely, so you never have to deal with the technical side.">Auf Servern in Deutschland – DSGVO-konform, schnell und ohne Umweg über Drittländer. Auf Wunsch übernehme ich Hosting, Domain und SSL-Zertifikat komplett für Sie, damit Sie sich um nichts Technisches kümmern müssen.</p></div>
+              <div class="faq-item__answer"><p data-en="Yes. In Neubrandenburg and the Mecklenburg Lake District I'm happy to come to you for the first meeting, photos or reviews — at your workshop, practice or shop. If you prefer it quick, most things can be settled by phone, WhatsApp or video call.">Ja. In Neubrandenburg und der Mecklenburgischen Seenplatte komme ich gern zum Erstgespräch oder zu Fotos und Abstimmungen direkt zu Ihnen – in die Werkstatt, die Praxis oder den Laden. Wer es lieber schnell mag, klärt das meiste per Telefon, WhatsApp oder Videocall.</p></div>
             </div>
           </div>
         </div>
@@ -912,89 +779,72 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <div class="footer-wrap">
-    <section class="footer-cta">
-      <div class="container" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg);">
-        <div><h2 class="t-xl t-center footer-cta__title" data-en="Ready to win more local customers?">Bereit für mehr lokale Kunden?</h2></div>
-        <div class="hero__actions">
-          <a href="contact.html" class="btn btn--primary">
+  <footer class="ftr" id="contact" data-nofog>
+    <div class="wrap">
+      <div class="grid ftr__cta">
+        <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
+        <div class="s__head">
+          <h2 class="display d1 rv-lines" data-split data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+        </div>
+        <div class="s__body ftr__actions rv">
+          <a href="contact.html" class="btn btn--lg btn--accent">
             <span data-en="Start a Project">Projekt starten</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
           </a>
-          <a href="services.html" class="btn btn--outline"><span data-en="View services">Leistungen ansehen</span></a>
+          <a href="services.html" class="btn btn--lg"><span data-en="View services">Leistungen ansehen</span></a>
         </div>
       </div>
-    </section>
 
-    <footer class="footer" id="contact">
-      <div class="container">
-        <div class="footer__inner">
-          <div class="footer__top">
-            <div style="display:flex; flex-direction:column; gap: var(--space-md);">
-              <div class="stars" aria-label="5 star review rating">
-                <div class="stars__icons" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                </div>
-                <div><span class="t-small" data-en="5 Star Review Rating">5-Sterne-Bewertung</span></div>
-              </div>
-              <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
-              <div><a href="services.html" class="btn btn--outline btn--sm"><span data-en="View our services">Unsere Leistungen ansehen</span></a></div>
-            </div>
-            <div class="footer__wordmark">vias<span class="dot">.</span></div>
-          </div>
-
-          <div class="divider" style="margin-block: var(--space-lg);"></div>
-
-          <div class="footer__grid">
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Services">Leistungen</span></div>
-              <a href="services.html" data-en="Web Design">Webdesign</a>
-              <a href="services.html" data-en="Development">Entwicklung</a>
-              <a href="services.html" data-en="SEO">SEO</a>
-              <a href="services.html" data-en="Consulting">Beratung</a>
-              <a href="services.html" data-en="Accessibility">Barrierefreiheit</a>
-              <a href="services.html" data-en="Support">Support</a>
-              <a href="webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
-            </div>
-
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Company">Unternehmen</span></div>
-              <a href="work.html" data-en="Work">Projekte</a>
-              <a href="blog/index.html">Blog</a>
-              <a href="contact.html" data-en="Contact">Kontakt</a>
-            </div>
-
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Connect">Verbinden</span></div>
-              <a href="contact.html" data-en="Start a project">Projekt starten</a>
-              <a href="contact.html" data-en="Get a quote">Angebot anfordern</a>
-              <div class="footer__nap">
-                <div><span class="t-small">Vias Media · Robert-Koch-Str. 15, 17036 Neubrandenburg</span></div>
-                <div><a href="tel:+4916095761094">+49 160 95761094</a></div>
-                <div><a href="mailto:mykhailo@viasmedia.com">mykhailo@viasmedia.com</a></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="divider" style="margin-block: var(--space-lg) var(--space-md);"></div>
-
-          <div class="footer__bottom">
-            <div><span class="t-small" data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></div>
-            <div class="footer__legal">
-              <a href="datenschutz.html" class="t-small" data-en="Privacy">Datenschutz</a>
-              <a href="impressum.html" class="t-small">Impressum</a>
-            </div>
-          </div>
-        </div>
+      <div class="ftr__lines">
+        <a class="ftr__line" href="tel:+4916095761094" data-cur="Anrufen" data-cur-en="Call"><span>+49 160 95761094</span></a>
+        <a class="ftr__line" href="mailto:mykhailo@viasmedia.com" data-cur="Schreiben" data-cur-en="Write"><span>mykhailo@viasmedia.com</span></a>
       </div>
-    </footer>
-  </div>
 
-  <script src="assets/js/i18n.js" defer></script>  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/consent.js" defer></script>
+      <div class="grid ftr__cols">
+        <div class="ftr__col ftr__col--nap">
+          <p class="tag">Vias Media</p>
+          <span data-en="Built for trades &amp; small businesses.">Für Handwerker &amp; kleine Unternehmen gemacht.</span>
+          <span>Robert-Koch-Str. 15, 17036 Neubrandenburg</span>
+        </div>
+        <nav class="ftr__col" aria-label="Leistungen">
+          <p class="tag" data-en="Services">Leistungen</p>
+          <a href="services.html#webdesign" data-en="Web Design">Webdesign</a>
+          <a href="services.html#webentwicklung" data-en="Development">Entwicklung</a>
+          <a href="services.html#seo">SEO</a>
+          <a href="services.html#beratung" data-en="Consulting">Beratung</a>
+          <a href="services.html#barrierefreiheit" data-en="Accessibility">Barrierefreiheit</a>
+          <a href="services.html#support">Support</a>
+          <a href="webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Unternehmen">
+          <p class="tag" data-en="Company">Unternehmen</p>
+          <a href="work.html" data-en="Work">Projekte</a>
+          <a href="blog/index.html">Blog</a>
+          <a href="contact.html" data-en="Contact">Kontakt</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Anfrage">
+          <p class="tag" data-en="Connect">Verbinden</p>
+          <a href="contact.html" data-en="Start a project">Projekt starten</a>
+          <a href="contact.html" data-en="Get a quote">Angebot anfordern</a>
+          <a data-contact="whatsapp" href="https://wa.me/4916095761094">WhatsApp</a>
+        </nav>
+      </div>
+
+      <div class="ftr__word" aria-hidden="true">vias<span class="dot">.</span></div>
+    </div>
+    <div class="wrap ftr__legal">
+      <p class="mono"><span data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></p>
+      <nav aria-label="Rechtliches">
+        <a href="datenschutz.html" data-en="Privacy">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
+        <button type="button" data-cc-open data-en="Cookie settings">Cookie-Einstellungen</button>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n.js?v=20261008" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
+  <script src="assets/js/v2/main.js?v=20261008" defer></script>
+  <script src="assets/js/consent.js?v=20261008" defer></script>
 </body>
 </html>

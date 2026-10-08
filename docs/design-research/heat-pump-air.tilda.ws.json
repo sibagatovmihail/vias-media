@@ -1,0 +1,202 @@
+{
+  "source": "https://heat-pump-air.tilda.ws/electric-air",
+  "captured": {
+    "date": "2026-10-07",
+    "viewport": "1440x900",
+    "pages": 1,
+    "page_height_px": 10006,
+    "platform": "Tilda Zero Block + Swiper"
+  },
+  "tokens": {
+    "spacing": {
+      "scale": [
+        10,
+        15,
+        20,
+        24,
+        30,
+        61
+      ],
+      "base_unit": "mixed (24 for layout, 10 inside components)",
+      "page_margin": "24px"
+    },
+    "typography": {
+      "families": [
+        "Bruno Ace SC",
+        "Raleway"
+      ],
+      "scale": [
+        {
+          "role": "hero",
+          "size": "102px",
+          "weight": "400",
+          "family": "Bruno Ace SC"
+        },
+        {
+          "role": "section-title",
+          "size": "58px",
+          "weight": "300",
+          "family": "Raleway"
+        },
+        {
+          "role": "item-title",
+          "size": "32px",
+          "weight": "400",
+          "family": "Raleway",
+          "transform": "uppercase"
+        },
+        {
+          "role": "lead",
+          "size": "18px",
+          "weight": "400",
+          "family": "Raleway"
+        },
+        {
+          "role": "body",
+          "size": "15px",
+          "weight": "400",
+          "family": "Raleway",
+          "line_height": "18px"
+        },
+        {
+          "role": "section-label",
+          "size": "14px",
+          "weight": "300",
+          "family": "Bruno Ace SC"
+        },
+        {
+          "role": "button",
+          "size": "13px",
+          "weight": "400",
+          "family": "Raleway",
+          "transform": "uppercase"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "role": "background",
+        "value": "#161616",
+        "note": "89.4% of surface"
+      },
+      {
+        "role": "panel",
+        "value": "#232323",
+        "note": "footer, 5.9%"
+      },
+      {
+        "role": "text-primary",
+        "value": "#FFFFFF"
+      },
+      {
+        "role": "text-secondary",
+        "value": "#8D8D8D"
+      },
+      {
+        "role": "price-small",
+        "value": "#00246D"
+      },
+      {
+        "role": "price-medium",
+        "value": "#063894"
+      },
+      {
+        "role": "price-large",
+        "value": "#1C58C6"
+      }
+    ],
+    "radius": [
+      "20px",
+      "30px",
+      "150px"
+    ],
+    "shadows": [],
+    "image_ratios": [
+      {
+        "usage": "hero video",
+        "ratio": "4:3 (1200x900)"
+      },
+      {
+        "usage": "step card photo",
+        "ratio": "1:1 (342x342) inside a 2:1 card"
+      },
+      {
+        "usage": "review card",
+        "ratio": "text half + photo half"
+      }
+    ],
+    "grid": {
+      "max_width": "none (full bleed)",
+      "columns": 4,
+      "gutter": "24px",
+      "column_width": "328px",
+      "margin": "24px",
+      "column_x": [
+        24,
+        376,
+        728,
+        1080
+      ]
+    },
+    "motion": {
+      "scroll_driven_elements": 13,
+      "hover_elements": 16,
+      "reveal": "opacity 0.3s + transform 0.7s cubic-bezier(0.22,0.61,0.36,1), 0.7s delay",
+      "hero": "headline drifts 110px over the first 300px of scroll",
+      "pricing": "three cards stack; each collapses to a ~115px header strip under the next",
+      "sliders": "Swiper, cursor: grab",
+      "focus_visible": false,
+      "reduced_motion": false
+    }
+  },
+  "taste": [
+    {
+      "name": "The second column is home base",
+      "trigger": "When every section needed a label, a title and a body",
+      "decision": "Chose a small label alone in column 1 with all content starting at column 2 or 3 over centred or full-width headings",
+      "reason": "A fixed left edge lets the eye run down column 1 like a table of contents, and no body line gets longer than about 700px",
+      "evidence": [
+        "section labels at x=24 in 14px Bruno Ace, grey",
+        "every section title starts at x=376",
+        "hero sub-copy and item titles start at x=728",
+        "column 1 stays empty below the label for the whole section"
+      ]
+    },
+    {
+      "name": "Cards share walls",
+      "trigger": "When three parts of one machine and three prices had to be compared",
+      "decision": "Chose one fused outline with shared 1px dividers, and a stacking price deck, over separate cards with gutters",
+      "reason": "Parts drawn as one object read as one system, and a stack keeps all three prices on screen so nobody scrolls back to compare",
+      "evidence": [
+        "three how-it-works cards form one 1392px outline with 0 gap",
+        "20px radius only on the outer corners",
+        "price cards overlap and collapse to ~115px header strips",
+        "0 shadows"
+      ]
+    },
+    {
+      "name": "Blue is only for money",
+      "trigger": "When a brand owns a red-to-blue gradient",
+      "decision": "Chose to keep it inside the hero video and the footer wordmark and spend solid blue on the price cards alone, over colouring buttons and headings",
+      "reason": "The one saturated block on a grey page marks where the decision happens, and the darker-to-lighter ramp encodes small, medium, large without a legend",
+      "evidence": [
+        "#161616 on 89.4% of surface",
+        "blue ramp #00246D, #063894, #1C58C6 on about 3%",
+        "buttons are 1px white outlines with 30px radius",
+        "no gradient on any UI element"
+      ]
+    },
+    {
+      "name": "A display face rationed to a few words",
+      "trigger": "When choosing where the wide techno face may appear",
+      "decision": "Chose it for the hero, logo, section labels and tier names only, with Raleway Light for every sentence, over setting all headings in the display face",
+      "reason": "The wide face says 'machine' in two lines; in a FAQ it would tire the reader, and a light humanist sans suits a product that goes into a living room",
+      "evidence": [
+        "Bruno Ace SC on 15 of about 200 text nodes",
+        "section titles 58px Raleway weight 300, sentence case",
+        "item titles 32px Raleway uppercase",
+        "body 15px/18px"
+      ]
+    }
+  ]
+}

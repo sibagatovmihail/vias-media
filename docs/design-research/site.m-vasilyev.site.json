@@ -1,0 +1,173 @@
+{
+  "source": "https://site.m-vasilyev.site/",
+  "captured": {
+    "date": "2026-10-07",
+    "viewport": "1440x900",
+    "pages": 1,
+    "page_height_px": 16392,
+    "platform": "Tilda Zero Block + GSAP ScrollTrigger"
+  },
+  "tokens": {
+    "spacing": {
+      "scale": [
+        10,
+        20,
+        30,
+        176
+      ],
+      "base_unit": 10,
+      "page_margin": "30px",
+      "row_pitch": "22px"
+    },
+    "typography": {
+      "families": [
+        "RF Dewi Expanded",
+        "JetBrains Mono"
+      ],
+      "scale": [
+        {
+          "role": "footer-word",
+          "size": "230px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "hero-wordmark",
+          "size": "100px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "section-word",
+          "size": "70px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "statement",
+          "size": "56px",
+          "weight": "400",
+          "family": "RF Dewi Expanded"
+        },
+        {
+          "role": "body",
+          "size": "12px",
+          "weight": "400",
+          "family": "JetBrains Mono"
+        },
+        {
+          "role": "annotation",
+          "size": "10px",
+          "weight": "400",
+          "family": "JetBrains Mono"
+        },
+        {
+          "role": "micro",
+          "size": "8px",
+          "weight": "400",
+          "family": "JetBrains Mono"
+        }
+      ]
+    },
+    "colors": [
+      {
+        "role": "background",
+        "value": "#FFFFFF",
+        "note": "reads as ~#ECECEC under the grain overlay"
+      },
+      {
+        "role": "text-primary",
+        "value": "#000000"
+      },
+      {
+        "role": "text-on-media",
+        "value": "#FFFFFF"
+      },
+      {
+        "role": "ink-soft",
+        "value": "#151617"
+      }
+    ],
+    "radius": [
+      "1px"
+    ],
+    "shadows": [],
+    "image_ratios": [
+      {
+        "usage": "hero video",
+        "ratio": "16:9 (1380x780)"
+      },
+      {
+        "usage": "embedded student work",
+        "ratio": "16:9 (780x430)"
+      }
+    ],
+    "grid": {
+      "max_width": "none (full bleed)",
+      "columns": 8,
+      "gutter": "0px",
+      "column_width": "176px",
+      "margin": "30px",
+      "visible_marks": "'+' every 176px x 175px, fixed to the viewport"
+    },
+    "motion": {
+      "scroll_driven_elements": 52,
+      "hover_elements": 621,
+      "logo": "100px wordmark scales to 0.2 over 300px of scroll, then stays fixed with mix-blend-mode: difference",
+      "blur_band": "fixed 1440x120 gradual blur at the bottom edge of the viewport",
+      "row_hover": "backdrop-filter: invert(1)",
+      "cursor": "100x100 custom cursor with full-width and full-height guide lines",
+      "marquee": "2.5s linear infinite",
+      "reduced_motion": false
+    }
+  },
+  "taste": [
+    {
+      "name": "The construction lines stay on",
+      "trigger": "When a course about grids needed a page of its own",
+      "decision": "Chose to leave registration marks, brackets and cursor guides visible over hiding the grid once the layout was done",
+      "reason": "The marks give empty columns a job, so open space looks measured instead of unfinished, and the page becomes its own lesson",
+      "evidence": [
+        "'+' marks on a 176px x 175px pitch, fixed while content scrolls",
+        "every label wrapped in [ ]",
+        "cc-guide-h 1440x1 and cc-guide-v 1x900 follow the pointer",
+        "8 columns of 176px inside 30px margins"
+      ]
+    },
+    {
+      "name": "No colour of its own",
+      "trigger": "When framing student work that comes in every colour",
+      "decision": "Chose a strictly black-and-grey frame over a brand accent",
+      "reason": "A grey frame hands all the chroma to the work inside it, so the red and blue embeds look louder than they are",
+      "evidence": [
+        "2 background values, 3 text values, all neutral",
+        "0 accent colours",
+        "colour appears only inside the 780x430 work embeds",
+        "radius 1px, 0 shadows"
+      ]
+    },
+    {
+      "name": "Wide grotesk speaks, mono annotates",
+      "trigger": "When claims and explanations had to sit side by side",
+      "decision": "Chose two typefaces with a hard job split over one family in several weights",
+      "reason": "A reader sorts statement from footnote at a glance, and mono reads like a spec sheet, which lends a paid course some rigour",
+      "evidence": [
+        "RF Dewi Expanded only at 56-230px (133 nodes)",
+        "JetBrains Mono at 8-12px (554 nodes)",
+        "56px statements with a first-line indent of about 350px (2 grid columns)",
+        "lists as 22px hairline rows ending in [ + ]"
+      ]
+    },
+    {
+      "name": "Content arrives out of fog",
+      "trigger": "When hundreds of elements needed an entrance",
+      "decision": "Chose one fixed blur band at the viewport's bottom edge over a fade-up timed per element",
+      "reason": "One global effect gives everything an entrance for free and marks the sharp zone as the reading zone",
+      "evidence": [
+        "fixed 1440x120 gradual-blur layer",
+        "no per-element reveal on text rows",
+        "logo shrinks 100px to 20px in the first 300px of scroll and never leaves the screen"
+      ]
+    }
+  ]
+}

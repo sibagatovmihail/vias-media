@@ -1,0 +1,282 @@
+/* =====================================================================
+   Vias Media v2 "Bauplan" — reset, page ground, grid, type primitives
+   ===================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--hdr-h) + 1rem);
+}
+/* smooth-scroll library (desktop pointers only, see main.js) */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, ol, ul, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+img, picture, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+::selection { background: var(--accent); color: var(--on-accent); }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: var(--z-cursor);
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--ground);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* =====================================================================
+   Page ground: construction marks, grain, fog
+   ===================================================================== */
+
+/* "+" registration marks on the column lines; they stay put while the
+   page scrolls underneath, like marks on the glass of a light table */
+.marks {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-marks);
+  pointer-events: none;
+  background-image: var(--marks);
+  background-size: var(--pitch) var(--pitch);
+  background-position:
+    calc(var(--margin) - var(--gutter) / 2 - 4.5px)
+    calc(var(--hdr-h) - 4.5px);
+  opacity: 0.6;
+}
+/* fine pointers have GPU to spare: the marks invert over photographs */
+@media (hover: hover) and (pointer: fine) {
+  .marks {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23fff' stroke-opacity='.62'/%3E%3C/svg%3E");
+    mix-blend-mode: difference;
+    opacity: 1;
+  }
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  background: url('../../img/v2/grain.png') 0 0 / 8rem 8rem;
+  opacity: 0.3;
+}
+
+/* progressive blur along the bottom edge: content arrives out of fog */
+.fog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--fog-h);
+  z-index: var(--z-fog);
+  pointer-events: none;
+  transition: opacity var(--dur-base) ease;
+}
+.fog i {
+  position: absolute;
+  inset: 0;
+}
+.fog i:nth-child(1) {
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%);
+}
+.fog i:nth-child(2) {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 30%, #000 75%);
+  mask-image: linear-gradient(to bottom, transparent 30%, #000 75%);
+}
+.fog i:nth-child(3) {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 60%, #000);
+  mask-image: linear-gradient(to bottom, transparent 60%, #000);
+}
+.fog.is-off { opacity: 0; }
+
+/* =====================================================================
+   Grid
+   ===================================================================== */
+
+.wrap {
+  width: 100%;
+  padding-inline: var(--margin);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.s {
+  position: relative;
+  padding-block: var(--section);
+}
+.s--tight-top { padding-top: 0; }
+
+/* section anatomy: a bracketed name in the first columns, content from the third */
+.s__label { grid-column: 1 / -1; margin-bottom: var(--block-gap); }
+.s__head { grid-column: 1 / -1; }
+.s__body { grid-column: 1 / -1; }
+@media (min-width: 48rem) {
+  .s__label { grid-column: 1 / span 2; margin-bottom: 0; }
+  .s__head { grid-column: 3 / -1; }
+  .s__body { grid-column: 3 / -1; }
+}
+
+/* =====================================================================
+   Type primitives
+   ===================================================================== */
+
+.display {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+.d1 { font-size: var(--fs-d1); }
+.d2 { font-size: var(--fs-d2); font-weight: 450; line-height: 1.02; letter-spacing: -0.03em; }
+.d3 { font-size: var(--fs-d3); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 34rem;
+  text-wrap: pretty;
+}
+.lead .em,
+.copy .em { color: var(--ink); font-weight: 600; }
+
+.copy {
+  color: var(--ink-2);
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-stretch: 87.5%;
+  font-size: var(--fs-mono);
+  line-height: 1.45;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* the plan's annotation: a name in square brackets */
+.tag {
+  font-family: var(--font-mono);
+  font-stretch: 87.5%;
+  font-size: var(--fs-mono);
+  line-height: 1.45;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.tag::before { content: "[\00a0"; content: "[\00a0" / ""; }
+.tag::after { content: "\00a0]"; content: "\00a0]" / ""; }
+
+/* accent phrase: a solid block as tall as the type, never italics */
+.mark {
+  background: linear-gradient(var(--accent), var(--accent)) 0 54% / 100% 1.02em no-repeat;
+  color: var(--on-accent);
+  padding-inline: 0.12em;
+  margin-inline: -0.06em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+@media (hover: hover) {
+  .link:hover { text-decoration-thickness: 2px; }
+}
+
+/* =====================================================================
+   Split text (JS wraps lines / words; the plain text is the default)
+   ===================================================================== */
+
+.ln { display: block; white-space: nowrap; overflow: hidden; overflow: clip; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.ln > span { display: block; will-change: transform; }
+/* a measured line that still runs wide may wrap rather than be clipped */
+.is-loose .ln { white-space: normal; }
+
+/* held back until the lines are measured, so the headline never flashes unsplit */
+.js .rv-lines:not(.is-ready) { visibility: hidden; }
+.js .rv-lines .ln > span { transform: translateY(105%); }
+.js .rv-lines.is-in .ln > span {
+  transform: none;
+  transition: transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* generic entrance for blocks next to a headline: rise and sharpen */
+.js .rv { opacity: 0; transform: translateY(1.25rem); }
+.js .rv.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-slow) ease, transform var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* scroll-filled statement: words go from pencil to ink */
+.fill .w { color: var(--ink-3); transition: color 0.35s ease; }
+.fill .w.is-on { color: var(--ink); }
+
+/* main.js never arrived (see the failsafe in <head>) */
+.rv-fallback .rv-lines { visibility: visible !important; }
+.rv-fallback .rv { opacity: 1 !important; transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .rv-lines .ln > span,
+  .js .rv { opacity: 1; transform: none; transition: none; }
+  .fill .w { color: var(--ink); transition: none; }
+}

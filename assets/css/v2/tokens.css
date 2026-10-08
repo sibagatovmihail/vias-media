@@ -1,0 +1,154 @@
+/* =====================================================================
+   Vias Media v2 "Bauplan" — fonts + design tokens
+   One variable grotesk (Archivo, width axis) for display and body,
+   one mono (Martian Mono) for annotations. Both OFL, self-hosted.
+   ===================================================================== */
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('../../fonts/archivo-var-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Martian Mono';
+  src: url('../../fonts/martian-mono-var-latin.woff2') format('woff2');
+  font-weight: 100 800;
+  font-stretch: 75% 112.5%;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Type ---- */
+  --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: 'Martian Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* the hero is sized by width AND by the frozen viewport height, so four
+     lines always fit the first screen (German words are the layout brief) */
+  --fs-hero: min(8.2vw, calc(var(--vh, 1vh) * 13.5));
+  --fs-d1: clamp(1.75rem, 1.05rem + 3.1vw, 4rem);       /* 28–64px  section titles */
+  --fs-d2: clamp(1.5rem, 0.95rem + 2.5vw, 3.375rem);    /* 24–54px  statements, big rows */
+  --fs-d3: clamp(1.1875rem, 1.05rem + 0.7vw, 1.75rem);  /* 19–28px  row titles */
+  --fs-lead: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);    /* 16–18px */
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-mono: 0.75rem;                                   /* 12px annotations */
+  --fs-mono-s: 0.6875rem;                               /* 11px micro */
+
+  /* ---- Grid: full bleed, thin margins, visible construction marks ---- */
+  --cols: 4;
+  --margin: clamp(1rem, 0.6rem + 1.1vw, 1.75rem);
+  --gutter: clamp(0.75rem, 0.5rem + 0.7vw, 1.25rem);
+  --pitch: calc((100vw - 2 * var(--margin) + var(--gutter)) / var(--cols)); /* JS refines to the px */
+
+  /* ---- Spacing (fluid; breakpoints change layout, never these values) ---- */
+  --section: clamp(5.5rem, 3rem + 11vw, 13rem);
+  --head-gap: clamp(2rem, 1.2rem + 3vw, 4.5rem);
+  --block-gap: clamp(1.25rem, 0.9rem + 1.4vw, 2.25rem);
+  --row-pad: clamp(1.125rem, 0.95rem + 0.8vw, 1.75rem);
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
+  /* ---- Controls ---- */
+  --hdr-h: 3.75rem;
+  --ctl-h: 2.75rem;          /* one height per row of controls (44px touch target) */
+  --radius: 0;               /* a plan has square corners; one family everywhere */
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);     /* expo out */
+  --ease-io: cubic-bezier(0.77, 0, 0.175, 1);    /* quart in-out, for wipes */
+  --dur-fast: 0.2s;
+  --dur-base: 0.45s;
+  --dur-slow: 0.9s;
+
+  /* ---- Layers ---- */
+  --z-marks: 5;
+  --z-fog: 40;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-grain: 900;
+  --z-cursor: 10001;         /* above the consent dialog (9999 / 10000) */
+
+  --fog-h: clamp(3.75rem, 3rem + 3vw, 6rem);
+}
+
+@media (min-width: 48rem) {
+  :root { --cols: 8; --hdr-h: 4rem; }
+}
+@media (max-width: 37.5rem) {
+  :root { --fs-hero: 8.7vw; }
+}
+@media (max-width: 22.5rem) {
+  :root { --fs-hero: 8.5vw; }   /* "Ihre Webagentur in" still fits one line at 320px */
+}
+
+/* =====================================================================
+   PALETTE: light ("ember") — grey paper, ink, one ember accent
+   ===================================================================== */
+:root,
+[data-palette="ember"] {
+  color-scheme: light;
+  --ground: #ECEBE8;
+  --ground-2: #E2E0DC;
+  --ink: #161514;
+  --ink-2: #45423F;          /* 8.4:1 on ground */
+  --ink-3: #63605C;          /* 5.2:1 on ground — annotations */
+  --line: rgba(22, 21, 20, 0.26);
+  --line-soft: rgba(22, 21, 20, 0.13);
+  --accent: #E8593A;         /* fills only: ink text on it is 5.1:1 */
+  --accent-ink: #B93A1C;     /* when the accent has to be text: 4.8:1 */
+  --on-accent: #161514;
+  --media-ink: #F3EFE8;      /* text set on photographs */
+  --marks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23161514' stroke-opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* =====================================================================
+   PALETTE: dark ("ember-dark") — the same plan, printed in negative
+   ===================================================================== */
+[data-palette="ember-dark"] {
+  color-scheme: dark;
+  --ground: #141312;
+  --ground-2: #1D1B19;
+  --ink: #EFE9DF;
+  --ink-2: #C4BDB2;          /* 10:1 */
+  --ink-3: #9A948A;          /* 6.2:1 */
+  --line: rgba(239, 233, 223, 0.28);
+  --line-soft: rgba(239, 233, 223, 0.14);
+  --accent: #E8593A;
+  --accent-ink: #F0704F;     /* 6.3:1 on ground */
+  --on-accent: #161514;
+  --media-ink: #F3EFE8;
+  --marks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23EFE9DF' stroke-opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* ---- Aliases the shared consent banner (consent.css) reads ---- */
+:root,
+[data-palette] {
+  --bg: var(--ground);
+  --card: var(--ground);
+  --card-hover: var(--ground-2);
+  --text: var(--ink);
+  --text-sec: var(--ink-2);
+  --border: var(--line);
+  --accent-hover: #F0704F;      /* lighter, so ink text stays readable on hover */
+  --btn-on-accent: var(--on-accent);
+  --container-max: 100rem;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-pill: 0;
+  --shadow-lg: none;
+  --ease: var(--ease-out);
+  --fs-200: 0.75rem;
+  --fs-300: 0.875rem;
+  --fs-400: 1rem;
+  --fs-500: 1.0625rem;
+  --fs-600: 1.25rem;
+}
