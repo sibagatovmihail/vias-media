@@ -36,11 +36,10 @@
   --font-display: 'Bebas Neue', 'Archivo', 'Arial Narrow', sans-serif;
   --font-mono: 'Martian Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* the hero title is sized by width AND by what the frozen viewport height
-     leaves after the bar and the notes (about 24.5rem), divided over four
-     lines at line-height 0.86: so the hero is exactly one screen on a short
-     laptop as well as on a tall monitor. Floor for landscape phones. */
-  --fs-hero: max(2.75rem, min(12.6vw, calc((var(--vh, 1vh) * 100 - 24.5rem) * 0.285)));
+  /* hero title. Below 62.5rem: four lines, sized by width and by what the
+     frozen viewport height leaves under the bar. From 62.5rem: two lines, and
+     main.js fits the first to the full width (this value is the fallback). */
+  --fs-hero: max(2.75rem, min(13.4vw, calc((var(--vh, 1vh) * 100 - 19rem) * 0.3)));
   --fs-d1: clamp(2.5rem, 1.4rem + 5vw, 6rem);           /* 40–96px  section titles */
   --fs-d2: clamp(2.125rem, 1.3rem + 3.6vw, 4.75rem);    /* 34–76px  big rows, panels */
   --fs-d3: clamp(1.5rem, 1.3rem + 0.9vw, 2.125rem);     /* 24–34px  row titles */
@@ -94,55 +93,31 @@
 @media (min-width: 48rem) {
   :root { --cols: 8; --hdr-h: 4rem; }
 }
-@media (max-width: 37.5rem) {
-  :root { --fs-hero: 13.4vw; }
+@media (min-width: 62.5rem) {
+  :root { --fs-hero: 7.1vw; }
 }
 
 /* =====================================================================
-   PALETTE: light ("ember") — grey paper, ink, one ember accent
+   PALETTE — one scheme: near-black ground, warm paper ink, one ember accent.
+   (The light scheme and its switch were removed on 2026-10-08.)
    ===================================================================== */
-:root,
-[data-palette="ember"],
-[data-palette="ember-dark"] .inv {
-  color-scheme: light;
-  --ground: #ECEBE8;
-  --ground-2: #E2E0DC;
-  --ink: #161514;
-  --ink-2: #45423F;          /* 8.4:1 on ground */
-  --ink-3: #63605C;          /* 5.2:1 on ground — annotations */
-  --line: rgba(22, 21, 20, 0.26);
-  --line-soft: rgba(22, 21, 20, 0.13);
-  --accent: #E8593A;         /* fills only: ink text on it is 5.1:1 */
-  --accent-ink: #B93A1C;     /* when the accent has to be text: 4.8:1 */
-  --on-accent: #161514;
-  --media-ink: #F3EFE8;      /* text set on photographs */
-  --marks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23161514' stroke-opacity='.5'/%3E%3C/svg%3E");
-}
-
-/* =====================================================================
-   PALETTE: dark ("ember-dark") — the same plan, printed in negative.
-   .inv is a band in the other palette (services): ink ground, paper type.
-   ===================================================================== */
-[data-palette="ember-dark"],
-:root:not([data-palette="ember-dark"]) .inv {
+:root {
   color-scheme: dark;
   --ground: #141312;
   --ground-2: #1D1B19;
   --ink: #EFE9DF;
-  --ink-2: #C4BDB2;          /* 10:1 */
-  --ink-3: #9A948A;          /* 6.2:1 */
+  --ink-2: #C4BDB2;          /* 10:1 on ground */
+  --ink-3: #9A948A;          /* 6.2:1 — annotations */
   --line: rgba(239, 233, 223, 0.28);
   --line-soft: rgba(239, 233, 223, 0.14);
-  --accent: #E8593A;
-  --accent-ink: #F0704F;     /* 6.3:1 on ground */
+  --accent: #E8593A;         /* fills only: dark text on it is 5.1:1 */
+  --accent-ink: #F0704F;     /* when the accent has to be text: 6.3:1 */
   --on-accent: #161514;
-  --media-ink: #F3EFE8;
   --marks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23EFE9DF' stroke-opacity='.5'/%3E%3C/svg%3E");
 }
 
 /* ---- Aliases the shared consent banner (consent.css) reads ---- */
-:root,
-[data-palette] {
+:root {
   --bg: var(--ground);
   --card: var(--ground);
   --card-hover: var(--ground-2);

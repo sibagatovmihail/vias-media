@@ -1,8 +1,9 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — page interactions
-   contact links · theme · menu sheet · smooth scroll · split text ·
-   reveals · project reel · horizontal scene + ink flood · service
-   drawings · hero drive / footer converge · fog · FAQ · cursor · ticker
+   contact links · menu sheet · smooth scroll · split text + hero fit ·
+   reveals · horizontal scene + masked-word zoom · service drawings ·
+   hero drive / footer converge · fog · FAQ · cursor
+   (The project stack and the pricing reveal are CSS only: home.css.)
    ===================================================================== */
 (function () {
   'use strict';
@@ -11,6 +12,7 @@
   window.viasReady = true;   /* tells the <head> failsafe that this file arrived */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var desktop = window.matchMedia('(min-width: 62.5rem)');
   var hdr = document.getElementById('header');
   var hdrBar = document.querySelector('.hdr__bar');
 
@@ -61,19 +63,6 @@
       }
     });
   }
-  function jumpTo(y) {
-    if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
-    else window.scrollTo(0, y);
-  }
-
-  /* ---- Theme toggle (restored inline in <head>) ---- */
-  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var next = root.getAttribute('data-palette') === 'ember-dark' ? 'ember' : 'ember-dark';
-      root.setAttribute('data-palette', next);
-      try { localStorage.setItem('vias-theme', next); } catch (e) {}
-    });
-  });
 
   /* ---- Cookie settings link ---- */
   document.querySelectorAll('[data-cc-open]').forEach(function (btn) {
@@ -116,7 +105,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) { setMenu(false); burger.focus(); }
     });
-    window.matchMedia('(min-width: 62.5rem)').addEventListener('change', function (e) {
+    desktop.addEventListener('change', function (e) {
       if (e.matches && menu.classList.contains('is-open')) setMenu(false);
     });
   }
@@ -126,6 +115,7 @@
      lines (reveals), words (ink fill) or letters (roll) and redoes it on
      width / language change.
      ===================================================================== */
+  var DASH = /^[–—-]$/;
   function tokenize(el) {
     var out = [], space = false;
     [].forEach.call(el.childNodes, function (n) {
@@ -134,8 +124,9 @@
       text.replace(/(\s+)|(\S+)/g, function (m, ws, word) {
         if (ws) { space = true; return m; }
         /* a dash never starts a line: it stays glued to the word before it */
-        if (/^[–—-]$/.test(word) && space && out.length && out[out.length - 1].cls === cls) {
+        if (DASH.test(word) && space && out.length && out[out.length - 1].cls === cls) {
           out[out.length - 1].t += ' ' + word;
+          out[out.length - 1].dash = true;
           space = false;
           return m;
         }
@@ -160,31 +151,61 @@
     }
     return html;
   }
-  function splitLines(el) {
-    if (el._src == null) el._src = el.innerHTML;
-    el.innerHTML = el._src;
-    var toks = tokenize(el);
-    if (!toks.length) return;
-    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
-    /* measure: every word as an inline-block, grouped by its line top */
+  /* where the browser breaks the lines: every word as an inline-block, grouped by its top */
+  function measuredLines(el, toks) {
     el.innerHTML = toks.map(function (t) {
       return (t.sp ? ' ' : '') + '<span class="' + (t.cls ? t.cls + ' ' : '') + 'mw" style="display:inline-block;text-indent:0">' + esc(t.t) + '</span>';
     }).join('');
-    var spans = el.querySelectorAll('.mw'), lines = [], lastTop = null;
-    [].forEach.call(spans, function (s, i) {
+    var lines = [], lastTop = null;
+    [].forEach.call(el.querySelectorAll('.mw'), function (s, i) {
       var top = s.offsetTop;
       if (lastTop === null || Math.abs(top - lastTop) > 4) { lines.push([]); lastTop = top; }
       lines[lines.length - 1].push(toks[i]);
     });
+    return lines;
+  }
+  /* data-lines="dash" (laptops): exactly two lines, broken after the dash */
+  function dashLines(toks) {
+    var cut = -1;
+    toks.forEach(function (t, i) { if (t.dash && cut < 0) cut = i; });
+    return (cut < 0 || cut === toks.length - 1) ? null : [toks.slice(0, cut + 1), toks.slice(cut + 1)];
+  }
+  /* data-lines="mark": two parts, broken before the highlighted phrase */
+  function markLines(toks) {
+    var cut = -1;
+    toks.forEach(function (t, i) { if (cut < 0 && /\bmark\b/.test(t.cls)) cut = i; });
+    return cut > 0 ? [toks.slice(0, cut), toks.slice(cut)] : null;
+  }
+  function splitLines(el) {
+    if (el._src == null) el._src = el.innerHTML;
+    el.innerHTML = el._src;
+    el.style.fontSize = '';
+    var toks = tokenize(el);
+    if (!toks.length) return;
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    var mode = el.getAttribute('data-lines');
+    var forced = mode === 'mark' ? markLines(toks) : (mode === 'dash' && desktop.matches) ? dashLines(toks) : null;
+    var lines = forced || measuredLines(el, toks);
     /* --i staggers the reveal; --dir (-1 / 1) lets lines travel in opposite directions */
     el.innerHTML = lines.map(function (ln, i) {
       ln[0] = { t: ln[0].t, cls: ln[0].cls, sp: false };
       return '<span class="ln" aria-hidden="true" style="--i:' + i + ';--dir:' + (i % 2 ? 1 : -1) + '"><span>' + runs(ln) + '</span></span>';
     }).join('');
+    if (forced && el.hasAttribute('data-fit')) fitLines(el);
     var wide = false;
     [].forEach.call(el.querySelectorAll('.ln'), function (ln) { if (ln.scrollWidth > ln.clientWidth + 1) wide = true; });
     el.classList.toggle('is-loose', wide);
     el.classList.add('is-ready');
+  }
+  /* scale the type so the longest line spans the full width (the top bar of the F) */
+  function fitLines(el) {
+    var widest = 0;
+    [].forEach.call(el.querySelectorAll('.ln > span'), function (s) { widest = Math.max(widest, s.getBoundingClientRect().width); });
+    if (!widest) return;
+    var cur = parseFloat(getComputedStyle(el).fontSize);
+    var size = cur * (el.clientWidth / widest) * 0.997;
+    size = Math.min(size, vh() * 0.26);                   /* never taller than about half a screen for two lines */
+    el.style.fontSize = size.toFixed(2) + 'px';
   }
   function splitWords(el) {
     if (el._src == null) el._src = el.innerHTML;
@@ -242,155 +263,91 @@
   }
 
   /* =====================================================================
-     Project reel — pinned scene. s = px scrolled inside the tall box.
-       0 … EXP          the inset window opens to full bleed
-       then per project one leg; the next screenshot wipes in mid-leg
-     ===================================================================== */
-  var reel = document.querySelector('[data-reel]');
-  var scene = null;
-  var EXP = 0.6, LEG = 0.62, END = 0.4;
-  if (reel && !reduced) {
-    var items = [].slice.call(reel.querySelectorAll('.reel__item'));
-    scene = {
-      stage: reel.querySelector('.reel__stage'),
-      frame: reel.querySelector('.reel__frame'),
-      items: items,
-      n: items.length,
-      index: 0
-    };
-    reel.classList.add('is-scene');
-    reel.style.setProperty('--reel-len', (1 + EXP + LEG * (items.length - 1) + END).toFixed(3));
-    /* the wipes must never reveal an unloaded image */
-    if ('IntersectionObserver' in window) {
-      var pre = new IntersectionObserver(function (en) {
-        if (!en[0].isIntersecting) return;
-        reel.querySelectorAll('img[loading="lazy"]').forEach(function (img) { img.loading = 'eager'; });
-        pre.disconnect();
-      }, { rootMargin: '100% 0px' });
-      pre.observe(reel);
-    }
-    /* keyboard: focusing a project's link brings that project on stage */
-    items.forEach(function (it, k) {
-      it.addEventListener('focusin', function () {
-        if (k === scene.index) return;
-        var top = reel.getBoundingClientRect().top + window.scrollY;
-        jumpTo(top + (EXP + LEG * k + 0.05) * vh());
-      });
-    });
-    fillTicker(reel.querySelector('.ticker'));
-    scene.tickH = reel.querySelector('.ticker').offsetHeight || 36;
-  }
-  function setReelIndex(i) {
-    if (i === scene.index && scene.items[i].classList.contains('is-active')) return;
-    scene.index = i;
-    scene.items.forEach(function (it, k) {
-      it.classList.toggle('is-in', k <= i);
-      it.classList.toggle('is-active', k === i);
-    });
-  }
-  function updateReel(V) {
-    var r = reel.getBoundingClientRect();
-    var y = r.top;
-    var stageH = scene.stage.offsetHeight;
-    var bleed = Math.max(0, stageH - V);                 /* see --bleed in home.css */
-    var s = clamp(-y, 0, Math.max(0, r.height - stageH));
-    var e = smooth(clamp(s / (EXP * V), 0, 1));
-    var pad = M.margin * 0.5;
-    /* before the pin the window's top edge rides just under the header bar */
-    var ct = (1 - e) * Math.max(pad, M.hdrH + pad - Math.max(y, 0));
-    var cx = (1 - e) * M.margin;
-    var st = scene.frame.style;
-    st.setProperty('--ct', ct.toFixed(1) + 'px');
-    st.setProperty('--cx', cx.toFixed(1) + 'px');
-    st.setProperty('--cb', (cx + (1 - e) * bleed).toFixed(1) + 'px');
-    st.setProperty('--zoom', (1 + (1 - e) * 0.07).toFixed(4));
-    var tickY = Math.max(ct, e * M.hdrH);
-    st.setProperty('--tick-y', tickY.toFixed(1) + 'px');
-    /* the screenshot window starts right under the ticker, wherever the ticker is */
-    st.setProperty('--bar', (tickY + scene.tickH).toFixed(1) + 'px');
-    var idx = clamp(Math.floor((s - EXP * V + LEG * V * 0.5) / (LEG * V)), 0, scene.n - 1);
-    setReelIndex(s < EXP * V ? 0 : idx);
-    return {
-      onMedia: e > 0.72 && y <= 0 && r.bottom >= V - 1,   /* only while pinned */
-      covering: y < V * 0.55 && r.bottom > V * 0.8
-    };
-  }
-
-  /* =====================================================================
-     "How I work" — pinned horizontal scene.
-       hold → the track pans left until the big word's letter I sits in the
-       middle → an ink layer grows out of that I (clip-path) until it covers
-       the stage. The Services band below has the same ink ground.
+     "How I work" — pinned horizontal scene, then the masked word.
+       hold → panels pan left → a sheet slides in from the right; the next
+       section's name is cut out of it and a photograph shows through →
+       the word zooms into its letter I until the photograph is the screen.
+     The mask is an SVG clipPath with live text, so it stays sharp at any
+     zoom; only the clip's transform changes per frame.
      ===================================================================== */
   var hs = document.querySelector('[data-hs]');
   var hsc = null;
-  var HS_HOLD = 0.12, HS_FLOOD = 0.7;
+  var HS_HOLD = 0.12, HS_SLIDE = 0.55, HS_ZOOM = 1.15;
+  /* The next section's name as outlines of the title face (Bebas Neue), from
+     tools/word-path.py. Live <text> in a clip path stops rendering in Chrome
+     once it is magnified about ten times; outlines scale without limit.
+     d: path, w: width, h: cap height, f: left and right edge of the letter I. */
+  var MASK_WORDS = {
+    de: { d: 'M41 0H151V600H332V700H41ZM385 0H685V100H495V285H646V385H495V600H685V700H385ZM748 0H858V700H748ZM921 534V494H1025V542Q1025 610 1082 610Q1110 610 1124 594Q1139 577 1139 540Q1139 496 1119 462Q1099 429 1045 382Q977 322 950 274Q923 225 923 164Q923 81 965 36Q1007 -10 1087 -10Q1166 -10 1206 36Q1247 81 1247 166V195H1143V159Q1143 123 1129 106Q1115 90 1088 90Q1033 90 1033 157Q1033 195 1054 228Q1074 261 1128 308Q1197 368 1223 417Q1249 466 1249 532Q1249 618 1206 664Q1164 710 1083 710Q1003 710 962 664Q921 619 921 534ZM1398 100H1283V0H1623V100H1508V700H1398ZM1672 534V0H1782V542Q1782 578 1796 594Q1811 610 1838 610Q1865 610 1880 594Q1894 578 1894 542V0H2000V534Q2000 619 1958 664Q1916 710 1836 710Q1756 710 1714 664Q1672 619 1672 534ZM2078 0H2216L2323 419H2325V0H2423V700H2310L2178 189H2176V700H2078ZM2497 534V166Q2497 81 2539 36Q2581 -10 2661 -10Q2741 -10 2783 36Q2825 81 2825 166V226H2721V159Q2721 90 2664 90Q2607 90 2607 159V542Q2607 610 2664 610Q2721 610 2721 542V405H2666V305H2825V534Q2825 619 2783 664Q2741 710 2661 710Q2581 710 2539 664Q2497 619 2497 534ZM2896 0H3196V100H3006V285H3157V385H3006V600H3196V700H2896ZM3259 0H3397L3504 419H3506V0H3604V700H3491L3359 189H3357V700H3259Z', w: 3645, h: 700, f: [748, 858] },
+    en: { d: 'M22 534V494H126V542Q126 610 183 610Q211 610 226 594Q240 577 240 540Q240 496 220 462Q200 429 146 382Q78 322 51 274Q24 225 24 164Q24 81 66 36Q108 -10 188 -10Q267 -10 308 36Q348 81 348 166V195H244V159Q244 123 230 106Q216 90 189 90Q134 90 134 157Q134 195 154 228Q175 261 229 308Q298 368 324 417Q350 466 350 532Q350 618 308 664Q265 710 184 710Q104 710 63 664Q22 619 22 534ZM413 0H713V100H523V285H674V385H523V600H713V700H413ZM776 0H939Q1024 0 1063 40Q1102 79 1102 161V204Q1102 313 1030 342V344Q1070 356 1086 393Q1103 430 1103 492V615Q1103 645 1105 664Q1107 682 1115 700H1003Q997 683 995 668Q993 653 993 614V486Q993 438 978 419Q962 400 924 400H886V700H776ZM926 300Q959 300 976 283Q992 266 992 226V172Q992 134 978 117Q965 100 936 100H886V300ZM1150 0H1261L1333 543H1335L1407 0H1508L1402 700H1256ZM1561 0H1671V700H1561ZM1746 538V162Q1746 80 1788 35Q1829 -10 1908 -10Q1987 -10 2028 35Q2070 80 2070 162V236H1966V155Q1966 90 1911 90Q1856 90 1856 155V546Q1856 610 1911 610Q1966 610 1966 546V439H2070V538Q2070 620 2028 665Q1987 710 1908 710Q1829 710 1788 665Q1746 620 1746 538ZM2136 0H2436V100H2246V285H2397V385H2246V600H2436V700H2136ZM2480 534V494H2584V542Q2584 610 2641 610Q2669 610 2684 594Q2698 577 2698 540Q2698 496 2678 462Q2658 429 2604 382Q2536 322 2509 274Q2482 225 2482 164Q2482 81 2524 36Q2566 -10 2646 -10Q2725 -10 2766 36Q2806 81 2806 166V195H2702V159Q2702 123 2688 106Q2674 90 2647 90Q2592 90 2592 157Q2592 195 2612 228Q2633 261 2687 308Q2756 368 2782 417Q2808 466 2808 532Q2808 618 2766 664Q2723 710 2642 710Q2562 710 2521 664Q2480 619 2480 534Z', w: 2830, h: 700, f: [1561, 1671] }
+  };
   if (hs && !reduced) {
     hsc = {
       stage: hs.querySelector('.hs__stage'),
       vp: hs.querySelector('.hs__viewport'),
       track: hs.querySelector('.hs__track'),
-      flood: hs.querySelector('.hs__flood'),
-      word: hs.querySelector('[data-word]'),
-      pan: 0, speed: 1.5, x: -1, f: -1
+      mask: hs.querySelector('.hs__mask'),
+      svg: hs.querySelector('.hs__svg'),
+      word: hs.querySelector('#hs-word'),
+      img: hs.querySelector('#hs-img'),
+      fade: hs.querySelector('.hs__mask-fade'),
+      pan: 0, speed: 1.5, x: -1, c: -1, z: -1, geo: null
     };
     hs.classList.add('is-scene');
   }
-  function wrapWordI() {
-    if (!hsc || !hsc.word) return;
-    var t = hsc.word.textContent;
-    var i = t.search(/i/i);
-    hsc.word.innerHTML = i < 0 ? esc(t)
-      : esc(t.slice(0, i)) + '<span class="hs__i">' + esc(t.charAt(i)) + '</span>' + esc(t.slice(i + 1));
-    hsc.i = hsc.word.querySelector('.hs__i');
+  /* size the SVG to the stage, set the word, and work out the zoom geometry */
+  function layoutMask() {
+    var W = hsc.stage.clientWidth, H = vh();
+    var m = MASK_WORDS[root.lang === 'en' ? 'en' : 'de'];
+    hsc.svg.setAttribute('viewBox', '0 0 ' + W + ' ' + hsc.stage.clientHeight);
+    hsc.word.setAttribute('d', m.d);
+    var s = Math.min(0.9 * W / m.w, 0.6 * H / m.h);      /* px per font unit: fits the width, caps at most 60 % of the height */
+    var stem = (m.f[1] - m.f[0]) * s;
+    hsc.geo = {
+      s: s,
+      x0: (W - m.w * s) / 2, y0: (H - m.h * s) / 2,      /* the word's top left corner at rest */
+      cx: W / 2, cy: H / 2,                              /* its centre */
+      fx: (W - m.w * s) / 2 + (m.f[0] + m.f[1]) / 2 * s, /* the middle of the I: where the zoom ends up */
+      kmax: 1.15 * Math.max(W / stem, hsc.stage.clientHeight / (m.h * s))
+    };
+    if (!hsc.img.getAttribute('href')) {
+      hsc.img.setAttribute('href', 'assets/img/v2/' + (W < 820 ? 'sparks-1100.webp' : 'sparks-1920.webp'));
+    }
   }
   function layoutHs() {
     if (!hsc) return;
     var V = vh();
     hsc.speed = window.innerWidth < 768 ? 1.8 : 1.5;      /* px of pan per px of scroll */
     hsc.track.style.transform = 'none';
-    var vw = hsc.vp.clientWidth;
-    var end = hsc.track.scrollWidth - vw;
-    if (hsc.i) {
-      var ir = hsc.i.getBoundingClientRect(), tr = hsc.track.getBoundingClientRect();
-      end = Math.min(end, ir.left - tr.left + ir.width / 2 - vw * 0.5);
-    }
-    hsc.pan = Math.max(0, end);
-    hsc.x = -1; hsc.f = -1;
-    hs.style.height = Math.round(hsc.stage.offsetHeight + HS_HOLD * V + hsc.pan / hsc.speed + HS_FLOOD * V) + 'px';
+    hsc.pan = Math.max(0, hsc.track.scrollWidth - hsc.vp.clientWidth);
+    layoutMask();
+    hsc.x = -1; hsc.c = -1; hsc.z = -1;
+    hs.style.height = Math.round(hsc.stage.offsetHeight + (HS_HOLD + HS_SLIDE + HS_ZOOM) * V + hsc.pan / hsc.speed) + 'px';
+  }
+  function setZoom(z) {
+    var g = hsc.geo;
+    if (!g) return;
+    var k = Math.pow(g.kmax, z);                          /* exponential: the zoom feels even */
+    /* the fixed point travels from the word's centre to the middle of the I early on */
+    var ax = g.cx + (g.fx - g.cx) * smooth(clamp(z / 0.3, 0, 1));
+    hsc.word.setAttribute('transform', 'translate(' + (g.cx + k * (g.x0 - ax)).toFixed(2) + ' ' + (g.cy + k * (g.y0 - g.cy)).toFixed(2) + ') scale(' + (k * g.s).toFixed(5) + ')');
+    /* at the very end the clip is dropped: the photograph is simply the screen */
+    if (z >= 0.985) hsc.img.removeAttribute('clip-path'); else hsc.img.setAttribute('clip-path', 'url(#hs-clip)');
+    hsc.fade.style.opacity = clamp((z - 0.6) / 0.4, 0, 1).toFixed(3);
   }
   function updateHs(V) {
     var r = hs.getBoundingClientRect();
     var stageH = hsc.stage.offsetHeight;
     var s = clamp(-r.top, 0, Math.max(0, r.height - stageH));
-    var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan);
-    if (x !== hsc.x) {
-      hsc.x = x;
-      hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)';
-    }
-    var f = clamp((s - HS_HOLD * V - hsc.pan / hsc.speed) / (HS_FLOOD * V), 0, 1);
-    if (f !== hsc.f) {
-      hsc.f = f;
-      var st = hsc.flood.style;
-      if (f <= 0) {
-        st.visibility = 'hidden';
-      } else {
-        /* start inside the stem of the I (same colour, so the start is invisible) */
-        var sr = hsc.stage.getBoundingClientRect();
-        var ir = hsc.i ? hsc.i.getBoundingClientRect() : { left: sr.left + sr.width / 2, right: sr.left + sr.width / 2, top: sr.top + sr.height / 2, bottom: sr.top + sr.height / 2, width: 0, height: 0 };
-        var k = 1 - Math.pow(f, 2.2);
-        var t = Math.max(0, (ir.top - sr.top + ir.height * 0.26) * k);
-        var b = Math.max(0, (sr.bottom - ir.bottom + ir.height * 0.34) * k);
-        var l = Math.max(0, (ir.left - sr.left + ir.width * 0.3) * k);
-        var rr = Math.max(0, (sr.right - ir.right + ir.width * 0.3) * k);
-        st.clipPath = 'inset(' + t.toFixed(1) + 'px ' + rr.toFixed(1) + 'px ' + b.toFixed(1) + 'px ' + l.toFixed(1) + 'px)';
-        st.visibility = 'visible';
-      }
-    }
-    return {
-      pinned: r.top <= V * 0.4 && r.bottom >= V * 0.9,
-      flooded: f > 0.9 && r.top <= 0 && r.bottom > M.hdrH * 0.5
-    };
+    var panLen = hsc.pan / hsc.speed;
+    var c = smooth(clamp((s - HS_HOLD * V - panLen) / (HS_SLIDE * V), 0, 1));       /* sheet slides in */
+    var z = clamp((s - HS_HOLD * V - panLen - HS_SLIDE * V) / (HS_ZOOM * V), 0, 1); /* zoom */
+    /* the panels keep moving a little while the sheet comes in, so nothing stops dead */
+    var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan) + c * hsc.vp.clientWidth * 0.3;
+    if (x !== hsc.x) { hsc.x = x; hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)'; }
+    if (c !== hsc.c) { hsc.c = c; hsc.mask.style.transform = 'translate3d(' + ((1 - c) * 100).toFixed(2) + '%,0,0)'; }
+    if (z !== hsc.z) { hsc.z = z; setZoom(z); }
+    return { pinned: r.top <= V * 0.4 && r.bottom >= V * 0.9 };
   }
 
   /* =====================================================================
@@ -402,9 +359,8 @@
     var svcPre = svc.querySelector('.svc-pre');
     var svcFigs = svcPre ? [].slice.call(svcPre.querySelectorAll('.svc-pre__fig')) : [];
     var svcRows = [].slice.call(svc.querySelectorAll('a.row'));
-    var svcWide = window.matchMedia('(min-width: 62.5rem)');
     var showSvc = function (i, row) {
-      if (!svcPre || !svcWide.matches) return;
+      if (!svcPre || !desktop.matches) return;
       var y = Math.round(row.offsetTop + row.offsetHeight / 2 - svcPre.offsetHeight / 2) + 'px';
       if (!svcPre.classList.contains('is-on')) {
         /* first appearance: start at this row, do not travel in from another one */
@@ -427,6 +383,31 @@
     svc.addEventListener('pointerleave', hideSvc);
   }
 
+  /* ---- Projects (laptops): each screenshot glides up through its backdrop. The
+     stack itself is CSS; this only reads four boxes and moves four frames. ---- */
+  var casesEl = reduced ? null : document.querySelector('.cases');
+  var caseEls = casesEl ? [].slice.call(casesEl.querySelectorAll('.case')) : [];
+  /* a card taller than the screen pins with its bottom edge on the screen's, so
+     its text is read before the next card covers it */
+  function layoutCases() {
+    var V = vh();
+    caseEls.forEach(function (el) { el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
+  }
+  function updateCases(V) {
+    if (!casesEl || !desktop.matches) return;
+    var box = casesEl.getBoundingClientRect();
+    if (box.top > V || box.bottom < 0) return;
+    var tops = caseEls.map(function (el) { return el.getBoundingClientRect().top; });
+    caseEls.forEach(function (el, i) {
+      /* 1 while it comes in, 0 when it is pinned, -1 once the next one has covered it */
+      var p = tops[i] > 0 ? tops[i] / V : (i + 1 < tops.length ? clamp(tops[i + 1] / V, 0, 1) - 1 : tops[i] / V);
+      var y = Math.round(clamp(p, -1, 1) * 0.14 * V);
+      if (y === el._cy) return;
+      el._cy = y;
+      el.style.setProperty('--cy', y);
+    });
+  }
+
   /* ---- Statement: words turn from pencil to ink as the block crosses the screen ---- */
   function updateFill(V) {
     fillEls.forEach(function (el) {
@@ -441,66 +422,49 @@
     });
   }
 
-  /* ---- Hero title: the lines drive apart as the hero scrolls away ---- */
+  /* ---- Hero title: the lines drive apart while the projects slide over the pinned hero ---- */
   var driveEl = reduced ? null : document.querySelector('[data-drive]');
-  var heroEl = driveEl ? driveEl.closest('section') : null;
   var driveVal = -1;
-  function updateDrive() {
+  function updateDrive(V) {
     if (!driveEl) return;
-    var r = heroEl.getBoundingClientRect();
-    if (r.bottom < 0) return;
-    var v = Math.round(clamp(-r.top / r.height, 0, 1) * 0.09 * window.innerWidth);
+    var v = Math.round(clamp(window.scrollY / V, 0, 1) * 0.11 * window.innerWidth);
     if (v === driveVal) return;
     driveVal = v;
     driveEl.style.setProperty('--drive', v);
   }
 
-  /* ---- Closing headline: grows and closes in as it comes up the screen ---- */
+  /* ---- Closing headline: its lines come in from the sides and meet ---- */
   var convEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-converge]'));
   function updateConverge(V) {
     convEls.forEach(function (el) {
-      var r = el.parentElement.getBoundingClientRect();   /* the parent does not scale */
+      var r = el.parentElement.getBoundingClientRect();   /* the parent does not move */
       if (r.top > V * 1.2 || r.bottom < -V * 0.2) return;
-      var v = smooth(clamp((V - r.top) / (V * 0.62), 0, 1)).toFixed(3);
+      var t = clamp((V - r.top) / (V * 0.55), 0, 1);
+      var v = (1 - Math.pow(1 - t, 3)).toFixed(3);        /* ease out: fast in, settles gently */
       if (v === el._conv) return;
       el._conv = v;
       el.style.setProperty('--conv', v);
     });
   }
 
-  /* ---- Promote a scene's layers only while it is within a screen of the viewport ---- */
-  var sceneEls = [reel, hs].filter(Boolean);
-  function nearScenes(V) {
-    sceneEls.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      var near = r.top < 2 * V && r.bottom > -V;
-      if (near !== el._near) { el._near = near; el.classList.toggle('is-near', near); }
-    });
+  /* ---- Promote the scene's layers only while it is within a screen of the viewport ---- */
+  function nearScene(V) {
+    if (!hs) return;
+    var r = hs.getBoundingClientRect();
+    var near = r.top < 2 * V && r.bottom > -V;
+    if (near !== hs._near) { hs._near = near; hs.classList.toggle('is-near', near); }
   }
 
-  /* ---- One scroll tick for header, scenes, fog and the text effects ---- */
+  /* ---- One scroll tick for header, scene, fog and the text effects ---- */
   var refreshCursor = null;   /* set by the cursor block on fine pointers */
   var fog = document.querySelector('.fog');
   var noFog = [].slice.call(document.querySelectorAll('[data-nofog]'));
   var noFogCover = [].slice.call(document.querySelectorAll('[data-nofog-cover]'));   /* off while it fills the bottom edge */
-  var inkEls = [].slice.call(document.querySelectorAll('[data-ink]'));
   var ticking = false;
-  function underHeader(el) {
-    var r = el.getBoundingClientRect();
-    return r.top <= M.hdrH * 0.5 && r.bottom > M.hdrH * 0.5;
-  }
-  function updateHeader(rs, hss) {
-    if (!hdr) return;
-    var inv = hss.flooded || inkEls.some(underHeader);
-    hdr.classList.toggle('is-scrolled', window.scrollY > 8);
-    hdr.classList.toggle('is-on-media', rs.onMedia);
-    hdr.classList.toggle('is-inv', inv && !rs.onMedia);
-  }
   /* the blur band is off wherever something is anchored to the bottom edge */
-  function updateFog(rs, hss, V) {
+  function updateFog(V) {
     if (!fog) return;
-    var off = rs.covering || hss.pinned ||
-      noFog.some(function (el) { return el.getBoundingClientRect().top < V - 8; }) ||
+    var off = noFog.some(function (el) { return el.getBoundingClientRect().top < V - 8; }) ||
       noFogCover.some(function (el) { var r = el.getBoundingClientRect(); return r.top < V && r.bottom > V - 12; });
     fog.classList.toggle('is-off', off);
   }
@@ -508,13 +472,13 @@
     ticking = false;
     if (root.classList.contains('menu-open')) return;   /* a pinned body reports scrollY 0 */
     var V = vh();
-    var rs = scene ? updateReel(V) : { onMedia: false, covering: false };
-    var hss = hsc ? updateHs(V) : { pinned: false, flooded: false };
-    nearScenes(V);
-    updateHeader(rs, hss);
-    updateFog(rs, hss, V);
+    if (hsc) updateHs(V);
+    nearScene(V);
+    if (hdr) hdr.classList.toggle('is-scrolled', window.scrollY > 8);
+    updateFog(V);
     updateFill(V);
-    updateDrive();
+    updateDrive(V);
+    updateCases(V);
     updateConverge(V);
     if (refreshCursor) refreshCursor();
   }
@@ -526,6 +490,37 @@
   window.addEventListener('scroll', requestTick, { passive: true });
   if (lenis) lenis.on('scroll', requestTick);
 
+  /* ---- Keyboard focus stays visible (WCAG 2.4.11). Pinned sheets defeat the
+     browser's own scroll-into-view: a focused control can sit under the next
+     sheet, or below the screen inside a block that is still pinned. ---- */
+  var byKey = false;
+  document.addEventListener('keydown', function (e) { if (e.key === 'Tab') byKey = true; });
+  document.addEventListener('pointerdown', function () { byKey = false; });
+  function nudge(dy) {
+    var y = window.scrollY + dy;
+    if (lenis) lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y);
+  }
+  function revealFocus(el, tries) {
+    if (!el || !el.isConnected || el.closest('.hdr, .menu, #cc-banner, #cc-modal-overlay')) return;
+    var V = window.innerHeight, r = el.getBoundingClientRect(), pad = 24, dy = 0;
+    if (!r.height) return;
+    if (r.bottom > V - pad) {
+      dy = Math.min(r.bottom - V + pad, r.top - M.hdrH - pad);      /* below the screen (a pinned block swallowed the scroll) */
+    } else if (r.top < M.hdrH + pad) {
+      dy = r.top - M.hdrH - pad;                                    /* under the header */
+    } else {
+      var hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      var sheet = hit && !el.contains(hit) && !hit.contains(el) ? hit.closest('.case, .cases__intro, .s, .hs, .ftr, .reel-more') : null;
+      if (sheet && !sheet.contains(el)) dy = Math.min(0, sheet.getBoundingClientRect().top - r.bottom - pad);   /* back until the sheet has cleared it */
+    }
+    if (Math.abs(dy) < 1) return;
+    nudge(dy);
+    if (tries > 0) window.requestAnimationFrame(function () { revealFocus(el, tries - 1); });
+  }
+  document.addEventListener('focusin', function (e) {
+    if (byKey) window.requestAnimationFrame(function () { revealFocus(e.target, 8); });
+  });
+
   /* ---- Width changes only: remeasure, re-split, re-reserve ---- */
   var lastW = window.innerWidth, resizeT = 0;
   window.addEventListener('resize', function () {
@@ -535,6 +530,7 @@
     resizeT = window.setTimeout(function () {
       measure();
       if (booted) splitAll(false);
+      layoutCases();
       layoutHs();
       reserveFaq();
       requestTick();
@@ -566,19 +562,6 @@
     });
   }
 
-  /* ---- Ticker: repeat the set until it spans the row, then double it for the loop ---- */
-  function fillTicker(ticker) {
-    if (!ticker) return;
-    var track = ticker.querySelector('.ticker__track');
-    var set = ticker.querySelector('.ticker__set');
-    if (!track || !set || track._filled) return;
-    track._filled = true;
-    var unit = set.innerHTML, guard = 0;
-    while (set.offsetWidth < ticker.offsetWidth && guard++ < 8) set.insertAdjacentHTML('beforeend', unit);
-    track.appendChild(set.cloneNode(true));
-    track.style.setProperty('--ticker-dur', Math.max(18, set.offsetWidth / 42) + 's');
-  }
-
   /* =====================================================================
      Cursor (fine pointers): a drafting crosshair with guide lines; over a
      labelled target the label takes its place. One element moves per
@@ -604,8 +587,6 @@
       t = t && t.closest ? t : null;
       var tagged = t && t.closest('[data-cur]');
       cur.classList.toggle('is-link', !!(t && t.closest('a, button, label, [role="button"]')));
-      cur.classList.toggle('is-light', !!(t && t.closest('.reel__frame, .hdr.is-on-media')));
-      cur.classList.toggle('is-inv', !!(t && t.closest('.inv, .hdr.is-inv, .hs__flood, .ftr__legal')));
       if (tagged) {
         var label = (root.lang === 'en' && tagged.getAttribute('data-cur-en')) || tagged.getAttribute('data-cur');
         if (cTag.textContent !== label) cTag.textContent = label;
@@ -636,7 +617,7 @@
   /* ---- Boot (last: everything above is defined) ---- */
   function boot() {
     splitAll(false);
-    wrapWordI();
+    layoutCases();
     layoutHs();
     startReveals();
     reserveFaq();
@@ -651,13 +632,13 @@
   } else {
     bootOnce();
   }
-  /* late layout shifts (images, fonts): the scene lengths depend on real sizes */
-  window.addEventListener('load', function () { if (booted) { layoutHs(); requestTick(); } });
+  /* late layout shifts (images, fonts): the scene length depends on real sizes */
+  window.addEventListener('load', function () { if (booted) { layoutCases(); layoutHs(); requestTick(); } });
   /* i18n rewrote the text: split the new copy, keep already-revealed state */
   document.addEventListener('vias:lang', function () {
     if (!booted) return;
     splitAll(true);
-    wrapWordI();
+    layoutCases();
     layoutHs();
     reserveFaq();
     requestTick();

@@ -157,9 +157,10 @@ fallow dead-code     --format json --quiet 2>/dev/null || true   # 3. re-verify
 Pages that load `assets/css/v2/*` follow **these** rules; the sections above still govern every page on the
 previous design (everything except `index.html` so far). Direction and reasoning: `docs/design-research/`.
 
-- **Files:** `assets/css/v2/tokens.css` (fonts + tokens, light `ember` and dark `ember-dark`), `base.css`
-  (ground, grid, type primitives, split-text states), `components.css` (shared), `home.css` (page);
-  `assets/js/v2/main.js`; `assets/js/vendor/lenis.min.js`. Old `main.js` / `components.css` are not loaded.
+- **Files:** `assets/css/v2/tokens.css` (fonts + tokens, **one dark scheme**; the light scheme and its switch
+  were removed on 2026-10-08), `base.css` (ground, grid, type primitives, split-text states), `components.css`
+  (shared), `home.css` (page); `assets/js/v2/main.js`; `assets/js/vendor/lenis.min.js`. Old `main.js` /
+  `components.css` are not loaded.
 - **Grid replaces the 72.5rem container:** full bleed, `.wrap` (fluid `--margin`) + `.grid` (4 columns, 8 from
   48rem). Section label in columns 1–2, content from column 3. No shadows, radius 0, hairline rows instead of cards.
 - **Type:** titles in Bebas Neue (`--font-display`, classes `.display`, `.d1`–`.d3`; caps only, so check
@@ -169,20 +170,34 @@ previous design (everything except `index.html` so far). Direction and reasoning
   (see the comment in `tokens.css`).
 - **Accent (#E8593A) is a fill behind dark text only** (primary CTA, `.mark`, wordmark dot, the free pricing
   card). Never accent-coloured text.
-- **Inverted band:** `.inv` on a section switches it to the other palette (Services). Give it `data-ink` so the
-  header inverts over it.
-- **Hero:** frozen `--vh` set inline in `<head>`; the hero is exactly one screen. The headline is split into
-  lines by JS; check line breaks in DE and EN at 320–1920px after any copy or size change.
-- **Motion:** Lenis on fine pointers only. Three scroll scenes, each with a static default and a
-  `prefers-reduced-motion` path: the project reel (`updateReel()`), the horizontal "So arbeite ich" scene with
-  the ink flood into Services (`updateHs()`), and the hero lines driving apart / the footer headline closing in
-  (`--drive`, `--conv`). Content hidden for reveals must stay covered by the `rv-fallback` failsafe in `<head>`.
+- **Section flow:** every section is an opaque sheet (`.s` has the ground colour and `z-index: 1`). Pinned
+  sheets stay put while the next one slides over them: the hero, the projects intro and each `.case` are
+  `position: sticky; top: 0` (CSS only). Pricing does the opposite: `.under` starts one screen before Services
+  ends, so Services (higher `z-index`) lifts off it. A new section must be opaque or it shows what is pinned
+  underneath.
+- **Hero:** frozen `--vh` set inline in `<head>`; the hero is exactly one screen, laid out as an F: title
+  across the top, note on the left, one CTA bottom right. From 62.5rem the title is forced onto two lines
+  (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
+  lines in DE and EN at 320–1920px after any copy or size change.
+- **Projects:** `.cases`. Laptops: one screen per case, blurred dark backdrop (`.case__bg`) on the left with
+  the screenshot gliding through it (`--cy`, `updateCases()`), story top right. Phones and tablets: cards as
+  tall as their content, screenshots whole at their own ratio (never `object-fit: cover`).
+- **Word mask ("So arbeite ich" → Services):** after the horizontal pan a sheet slides in with the next
+  section's name cut out of it; a photograph shows through and the word zooms into its letter I
+  (`updateHs()`, `setZoom()`). The letters are **outlines** in an SVG clip path (`MASK_WORDS` in `main.js`),
+  not live text: Chrome stops drawing `<text>` in a clip path beyond about 10× magnification. If the section
+  is renamed, regenerate both languages with `python3 tools/word-path.py WORD I` (needs fontTools + brotli).
+- **Motion:** Lenis on fine pointers only. Every scene has a static default and a `prefers-reduced-motion`
+  path (nothing pinned, no mask). Scroll-driven values: `--drive` (hero lines part), `--cy` (case
+  screenshots), the hs scene, `--conv` (the footer question's two halves come in from the sides and meet).
+  Content hidden for reveals must stay covered by the `rv-fallback` failsafe in `<head>`.
 - **Performance rules learned on this page:** no `mix-blend-mode` and no `backdrop-filter` on full-screen fixed
   layers beyond the two fog strips; hover states change `opacity`/`transform` of a layer, text colour switches
   in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
-- **Header:** ≥ 62.5rem logo, four links (letter-roll hover), theme switch; no CTA and no language switch there
-  (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
-- **Phones:** project screenshots are shown whole at their own ratio (never `object-fit: cover`).
+- **Header:** ≥ 62.5rem logo and four links (letter-roll hover), nothing else: no CTA, no language switch, no
+  theme switch (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
+- **Images:** sources and licences in `assets/img/v2/CREDITS.md`; add a line for every new image and say
+  whether it is a photo, drawn by script or AI-generated.
 - **Pricing:** card prices carry `data-price` (figures supplied by the owner on 2026-10-08: Onepager 575 €,
   Website 695 €, Onlineshop 1.295 €). Change them only on the owner's word, in both `data-en` and the text.
 - **Breakpoints in use:** 22.5rem, 30rem, 37.5rem, 48rem (grid 4→8), 62.5rem (burger → nav), 75rem, 87.5rem.

@@ -140,9 +140,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .s {
   position: relative;
+  z-index: 1;
   padding-block: var(--section);
+  background: var(--ground);       /* opaque: sections slide over pinned neighbours */
 }
-.s--tight-top { padding-top: 0; }
 
 /* section anatomy: a bracketed name in the first columns, content from the third */
 .s__label { grid-column: 1 / -1; margin-bottom: var(--block-gap); }
@@ -168,9 +169,6 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .d1 { font-size: var(--fs-d1); }
 .d2 { font-size: var(--fs-d2); line-height: 0.92; }
 .d3 { font-size: var(--fs-d3); line-height: 1; letter-spacing: 0.015em; }
-
-/* an inverted band: the other palette, locally (tokens.css) */
-.inv { background: var(--ground); color: var(--ink); }
 
 .lead {
   font-size: var(--fs-lead);

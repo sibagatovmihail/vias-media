@@ -1,25 +1,35 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — homepage
-   hero · project reel · why · how I work (horizontal scene) ·
-   services (inked band, hover drawings) · pricing · faq
+   hero (F) · projects (sticky stack) · why · how I work (horizontal scene
+   + masked word) · services · pricing (uncovered from below) · faq
+
+   Flow: blocks are opaque sheets. Pinned ones (hero, project cases) stay
+   where they are while the next sheet slides over them; Pricing lies
+   under Services and is uncovered as Services lifts.
    ===================================================================== */
 
 /* =====================================================================
-   HERO — one full screen
+   HERO — one full screen, laid out as an F: two bars of title across the
+   top, the note as the stem on the left, the action in the bottom right.
+   It stays pinned while the projects slide over it.
    ===================================================================== */
 .hero {
   position: relative;
+  z-index: 0;
   display: flex;
   min-height: calc(var(--vh, 1vh) * 100);
   padding-top: calc(var(--hdr-h) + env(safe-area-inset-top, 0px));
   overflow: hidden;          /* the title lines drive apart sideways on scroll */
   overflow: clip;
 }
+@media (min-height: 36.0625rem) {
+  .hero { position: sticky; top: 0; }
+}
 .hero__wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--block-gap);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr;
+  row-gap: clamp(1.25rem, calc(var(--vh, 1vh) * 3.4), 2.5rem);
   padding-top: clamp(0.5rem, calc(var(--vh, 1vh) * 1.6), 1.5rem);
   padding-bottom: calc(clamp(1.25rem, calc(var(--vh, 1vh) * 3.4), 2.5rem) + env(safe-area-inset-bottom, 0px));
 }
@@ -28,232 +38,160 @@
   font-weight: 400;
   font-size: var(--fs-hero);
   letter-spacing: 0.005em;
-  line-height: 0.86;
-  max-width: 8.4em;          /* always four lines, also where the size is limited by height */
+  line-height: 0.8;
+  max-width: 8.4em;          /* phones and tablets: always four lines */
   text-wrap: balance;        /* no one-word lines; the splitter measures the balanced breaks */
 }
-/* --drive (px) is set by main.js while the hero scrolls away; odd and even
-   lines travel in opposite directions */
-.hero__title .ln {
-  transform: translate3d(calc(var(--drive, 0) * var(--dir, 1) * 1px), 0, 0);
-}
+/* --drive (px) is set by main.js while the next sheet covers the hero; odd
+   and even lines travel in opposite directions */
+.hero__title .ln { transform: translate3d(calc(var(--drive, 0) * var(--dir, 1) * 1px), 0, 0); }
+.hero__title .ln > span { display: inline-block; }   /* so a line can be measured and fitted */
 
-.hero__info { row-gap: var(--block-gap); align-items: end; }
-.hero__meta { display: none; }
-.hero__lead-cover { grid-column: 1 / -1; }
 .hero__lead {
   font-size: 0.9375rem;
   line-height: 1.45;
   color: var(--ink-2);
-  max-width: 34rem;
+  max-width: 30rem;
   text-wrap: pretty;
 }
 .hero__lead .em { color: var(--ink); font-weight: 600; }
 .hero__actions {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-}
-.hero__actions .btn { width: 100%; padding-inline: 0.5rem; }
-.hero__actions .btn svg.ico-wa { width: 1.125rem; height: 1.125rem; }
-.hero__reassure {
-  grid-column: 1 / -1;
-  color: var(--ink-2);
-  font-size: var(--fs-mono-s);
-  line-height: 1.5;
-  text-wrap: balance;
-}
-
-/* very short phones: the action comes before the explanation */
-@media (max-width: 37.5rem) and (max-height: 36rem) {
-  .hero__actions { order: -1; }
+  align-self: end;
+  justify-self: end;         /* the F ends in the bottom right corner */
 }
 @media (max-width: 22.5rem) {
-  .hero__actions { grid-template-columns: minmax(0, 1fr); }
-}
-
-@media (min-width: 37.5625rem) {
-  .hero__lead { font-size: 1rem; }
-  .hero__lead-cover { grid-column: 1 / span 5; }
-  .hero__actions { grid-column: 6 / -1; grid-template-columns: minmax(0, 1fr); }
-}
-@media (min-width: 37.5625rem) and (max-width: 47.9375rem) {
-  /* 4 columns here */
-  .hero__lead-cover { grid-column: 1 / -1; }
-  .hero__actions { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+  .hero__actions { justify-self: stretch; }
+  .hero__actions .btn { width: 100%; }
 }
 @media (min-width: 62.5rem) {
-  .hero__title { text-indent: var(--pitch); }
-  .hero__title .ln { text-indent: 0; }
-  .hero__title .ln:first-child { padding-left: var(--pitch); }
-  .hero__meta {
-    grid-column: 1 / span 2;
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-    color: var(--ink-2);
-  }
-  /* laptops: the subtitle is a note beside the title, not a second headline */
-  .hero__lead { font-size: 0.875rem; line-height: 1.5; max-width: 27rem; }
-  .hero__lead-cover { grid-column: 3 / span 3; }
-  .hero__actions { grid-column: 7 / -1; }
+  /* two bars: line 1 runs the full width (fitted by main.js), line 2 is shorter */
+  .hero__title { max-width: none; }
+  .hero__lead { font-size: 0.875rem; line-height: 1.5; max-width: 26rem; }
 }
 
-/* first-load order: lines rise, then the notes */
-.hero__info > :nth-child(1) { --i: 5; }
-.hero__info > :nth-child(2) { --i: 6; }
-.hero__info > :nth-child(3) { --i: 7; }
+/* first-load order: lines rise, then the note, then the action */
+.hero__lead-cover { --i: 4; }
+.hero__actions { --i: 6; }
 
 /* =====================================================================
-   REEL — the projects. Default: a plain list of four figures.
-   With JS and motion allowed (.is-scene): a pinned stage; the frame
-   opens from an inset window to full bleed, then the projects wipe in.
+   PROJECTS — a sticky stack: the intro and each case are pinned at the
+   top and the next one slides over them (CSS only). On laptops a case is
+   one screen: a dark, soft backdrop on the left with the site's screenshot
+   gliding up through it (--cy, main.js), the story top right.
    ===================================================================== */
-.reel {
+.cases {
   position: relative;
-  padding-inline: var(--margin);
+  z-index: 1;
+  background: var(--ground);
 }
-.reel__list { display: grid; gap: var(--head-gap); }
-.reel__item { position: relative; display: grid; gap: 1rem; }
-.reel__pic { position: relative; background: var(--ground-2); }
-.reel__pic img { width: 100%; height: auto; }      /* always the screenshot's own ratio */
-.reel__cap { display: grid; gap: 0.625rem; justify-items: start; }
-.reel__count,
-.reel__tags { color: var(--ink-2); }
-.reel__name { font-size: clamp(2.5rem, 1.2rem + 6.4vw, 7rem); }
-.reel__name h3 { font: inherit; letter-spacing: inherit; }
-.reel__ticker { display: none; }
-
-.reel.is-scene {
-  --bar: calc(var(--hdr-h) + 2.25rem + var(--margin) * 0.5);   /* header + ticker */
-  --cap-h: 12.25rem;                                           /* title block */
-  --bleed: 0px;
-  padding-inline: 0;
-  height: calc(var(--vh, 1vh) * 100 * var(--reel-len, 3.7) + var(--bleed));
-}
-/* iOS: the frozen --vh is the height with the toolbar showing. When the toolbar
-   slides away the screen grows; the sheet's dark ground continues below the
-   title block so no page ground shows under the pinned stage. */
-@media (hover: none), (pointer: coarse) {
-  .reel.is-scene,
-  .hs.is-scene { --bleed: 7rem; }
-}
-.is-scene .reel__stage {
-  position: sticky;
-  top: 0;
-  height: calc(var(--vh, 1vh) * 100 + var(--bleed));
+.cases__intro {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(var(--vh, 1vh) * 100);
+  padding-bottom: clamp(2rem, calc(var(--vh, 1vh) * 8), 5rem);
   overflow: hidden;
   overflow: clip;
+  background: var(--ground);
+  border-top: 1px solid var(--line-soft);
 }
-/* the frame is a sheet: bar on top, the screenshot in its window, a ruled
-   title block below. Nothing is laid over the client's work. */
-.is-scene .reel__frame {
+.cases__intro-in { position: relative; display: grid; gap: var(--block-gap); }
+/* the section's name as a huge, barely lit word behind its opening */
+.ghost {
   position: absolute;
-  inset: 0;
-  background: #121110;
-  color: var(--media-ink);
-  clip-path: inset(var(--ct, 0px) var(--cx, 0px) var(--cb, 0px) var(--cx, 0px));
-}
-.is-scene .reel__list { position: absolute; inset: 0; display: block; }
-.is-scene .reel__item { position: absolute; inset: 0; display: block; pointer-events: none; }
-.is-scene .reel__pic {
-  position: absolute;
-  inset: var(--bar) 0 calc(var(--cap-h) + var(--bleed)) 0;
-  background: #121110;
-  overflow: hidden;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 1.1s var(--ease-io);
-}
-.is-scene .reel__item.is-in .reel__pic { clip-path: inset(0); }
-.is-scene .reel__pic picture { display: block; width: 100%; height: 100%; transform: scale(var(--zoom, 1)); transform-origin: 50% 0; }
-.is-scene .reel__pic img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transform: scale(1.12);
-  transform-origin: 50% 0;
-  transition: transform 1.6s var(--ease-out);
-}
-.is-scene .reel__item.is-in .reel__pic img { transform: none; }
-@media (max-width: 47.9375rem) {
-  /* phones: the whole screenshot at its own ratio, mounted on the sheet;
-     never cropped to fill the tall window */
-  .is-scene .reel__pic picture { transform: none; }
-  .is-scene .reel__pic img,
-  .is-scene .reel__item.is-in .reel__pic img {
-    object-fit: contain;
-    object-position: center;
-    transform: none;
-  }
+  left: -0.02em;
+  top: calc(var(--hdr-h) - 0.06em);
+  font-family: var(--font-display);
+  font-size: 37vw;
+  line-height: 0.8;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  color: var(--ink);
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
 }
 
-.is-scene .reel__cap {
-  position: absolute;
-  inset: auto 0 var(--bleed) 0;
-  height: var(--cap-h);
-  padding: 1rem calc(var(--margin) * 2) calc(var(--margin) + 1rem + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid rgba(243, 239, 232, 0.28);
+/* phones and tablets: a card as tall as its content, so the next one follows
+   directly and no screen is left half empty */
+.case {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--hdr-h);
+  background: var(--ground);
+  border-top: 1px solid var(--line-soft);
+}
+/* main.js gives a card that is taller than the screen a negative top, so it
+   pins once its last line is on screen */
+@media (min-height: 37.5rem) {
+  .cases__intro,
+  .case { position: sticky; top: 0; }
+}
+/* phones: the screenshot whole, at its own ratio; the story under it */
+.case__media { position: relative; padding: var(--margin) var(--margin) 0; }
+.case__bg { display: none; }
+.case__frame { border: 1px solid var(--line); background: var(--ground-2); }
+.case__frame img { width: 100%; height: auto; }
+.case__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: space-between;
-  gap: 0.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  gap: 0.75rem;
+  justify-items: start;
+  align-content: start;
+  padding: clamp(1.25rem, calc(var(--vh, 1vh) * 3), 2rem) var(--margin) clamp(2rem, calc(var(--vh, 1vh) * 6), 3.5rem);
 }
-.is-scene .reel__count,
-.is-scene .reel__tags { color: rgba(243, 239, 232, 0.78); }
-.is-scene .reel__name {
-  font-size: clamp(2.5rem, 1.4rem + 4.4vw, 5.75rem);
-  overflow: hidden;
-  overflow: clip;
-  padding-block: 0.08em 0.04em;
-  margin-block: -0.08em -0.04em;
-}
-.is-scene .reel__name span { display: block; transform: translateY(110%); transition: transform 0.5s var(--ease-io); }
-.is-scene .reel__item.is-active .reel__cap { opacity: 1; pointer-events: auto; transition: opacity 0.5s ease 0.35s; }
-.is-scene .reel__item.is-active .reel__name span { transform: none; transition: transform 1s var(--ease-out) 0.4s; }
-.is-scene .reel__cap .btn { justify-self: start; }
-@media (min-width: 48rem) {
-  .reel.is-scene { --cap-h: clamp(9.5rem, calc(var(--vh, 1vh) * 21), 12.5rem); }
-  .is-scene .reel__cap {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto 1fr auto;
-    align-items: end;
-    column-gap: var(--gutter);
+.case__count,
+.case__tags { color: var(--ink-2); }
+.case__name { font-size: clamp(2.75rem, 1.4rem + 6vw, 7rem); line-height: 0.86; }
+.case__desc p { color: var(--ink-2); max-width: 30rem; text-wrap: pretty; }
+.case__body .btn { margin-top: 0.5rem; }
+
+@media (min-width: 62.5rem) {
+  .case { flex-direction: row; min-height: calc(var(--vh, 1vh) * 100); padding-top: 0; }
+  .case__media {
+    flex: none;
+    width: 50%;
+    padding: 0;
+    overflow: hidden;
+    overflow: clip;
+    background: #0E0D0C;
   }
-  .is-scene .reel__count { grid-column: 1; grid-row: 1; }
-  .is-scene .reel__name { grid-column: 1; grid-row: 2; }
-  .is-scene .reel__tags { grid-column: 1; grid-row: 3; }
-  .is-scene .reel__cap .btn { grid-column: 2; grid-row: 2 / span 2; justify-self: end; }
+  /* a second view of the same site, pushed back until it is only atmosphere */
+  .case__bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% top;
+    filter: brightness(0.3) saturate(0.7) blur(0.5rem);
+    transform: scale(1.08);          /* hides the blur's soft edge */
+  }
+  .case__frame {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50%;
+    border-color: rgba(243, 239, 232, 0.4);
+    transform: translate3d(0, calc(-50% + var(--cy, 0) * 1px), 0);
+  }
+  .case__body {
+    flex: 1;
+    gap: 1rem;
+    align-content: start;
+    padding: calc(var(--hdr-h) + clamp(1.5rem, calc(var(--vh, 1vh) * 6), 4.5rem)) calc(var(--margin) * 2) var(--margin) clamp(1.5rem, 3.4vw, 3.5rem);
+  }
+  .case__body .btn { margin-top: 1rem; }
 }
-
-.is-scene .reel__ticker {
-  display: block;
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: 2;
-  height: 2.25rem;
-  line-height: 2.25rem;
-  color: rgba(243, 239, 232, 0.86);
-  border-bottom: 1px solid rgba(243, 239, 232, 0.28);
-  transform: translateY(var(--tick-y, 0px));
-}
-
-/* Layers are promoted only while a scene is near the screen (.is-near, set by
-   main.js). Permanent will-change on every scene made the layer bookkeeping
-   of each frame heavier, also far away from the scenes. */
-.is-near .reel__frame,
-.is-near .reel__pic { will-change: clip-path; }
-.is-near .hs__track { will-change: transform; }
-.is-near .hs__flood { will-change: clip-path; }
 
 .reel-more {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   padding-top: var(--block-gap);
+  background: var(--ground);
 }
 
 /* =====================================================================
@@ -277,11 +215,13 @@
 
 /* =====================================================================
    HOW I WORK — default: a ruled list. With JS and motion (.is-scene):
-   the section pins, seven panels pan sideways, and the word at the end
-   floods the screen with ink (clip-path grows out of its letter I),
-   which is the ground of the Services band that follows.
+   the section pins and seven panels pan sideways; then a sheet with the
+   next section's name slides in. The name is cut out of the sheet (an SVG
+   clip path of the letters' outlines) and a photograph shows through; the
+   word zooms into its letter I until the photograph is the whole screen,
+   and its lower edge fades to the page ground, where Services begins.
    ===================================================================== */
-.hs { position: relative; padding-bottom: var(--section); }   /* the section before it brings the space above */
+.hs { position: relative; z-index: 1; padding-bottom: var(--section); background: var(--ground); }
 .features__head { display: grid; gap: var(--block-gap); }
 .hs__viewport { padding-inline: var(--margin); margin-top: var(--head-gap); }
 .hs__track { border-top: 1px solid var(--line); }
@@ -293,8 +233,7 @@
 }
 .hs__n { color: var(--ink-3); }
 .hs__d p { color: var(--ink-2); max-width: 34rem; text-wrap: pretty; }
-.hs__panel--word,
-.hs__flood { display: none; }
+.hs__mask { display: none; }
 @media (min-width: 48rem) {
   .hs:not(.is-scene) .hs__viewport { padding-left: calc(var(--margin) + 2 * var(--pitch)); }
   .hs:not(.is-scene) .hs__panel { grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: baseline; }
@@ -304,6 +243,11 @@
 .hs.is-scene {
   --bleed: 0px;
   padding-block: 0;          /* main.js sets the height from the track's length */
+}
+/* iOS: the frozen --vh is the height with the toolbar showing; when the toolbar
+   slides away the screen grows, and the stage reaches further down */
+@media (hover: none), (pointer: coarse) {
+  .hs.is-scene { --bleed: 7rem; }
 }
 .is-scene .hs__stage {
   position: sticky;
@@ -345,6 +289,7 @@
   border-bottom: 0;
   border-left: 1px solid var(--line);
 }
+.is-scene .hs__panel:last-child { border-right: 1px solid var(--line); }
 .is-scene .hs__t h3 {
   font-size: clamp(2.125rem, 1.5rem + 2vw, 3.25rem);
   overflow-wrap: break-word;
@@ -353,25 +298,22 @@
 }
 .is-scene .hs__d { margin-top: auto; }
 .is-scene .hs__d p { font-size: 0.9375rem; }
-.is-scene .hs__panel--word {
-  display: flex;
-  width: auto;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 28vw 0 6vw;
-}
-.hs__word {
-  font-size: min(calc(var(--vh, 1vh) * 46), 62vw);
-  line-height: 0.8;
-  white-space: nowrap;
-}
-.is-scene .hs__flood {
+
+/* the sheet with the cut-out word */
+.is-scene .hs__mask {
   display: block;
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: var(--ink);
-  visibility: hidden;
+  background: var(--ground);
+  transform: translate3d(100%, 0, 0);     /* slides in from the right (main.js) */
+}
+.hs__svg { display: block; width: 100%; height: 100%; }
+.hs__mask-fade {
+  position: absolute;
+  inset: 45% 0 0 0;
+  background: linear-gradient(to bottom, rgba(20, 19, 18, 0), var(--ground) 82%);
+  opacity: 0;
 }
 @media (max-height: 40rem) and (max-width: 47.9375rem) {
   /* short phones: the panels need the room */
@@ -389,13 +331,19 @@
   .is-scene .hs__panel { width: clamp(21rem, 30vw, 28rem); padding: 1.25rem 1.75rem 1.75rem 1.25rem; }
   .is-scene .hs__d p { font-size: 1rem; }
 }
+/* layers are promoted only while the scene is near the screen (.is-near, set
+   by main.js); a permanent will-change made every frame's bookkeeping heavier */
+.is-near .hs__track,
+.is-near .hs__mask { will-change: transform; }
 
 /* =====================================================================
-   SERVICES — an inked band of big ruled links. On hover (fine pointers,
-   wide screens) a drawing for the service slides in on the left.
+   SERVICES — big ruled links. On hover (fine pointers, wide screens) a
+   drawing for the service slides in on the left. The section is an
+   opaque sheet above Pricing: it lifts and uncovers it.
    ===================================================================== */
-/* the flood before it already filled a whole screen with ink: start sooner */
-.hs.is-scene + .inv { padding-top: calc(var(--section) * 0.4); }
+.services-sec { z-index: 3; }
+/* the photograph before it already filled a whole screen: start sooner */
+.hs.is-scene + .services-sec { padding-top: calc(var(--section) * 0.35); }
 .services { row-gap: var(--head-gap); }
 .services__head { display: grid; gap: var(--block-gap); justify-items: start; }
 /* these rows are links and invert on hover, so they run edge to edge */
@@ -454,9 +402,40 @@
 }
 
 /* =====================================================================
-   PRICING — four joined cards; the free first meeting carries the accent
+   PRICING — lies under Services. .under starts one screen before
+   Services ends and is one screen longer than the section; the section
+   is sticky in it, so it stands still while Services lifts off it, and
+   scrolls on normally once it is uncovered. An ember glow sits behind
+   its head; four joined cards, the free meeting carries the accent.
    ===================================================================== */
-.pricing { row-gap: var(--head-gap); }
+.under {
+  position: relative;
+  z-index: 2;
+  margin-top: calc(var(--vh, 1vh) * -100);
+}
+.under::after { content: ""; display: block; height: calc(var(--vh, 1vh) * 100); }   /* the sticky travel */
+/* #preise lands where Services has fully lifted off (the page's scroll-padding
+   would otherwise stop one header height short) */
+.under__anchor { position: absolute; top: calc(var(--vh, 1vh) * 100 + var(--hdr-h) + 1rem); }
+.pricing-sec {
+  --glow-pad: clamp(11rem, calc(var(--vh, 1vh) * 44), 26rem);
+  position: sticky;
+  top: 0;
+  padding-top: var(--glow-pad);
+}
+/* the image is bright between 20 % and 57 % of its height. It is 1/0.6 as
+   tall as the space above the text, so the text starts at 60 %, where the
+   small label still has 6.6:1 (measured 2026-10-08). Keep the ratio. */
+.pricing__glow {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--glow-pad) / 0.6);
+  background: var(--ground) url('../../img/v2/glow-900.webp') center top / 100% 100% no-repeat;
+}
+@media (min-width: 48rem) {
+  .pricing__glow { background-image: url('../../img/v2/glow-1600.webp'); }
+}
+.pricing { position: relative; row-gap: var(--head-gap); }
 .pricing__head { display: grid; gap: var(--block-gap); }
 .pricing__cards {
   grid-column: 1 / -1;
@@ -471,6 +450,7 @@
   padding: clamp(1.125rem, 0.9rem + 0.8vw, 1.75rem);
   background: var(--ground-2);
 }
+/* the duration sits above the name, so long names never collide with it */
 .pcard__top {
   display: flex;
   flex-direction: column-reverse;
@@ -523,6 +503,13 @@
   .faq__list { grid-column: 4 / -1; }
 }
 
+/* reduced motion: nothing is pinned or layered; every block is plain flow */
 @media (prefers-reduced-motion: reduce) {
-  .ticker__track { animation: none; }
+  .hero,
+  .cases__intro,
+  .case,
+  .pricing-sec { position: relative; top: auto; }
+  .under { margin-top: 0; }
+  .under::after { display: none; }
+  .under__anchor { top: calc(var(--hdr-h) + 1rem); }
 }
