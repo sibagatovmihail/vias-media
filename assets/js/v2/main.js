@@ -2,8 +2,11 @@
    Vias Media v2 "Bauplan" — page interactions
    contact links · menu sheet · smooth scroll · split text + hero fit ·
    reveals · horizontal scene + masked-word zoom · service drawings ·
-   hero drive / footer converge · fog · FAQ · cursor
-   (The project stack and the pricing reveal are CSS only: home.css.)
+   hero drive / footer converge · fog · FAQ · gallery · contact form ·
+   cursor. One file for every page: each block looks for its own markup
+   and does nothing where it is missing.
+   (The project stack, the pricing reveal and the page-change transition
+   are CSS only: home.css, base.css.)
    ===================================================================== */
 (function () {
   'use strict';
@@ -22,7 +25,7 @@
   function smooth(t) { return t * t * (3 - 2 * t); }
   function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-  /* ---- Contact details (mirrors assets/js/main.js until the old file is retired) ---- */
+  /* ---- Contact details: one place for the number, so call and WhatsApp links stay in step ---- */
   var CONTACT = {
     phoneHref: '+4916095761094',
     whatsapp: '4916095761094',
@@ -87,7 +90,8 @@
     var st = document.body.style;
     st.position = ''; st.top = ''; st.left = ''; st.right = '';
     window.scrollTo(0, lockY);
-    if (lenis) { lenis.start(); lenis.scrollTo(lockY, { immediate: true, force: true }); }
+    /* the smooth scroller measured the page while it was pinned (one screen high): re-measure, or it clamps to 0 */
+    if (lenis) { lenis.resize(); lenis.start(); lenis.scrollTo(lockY, { immediate: true, force: true }); }
   }
   function setMenu(open) {
     if (!burger || !menu) return;
@@ -101,7 +105,20 @@
   }
   if (burger && menu) {
     burger.addEventListener('click', function () { setMenu(!menu.classList.contains('is-open')); });
-    menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+    /* a link to a place on this page closes the sheet first. A link to another page
+       leaves it open: the next page comes up over it, and nothing flickers */
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (a.hash && a.pathname === window.location.pathname && a.host === window.location.host) setMenu(false);
+        /* leaving: the sheet stays where it is, but the page under it gets its scroll
+           position back, so "back" returns to the place the visitor left */
+        else if (a.host === window.location.host && menu.classList.contains('is-open')) unlockScroll();
+      });
+    });
+    /* back from the page cache with the sheet still open */
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted && menu.classList.contains('is-open')) setMenu(false);
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) { setMenu(false); burger.focus(); }
     });
@@ -130,7 +147,11 @@
           space = false;
           return m;
         }
-        out.push({ t: word, cls: cls, sp: space && out.length > 0 });
+        /* a hyphenated word may break after its hyphen ("Barrierefreiheits-" / "Audits") */
+        var parts = /[A-Za-z\u00C0-\u00FF]-[A-Za-z\u00C0-\u00FF]/.test(word) ? word.match(/[^-]+-|[^-]+$/g) : [word];
+        parts.forEach(function (part, k) {
+          out.push({ t: part, cls: cls, sp: k === 0 && space && out.length > 0 });
+        });
         space = false;
         return m;
       });
@@ -387,11 +408,13 @@
      stack itself is CSS; this only reads four boxes and moves four frames. ---- */
   var casesEl = reduced ? null : document.querySelector('.cases');
   var caseEls = casesEl ? [].slice.call(casesEl.querySelectorAll('.case')) : [];
-  /* a card taller than the screen pins with its bottom edge on the screen's, so
-     its text is read before the next card covers it */
+  /* everything that pins at the top: the heroes and the project cards */
+  var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .case'));
+  /* a pinned block taller than the screen pins with its bottom edge on the
+     screen's, so its last line (the button) is seen before the next sheet covers it */
   function layoutCases() {
     var V = vh();
-    caseEls.forEach(function (el) { el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
+    pinEls.forEach(function (el) { el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
   }
   function updateCases(V) {
     if (!casesEl || !desktop.matches) return;
@@ -510,7 +533,7 @@
       dy = r.top - M.hdrH - pad;                                    /* under the header */
     } else {
       var hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-      var sheet = hit && !el.contains(hit) && !hit.contains(el) ? hit.closest('.case, .cases__intro, .s, .hs, .ftr, .reel-more') : null;
+      var sheet = hit && !el.contains(hit) && !hit.contains(el) ? hit.closest('.case, .cases__intro, .s, .hs, .ftr, .reel-more, .pn, .ct') : null;
       if (sheet && !sheet.contains(el)) dy = Math.min(0, sheet.getBoundingClientRect().top - r.bottom - pad);   /* back until the sheet has cleared it */
     }
     if (Math.abs(dy) < 1) return;
@@ -559,6 +582,222 @@
         });
         if (open) { item.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
       });
+    });
+  }
+
+  /* ---- Gallery (case studies): the row scrolls natively; the buttons step one picture ---- */
+  document.querySelectorAll('[data-slider]').forEach(function (box) {
+    var vp = box.querySelector('[data-slider-viewport]');
+    var prev = box.querySelector('[data-slider-prev]');
+    var next = box.querySelector('[data-slider-next]');
+    if (!vp || !vp.children.length) return;
+    function stops() {
+      var base = vp.children[0].offsetLeft;
+      return [].map.call(vp.children, function (c) { return c.offsetLeft - base; });
+    }
+    function go(dir) {
+      var pos = stops(), cur = vp.scrollLeft, max = vp.scrollWidth - vp.clientWidth, target = dir > 0 ? max : 0, i;
+      if (dir > 0) { for (i = 0; i < pos.length; i++) { if (pos[i] > cur + 2) { target = pos[i]; break; } } }
+      else { for (i = pos.length - 1; i >= 0; i--) { if (pos[i] < cur - 2) { target = pos[i]; break; } } }
+      vp.scrollTo({ left: Math.min(target, max), behavior: reduced ? 'auto' : 'smooth' });
+    }
+    function sync() {
+      var max = vp.scrollWidth - vp.clientWidth;
+      if (prev) prev.disabled = vp.scrollLeft <= 2;
+      if (next) next.disabled = vp.scrollLeft >= max - 2;
+    }
+    if (prev) prev.addEventListener('click', function () { go(-1); });
+    if (next) next.addEventListener('click', function () { go(1); });
+    var raf = 0;
+    vp.addEventListener('scroll', function () {
+      if (raf) return;
+      raf = window.requestAnimationFrame(function () { raf = 0; sync(); });
+    }, { passive: true });
+    window.addEventListener('load', sync);
+    window.addEventListener('resize', sync);
+    sync();
+  });
+
+  /* ---- Tables that scroll sideways on a small screen can be reached and scrolled by keyboard ---- */
+  var tables = [].slice.call(document.querySelectorAll('.tbl'));
+  function syncTables() {
+    tables.forEach(function (t) {
+      if (t.hasAttribute('data-fixed-focus')) return;
+      if (t.scrollWidth > t.clientWidth + 1) {
+        t.setAttribute('tabindex', '0');
+        t.setAttribute('role', 'region');
+        if (!t.hasAttribute('aria-label')) t.setAttribute('aria-label', root.lang === 'en' ? 'Table, scrolls sideways' : 'Tabelle, seitlich scrollbar');
+      } else {
+        t.removeAttribute('tabindex');
+      }
+    });
+  }
+  if (tables.length) {
+    tables.forEach(function (t) { if (t.hasAttribute('tabindex')) t.setAttribute('data-fixed-focus', ''); });
+    syncTables();
+    window.addEventListener('resize', syncTables);
+    window.addEventListener('load', syncTables);
+  }
+
+  /* ---- Custom dropdown (listbox pattern): arrows, Home/End, Enter, Esc, click outside ---- */
+  document.querySelectorAll('[data-select]').forEach(function (box) {
+    var trigger = box.querySelector('.select__trigger');
+    var list = box.querySelector('.select__menu');
+    var valueEl = box.querySelector('.select__value');
+    var hidden = box.querySelector('input[type="hidden"]');
+    var options = [].slice.call(box.querySelectorAll('.select__option'));
+    var active = -1;
+    if (!trigger || !list || !options.length) return;
+    function isOpen() { return list.classList.contains('is-open'); }
+    function setActive(i) {
+      active = (i + options.length) % options.length;
+      options.forEach(function (o, k) { o.classList.toggle('is-active', k === active); });
+      list.setAttribute('aria-activedescendant', options[active].id);
+      options[active].scrollIntoView({ block: 'nearest' });
+    }
+    function open() {
+      list.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      var sel = options.findIndex(function (o) { return o.getAttribute('aria-selected') === 'true'; });
+      setActive(sel >= 0 ? sel : 0);
+      list.focus({ preventScroll: true });
+      /* the whole list on screen, also on a phone */
+      var r = list.getBoundingClientRect();
+      if (r.bottom > window.innerHeight - 96) window.scrollBy(0, r.bottom - window.innerHeight + 96);   /* clear of the fog strip */
+    }
+    function close(refocus) {
+      list.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      list.removeAttribute('aria-activedescendant');
+      options.forEach(function (o) { o.classList.remove('is-active'); });
+      if (refocus) trigger.focus();
+    }
+    function choose(opt) {
+      options.forEach(function (o) { o.setAttribute('aria-selected', String(o === opt)); });
+      valueEl.textContent = opt.textContent;
+      valueEl.classList.remove('is-placeholder');
+      box._chosen = opt;
+      if (hidden) hidden.value = opt.getAttribute('data-value');
+    }
+    trigger.addEventListener('click', function () { if (isOpen()) close(false); else open(); });
+    trigger.addEventListener('keydown', function (e) {
+      if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !isOpen()) { e.preventDefault(); open(); }
+    });
+    options.forEach(function (opt, i) {
+      opt.addEventListener('click', function () { choose(opt); close(true); });
+      opt.addEventListener('pointermove', function () { if (i !== active) setActive(i); });
+    });
+    list.addEventListener('keydown', function (e) {
+      var k = e.key;
+      if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+      else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+      else if (k === 'Home') { e.preventDefault(); setActive(0); }
+      else if (k === 'End') { e.preventDefault(); setActive(options.length - 1); }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); if (active >= 0) { choose(options[active]); close(true); } }
+      else if (k === 'Escape') { e.preventDefault(); close(true); }
+      else if (k === 'Tab') { close(false); }
+      else if (k.length === 1) {   /* type-ahead: first option starting with the letter */
+        var hit = options.findIndex(function (o) { return o.textContent.trim().toLowerCase().indexOf(k.toLowerCase()) === 0; });
+        if (hit >= 0) setActive(hit);
+      }
+    });
+    document.addEventListener('click', function (e) { if (isOpen() && !box.contains(e.target)) close(false); });
+    /* the language switch rewrites the option texts: show the chosen one again */
+    document.addEventListener('vias:lang', function () { if (box._chosen) valueEl.textContent = box._chosen.textContent; });
+    box._reset = function () {
+      options.forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
+      box._chosen = null;
+      if (hidden) hidden.value = '';
+      valueEl.textContent = valueEl.getAttribute(root.lang === 'en' ? 'data-en' : 'data-ph-de') || '';
+      valueEl.classList.add('is-placeholder');
+    };
+  });
+
+  /* ---- Contact form: own validation (messages sit in reserved space, nothing
+     jumps), send in the background, then a small dialog ---- */
+  var form = document.getElementById('contact-form');
+  if (form) {
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    var done = document.getElementById('form-done');
+    var doneClose = document.getElementById('form-done-close');
+    var status = form.querySelector('.form__status');
+    var submit = form.querySelector('button[type="submit"]');
+    var lastFocus = null;
+    var say = function (de, en) { return root.lang === 'en' ? en : de; };
+    var checks = {
+      name: function (v) { return v.length > 0; },
+      email: function (v) { return EMAIL_RE.test(v); },
+      phone: function (v) { var d = v.replace(/\D/g, ''); return !v || (d.length >= 7 && d.length <= 15); }
+    };
+    var setInvalid = function (input, bad) {
+      var field = input.closest('.field');
+      if (field) field.classList.toggle('is-invalid', bad);
+      if (bad) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    };
+    var validate = function () {
+      var firstBad = null;
+      Object.keys(checks).forEach(function (name) {
+        var input = form.elements[name];
+        if (!input) return;
+        var bad = !checks[name](input.value.trim());
+        setInvalid(input, bad);
+        if (bad && !firstBad) firstBad = input;
+      });
+      return firstBad;
+    };
+    Object.keys(checks).forEach(function (name) {
+      var input = form.elements[name];
+      if (input) input.addEventListener('input', function () { setInvalid(input, false); });
+    });
+    var closeDone = function () {
+      if (!done || !done.classList.contains('is-open')) return;
+      done.classList.remove('is-open');
+      done.setAttribute('aria-hidden', 'true');
+      if (main) main.removeAttribute('inert');
+      unlockScroll();
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+    var openDone = function () {
+      if (!done) return;
+      lastFocus = submit;                  /* the button is disabled while sending, so it is not the active element */
+      lockScroll();                        /* the page behind an overlay never scrolls */
+      if (main) main.setAttribute('inert', '');
+      done.classList.add('is-open');
+      done.setAttribute('aria-hidden', 'false');
+      if (doneClose) doneClose.focus();
+    };
+    if (done) {
+      if (doneClose) doneClose.addEventListener('click', closeDone);
+      done.addEventListener('click', function (e) { if (e.target === done) closeDone(); });
+      document.addEventListener('keydown', function (e) {
+        if (!done.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeDone();
+        else if (e.key === 'Tab' && doneClose) { e.preventDefault(); doneClose.focus(); }   /* one control: focus stays on it */
+      });
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (status) status.textContent = '';
+      var bad = validate();
+      if (bad) { bad.focus(); return; }
+      var label = submit.querySelector('span');
+      var idle = label.textContent;
+      label.textContent = say('Wird gesendet …', 'Sending …');
+      submit.disabled = true;
+      window.fetch(form.action, { method: 'POST', body: new window.FormData(form), headers: { Accept: 'application/json' } })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (!data || !data.success) throw new Error('not sent');
+          form.reset();
+          form.querySelectorAll('[data-select]').forEach(function (b) { if (b._reset) b._reset(); });
+          openDone();
+        })
+        .catch(function () {
+          if (status) status.textContent = say(
+            'Senden fehlgeschlagen. Bitte noch einmal versuchen oder an mykhailo@viasmedia.com schreiben.',
+            'Sending failed. Please try again or write to mykhailo@viasmedia.com.');
+        })
+        .then(function () { label.textContent = idle; submit.disabled = false; });
     });
   }
 

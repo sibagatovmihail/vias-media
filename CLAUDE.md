@@ -116,7 +116,7 @@ Wrap all text elements (`<span>`, `<p>`, `h1, h2, h3, h4, h5, h6`, `<a>`) in a `
 Fallow is installed as a Claude Code skill (`fallow@fallow-skills`). It is a static-analysis tool for **JS/CSS**: dead code, duplication, and complexity. Use it as a recurring sanity check — not a one-off.
 
 **Scope on this project:** This is a static HTML/CSS/JS site (no `package.json`/TypeScript). Fallow's value here is narrow but real:
-- **JS** — `middleware.js`, `api/**`, `assets/js/main.js`: unused exports/files, duplication, complexity hotspots.
+- **JS** — `middleware.js`, `api/**`, `assets/js/v2/main.js`: unused exports/files, duplication, complexity hotspots.
 - **CSS** — `assets/css/**`: unused selectors and duplicated rule blocks (Fallow's CSS layer).
 - It will **not** meaningfully cover inline HTML, the standalone `Vias Media (standalone).html` dump, or design fidelity. Don't expect dependency-graph results without a `package.json`.
 
@@ -154,13 +154,28 @@ fallow dead-code     --format json --quiet 2>/dev/null || true   # 3. re-verify
 
 ## Redesign v2 "Bauplan" (branch `redesign/reference-study`, started 2026-10-07)
 
-Pages that load `assets/css/v2/*` follow **these** rules; the sections above still govern every page on the
-previous design (everything except `index.html` so far). Direction and reasoning: `docs/design-research/`.
+**Every page of the site is on v2 since 2026-10-09** (homepage, services, projects, five case studies, contact,
+the Neubrandenburg landing page, Impressum, Datenschutz, blog index and articles). The sections above describe
+the previous design: its stylesheets and `assets/js/main.js` were removed. What still applies from them: `rem`
+units, semantic HTML, no `overflow: hidden` on `<body>`/`<html>`, Fallow before commits, the commit rules.
+Direction and reasoning: `docs/design-research/`.
 
 - **Files:** `assets/css/v2/tokens.css` (fonts + tokens, **one dark scheme**; the light scheme and its switch
-  were removed on 2026-10-08), `base.css` (ground, grid, type primitives, split-text states), `components.css`
-  (shared), `home.css` (page); `assets/js/v2/main.js`; `assets/js/vendor/lenis.min.js`. Old `main.js` /
-  `components.css` are not loaded.
+  were removed on 2026-10-08), `base.css` (ground, grid, type primitives, split-text states, page-change
+  transition), `components.css` (shared: buttons, header, menu, rows, FAQ, cursor, footer), `home.css`
+  (homepage only), `pages.css` (all other pages, one file so it is cached once); `assets/js/v2/main.js` (one
+  script for every page, each block looks for its own markup); `assets/js/vendor/lenis.min.js`.
+- **Header, menu sheet, footer and the script tags are copied into every page.** A change to them goes into
+  `index.html`, all root pages and `content/_templates/{article,index}.html`, then `python3 build_blog.py`.
+  Differences on purpose: `aria-current` on the current nav link (`"page"`, or `"true"` on a child page such as
+  a case study), "Preise" points to `index.html#preise` outside the homepage, blog pages prefix paths with
+  `../` or `../../`, the contact page's footer has `ftr--bare` (no second call to action).
+- **One asset version for all pages:** the `?v=` on the CSS/JS links is the same string in every HTML file and
+  both blog templates. Bump all of them together (and rebuild the blog), or pages load two copies of one file.
+- **Page change:** native cross-document view transitions (`@view-transition` in `base.css`): the next page
+  comes up as a sheet while header, registration marks and grain stay still (`view-transition-name`). No
+  script, nothing to maintain per page; browsers without it just load the page; off under reduced motion.
+  Every page also carries speculation rules that prefetch a same-site link on hover (HTML only, Chromium).
 - **Grid replaces the 72.5rem container:** full bleed, `.wrap` (fluid `--margin`) + `.grid` (4 columns, 8 from
   48rem). Section label in columns 1–2, content from column 3. No shadows, radius 0, hairline rows instead of cards.
 - **Type:** titles in Bebas Neue (`--font-display`, classes `.display`, `.d1`–`.d3`; caps only, so check
@@ -196,6 +211,29 @@ previous design (everything except `index.html` so far). Direction and reasoning
   in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
 - **Header:** ≥ 62.5rem logo and four links (letter-roll hover), nothing else: no CTA, no language switch, no
   theme switch (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
+- **Sub-pages** (all in `pages.css`):
+  - `.phero`: one-screen page hero with the homepage's F layout (title top, note left, foot row with facts
+    left and action right), pinned so the first section slides over it. `.phero--short` for text pages
+    (legal, blog): content height, not pinned. A title with `data-lines="dash" data-fit` is set on two
+    lines and fitted to the width on laptops (homepage, landing page).
+  - Because the hero stays pinned under the whole page, **every block inside `<main>` must be opaque and
+    gaps must be padding, never margin** (a margin shows the hero through).
+  - Services: `.svc` sheets (ids are link targets). Sequences: `.steps` (rows on phones, four standing panels
+    on laptops). Projects: `.wk` (the whole entry is one link). Case study: `.shots`, `.moves`, gallery
+    (`[data-slider]`, native sideways scroll, `overflow-y: hidden`), `.stats`, `.pn`.
+  - Contact: the form comes before the details on phones. Fields are 3.25rem high like `.btn--lg`; error
+    lines are absolutely positioned in the row gap, so the form never changes height; the dropdown is a
+    custom listbox (`[data-select]`). The form still posts to Web3Forms (see open points).
+  - Text pages use `.prose`: mixed-case Archivo for headings, only the page title is in Bebas Neue (long
+    all-caps headings are hard to read). Blog list and article blocks are styled on the class names
+    `build_blog.py` writes (`.blog-card`, `.post__case`, `.post__related`, `.post__cta`); `.post__body`
+    stays on the prose wrapper because the structured data's speakable selector uses it.
+- **Removed claims (2026-10-09):** "Servern/Hosting in Deutschland", "rechtssicher" and "DSGVO-konform" are
+  gone from services and landing page (visible text, meta description, structured data); the services FAQ
+  "Wo wird meine Website gehostet?" was removed. Voice is "ich" on every page.
+- **Open points:** the contact form's backend (Web3Forms, against the own-sites rule; needs an SMTP function
+  and credentials), the result figures in the case studies ("2× Anfragen" at Eagle Air was already
+  questioned), the Akkerman Stroy quote.
 - **Images:** sources and licences in `assets/img/v2/CREDITS.md`; add a line for every new image and say
   whether it is a photo, drawn by script or AI-generated.
 - **Pricing:** card prices carry `data-price` (figures supplied by the owner on 2026-10-08: Onepager 575 €,

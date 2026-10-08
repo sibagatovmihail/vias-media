@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="de" data-palette="ember">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
-  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
+  <script>document.documentElement.className="js";
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
+  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* if main.js never arrives, nothing may stay hidden */
+  window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Services: Web Design & SEO in Neubrandenburg | Vias Media">Leistungen: Webdesign & SEO in Neubrandenburg | Vias Media</title>
   <meta name="description" content="Websites, Onlineshops, Landingpages, lokales SEO und Betreuung für kleine Betriebe in Neubrandenburg und MV – barrierefrei nach BFSG, zum Festpreis." data-en="Websites, online shops, landing pages, local SEO and support for small businesses in Neubrandenburg and MV — accessible under the BFSG, at a fixed price.">
@@ -16,8 +20,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="mask-icon" href="/mask-icon.svg" color="#E8593A">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#FEF8EF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#141312">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -37,14 +40,14 @@
   <meta name="twitter:description" content="Webdesign, Entwicklung, lokales SEO und Betreuung für kleine Unternehmen und Handwerksbetriebe in Neubrandenburg und MV – zum Festpreis.">
   <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/og-default.png">
 
-  <link rel="preload" href="assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/fonts.css">
-  <link rel="stylesheet" href="assets/css/tokens.css">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/consent.css">
-  <link rel="stylesheet" href="assets/css/pages/services.css">
+  <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261009i">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261009i">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261009i">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261009i">
+  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261009i">
+  <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -72,7 +75,7 @@
       "@id": "https://viasmedia.com/services.html#webpage",
       "url": "https://viasmedia.com/services.html",
       "name": "Leistungen — Webdesign, Webentwicklung und lokales SEO | Vias Media",
-      "description": "Websites, Onlineshops und Landingpages, Entwicklung, lokales SEO, Beratung, Barrierefreiheits-Audits und laufende Betreuung mit Hosting in Deutschland für kleine Unternehmen und Handwerksbetriebe in Mecklenburg-Vorpommern.",
+      "description": "Websites, Onlineshops und Landingpages, Entwicklung, lokales SEO, Beratung, Barrierefreiheits-Audits und laufende Betreuung für kleine Unternehmen und Handwerksbetriebe in Mecklenburg-Vorpommern.",
       "isPartOf": {
         "@id": "https://viasmedia.com/#website"
       },
@@ -269,7 +272,7 @@
             "@id": "https://viasmedia.com/services.html#support",
             "name": "Laufender Support",
             "serviceType": "Website-Betreuung",
-            "description": "Betreuung nach dem Launch: Updates, Inhaltsänderungen, Monitoring, laufende Optimierung und Hosting auf Servern in Deutschland.",
+            "description": "Betreuung nach dem Launch: Updates, Inhaltsänderungen, Monitoring und laufende Optimierung.",
             "provider": {
               "@id": "https://viasmedia.com/#organization"
             },
@@ -348,7 +351,7 @@
           "name": "Brauche ich eine eigene Website, wenn ich schon Facebook oder Instagram habe?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja — ein Social-Media-Profil ersetzt keine Website, weil es gemietetes Land ist. Eine Facebook- oder Instagram-Seite gehört der Plattform: Reichweite, Darstellung und sogar der Fortbestand hängen von Regeln ab, die Sie nicht kontrollieren, und das Profil rankt selten für Suchen wie „Dachdecker Neubrandenburg\". Ihre eigene Domain ist die einzige Adresse, die bei Google erscheint, von KI-Assistenten wie ChatGPT und Perplexity zitiert wird, Impressum und Datenschutzerklärung rechtssicher trägt und Anfragen dort ablegt, wo Sie sie erreichen. Sinnvoll ist die Aufteilung: Social Media für Reichweite und Arbeitsnachweis, die eigene Website als Ort, an dem die Anfrage tatsächlich landet."
+            "text": "Ja — ein Social-Media-Profil ersetzt keine Website, weil es gemietetes Land ist. Eine Facebook- oder Instagram-Seite gehört der Plattform: Reichweite, Darstellung und sogar der Fortbestand hängen von Regeln ab, die Sie nicht kontrollieren, und das Profil rankt selten für Suchen wie „Dachdecker Neubrandenburg\". Ihre eigene Domain ist die einzige Adresse, die bei Google erscheint, von KI-Assistenten wie ChatGPT und Perplexity zitiert wird, Impressum und Datenschutzerklärung trägt und Anfragen dort ablegt, wo Sie sie erreichen. Sinnvoll ist die Aufteilung: Social Media für Reichweite und Arbeitsnachweis, die eigene Website als Ort, an dem die Anfrage tatsächlich landet."
           }
         },
         {
@@ -364,15 +367,7 @@
           "name": "Erstellen Sie auch Onlineshops und Landingpages?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja. Neben Unternehmenswebsites baut Vias Media Onlineshops für Händler und Direktvermarkter – mit sicherem Bezahlvorgang, klarer Bestellstrecke und rechtssicheren Pflichtangaben – sowie Landingpages für einzelne Angebote oder Kampagnen, die auf genau ein Ziel ausgerichtet sind: Anruf, Anfrage oder Buchung. Beim Blumengeschäft Luxe Bouquets bestellen Kundinnen und Kunden seit dem neuen Shop direkt online statt nur anzurufen; die Online-Bestellungen stiegen um 85 Prozent. Auch Shops und Landingpages entstehen barrierefrei nach BFSG, schnell auf jedem Handy und zum Festpreis."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Wo wird meine Website gehostet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Websites von Vias Media laufen auf Servern in Deutschland – DSGVO-konform, schnell und ohne Datenübertragung in Drittländer. Auf Wunsch übernehme ich Hosting, Domain und SSL-Zertifikat vollständig, sodass Sie sich um keine Technik kümmern müssen. Weil jede Seite als schlankes, statisches HTML gebaut ist, gibt es keine Datenbank und keine Plugins, die ständig Sicherheitsupdates brauchen. Die Website gehört trotzdem Ihnen: Sie können sie jederzeit zu einem anderen Anbieter mitnehmen."
+            "text": "Ja. Neben Unternehmenswebsites baut Vias Media Onlineshops für Händler und Direktvermarkter – mit sicherem Bezahlvorgang, klarer Bestellstrecke und den Pflichtangaben – sowie Landingpages für einzelne Angebote oder Kampagnen, die auf genau ein Ziel ausgerichtet sind: Anruf, Anfrage oder Buchung. Beim Blumengeschäft Luxe Bouquets bestellen Kundinnen und Kunden seit dem neuen Shop direkt online statt nur anzurufen; die Online-Bestellungen stiegen um 85 Prozent. Auch Shops und Landingpages entstehen barrierefrei nach BFSG, schnell auf jedem Handy und zum Festpreis."
           }
         }
       ]
@@ -384,339 +379,383 @@
 <body>
   <a class="skip-link" href="#main" data-en="Skip to content">Zum Inhalt springen</a>
 
-  <header class="header" id="header">
-    <div class="topbar">
-      <div class="topbar__inner container">
-        <span class="topbar__text t-label" data-en="Need more local customers?">Mehr lokale Kunden gewinnen?</span>
-        <a href="contact.html" class="topbar__link t-label" data-en="Let's Talk!">Sprechen wir!</a>
+  <!-- icon sprite (Heroicons outline 24 + WhatsApp glyph) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
+  </svg>
+
+  <!-- page ground: registration marks, grain, bottom fog -->
+  <div class="marks" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="hdr" id="header">
+    <div class="wrap hdr__bar">
+      <a href="index.html" class="hdr__logo" aria-label="Vias Media – Startseite">
+        <img src="assets/img/logo-mark-dark.png" alt="" width="1019" height="947" class="logo-mark">
+        <span class="wordmark">vias<span class="dot">.</span></span>
+      </a>
+      <nav class="hdr__nav" aria-label="Hauptnavigation">
+        <a href="services.html" class="blink" aria-current="page"><span class="roll" data-roll data-en="Services">Leistungen</span></a>
+        <a href="work.html" class="blink"><span class="roll" data-roll data-en="Work">Projekte</span></a>
+        <a href="index.html#preise" class="blink"><span class="roll" data-roll data-en="Pricing">Preise</span></a>
+        <a href="contact.html" class="blink"><span class="roll" data-roll data-en="Contact">Kontakt</span></a>
+      </nav>
+      <div class="hdr__tools">
+        <a href="contact.html" class="btn btn--accent hdr__cta">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+        </a>
+        <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span>
+        </button>
       </div>
     </div>
-    <nav class="navbar" aria-label="Primary">
-      <div class="navbar__inner">
-        <a href="index.html" class="navbar__logo" aria-label="Vias Media home">
-          <img src="assets/img/logo-mark.png" alt="Vias Media Logo" class="logo-mark logo-mark--light">
-          <img src="assets/img/logo-mark-dark.png" alt="Vias Media Logo" class="logo-mark logo-mark--dark">
-          <span class="wordmark">vias<span class="dot">.</span></span>
-        </a>
-        <div class="navbar__links">
-          <a href="services.html" aria-current="page" data-en="Services">Leistungen</a>
-          <a href="work.html" data-en="Work">Projekte</a>
-          <a href="contact.html" data-en="Contact">Kontakt</a>
-        </div>
-        <div class="navbar__actions">
-          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-            <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-            <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-          </button>
-          <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Sprache wechseln">
-            <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-          </button>
-          <a href="contact.html" class="btn btn--primary btn-cta">
-            <span data-en="Free Consultation">Kostenlose Beratung</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
-          <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrop">
-            <svg class="hamburger__icon hamburger__bars" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6H19M3 11H19M3 16H19"/></svg>
-            <svg class="hamburger__icon hamburger__x" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5L17 17M17 5L5 17"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="nav-drop" id="navDrop">
-        <div class="nav-drop__inner">
-          <div class="nav-drop__content">
-            <a href="services.html" data-en="Services">Leistungen</a>
-            <a href="work.html" data-en="Work">Projekte</a>
-            <a href="contact.html" data-en="Contact">Kontakt</a>
-            <div class="nav-drop__cta">
-              <a href="contact.html" class="btn btn--primary">
-                <span data-en="Free Consultation">Kostenlose Beratung</span>
-                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-              </a>
-            </div>
-            <div class="nav-drop__lang">
-              <button class="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
-                <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-              </button>
-              <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-                <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-                <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
   </header>
 
-
-  <div id="header-spacer"></div>
-
-  <main id="main" tabindex="-1">
-    <!-- Subhero -->
-    <section class="subhero">
-      <div class="container">
-        <div class="subhero__inner reveal">
-          <div><h1 class="t-xl" data-en="Everything you need to grow online">Alles, was Sie für Ihr Online-Wachstum brauchen</h1></div>
-          <div><p class="t-body-lg subhero__lead" data-en="I combine thoughtful web design, clean development and local SEO so small businesses, trades and practices in the Lake District win more work — accessible, fast and at a fixed price, from brand-new ventures to established local names.">Ich verbinde durchdachtes Webdesign, saubere Entwicklung und lokales SEO, damit kleine Unternehmen, Handwerker und Praxen in der Seenplatte mehr Aufträge gewinnen – barrierefrei, schnell und zum Festpreis, vom brandneuen Betrieb bis zum etablierten lokalen Namen.</p></div>
-          <div><p class="t-body subhero__lead" data-en-html="Based in Neubrandenburg? Read what makes me different as a <a href='webagentur-neubrandenburg.html' class='link'>web agency in Neubrandenburg</a>."><a href='webagentur-neubrandenburg.html' class='link'>Webagentur in Neubrandenburg</a> – was mich vor Ort von Baukasten und Großagentur unterscheidet.</p></div>
-          <div class="hero__actions">
-            <a href="contact.html" class="btn btn--primary"><span data-en="Start a Project">Projekt starten</span>
-              <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-            </a>
-            <a href="work.html" class="btn btn--outline"><span data-en="See my work">Meine Projekte ansehen</span></a>
-          </div>
+  <!-- ===== MENU SHEET (≤ 999px) ===== -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__panel">
+      <nav class="menu__list" aria-label="Menü">
+        <a href="services.html" class="menu__row" aria-current="page"><span data-en="Services">Leistungen</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="work.html" class="menu__row"><span data-en="Work">Projekte</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="index.html#preise" class="menu__row"><span data-en="Pricing">Preise</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="blog/index.html" class="menu__row"><span>Blog</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="contact.html" class="menu__row"><span data-en="Contact">Kontakt</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+      <div class="menu__foot">
+        <div class="menu__prefs">
+          <button class="lang-toggle" type="button">
+            <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+          </button>
         </div>
+        <a href="contact.html" class="btn btn--accent">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+        </a>
+        <a data-contact="call" href="tel:+4916095761094" class="btn">
+          <span data-en="Call">Anrufen</span>
+        </a>
       </div>
-    </section>
-
-    <!-- Services grid -->
-    <section class="section">
-      <div class="container">
-        <div class="svc-grid">
-          <article id="webdesign" class="card svc-card reveal">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="4"/><path d="M4 12H28"/><circle cx="20" cy="20" r="5"/></svg></div>
-            <div><h2 class="t-card" data-en="Web Design">Webdesign</h2></div>
-            <div><p class="t-body" data-en="Websites, online shops and landing pages that fit your business and lead visitors straight to an enquiry or order.">Websites, Onlineshops und Landingpages, die zu Ihrem Betrieb passen und Besucher gezielt zur Anfrage oder Bestellung führen.</p></div>
-          </article>
-          <article id="webentwicklung" class="card svc-card reveal" data-delay="1">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 10L5 16L11 22"/><path d="M21 10L27 16L21 22"/></svg></div>
-            <div><h2 class="t-card" data-en="Web Development">Webentwicklung</h2></div>
-            <div><p class="t-body" data-en="Hand-written, accessible code in line with the BFSG — fast on every phone, with no page builder and no plugins.">Handgeschriebener, barrierefreier Code nach BFSG – schnell auf jedem Handy, ohne Baukasten und ohne Plugins.</p></div>
-          </article>
-          <article id="seo" class="card svc-card reveal" data-delay="2">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="9"/><path d="M21 21L28 28"/></svg></div>
-            <div><h2 class="t-card" data-en="SEO Optimization">SEO-Optimierung</h2></div>
-            <div><p class="t-body" data-en="Local SEO and structured data, so Google and AI assistants show you first in the region.">Lokales SEO und strukturierte Daten, damit Google und KI-Assistenten Sie in der Region zuerst zeigen.</p></div>
-          </article>
-          <article id="beratung" class="card svc-card reveal">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="12" r="3"/><path d="M16 4V9"/><path d="M16 15V28"/><path d="M8 20L16 15L24 20"/></svg></div>
-            <div><h2 class="t-card" data-en="Digital Consulting">Digitale Beratung</h2></div>
-            <div><p class="t-body" data-en="Straight answers on what your business needs online and what it costs — on the phone or at your place.">Klare Antworten, was Ihr Betrieb online braucht und was es kostet – am Telefon oder bei Ihnen vor Ort.</p></div>
-          </article>
-          <article id="barrierefreiheit" class="card svc-card reveal" data-delay="1">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="8" r="3"/><path d="M16 14V22"/><path d="M8 16H24"/><path d="M12 28L16 22L20 28"/></svg></div>
-            <div><h2 class="t-card" data-en="Accessibility Audits">Barrierefreiheits-Audits</h2></div>
-            <div><p class="t-body" data-en="Existing sites tested against WCAG 2.2 and the BFSG — with a clear list of issues and a plan to fix them.">Prüfung bestehender Websites nach WCAG 2.2 und BFSG – mit verständlicher Mängelliste und Umsetzungsplan.</p></div>
-          </article>
-          <article id="support" class="card svc-card reveal" data-delay="2">
-            <div class="icon-box icon-box--muted"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="4"/><path d="M16 4V8"/><path d="M16 24V28"/><path d="M4 16H8"/><path d="M24 16H28"/></svg></div>
-            <div><h2 class="t-card" data-en="Ongoing Support">Laufender Support</h2></div>
-            <div><p class="t-body" data-en="Updates, content changes and hosting on servers in Germany — with one fixed contact.">Updates, Inhaltsänderungen und Hosting auf Servern in Deutschland – mit einem festen Ansprechpartner.</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Process -->
-    <section class="section has-decor-truchet process">
-      <div class="container">
-        <div class="section-head section-head--center reveal">
-          <div><h2 class="t-lg" data-en="A clear route from idea to launch">Ein klarer Kurs von der Idee bis zum Launch</h2></div>
-          <div><p class="t-body" data-en="Like charting a course, I move in deliberate stages — so you always know where the project is and what's next. No surprises, no hidden costs.">Wie beim Setzen eines Kurses gehe ich in bewussten Etappen vor – damit Sie stets wissen, wo das Projekt steht und was als Nächstes kommt. Ohne Überraschungen, ohne versteckte Kosten.</p></div>
-        </div>
-        <div class="process__grid">
-          <div class="process-step reveal">
-            <div class="process-step__num">01</div>
-            <div><h3 class="t-sm" data-en="Discover">Entdecken</h3></div>
-            <div><p class="t-body" data-en="A free first meeting — by phone or at your place. I learn your business and goals, then you get a clear fixed-price quote.">Kostenloses Erstgespräch – am Telefon oder bei Ihnen vor Ort. Ich lerne Ihren Betrieb und Ihre Ziele kennen, danach erhalten Sie ein klares Festpreisangebot.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="1">
-            <div class="process-step__num">02</div>
-            <div><h3 class="t-sm" data-en="Design">Gestalten</h3></div>
-            <div><p class="t-body" data-en="A design made for your business, refined together with you until it fits — focused on clarity, brand and enquiries.">Ein Design für Ihren Betrieb, gemeinsam mit Ihnen verfeinert, bis es passt – mit Fokus auf Klarheit, Marke und Anfragen.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="2">
-            <div class="process-step__num">03</div>
-            <div><h3 class="t-sm" data-en="Build">Entwickeln</h3></div>
-            <div><p class="t-body" data-en="Hand-built, accessible under the BFSG, SEO- and AI-ready — with progress you can review at every milestone.">Handgeschrieben, barrierefrei nach BFSG, SEO- und KI-optimiert – mit Fortschritt, den Sie bei jedem Meilenstein prüfen können.</p></div>
-          </div>
-          <div class="process-step reveal" data-delay="3">
-            <div class="process-step__num">04</div>
-            <div><h3 class="t-sm" data-en="Grow">Wachsen</h3></div>
-            <div><p class="t-body" data-en="Launch on servers in Germany, with Search Console and Business Profile set up — and I stay your contact after go-live.">Launch auf Servern in Deutschland, mit Search Console und Unternehmensprofil – und ich bleibe auch nach dem Go-live Ihr Ansprechpartner.</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ — question-headed answer blocks (GEO/AEO) -->
-    <section class="section faq" id="faq">
-      <div class="container">
-        <div class="section-head section-head--center faq__head reveal">
-          <div><h2 class="t-lg t-center" data-en="Questions about my services">Fragen zu meinen Leistungen</h2></div>
-          <div><p class="t-body t-muted-body" data-en="Direct answers to what small businesses and tradespeople in Mecklenburg-Vorpommern ask before starting a project.">Direkte Antworten auf das, was kleine Unternehmen und Handwerksbetriebe in Mecklenburg-Vorpommern vor Projektstart fragen.</p></div>
-        </div>
-
-        <div class="faq__list reveal">
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-1" id="svc-faq-trigger-1">
-              <span class="t-card" data-en="What does a website from Vias Media cost?">Was kostet eine Website bei Vias Media?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-1" role="region" aria-labelledby="svc-faq-trigger-1">
-              <div class="faq-item__answer"><p class="t-body" data-en="A professional website for a small business or trade company from Vias Media is a one-off fixed-price project in the high three-figure to low four-figure euro range. The price is driven by four things: the number of pages, whether text and photos already exist, extra functions such as online booking or a shop, and how much local SEO groundwork the site needs. You receive the fixed quote after a free first consultation — never an hourly estimate, and never a monthly licence fee. The finished website belongs entirely to you.">Eine professionelle Website für ein kleines Unternehmen oder einen Handwerksbetrieb liegt bei Vias Media im höheren dreistelligen bis niedrigen vierstelligen Euro-Bereich — als einmaliges Festpreis-Projekt. Vier Faktoren bestimmen den Preis: die Anzahl der Unterseiten, ob Texte und Fotos schon vorhanden sind, Zusatzfunktionen wie Online-Terminbuchung oder Shop, und wie viel lokale SEO-Grundarbeit nötig ist. Das Festpreisangebot erhalten Sie nach einem kostenlosen Erstgespräch — keine Stundenschätzung, keine monatliche Lizenzgebühr. Die fertige Website gehört vollständig Ihnen.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-2" id="svc-faq-trigger-2">
-              <span class="t-card" data-en="Is local SEO included, or is it an extra?">Ist lokales SEO im Preis enthalten oder kostet es extra?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-2" role="region" aria-labelledby="svc-faq-trigger-2">
-              <div class="faq-item__answer"><p class="t-body" data-en="Local SEO is included in every Vias Media project at no extra charge. Every site ships with regional keyword research, clean technical SEO, structured data (schema.org) so Google and AI assistants understand the business, a matching Google Business Profile setup, and separate landing pages per service and town where that makes sense. Akkerman Stroy, a renovation contractor in Berlin and Mecklenburg-Vorpommern, gained 140% more organic traffic after exactly this groundwork.">Lokales SEO ist bei Vias Media in jedem Projekt ohne Aufpreis enthalten. Zu jeder Seite gehören: regionale Keyword-Recherche, sauberes technisches SEO, strukturierte Daten (schema.org), damit Google und KI-Assistenten den Betrieb verstehen, die passende Einrichtung des Google-Unternehmensprofils sowie eigene Landingpages je Leistung und Ort, wo das sinnvoll ist. Akkerman Stroy, ein Sanierungsbetrieb in Berlin und Mecklenburg-Vorpommern, gewann nach genau dieser Grundarbeit 140 % mehr organischen Traffic.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-3" id="svc-faq-trigger-3">
-              <span class="t-card" data-en="How long until a new site is found on Google?">Wie lange dauert es, bis eine neue Website bei Google gefunden wird?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-3" role="region" aria-labelledby="svc-faq-trigger-3">
-              <div class="faq-item__answer"><p class="t-body" data-en="A new website is usually indexed by Google within a few days to two weeks after launch, provided the sitemap is submitted in Google Search Console. Stable rankings for competitive local terms such as 'Elektriker Neubrandenburg' typically take three to six months, because Google needs consistent signals: a complete Google Business Profile, matching name, address and phone number everywhere, real reviews, and content that actually answers the search. Vias Media sets all of these up at launch, which is why the clock starts on day one rather than months later.">Eine neue Website wird in der Regel innerhalb weniger Tage bis zwei Wochen nach dem Launch von Google indexiert — vorausgesetzt, die Sitemap ist in der Google Search Console eingereicht. Stabile Platzierungen für umkämpfte lokale Suchbegriffe wie „Elektriker Neubrandenburg" brauchen meist drei bis sechs Monate, weil Google konsistente Signale benötigt: ein vollständiges Google-Unternehmensprofil, überall identische Angaben zu Name, Adresse und Telefonnummer, echte Bewertungen und Inhalte, die die Suchanfrage wirklich beantworten. Vias Media richtet all das bereits zum Launch ein — deshalb läuft die Uhr ab Tag eins und nicht erst Monate später.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-4" id="svc-faq-trigger-4">
-              <span class="t-card" data-en="What is the difference between web design and web development?">Was ist der Unterschied zwischen Webdesign und Webentwicklung?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-4" role="region" aria-labelledby="svc-faq-trigger-4">
-              <div class="faq-item__answer"><p class="t-body" data-en="Web design decides what a website looks like and how a visitor moves through it; web development is the code that makes it actually work. Design covers layout, typography, colour, imagery and the path from landing to enquiry. Development covers the HTML, CSS and JavaScript, loading speed, mobile behaviour, forms and hosting. At Vias Media both come from the same person, so nothing gets lost in handover — and every site is hand-coded rather than assembled in a page builder, which is why load times stay low and Lighthouse performance scores land in the 90s.">Webdesign entscheidet, wie eine Website aussieht und wie sich Besucher darin bewegen; Webentwicklung ist der Code, der sie tatsächlich funktionieren lässt. Zum Design gehören Layout, Typografie, Farben, Bildsprache und der Weg vom ersten Blick bis zur Anfrage. Zur Entwicklung gehören HTML, CSS und JavaScript, Ladezeit, Verhalten auf dem Handy, Formulare und Hosting. Bei Vias Media kommt beides aus einer Hand, sodass bei der Übergabe nichts verloren geht — und jede Seite wird handgeschrieben statt in einem Baukasten zusammengeklickt. Genau deshalb bleiben die Ladezeiten niedrig und die Lighthouse-Performance-Werte im 90er-Bereich.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-5" id="svc-faq-trigger-5">
-              <span class="t-card" data-en="What does the German Accessibility Act (BFSG) mean for my website?">Was bedeutet das Barrierefreiheitsstärkungsgesetz (BFSG) für meine Website?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-5" role="region" aria-labelledby="svc-faq-trigger-5">
-              <div class="faq-item__answer"><p class="t-body" data-en="The German Accessibility Act (Barrierefreiheitsstärkungsgesetz, BFSG) has applied since 28 June 2025 and requires digital services aimed at consumers — online shops, booking systems, banking and similar — to be accessible. Micro-enterprises with fewer than 10 employees and under 2 million euros annual turnover are exempt for services, but the exemption does not cover products. In practice this means: sufficient colour contrast, full keyboard operability, real alt text, correct heading order and forms that a screen reader can read out. A Vias Media accessibility audit tests a site against WCAG 2.2 level AA and returns a concrete defect list with an implementation plan rather than a score alone.">Das Barrierefreiheitsstärkungsgesetz (BFSG) gilt seit dem 28. Juni 2025 und verpflichtet digitale Dienstleistungen für Verbraucher — Onlineshops, Buchungssysteme, Bankdienste und Ähnliches — zur Barrierefreiheit. Kleinstunternehmen mit weniger als 10 Beschäftigten und unter 2 Millionen Euro Jahresumsatz sind bei Dienstleistungen ausgenommen; für Produkte gilt diese Ausnahme nicht. Praktisch heißt das: ausreichende Farbkontraste, vollständige Bedienbarkeit per Tastatur, echte Alternativtexte, korrekte Überschriftenreihenfolge und Formulare, die ein Screenreader vorlesen kann. Ein Barrierefreiheits-Audit von Vias Media prüft eine Seite gegen WCAG 2.2 Stufe AA und liefert eine konkrete Mängelliste mit Umsetzungsplan — nicht nur eine Punktzahl.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-6" id="svc-faq-trigger-6">
-              <span class="t-card" data-en="Do I still need my own website if I already have Facebook or Instagram?">Brauche ich eine eigene Website, wenn ich schon Facebook oder Instagram habe?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-6" role="region" aria-labelledby="svc-faq-trigger-6">
-              <div class="faq-item__answer"><p class="t-body" data-en="Yes — a social media profile cannot replace a website, because it is rented ground. A Facebook or Instagram page belongs to the platform: reach, layout and even continued existence depend on rules you do not control, and the profile rarely ranks for searches like 'Dachdecker Neubrandenburg'. Your own domain is the only address that appears in Google, gets quoted by AI assistants such as ChatGPT and Perplexity, carries your imprint and privacy policy in line with German law, and stores enquiries where you can reach them. The sensible split is: social media for reach and proof of work, your own website as the place where the enquiry actually lands.">Ja — ein Social-Media-Profil ersetzt keine Website, weil es gemietetes Land ist. Eine Facebook- oder Instagram-Seite gehört der Plattform: Reichweite, Darstellung und sogar der Fortbestand hängen von Regeln ab, die Sie nicht kontrollieren, und das Profil rankt selten für Suchen wie „Dachdecker Neubrandenburg". Ihre eigene Domain ist die einzige Adresse, die bei Google erscheint, von KI-Assistenten wie ChatGPT und Perplexity zitiert wird, Impressum und Datenschutzerklärung rechtssicher trägt und Anfragen dort ablegt, wo Sie sie erreichen. Sinnvoll ist die Aufteilung: Social Media für Reichweite und Arbeitsnachweis, die eigene Website als Ort, an dem die Anfrage tatsächlich landet.</p></div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-7" id="svc-faq-trigger-7">
-              <span class="t-card" data-en="What happens after launch — do I need ongoing support?">Was passiert nach dem Launch — brauche ich laufende Betreuung?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-7" role="region" aria-labelledby="svc-faq-trigger-7">
-              <div class="faq-item__answer"><p class="t-body" data-en="Ongoing support is optional, not compulsory — the website is yours and keeps running without a contract. What support buys is upkeep: content changes such as new services, prices or reference photos, technical updates, uptime and speed monitoring, and continuous local SEO work as competitors change. Sites that are updated regularly are ranked and cited more readily, because both Google and AI answer engines prefer content with a visible recent update date. Most Vias Media clients start with a small retainer for the first six months after launch and then decide.">Laufende Betreuung ist optional, keine Pflicht — die Website gehört Ihnen und läuft auch ohne Vertrag weiter. Was Betreuung bringt, ist Pflege: Inhaltsänderungen wie neue Leistungen, Preise oder Referenzfotos, technische Updates, Überwachung von Erreichbarkeit und Ladezeit sowie fortlaufende lokale SEO-Arbeit, wenn sich der Wettbewerb verändert. Regelmäßig aktualisierte Seiten werden besser platziert und häufiger zitiert, weil sowohl Google als auch KI-Antwortmaschinen Inhalte mit sichtbar aktuellem Änderungsdatum bevorzugen. Die meisten Kunden von Vias Media starten mit einer kleinen Betreuung für die ersten sechs Monate nach dem Launch und entscheiden dann neu.</p></div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-8" id="svc-faq-trigger-8">
-              <span class="t-card" data-en="Do you also build online shops and landing pages?">Erstellen Sie auch Onlineshops und Landingpages?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-8" role="region" aria-labelledby="svc-faq-trigger-8">
-              <div class="faq-item__answer"><p class="t-body" data-en="Yes. Besides business websites, Vias Media builds online shops for retailers and direct sellers — with secure checkout, a clear order path and legally required information — and landing pages for a single offer or campaign, focused on exactly one goal: a call, an enquiry or a booking. Since the new shop went live at the florist Luxe Bouquets, customers order online instead of only calling; online orders rose by 85 percent. Shops and landing pages are also built accessible under the BFSG, fast on every phone and at a fixed price.">Ja. Neben Unternehmenswebsites baut Vias Media Onlineshops für Händler und Direktvermarkter – mit sicherem Bezahlvorgang, klarer Bestellstrecke und rechtssicheren Pflichtangaben – sowie Landingpages für einzelne Angebote oder Kampagnen, die auf genau ein Ziel ausgerichtet sind: Anruf, Anfrage oder Buchung. Beim Blumengeschäft Luxe Bouquets bestellen Kundinnen und Kunden seit dem neuen Shop direkt online statt nur anzurufen; die Online-Bestellungen stiegen um 85 Prozent. Auch Shops und Landingpages entstehen barrierefrei nach BFSG, schnell auf jedem Handy und zum Festpreis.</p></div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="svc-faq-panel-9" id="svc-faq-trigger-9">
-              <span class="t-card" data-en="Where is my website hosted?">Wo wird meine Website gehostet?</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8L10 13L15 8"/></svg>
-              </span>
-            </button>
-            <div class="faq-item__panel" id="svc-faq-panel-9" role="region" aria-labelledby="svc-faq-trigger-9">
-              <div class="faq-item__answer"><p class="t-body" data-en="Vias Media websites run on servers in Germany — GDPR-compliant, fast, and without transferring data to third countries. If you like, I take care of hosting, domain and SSL certificate entirely, so you never have to deal with the technical side. Because every site is built as lean, static HTML, there is no database and no plugins that constantly need security updates. The website is still yours: you can move it to another provider at any time.">Websites von Vias Media laufen auf Servern in Deutschland – DSGVO-konform, schnell und ohne Datenübertragung in Drittländer. Auf Wunsch übernehme ich Hosting, Domain und SSL-Zertifikat vollständig, sodass Sie sich um keine Technik kümmern müssen. Weil jede Seite als schlankes, statisches HTML gebaut ist, gibt es keine Datenbank und keine Plugins, die ständig Sicherheitsupdates brauchen. Die Website gehört trotzdem Ihnen: Sie können sie jederzeit zu einem anderen Anbieter mitnehmen.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="footer-wrap">
-    <section class="footer-cta">
-      <div class="container" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg);">
-        <h2 class="t-xl t-center footer-cta__title" data-en="Let's build something that works.">Lassen Sie uns etwas bauen, das funktioniert.</h2>
-        <a href="contact.html" class="btn btn--primary"><span data-en="Start a Project">Projekt starten</span><span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span></a>
-      </div>
-    </section>
-    <footer class="footer" id="contact">
-      <div class="container">
-        <div class="footer__inner">
-          <div class="footer__top">
-            <div style="display:flex; flex-direction:column; gap: var(--space-md);">
-              <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
-              <div><a href="contact.html" class="btn btn--outline btn--sm"><span data-en="Start a project">Projekt starten</span></a></div>
-            </div>
-            <div class="footer__wordmark">vias<span class="dot">.</span></div>
-          </div>
-          <div class="divider" style="margin-block: var(--space-lg);"></div>
-          <div class="footer__grid">
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Services">Leistungen</span></div>
-              <a href="services.html" data-en="Web Design">Webdesign</a>
-              <a href="services.html" data-en="Development">Entwicklung</a>
-              <a href="services.html" data-en="SEO">SEO</a>
-              <a href="services.html" data-en="Support">Support</a>
-              <a href="webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
-            </div>
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Company">Unternehmen</span></div>
-              <a href="work.html" data-en="Work">Projekte</a>
-              <a href="blog/index.html">Blog</a>
-              <a href="contact.html" data-en="Contact">Kontakt</a>
-            </div>
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Connect">Verbinden</span></div>
-              <a href="contact.html" data-en="Start a project">Projekt starten</a>
-              <a href="contact.html" data-en="Get a quote">Angebot anfordern</a>
-              <div class="footer__nap">
-                <div><span class="t-small">Vias Media · Robert-Koch-Str. 15, 17036 Neubrandenburg</span></div>
-                <div><a href="tel:+4916095761094">+49 160 95761094</a></div>
-                <div><a href="mailto:mykhailo@viasmedia.com">mykhailo@viasmedia.com</a></div>
-              </div>
-            </div>
-          </div>
-          <div class="divider" style="margin-block: var(--space-lg) var(--space-md);"></div>
-          <div class="footer__bottom">
-            <div><span class="t-small" data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></div>
-            <div class="footer__legal">
-              <a href="datenschutz.html" class="t-small" data-en="Privacy">Datenschutz</a>
-              <a href="impressum.html" class="t-small">Impressum</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    </div>
   </div>
 
-  <script src="assets/js/i18n.js" defer></script>  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/consent.js" defer></script>
+  <main id="main" tabindex="-1">
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="phero" data-nofog-cover>
+      <div class="wrap phero__wrap">
+        <div><p class="tag" data-en="Services">Leistungen</p></div>
+        <div><h1 class="phero__title rv-lines" data-split data-drive data-en="Everything you need to grow online">Alles, was Sie für Ihr Online-Wachstum brauchen</h1></div>
+        <div class="phero__lead-cover rv">
+          <p class="phero__lead" data-en="I combine thoughtful web design, clean development and local SEO so small businesses, trades and practices in the Lake District win more work — accessible, fast and at a fixed price, from brand-new ventures to established local names.">Ich verbinde durchdachtes Webdesign, saubere Entwicklung und lokales SEO, damit kleine Unternehmen, Handwerker und Praxen in der Seenplatte mehr Aufträge gewinnen – barrierefrei, schnell und zum Festpreis, vom brandneuen Betrieb bis zum etablierten lokalen Namen.</p>
+          <p class="phero__lead" data-en-html="Based in Neubrandenburg? Read what makes me different as a &lt;a href=&#x27;webagentur-neubrandenburg.html&#x27; class=&#x27;link&#x27;&gt;web agency in Neubrandenburg&lt;/a&gt;."><a class="link" href="webagentur-neubrandenburg.html">Webagentur in Neubrandenburg</a> – was mich vor Ort von Baukasten und Großagentur unterscheidet.</p>
+        </div>
+        <div class="phero__foot rv">
+          <div class="phero__actions">
+            <a href="work.html" class="btn btn--lg"><span data-en="See my work">Meine Projekte ansehen</span></a>
+            <a href="contact.html" class="btn btn--lg btn--accent">
+              <span data-en="Start a Project">Projekt starten</span>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== THE SIX SERVICES: one sheet each (ids are link targets from the homepage and the footer) ===== -->
+    <section class="s" aria-label="Leistungen im Einzelnen">
+      <div class="wrap">
+        <article class="grid svc" id="webdesign">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 01 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="14" y="16" width="212" height="148"/><path d="M14 36h212"/>
+              <circle cx="25" cy="26" r="2.5"/><circle cx="35" cy="26" r="2.5"/><circle cx="45" cy="26" r="2.5"/>
+              <path d="M30 62h92M30 77h64" stroke-width="8"/><path d="M30 97h84M30 107h66"/>
+              <rect class="a" x="30" y="124" width="60" height="22" stroke="none"/>
+              <rect x="146" y="52" width="64" height="94"/><path d="M146 52l64 94M210 52l-64 94"/>
+              <path d="M134 36v128" stroke-dasharray="2 5"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="Web Design">Webdesign</h2></div>
+            <div class="rv"><p class="lead" data-en="Websites, online shops and landing pages that fit your business and lead visitors straight to an enquiry or order.">Websites, Onlineshops und Landingpages, die zu Ihrem Betrieb passen und Besucher gezielt zur Anfrage oder Bestellung führen.</p></div>
+          </div>
+        </article>
+        <article class="grid svc" id="webentwicklung">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 02 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M52 44L22 82l30 38M92 44l30 38-30 38M82 34L62 130" stroke-width="2.5"/>
+              <path d="M22 146h52M22 158h84"/><rect class="a" x="82" y="141" width="30" height="10" stroke="none"/>
+              <rect x="152" y="18" width="70" height="144"/><path d="M152 36h70M152 144h70M180 27h14"/>
+              <path d="M164 54h46M164 66h30M164 78h40" /><rect x="164" y="94" width="46" height="34"/><path d="M164 94l46 34"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="Web Development">Webentwicklung</h2></div>
+            <div class="rv"><p class="lead" data-en="Hand-written, accessible code in line with the BFSG — fast on every phone, with no page builder and no plugins.">Handgeschriebener, barrierefreier Code nach BFSG – schnell auf jedem Handy, ohne Baukasten und ohne Plugins.</p></div>
+          </div>
+        </article>
+        <article class="grid svc" id="seo">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 03 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="14" y="16" width="212" height="30"/><circle cx="32" cy="30" r="6"/><path d="M36.5 34.5l5.5 5.5M52 31h92"/>
+              <rect class="a" x="14" y="60" width="150" height="32" stroke="none"/><path d="M26 71h76M26 81h110" stroke="#161514"/>
+              <rect x="14" y="100" width="150" height="28"/><path d="M26 110h62M26 119h96"/>
+              <rect x="14" y="136" width="150" height="28"/><path d="M26 146h70M26 155h88"/>
+              <path d="M214 92c0 15-17 34-17 34s-17-19-17-34a17 17 0 0 1 34 0z"/><circle cx="197" cy="92" r="5.5"/><path d="M183 140h28"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="SEO Optimization">SEO-Optimierung</h2></div>
+            <div class="rv"><p class="lead" data-en="Local SEO and structured data, so Google and AI assistants show you first in the region.">Lokales SEO und strukturierte Daten, damit Google und KI-Assistenten Sie in der Region zuerst zeigen.</p></div>
+          </div>
+        </article>
+        <article class="grid svc" id="beratung">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 04 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M16 20h126v66H62l-22 20V86H16z"/><path d="M30 42h96M30 56h70"/>
+              <path d="M224 78H104v64h82l20 18v-18h18z"/>
+              <path d="M118 97l6 6 11-13M118 120l6 6 11-13" stroke-width="2"/><path d="M146 99h62M146 122h44"/>
+              <rect class="a" x="30" y="66" width="38" height="9" stroke="none"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="Digital Consulting">Digitale Beratung</h2></div>
+            <div class="rv"><p class="lead" data-en="Straight answers on what your business needs online and what it costs — on the phone or at your place.">Klare Antworten, was Ihr Betrieb online braucht und was es kostet – am Telefon oder bei Ihnen vor Ort.</p></div>
+          </div>
+        </article>
+        <article class="grid svc" id="barrierefreiheit">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 05 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="60" cy="66" r="42"/><path class="f" d="M60 24a42 42 0 0 1 0 84z" stroke="none"/>
+              <text x="122" y="88" font-size="56" font-weight="600" fill="currentColor" stroke="none" style="font-stretch:125%">Aa</text>
+              <rect x="24" y="130" width="88" height="28"/><path d="M40 144h56"/>
+              <rect class="as" x="17" y="123" width="102" height="42" stroke-dasharray="5 4" stroke-width="2"/>
+              <rect x="150" y="126" width="72" height="36"/><path d="M162 144h44M198 136l9 8-9 8M210 134v20"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="Accessibility Audits">Barrierefreiheits-Audits</h2></div>
+            <div class="rv"><p class="lead" data-en="Existing sites tested against WCAG 2.2 and the BFSG — with a clear list of issues and a plan to fix them.">Prüfung bestehender Websites nach WCAG 2.2 und BFSG – mit verständlicher Mängelliste und Umsetzungsplan.</p></div>
+          </div>
+        </article>
+        <article class="grid svc" id="support">
+          <div class="svc__side">
+            <span class="mono svc__n" aria-hidden="true">[ 06 / 06 ]</span>
+            <div class="svc__fig" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M148 70a48 48 0 0 0-88-12" stroke-width="2"/><path d="M56 36v24h24" stroke-width="2"/>
+              <path d="M56 110a48 48 0 0 0 88 12" stroke-width="2"/><path d="M148 144v-24h-24" stroke-width="2"/>
+              <path d="M102 66v26l16 11"/>
+              <rect x="174" y="28" width="52" height="48"/><path d="M174 43h52M187 21v13M213 21v13"/>
+              <rect class="a" x="182" y="51" width="11" height="11" stroke="none"/><path d="M200 56h18M182 68h36"/>
+              <path d="M174 104h52M174 118h36M174 132h46"/>
+            </svg></div>
+          </div>
+          <div class="svc__main">
+            <div><h2 class="display rv-lines" data-split data-en="Ongoing Support">Laufender Support</h2></div>
+            <div class="rv"><p class="lead" data-en="Updates, content changes and fixes — with one fixed contact.">Updates, Inhaltsänderungen und Fehlerbehebungen – mit einem festen Ansprechpartner.</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== PROCESS ===== -->
+    <section class="s" id="ablauf">
+      <div class="wrap grid sec">
+        <div class="s__label"><p class="tag" data-en="Process">Ablauf</p></div>
+        <div class="s__head head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="A clear route from idea to launch">Ein klarer Kurs von der Idee bis zum Launch</h2></div>
+          <div class="rv"><p class="lead" data-en="Like charting a course, I move in deliberate stages — so you always know where the project is and what&#x27;s next. No surprises, no hidden costs.">Wie beim Setzen eines Kurses gehe ich in bewussten Etappen vor – damit Sie stets wissen, wo das Projekt steht und was als Nächstes kommt. Ohne Überraschungen, ohne versteckte Kosten.</p></div>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 01 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Discover">Entdecken</h3></div>
+            <div class="step__d"><p data-en="A free first meeting — by phone or at your place. I learn your business and goals, then you get a clear fixed-price quote.">Kostenloses Erstgespräch – am Telefon oder bei Ihnen vor Ort. Ich lerne Ihren Betrieb und Ihre Ziele kennen, danach erhalten Sie ein klares Festpreisangebot.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 02 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Design">Gestalten</h3></div>
+            <div class="step__d"><p data-en="A design made for your business, refined together with you until it fits — focused on clarity, brand and enquiries.">Ein Design für Ihren Betrieb, gemeinsam mit Ihnen verfeinert, bis es passt – mit Fokus auf Klarheit, Marke und Anfragen.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 03 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Build">Entwickeln</h3></div>
+            <div class="step__d"><p data-en="Hand-built, accessible under the BFSG, SEO- and AI-ready — with progress you can review at every milestone.">Handgeschrieben, barrierefrei nach BFSG, SEO- und KI-optimiert – mit Fortschritt, den Sie bei jedem Meilenstein prüfen können.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 04 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Grow">Wachsen</h3></div>
+            <div class="step__d"><p data-en="Launch with Search Console and Business Profile set up — and I stay your contact after go-live.">Launch mit Search Console und Unternehmensprofil – und ich bleibe auch nach dem Go-live Ihr Ansprechpartner.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="s" id="faq">
+      <div class="wrap grid faq">
+        <div class="faq__head">
+          <div><p class="tag" data-en="Questions">Fragen</p></div>
+          <div><h2 class="display d1 rv-lines" data-split data-en="Questions about my services">Fragen zu meinen Leistungen</h2></div>
+          <div class="rv"><p class="lead" data-en="Direct answers to what small businesses and tradespeople in Mecklenburg-Vorpommern ask before starting a project.">Direkte Antworten auf das, was kleine Unternehmen und Handwerksbetriebe in Mecklenburg-Vorpommern vor Projektstart fragen.</p></div>
+        </div>
+        <div class="faq__list" data-faq>
+          <div class="faq-item is-open">
+            <button class="faq-item__q" type="button" aria-expanded="true" aria-controls="faq-panel-1" id="faq-trigger-1">
+              <span class="display d3" data-en="What does a website from Vias Media cost?">Was kostet eine Website bei Vias Media?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1">
+              <div class="faq-item__answer"><p data-en="A professional website for a small business or trade company from Vias Media is a one-off fixed-price project in the high three-figure to low four-figure euro range. The price is driven by four things: the number of pages, whether text and photos already exist, extra functions such as online booking or a shop, and how much local SEO groundwork the site needs. You receive the fixed quote after a free first consultation — never an hourly estimate, and never a monthly licence fee. The finished website belongs entirely to you.">Eine professionelle Website für ein kleines Unternehmen oder einen Handwerksbetrieb liegt bei Vias Media im höheren dreistelligen bis niedrigen vierstelligen Euro-Bereich — als einmaliges Festpreis-Projekt. Vier Faktoren bestimmen den Preis: die Anzahl der Unterseiten, ob Texte und Fotos schon vorhanden sind, Zusatzfunktionen wie Online-Terminbuchung oder Shop, und wie viel lokale SEO-Grundarbeit nötig ist. Das Festpreisangebot erhalten Sie nach einem kostenlosen Erstgespräch — keine Stundenschätzung, keine monatliche Lizenzgebühr. Die fertige Website gehört vollständig Ihnen.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2">
+              <span class="display d3" data-en="Is local SEO included, or is it an extra?">Ist lokales SEO im Preis enthalten oder kostet es extra?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2">
+              <div class="faq-item__answer"><p data-en="Local SEO is included in every Vias Media project at no extra charge. Every site ships with regional keyword research, clean technical SEO, structured data (schema.org) so Google and AI assistants understand the business, a matching Google Business Profile setup, and separate landing pages per service and town where that makes sense. Akkerman Stroy, a renovation contractor in Berlin and Mecklenburg-Vorpommern, gained 140% more organic traffic after exactly this groundwork.">Lokales SEO ist bei Vias Media in jedem Projekt ohne Aufpreis enthalten. Zu jeder Seite gehören: regionale Keyword-Recherche, sauberes technisches SEO, strukturierte Daten (schema.org), damit Google und KI-Assistenten den Betrieb verstehen, die passende Einrichtung des Google-Unternehmensprofils sowie eigene Landingpages je Leistung und Ort, wo das sinnvoll ist. Akkerman Stroy, ein Sanierungsbetrieb in Berlin und Mecklenburg-Vorpommern, gewann nach genau dieser Grundarbeit 140 % mehr organischen Traffic.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3">
+              <span class="display d3" data-en="How long until a new site is found on Google?">Wie lange dauert es, bis eine neue Website bei Google gefunden wird?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3">
+              <div class="faq-item__answer"><p data-en="A new website is usually indexed by Google within a few days to two weeks after launch, provided the sitemap is submitted in Google Search Console. Stable rankings for competitive local terms such as &#x27;Elektriker Neubrandenburg&#x27; typically take three to six months, because Google needs consistent signals: a complete Google Business Profile, matching name, address and phone number everywhere, real reviews, and content that actually answers the search. Vias Media sets all of these up at launch, which is why the clock starts on day one rather than months later.">Eine neue Website wird in der Regel innerhalb weniger Tage bis zwei Wochen nach dem Launch von Google indexiert — vorausgesetzt, die Sitemap ist in der Google Search Console eingereicht. Stabile Platzierungen für umkämpfte lokale Suchbegriffe wie „Elektriker Neubrandenburg" brauchen meist drei bis sechs Monate, weil Google konsistente Signale benötigt: ein vollständiges Google-Unternehmensprofil, überall identische Angaben zu Name, Adresse und Telefonnummer, echte Bewertungen und Inhalte, die die Suchanfrage wirklich beantworten. Vias Media richtet all das bereits zum Launch ein — deshalb läuft die Uhr ab Tag eins und nicht erst Monate später.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4">
+              <span class="display d3" data-en="What is the difference between web design and web development?">Was ist der Unterschied zwischen Webdesign und Webentwicklung?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-4" role="region" aria-labelledby="faq-trigger-4">
+              <div class="faq-item__answer"><p data-en="Web design decides what a website looks like and how a visitor moves through it; web development is the code that makes it actually work. Design covers layout, typography, colour, imagery and the path from landing to enquiry. Development covers the HTML, CSS and JavaScript, loading speed, mobile behaviour, forms and hosting. At Vias Media both come from the same person, so nothing gets lost in handover — and every site is hand-coded rather than assembled in a page builder, which is why load times stay low and Lighthouse performance scores land in the 90s.">Webdesign entscheidet, wie eine Website aussieht und wie sich Besucher darin bewegen; Webentwicklung ist der Code, der sie tatsächlich funktionieren lässt. Zum Design gehören Layout, Typografie, Farben, Bildsprache und der Weg vom ersten Blick bis zur Anfrage. Zur Entwicklung gehören HTML, CSS und JavaScript, Ladezeit, Verhalten auf dem Handy, Formulare und Hosting. Bei Vias Media kommt beides aus einer Hand, sodass bei der Übergabe nichts verloren geht — und jede Seite wird handgeschrieben statt in einem Baukasten zusammengeklickt. Genau deshalb bleiben die Ladezeiten niedrig und die Lighthouse-Performance-Werte im 90er-Bereich.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-5" id="faq-trigger-5">
+              <span class="display d3" data-en="What does the German Accessibility Act (BFSG) mean for my website?">Was bedeutet das Barrierefreiheitsstärkungsgesetz (BFSG) für meine Website?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-5" role="region" aria-labelledby="faq-trigger-5">
+              <div class="faq-item__answer"><p data-en="The German Accessibility Act (Barrierefreiheitsstärkungsgesetz, BFSG) has applied since 28 June 2025 and requires digital services aimed at consumers — online shops, booking systems, banking and similar — to be accessible. Micro-enterprises with fewer than 10 employees and under 2 million euros annual turnover are exempt for services, but the exemption does not cover products. In practice this means: sufficient colour contrast, full keyboard operability, real alt text, correct heading order and forms that a screen reader can read out. A Vias Media accessibility audit tests a site against WCAG 2.2 level AA and returns a concrete defect list with an implementation plan rather than a score alone.">Das Barrierefreiheitsstärkungsgesetz (BFSG) gilt seit dem 28. Juni 2025 und verpflichtet digitale Dienstleistungen für Verbraucher — Onlineshops, Buchungssysteme, Bankdienste und Ähnliches — zur Barrierefreiheit. Kleinstunternehmen mit weniger als 10 Beschäftigten und unter 2 Millionen Euro Jahresumsatz sind bei Dienstleistungen ausgenommen; für Produkte gilt diese Ausnahme nicht. Praktisch heißt das: ausreichende Farbkontraste, vollständige Bedienbarkeit per Tastatur, echte Alternativtexte, korrekte Überschriftenreihenfolge und Formulare, die ein Screenreader vorlesen kann. Ein Barrierefreiheits-Audit von Vias Media prüft eine Seite gegen WCAG 2.2 Stufe AA und liefert eine konkrete Mängelliste mit Umsetzungsplan — nicht nur eine Punktzahl.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6">
+              <span class="display d3" data-en="Do I still need my own website if I already have Facebook or Instagram?">Brauche ich eine eigene Website, wenn ich schon Facebook oder Instagram habe?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6">
+              <div class="faq-item__answer"><p data-en="Yes — a social media profile cannot replace a website, because it is rented ground. A Facebook or Instagram page belongs to the platform: reach, layout and even continued existence depend on rules you do not control, and the profile rarely ranks for searches like &#x27;Dachdecker Neubrandenburg&#x27;. Your own domain is the only address that appears in Google, gets quoted by AI assistants such as ChatGPT and Perplexity, carries your imprint and privacy policy, and stores enquiries where you can reach them. The sensible split is: social media for reach and proof of work, your own website as the place where the enquiry actually lands.">Ja — ein Social-Media-Profil ersetzt keine Website, weil es gemietetes Land ist. Eine Facebook- oder Instagram-Seite gehört der Plattform: Reichweite, Darstellung und sogar der Fortbestand hängen von Regeln ab, die Sie nicht kontrollieren, und das Profil rankt selten für Suchen wie „Dachdecker Neubrandenburg". Ihre eigene Domain ist die einzige Adresse, die bei Google erscheint, von KI-Assistenten wie ChatGPT und Perplexity zitiert wird, Impressum und Datenschutzerklärung trägt und Anfragen dort ablegt, wo Sie sie erreichen. Sinnvoll ist die Aufteilung: Social Media für Reichweite und Arbeitsnachweis, die eigene Website als Ort, an dem die Anfrage tatsächlich landet.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-7" id="faq-trigger-7">
+              <span class="display d3" data-en="What happens after launch — do I need ongoing support?">Was passiert nach dem Launch — brauche ich laufende Betreuung?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-7" role="region" aria-labelledby="faq-trigger-7">
+              <div class="faq-item__answer"><p data-en="Ongoing support is optional, not compulsory — the website is yours and keeps running without a contract. What support buys is upkeep: content changes such as new services, prices or reference photos, technical updates, uptime and speed monitoring, and continuous local SEO work as competitors change. Sites that are updated regularly are ranked and cited more readily, because both Google and AI answer engines prefer content with a visible recent update date. Most Vias Media clients start with a small retainer for the first six months after launch and then decide.">Laufende Betreuung ist optional, keine Pflicht — die Website gehört Ihnen und läuft auch ohne Vertrag weiter. Was Betreuung bringt, ist Pflege: Inhaltsänderungen wie neue Leistungen, Preise oder Referenzfotos, technische Updates, Überwachung von Erreichbarkeit und Ladezeit sowie fortlaufende lokale SEO-Arbeit, wenn sich der Wettbewerb verändert. Regelmäßig aktualisierte Seiten werden besser platziert und häufiger zitiert, weil sowohl Google als auch KI-Antwortmaschinen Inhalte mit sichtbar aktuellem Änderungsdatum bevorzugen. Die meisten Kunden von Vias Media starten mit einer kleinen Betreuung für die ersten sechs Monate nach dem Launch und entscheiden dann neu.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-8" id="faq-trigger-8">
+              <span class="display d3" data-en="Do you also build online shops and landing pages?">Erstellen Sie auch Onlineshops und Landingpages?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-8" role="region" aria-labelledby="faq-trigger-8">
+              <div class="faq-item__answer"><p data-en="Yes. Besides business websites, Vias Media builds online shops for retailers and direct sellers — with secure checkout, a clear order path and legally required information — and landing pages for a single offer or campaign, focused on exactly one goal: a call, an enquiry or a booking. Since the new shop went live at the florist Luxe Bouquets, customers order online instead of only calling; online orders rose by 85 percent. Shops and landing pages are also built accessible under the BFSG, fast on every phone and at a fixed price.">Ja. Neben Unternehmenswebsites baut Vias Media Onlineshops für Händler und Direktvermarkter – mit sicherem Bezahlvorgang, klarer Bestellstrecke und den Pflichtangaben – sowie Landingpages für einzelne Angebote oder Kampagnen, die auf genau ein Ziel ausgerichtet sind: Anruf, Anfrage oder Buchung. Beim Blumengeschäft Luxe Bouquets bestellen Kundinnen und Kunden seit dem neuen Shop direkt online statt nur anzurufen; die Online-Bestellungen stiegen um 85 Prozent. Auch Shops und Landingpages entstehen barrierefrei nach BFSG, schnell auf jedem Handy und zum Festpreis.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="ftr" id="contact" data-nofog>
+    <div class="wrap">
+      <div class="grid ftr__cta">
+        <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
+        <div class="s__head">
+          <h2 class="display ftr__big rv-lines" data-split data-lines="mark" data-converge data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+        </div>
+        <div class="s__body ftr__actions rv">
+          <a href="contact.html" class="btn btn--lg btn--accent">
+            <span data-en="Start a Project">Projekt starten</span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+          </a>
+          <a href="services.html" class="btn btn--lg"><span data-en="View services">Leistungen ansehen</span></a>
+        </div>
+      </div>
+
+      <div class="ftr__lines">
+        <a class="ftr__line" href="tel:+4916095761094" data-cur="Anrufen" data-cur-en="Call"><span>+49 160 95761094</span></a>
+        <a class="ftr__line" href="mailto:mykhailo@viasmedia.com" data-cur="Schreiben" data-cur-en="Write"><span>mykhailo@viasmedia.com</span></a>
+      </div>
+
+      <div class="grid ftr__cols">
+        <div class="ftr__col ftr__col--nap">
+          <p class="tag">Vias Media</p>
+          <span data-en="Built for trades &amp; small businesses.">Für Handwerker &amp; kleine Unternehmen gemacht.</span>
+          <span>Robert-Koch-Str. 15, 17036 Neubrandenburg</span>
+        </div>
+        <nav class="ftr__col" aria-label="Leistungen">
+          <p class="tag" data-en="Services">Leistungen</p>
+          <a href="services.html#webdesign" data-en="Web Design">Webdesign</a>
+          <a href="services.html#webentwicklung" data-en="Development">Entwicklung</a>
+          <a href="services.html#seo">SEO</a>
+          <a href="services.html#beratung" data-en="Consulting">Beratung</a>
+          <a href="services.html#barrierefreiheit" data-en="Accessibility">Barrierefreiheit</a>
+          <a href="services.html#support">Support</a>
+          <a href="webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Unternehmen">
+          <p class="tag" data-en="Company">Unternehmen</p>
+          <a href="work.html" data-en="Work">Projekte</a>
+          <a href="blog/index.html">Blog</a>
+          <a href="contact.html" data-en="Contact">Kontakt</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Anfrage">
+          <p class="tag" data-en="Connect">Verbinden</p>
+          <a href="contact.html" data-en="Start a project">Projekt starten</a>
+          <a href="contact.html" data-en="Get a quote">Angebot anfordern</a>
+          <a data-contact="whatsapp" href="https://wa.me/4916095761094">WhatsApp</a>
+        </nav>
+      </div>
+
+      <div class="ftr__word" aria-hidden="true">vias<span class="dot">.</span></div>
+    </div>
+    <div class="wrap ftr__legal">
+      <p class="mono"><span data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></p>
+      <nav aria-label="Rechtliches">
+        <a href="datenschutz.html" data-en="Privacy">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
+        <button type="button" data-cc-open data-en="Cookie settings">Cookie-Einstellungen</button>
+        <button class="lang-toggle lang-toggle--plain" type="button">
+          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+        </button>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n.js?v=20261009i" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
+  <script src="assets/js/v2/main.js?v=20261009i" defer></script>
+  <script src="assets/js/consent.js?v=20261009i" defer></script>
 </body>
 </html>

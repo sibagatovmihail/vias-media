@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html lang="de" data-palette="ember">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
-  <script>document.documentElement.className="js";try{var t=localStorage.getItem('vias-theme');if(t)document.documentElement.setAttribute('data-palette',t);}catch(e){}</script>
+  <script>document.documentElement.className="js";
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
+  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* if main.js never arrives, nothing may stay hidden */
+  window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BFSG: Muss meine Website barrierefrei sein? — Vias Media</title>
   <meta name="description" content="Seit 28. Juni 2025 gilt das BFSG. Wen es trifft, wer als Kleinstunternehmen ausgenommen ist, was technisch verlangt wird und wie Sie Ihre Website selbst prüfen.">
@@ -19,8 +23,7 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
   <link rel="mask-icon" href="../../mask-icon.svg" color="#E8593A">
   <link rel="manifest" href="../../site.webmanifest">
-  <meta name="theme-color" content="#FEF8EF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#141312">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
@@ -43,104 +46,104 @@
   <meta name="twitter:description" content="Seit 28. Juni 2025 gilt das BFSG. Wen es trifft, wer als Kleinstunternehmen ausgenommen ist, was technisch verlangt wird und wie Sie Ihre Website selbst prüfen.">
   <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/blog-default.png">
 
-  <link rel="preload" href="../../assets/fonts/raveo-display-bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../../assets/fonts/raveo-medium.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../assets/css/fonts.css">
-  <link rel="stylesheet" href="../../assets/css/tokens.css">
-  <link rel="stylesheet" href="../../assets/css/base.css">
-  <link rel="stylesheet" href="../../assets/css/components.css">
-  <link rel="stylesheet" href="../../assets/css/consent.css">
-  <link rel="stylesheet" href="../../assets/css/pages/blog.css?v=2026-10-01">
+  <link rel="preload" href="../../assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/v2/tokens.css?v=20261009i">
+  <link rel="stylesheet" href="../../assets/css/v2/base.css?v=20261009i">
+  <link rel="stylesheet" href="../../assets/css/consent.css?v=20261009i">
+  <link rel="stylesheet" href="../../assets/css/v2/components.css?v=20261009i">
+  <link rel="stylesheet" href="../../assets/css/v2/pages.css?v=20261009i">
+  <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht#article", "url": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht", "headline": "BFSG: Muss meine Website jetzt barrierefrei sein?", "name": "BFSG: Muss meine Website jetzt barrierefrei sein?", "description": "Seit 28. Juni 2025 gilt das BFSG. Wen es trifft, wer als Kleinstunternehmen ausgenommen ist, was technisch verlangt wird und wie Sie Ihre Website selbst prüfen.", "datePublished": "2026-09-30", "dateModified": "2026-09-30", "author": {"@id": "https://viasmedia.com/#mykhailo"}, "publisher": {"@id": "https://viasmedia.com/#organization"}, "isPartOf": {"@id": "https://viasmedia.com/blog#blog"}, "image": {"@type": "ImageObject", "url": "https://viasmedia.com/assets/img/og/blog-default.png", "width": 1200, "height": 630}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht"}, "breadcrumb": {"@id": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht#breadcrumb"}, "articleSection": "Ratgeber", "wordCount": 1379, "timeRequired": "PT7M", "inLanguage": "de-DE", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".post__lead", ".post__body h2", ".post__body p"]}}, {"@type": "Person", "@id": "https://viasmedia.com/#mykhailo", "name": "Mykhailo Sibahatov", "jobTitle": "Webdesigner und Webentwickler", "url": "https://viasmedia.com/", "worksFor": {"@id": "https://viasmedia.com/#organization"}, "knowsAbout": ["Webdesign", "Webentwicklung", "Lokales SEO", "Barrierefreiheit im Web", "Core Web Vitals"], "knowsLanguage": ["de", "en"]}, {"@type": "BreadcrumbList", "@id": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://viasmedia.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://viasmedia.com/blog"}, {"@type": "ListItem", "position": 3, "name": "BFSG: Muss meine Website jetzt barrierefrei sein?", "item": "https://viasmedia.com/blog/bfsg-barrierefreie-website-pflicht"}]}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-en="Skip to content">Zum Inhalt springen</a>
 
-  <!-- ===== HEADER: topbar + floating nav ===== -->
-  <header class="header" id="header">
-    <div class="topbar">
-      <div class="topbar__inner container">
-        <span class="topbar__text t-label" data-en="Need more local customers?">Mehr lokale Kunden gewinnen?</span>
-        <a href="../../contact.html" class="topbar__link t-label" data-en="Let's Talk!">Sprechen wir!</a>
+  <!-- icon sprite (Heroicons outline 24 + WhatsApp glyph) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
+  </svg>
+
+  <!-- page ground: registration marks, grain, bottom fog -->
+  <div class="marks" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="hdr" id="header">
+    <div class="wrap hdr__bar">
+      <a href="../../index.html" class="hdr__logo" aria-label="Vias Media – Startseite">
+        <img src="../../assets/img/logo-mark-dark.png" alt="" width="1019" height="947" class="logo-mark">
+        <span class="wordmark">vias<span class="dot">.</span></span>
+      </a>
+      <nav class="hdr__nav" aria-label="Hauptnavigation">
+        <a href="../../services.html" class="blink"><span class="roll" data-roll data-en="Services">Leistungen</span></a>
+        <a href="../../work.html" class="blink"><span class="roll" data-roll data-en="Work">Projekte</span></a>
+        <a href="../../index.html#preise" class="blink"><span class="roll" data-roll data-en="Pricing">Preise</span></a>
+        <a href="../../contact.html" class="blink"><span class="roll" data-roll data-en="Contact">Kontakt</span></a>
+      </nav>
+      <div class="hdr__tools">
+        <a href="../../contact.html" class="btn btn--accent hdr__cta">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+        </a>
+        <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span>
+        </button>
       </div>
     </div>
-    <nav class="navbar" aria-label="Primary">
-      <div class="navbar__inner">
-        <a href="../../index.html" class="navbar__logo" aria-label="Vias Media home">
-          <img src="../../assets/img/logo-mark.png" alt="Vias Media Logo" class="logo-mark logo-mark--light">
-          <img src="../../assets/img/logo-mark-dark.png" alt="Vias Media Logo" class="logo-mark logo-mark--dark">
-          <span class="wordmark">vias<span class="dot">.</span></span>
-        </a>
-        <div class="navbar__links">
-          <a href="../../services.html" data-en="Services">Leistungen</a>
-          <a href="../../work.html" data-en="Work">Projekte</a>
-          <a href="../../contact.html" data-en="Contact">Kontakt</a>
-        </div>
-        <div class="navbar__actions">
-          <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-            <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-            <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-          </button>
-          <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Sprache wechseln">
-            <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-          </button>
-          <a href="../../contact.html" class="btn btn--primary btn-cta">
-            <span data-en="Free Consultation">Kostenlose Beratung</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
-          <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrop">
-            <svg class="hamburger__icon hamburger__bars" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6H19M3 11H19M3 16H19"/></svg>
-            <svg class="hamburger__icon hamburger__x" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5L17 17M17 5L5 17"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="nav-drop" id="navDrop">
-        <div class="nav-drop__inner">
-          <div class="nav-drop__content">
-            <a href="../../services.html" data-en="Services">Leistungen</a>
-            <a href="../../work.html" data-en="Work">Projekte</a>
-            <a href="../../contact.html" data-en="Contact">Kontakt</a>
-            <div class="nav-drop__cta">
-              <a href="../../contact.html" class="btn btn--primary">
-                <span data-en="Free Consultation">Kostenlose Beratung</span>
-                <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-              </a>
-            </div>
-            <div class="nav-drop__lang">
-              <button class="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
-                <span class="lang-cur">EN</span><span class="lang-sep">/</span><span class="lang-alt">DE</span>
-              </button>
-              <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-                <svg class="theme-icon icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
-                <svg class="theme-icon icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M4.6 4.6l1.85 1.85M17.55 17.55l1.85 1.85M2.5 12h2.6M18.9 12h2.6M4.6 19.4l1.85-1.85M17.55 6.45l1.85-1.85"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
   </header>
 
-
-  <div id="header-spacer"></div>
+  <!-- ===== MENU SHEET (≤ 999px) ===== -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__panel">
+      <nav class="menu__list" aria-label="Menü">
+        <a href="../../services.html" class="menu__row"><span data-en="Services">Leistungen</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="../../work.html" class="menu__row"><span data-en="Work">Projekte</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="../../index.html#preise" class="menu__row"><span data-en="Pricing">Preise</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="../../blog/index.html" class="menu__row" aria-current="true"><span>Blog</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="../../contact.html" class="menu__row"><span data-en="Contact">Kontakt</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+      <div class="menu__foot">
+        <div class="menu__prefs">
+          <button class="lang-toggle" type="button">
+            <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+          </button>
+        </div>
+        <a href="../../contact.html" class="btn btn--accent">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+        </a>
+        <a data-contact="call" href="tel:+4916095761094" class="btn">
+          <span data-en="Call">Anrufen</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <main id="main" tabindex="-1">
     <article class="post">
-      <div class="container post__container">
-        <header class="post__head">
-          <div><span class="post__cat t-label-md">Ratgeber</span></div>
-          <div><h1 class="t-lg post__title">BFSG: Muss meine Website jetzt barrierefrei sein?</h1></div>
-          <div class="post__meta">
-            <span class="t-small">30. September 2026</span>
-            <span class="post__dot" aria-hidden="true">·</span>
-            <span class="t-small">7 Min. Lesezeit</span>
-            <span class="post__dot" aria-hidden="true">·</span>
-            <span class="t-small">von Mykhailo Sibahatov</span>
-          </div>
-        </header>
+      <header class="phero phero--short">
+        <div class="wrap phero__wrap">
+          <nav class="crumb" aria-label="Brotkrumen">
+            <a href="../../index.html">Start</a><span aria-hidden="true">/</span>
+            <a href="../../blog/index.html">Ratgeber</a><span aria-hidden="true">/</span>
+            <span>Ratgeber</span>
+          </nav>
+          <div><h1 class="phero__title post__title rv-lines" data-split>BFSG: Muss meine Website jetzt barrierefrei sein?</h1></div>
+          <p class="meta meta--line">
+            <span>30. September 2026</span><span aria-hidden="true">·</span>
+            <span>7 Min. Lesezeit</span><span aria-hidden="true">·</span>
+            <span>von Mykhailo Sibahatov</span>
+          </p>
+        </div>
+      </header>
 
-        <div class="post__body">
-          <p>Seit dem <strong>28. Juni 2025</strong> gilt in Deutschland das Barrierefreiheitsstärkungsgesetz, kurz BFSG. Seitdem kommt in fast jedem Erstgespräch dieselbe Frage: „Muss meine Website jetzt barrierefrei sein?" Die ehrliche Antwort lautet: Für viele kleine Betriebe in Neubrandenburg und der Seenplatte <strong>nein</strong> — für jeden Onlineshop, jedes Buchungssystem und jede Terminbuchung mit Vertragsschluss an Verbraucher dagegen sehr wahrscheinlich <strong>ja</strong>. Dieser Artikel zeigt, wie Sie in fünf Minuten einordnen, ob das Gesetz Sie betrifft, was es technisch verlangt und wie Sie Ihre Website selbst prüfen.</p>
+      <div class="s">
+        <div class="wrap grid">
+          <div class="prose post__body">
+            <p>Seit dem <strong>28. Juni 2025</strong> gilt in Deutschland das Barrierefreiheitsstärkungsgesetz, kurz BFSG. Seitdem kommt in fast jedem Erstgespräch dieselbe Frage: „Muss meine Website jetzt barrierefrei sein?" Die ehrliche Antwort lautet: Für viele kleine Betriebe in Neubrandenburg und der Seenplatte <strong>nein</strong> — für jeden Onlineshop, jedes Buchungssystem und jede Terminbuchung mit Vertragsschluss an Verbraucher dagegen sehr wahrscheinlich <strong>ja</strong>. Dieser Artikel zeigt, wie Sie in fünf Minuten einordnen, ob das Gesetz Sie betrifft, was es technisch verlangt und wie Sie Ihre Website selbst prüfen.</p>
 <p><em>Hinweis: Dieser Artikel erklärt die Rechtslage verständlich, ersetzt aber keine Rechtsberatung. Im Zweifel klären Sie Ihren Einzelfall mit einer Anwältin oder einem Anwalt.</em></p>
 <h2>Was ist das Barrierefreiheitsstärkungsgesetz (BFSG)?</h2>
 <p>Das BFSG ist die deutsche Umsetzung des <strong>European Accessibility Act</strong> (EU-Richtlinie 2019/882). Es wurde im Juli 2021 verabschiedet und gilt seit dem 28. Juni 2025. Das Gesetz verpflichtet Unternehmen, bestimmte Produkte und Dienstleistungen so anzubieten, dass Menschen mit Behinderungen sie ohne fremde Hilfe nutzen können. Für Websites relevant ist vor allem eine Kategorie: <strong>Dienstleistungen im elektronischen Geschäftsverkehr</strong>. Gemeint sind Angebote, bei denen Verbraucher online einen Vertrag abschließen — also kaufen, buchen oder bezahlen. Weitere erfasste Bereiche sind Bankdienstleistungen, E-Books, Telekommunikation und Personenbeförderung. Wichtig: Das BFSG schützt <strong>Verbraucher</strong>. Ein reines B2B-Angebot, das sich ausschließlich an Unternehmen richtet, fällt nicht darunter.</p>
@@ -254,110 +257,95 @@
 <p>Bei einer Neuentwicklung kostet Barrierefreiheit kaum mehr als eine normale Website, weil sie von der ersten Zeile an mitgedacht wird. Teuer wird es beim Nachrüsten einer bestehenden Seite, besonders bei Baukastensystemen und überladenen Themes, die Menüs und Formulare ohne Tastaturbedienung ausliefern. Dort ist ein Neuaufbau oft günstiger als hundert einzelne Reparaturen. Bei Vias Media ist Barrierefreiheit deshalb <strong>in jedem Projekt enthalten</strong> und kein Aufpreis: Kontraste, Tastaturbedienung, Alternativtexte, beschriftete Formulare und eine saubere Struktur gehören zum Standard. Für bestehende Websites biete ich ein <strong>Barrierefreiheits-Audit nach WCAG 2.2 Stufe AA</strong> an. Sie erhalten keine abstrakte Punktzahl, sondern eine Mängelliste in verständlicher Sprache, sortiert nach Dringlichkeit, mit einem konkreten Umsetzungsplan.</p>
 <h2>Was sollte ich jetzt tun?</h2>
 <p>Ordnen Sie zuerst ein, ob Ihre Website überhaupt unter das BFSG fällt — die Tabelle oben reicht dafür in den meisten Fällen. Betreiben Sie einen Onlineshop oder ein Buchungssystem und sind kein Kleinstunternehmen, dann gilt die Pflicht bereits seit dem 28. Juni 2025, und der nächste Schritt ist eine Prüfung. Fallen Sie nicht darunter, lohnt sich der Selbsttest trotzdem: Jede Barriere, die Sie entfernen, ist ein Kunde weniger, der auf halbem Weg aufgibt. Wenn Sie unsicher sind, melden Sie sich für ein kostenloses Erstgespräch — gern auch vor Ort in Neubrandenburg oder der Seenplatte. Ich schaue mir Ihre Website an und sage Ihnen ehrlich, ob Handlungsbedarf besteht oder nicht.</p>
-        </div>
-
-        <a class="post__case" href="../../work-luxe-bouquets.html"><div class="post__case-stat"><span class="post__case-num">+85%</span><span class="t-small">Online-Bestellungen</span></div><div class="post__case-text"><span class="t-label-md t-muted">Fallstudie</span><span class="t-card">Luxe Bouquets</span><span class="link">Fallstudie ansehen →</span></div></a>
-
-        <aside class="post__related" aria-labelledby="related-title"><div><h2 class="t-md" id="related-title">Passende Artikel</h2></div><div class="blog-grid post__related-grid"><a class="blog-card" href="../../blog/ki-chatgpt-handwerker-gefunden-werden"><div class="blog-card__body"><div><span class="blog-card__cat t-label-md t-muted">Handwerk</span></div><div><h3 class="t-card">Empfiehlt ChatGPT Ihren Betrieb? Wie Handwerker in KI-Antworten auftauchen</h3></div><div><p class="t-body t-muted-body">58 % der Deutschen nutzen KI, Google antwortet im KI-Modus. Wie ChatGPT, Gemini & Co. lokale Handwerker auswählen und was Ihre Website dafür braucht – mit Selbsttest in 5 Minuten.</p></div><div class="blog-card__meta"><span class="t-small">7. Oktober 2026</span><span aria-hidden="true"> · </span><span class="t-small">6 Min.</span></div><div class="blog-card__more"><span class="link">Weiterlesen →</span></div></div></a><a class="blog-card" href="../../blog/foerderung-website-handwerk-mv"><div class="blog-card__body"><div><span class="blog-card__cat t-label-md t-muted">Handwerk</span></div><div><h3 class="t-card">Gibt es Förderung für die Website eines Handwerksbetriebs? Stand Oktober 2026 in MV</h3></div><div><p class="t-body t-muted-body">go-digital und Digital Jetzt sind ausgelaufen, die Digitalisierungsförderung MV lief bis Juni 2026. Was es für Handwerker in MV noch gibt – BAFA-Beratung mit 80 %, kostenlose Kammerberatung – und was nicht.</p></div><div class="blog-card__meta"><span class="t-small">6. Oktober 2026</span><span aria-hidden="true"> · </span><span class="t-small">6 Min.</span></div><div class="blog-card__more"><span class="link">Weiterlesen →</span></div></div></a></div></aside>
-
-        <aside class="post__cta">
-          <div>
-            <h2 class="t-md">Kostenloser Website-Check für Ihren Betrieb</h2>
-            <div><p class="t-body t-muted-body">Ich schaue mir Ihre aktuelle Website (oder Ihren Auftritt bei Google) an und sage Ihnen konkret, wo Sie Anfragen verlieren — unverbindlich und kostenlos.</p></div>
           </div>
-          <a href="../../contact.html" class="btn btn--primary">
-            <span>Website-Check anfragen</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
-          </a>
-        </aside>
+          <div class="post__blocks">
+            <a class="post__case" href="../../work-luxe-bouquets.html"><div class="post__case-stat"><span class="post__case-num">+85%</span><span class="t-small">Online-Bestellungen</span></div><div class="post__case-text"><span class="t-label-md t-muted">Fallstudie</span><span class="t-card">Luxe Bouquets</span><span class="link">Fallstudie ansehen →</span></div></a>
+
+            <aside class="post__related" aria-labelledby="related-title"><div><h2 class="t-md" id="related-title">Passende Artikel</h2></div><div class="blog-grid post__related-grid"><a class="blog-card" href="../../blog/ki-chatgpt-handwerker-gefunden-werden"><div class="blog-card__body"><div><span class="blog-card__cat t-label-md t-muted">Handwerk</span></div><div><h3 class="t-card">Empfiehlt ChatGPT Ihren Betrieb? Wie Handwerker in KI-Antworten auftauchen</h3></div><div><p class="t-body t-muted-body">58 % der Deutschen nutzen KI, Google antwortet im KI-Modus. Wie ChatGPT, Gemini & Co. lokale Handwerker auswählen und was Ihre Website dafür braucht – mit Selbsttest in 5 Minuten.</p></div><div class="blog-card__meta"><span class="t-small">7. Oktober 2026</span><span aria-hidden="true"> · </span><span class="t-small">6 Min.</span></div><div class="blog-card__more"><span class="link">Weiterlesen →</span></div></div></a><a class="blog-card" href="../../blog/foerderung-website-handwerk-mv"><div class="blog-card__body"><div><span class="blog-card__cat t-label-md t-muted">Handwerk</span></div><div><h3 class="t-card">Gibt es Förderung für die Website eines Handwerksbetriebs? Stand Oktober 2026 in MV</h3></div><div><p class="t-body t-muted-body">go-digital und Digital Jetzt sind ausgelaufen, die Digitalisierungsförderung MV lief bis Juni 2026. Was es für Handwerker in MV noch gibt – BAFA-Beratung mit 80 %, kostenlose Kammerberatung – und was nicht.</p></div><div class="blog-card__meta"><span class="t-small">6. Oktober 2026</span><span aria-hidden="true"> · </span><span class="t-small">6 Min.</span></div><div class="blog-card__more"><span class="link">Weiterlesen →</span></div></div></a></div></aside>
+
+          <aside class="post__cta">
+            <div>
+              <h2>Kostenloser Website-Check für Ihren Betrieb</h2>
+              <p>Ich schaue mir Ihre aktuelle Website (oder Ihren Auftritt bei Google) an und sage Ihnen konkret, wo Sie Anfragen verlieren — unverbindlich und kostenlos.</p>
+            </div>
+            <a href="../../contact.html" class="btn btn--lg"><span>Website-Check anfragen</span><svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg></a>
+          </aside>
+          </div>
+        </div>
       </div>
     </article>
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <div class="footer-wrap">
-    <section class="footer-cta">
-      <div class="container" style="display:flex; flex-direction:column; align-items:center; gap: var(--space-lg);">
-        <div><h2 class="t-xl t-center footer-cta__title" data-en="Ready to win more local customers?">Bereit für mehr lokale Kunden?</h2></div>
-        <div class="hero__actions">
-          <a href="../../contact.html" class="btn btn--primary">
+  <footer class="ftr" id="contact" data-nofog>
+    <div class="wrap">
+      <div class="grid ftr__cta">
+        <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
+        <div class="s__head">
+          <h2 class="display ftr__big rv-lines" data-split data-lines="mark" data-converge data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+        </div>
+        <div class="s__body ftr__actions rv">
+          <a href="../../contact.html" class="btn btn--lg btn--accent">
             <span data-en="Start a Project">Projekt starten</span>
-            <span class="btn__arrow"><svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="var(--btn-on-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 13L13 1M13 1H3M13 1V11"/></svg></span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
           </a>
-          <a href="../../services.html" class="btn btn--outline"><span data-en="View services">Leistungen ansehen</span></a>
+          <a href="../../services.html" class="btn btn--lg"><span data-en="View services">Leistungen ansehen</span></a>
         </div>
       </div>
-    </section>
 
-    <footer class="footer" id="contact">
-      <div class="container">
-        <div class="footer__inner">
-          <div class="footer__top">
-            <div style="display:flex; flex-direction:column; gap: var(--space-md);">
-              <div class="stars" aria-label="5 star review rating">
-                <div class="stars__icons" aria-hidden="true">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--star)" stroke="var(--star-stroke)" stroke-width="0.5"><path d="M8 0.5L10.12 5.26L15.5 5.85L11.45 9.54L12.64 14.84L8 12.15L3.36 14.84L4.55 9.54L0.5 5.85L5.88 5.26L8 0.5Z"/></svg>
-                </div>
-                <div><span class="t-small" data-en="5 Star Review Rating">5-Sterne-Bewertung</span></div>
-              </div>
-              <div><span class="t-md">Built for trades &amp; small businesses.</span></div>
-              <div><a href="../../services.html" class="btn btn--outline btn--sm"><span data-en="View our services">Unsere Leistungen ansehen</span></a></div>
-            </div>
-            <div class="footer__wordmark">vias<span class="dot">.</span></div>
-          </div>
-
-          <div class="divider" style="margin-block: var(--space-lg);"></div>
-
-          <div class="footer__grid">
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Services">Leistungen</span></div>
-              <a href="../../services.html" data-en="Web Design">Webdesign</a>
-              <a href="../../services.html" data-en="Development">Entwicklung</a>
-              <a href="../../services.html" data-en="SEO">SEO</a>
-              <a href="../../services.html" data-en="Consulting">Beratung</a>
-              <a href="../../services.html" data-en="Accessibility">Barrierefreiheit</a>
-              <a href="../../services.html" data-en="Support">Support</a>
-              <a href="../../webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
-            </div>
-
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Company">Unternehmen</span></div>
-              <a href="../../work.html" data-en="Work">Projekte</a>
-              <a href="../../blog/index.html" data-en="Blog">Blog</a>
-              <a href="../../contact.html" data-en="Contact">Kontakt</a>
-            </div>
-
-            <div class="footer__col">
-              <div><span class="t-label-md" data-en="Connect">Verbinden</span></div>
-              <a href="../../contact.html" data-en="Start a project">Projekt starten</a>
-              <a href="../../contact.html" data-en="Get a quote">Angebot anfordern</a>
-              <div class="footer__nap">
-                <div><span class="t-small">Vias Media · Robert-Koch-Str. 15, 17036 Neubrandenburg</span></div>
-                <div><a href="tel:+4916095761094">+49 160 95761094</a></div>
-                <div><a href="mailto:mykhailo@viasmedia.com">mykhailo@viasmedia.com</a></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="divider" style="margin-block: var(--space-lg) var(--space-md);"></div>
-
-          <div class="footer__bottom">
-            <div><span class="t-small" data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></div>
-            <div class="footer__legal">
-              <a href="../../datenschutz.html" class="t-small" data-en="Privacy">Datenschutz</a>
-              <a href="../../impressum.html" class="t-small">Impressum</a>
-            </div>
-          </div>
-        </div>
+      <div class="ftr__lines">
+        <a class="ftr__line" href="tel:+4916095761094" data-cur="Anrufen" data-cur-en="Call"><span>+49 160 95761094</span></a>
+        <a class="ftr__line" href="mailto:mykhailo@viasmedia.com" data-cur="Schreiben" data-cur-en="Write"><span>mykhailo@viasmedia.com</span></a>
       </div>
-    </footer>
-  </div>
 
-  <script src="../../assets/js/i18n.js" defer></script>  <script src="../../assets/js/main.js" defer></script>
-  <script src="../../assets/js/consent.js" defer></script>
+      <div class="grid ftr__cols">
+        <div class="ftr__col ftr__col--nap">
+          <p class="tag">Vias Media</p>
+          <span data-en="Built for trades &amp; small businesses.">Für Handwerker &amp; kleine Unternehmen gemacht.</span>
+          <span>Robert-Koch-Str. 15, 17036 Neubrandenburg</span>
+        </div>
+        <nav class="ftr__col" aria-label="Leistungen">
+          <p class="tag" data-en="Services">Leistungen</p>
+          <a href="../../services.html#webdesign" data-en="Web Design">Webdesign</a>
+          <a href="../../services.html#webentwicklung" data-en="Development">Entwicklung</a>
+          <a href="../../services.html#seo">SEO</a>
+          <a href="../../services.html#beratung" data-en="Consulting">Beratung</a>
+          <a href="../../services.html#barrierefreiheit" data-en="Accessibility">Barrierefreiheit</a>
+          <a href="../../services.html#support">Support</a>
+          <a href="../../webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Unternehmen">
+          <p class="tag" data-en="Company">Unternehmen</p>
+          <a href="../../work.html" data-en="Work">Projekte</a>
+          <a href="../../blog/index.html">Blog</a>
+          <a href="../../contact.html" data-en="Contact">Kontakt</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Anfrage">
+          <p class="tag" data-en="Connect">Verbinden</p>
+          <a href="../../contact.html" data-en="Start a project">Projekt starten</a>
+          <a href="../../contact.html" data-en="Get a quote">Angebot anfordern</a>
+          <a data-contact="whatsapp" href="https://wa.me/4916095761094">WhatsApp</a>
+        </nav>
+      </div>
+
+      <div class="ftr__word" aria-hidden="true">vias<span class="dot">.</span></div>
+    </div>
+    <div class="wrap ftr__legal">
+      <p class="mono"><span data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></p>
+      <nav aria-label="Rechtliches">
+        <a href="../../datenschutz.html" data-en="Privacy">Datenschutz</a>
+        <a href="../../impressum.html">Impressum</a>
+        <button type="button" data-cc-open data-en="Cookie settings">Cookie-Einstellungen</button>
+        <button class="lang-toggle lang-toggle--plain" type="button">
+          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+        </button>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/i18n.js?v=20261009i" defer></script>
+  <script src="../../assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
+  <script src="../../assets/js/v2/main.js?v=20261009i" defer></script>
+  <script src="../../assets/js/consent.js?v=20261009i" defer></script>
 </body>
 </html>

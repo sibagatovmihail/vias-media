@@ -93,7 +93,10 @@
 }
 .blink::before { content: "[\00a0"; content: "[\00a0" / ""; opacity: 0.62; }
 .blink::after { content: "\00a0]"; content: "\00a0]" / ""; opacity: 0.62; }
-.blink[aria-current="page"] { font-weight: 700; }
+/* where you are: a filled block, not just a heavier word */
+.blink[aria-current] { background: var(--ink); color: var(--ground); font-weight: 600; }
+.blink[aria-current]::before,
+.blink[aria-current]::after { opacity: 1; }
 
 /* letter roll: every letter is the front of a small cube; on hover the cubes
    turn a quarter, one after the other, and bring the same letter up from below */
@@ -239,7 +242,7 @@
   transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
 }
 .menu__row svg { width: 1.125rem; height: 1.125rem; flex: none; transition: transform var(--dur-base) var(--ease-out); }
-.menu__row[aria-current="page"] { background: var(--line-soft); }
+.menu__row[aria-current] { background: var(--line-soft); }
 /* the row answers the finger (active) and the pointer (hover) the same way */
 .menu__row:active { background: var(--ink); color: var(--ground); }
 @media (hover: hover) {
@@ -327,6 +330,14 @@ a.row:focus-visible { outline-offset: -3px; }
 /* =====================================================================
    Accordion (FAQ) — one open at a time, plus turns into minus
    ===================================================================== */
+/* section layout: head beside the list on laptops (the head stays in view) */
+.faq { row-gap: var(--head-gap); }
+.faq__head { grid-column: 1 / -1; display: grid; gap: var(--block-gap); align-content: start; }
+.faq__list { grid-column: 1 / -1; align-self: start; }
+@media (min-width: 62.5rem) {
+  .faq__head { grid-column: 1 / span 3; position: sticky; top: calc(var(--hdr-h) + 2rem); }
+  .faq__list { grid-column: 4 / -1; }
+}
 .faq__list { border-top: 1px solid var(--line); }
 .faq-item { border-bottom: 1px solid var(--line); }
 .faq-item__q {
@@ -338,7 +349,7 @@ a.row:focus-visible { outline-offset: -3px; }
   padding-block: var(--row-pad);
   text-align: left;
 }
-.faq-item__q > span:first-child { text-wrap: balance; }
+.faq-item__q > span:first-child { min-width: 0; text-wrap: balance; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
 .faq-item__icon {
   position: relative;
   flex: none;

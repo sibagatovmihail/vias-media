@@ -1,7 +1,7 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — homepage
    hero (F) · projects (sticky stack) · why · how I work (horizontal scene
-   + masked word) · services · pricing (uncovered from below) · faq
+   + masked word) · services · pricing (uncovered from below)
 
    Flow: blocks are opaque sheets. Pinned ones (hero, project cases) stay
    where they are while the next sheet slides over them; Pricing lies
@@ -490,17 +490,6 @@
 }
 @media (min-width: 75rem) {
   .pricing__cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
-/* =====================================================================
-   FAQ
-   ===================================================================== */
-.faq { row-gap: var(--head-gap); }
-.faq__head { grid-column: 1 / -1; display: grid; gap: var(--block-gap); align-content: start; }
-.faq__list { grid-column: 1 / -1; align-self: start; }
-@media (min-width: 62.5rem) {
-  .faq__head { grid-column: 1 / span 3; position: sticky; top: calc(var(--hdr-h) + 2rem); }
-  .faq__list { grid-column: 4 / -1; }
 }
 
 /* reduced motion: nothing is pinned or layered; every block is plain flow */

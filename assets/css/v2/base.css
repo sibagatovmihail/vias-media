@@ -125,6 +125,35 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .fog.is-off { opacity: 0; }
 
 /* =====================================================================
+   Page change — the next page comes up as a sheet, the way sections do,
+   while the header bar, the registration marks and the grain stay where
+   they are. Native cross-document view transitions: browsers without
+   them simply load the page. Every page must link this file for it to work.
+   ===================================================================== */
+@view-transition { navigation: auto; }
+.hdr { view-transition-name: hdr; }
+.marks { view-transition-name: marks; }
+.grain { view-transition-name: grain; }
+::view-transition-old(root),
+::view-transition-new(root) { mix-blend-mode: normal; }
+::view-transition-old(root) { animation: vt-leave 0.62s cubic-bezier(0.7, 0, 0.2, 1) both; }
+::view-transition-new(root) { animation: vt-enter 0.62s cubic-bezier(0.7, 0, 0.2, 1) both; }
+/* the incoming sheet has an edge, like every section on the page */
+::view-transition-new(root) { box-shadow: 0 -1px 0 rgba(239, 233, 223, 0.28); }
+::view-transition-group(hdr),
+::view-transition-group(marks),
+::view-transition-group(grain) { animation-duration: 0.3s; }
+@keyframes vt-leave {
+  to { transform: translate3d(0, -7vh, 0); opacity: 0.35; }
+}
+@keyframes vt-enter {
+  from { transform: translate3d(0, 100%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* =====================================================================
    Grid
    ===================================================================== */
 

@@ -84,4 +84,4 @@ Nur, wenn sie gegen Googles Richtlinien verstößt, etwa durch Beleidigungen ode
 
 Antworten Sie mindestens auf jede kritische Bewertung und möglichst auch auf positive. Kurze, persönliche Antworten zeigen neuen Kunden, dass der Betrieb erreichbar ist und sich kümmert.
 
-Wenn Sie Ihre Google-Bewertungen automatisch und rechtssicher auf Ihrer Website zeigen möchten, richte ich das als Teil Ihrer Website ein. [Schreiben Sie mir](/contact.html) — das erste Gespräch ist kostenlos.
+Wenn Sie Ihre Google-Bewertungen automatisch auf Ihrer Website zeigen möchten, richte ich das als Teil Ihrer Website ein. [Schreiben Sie mir](/contact.html) — das erste Gespräch ist kostenlos.
