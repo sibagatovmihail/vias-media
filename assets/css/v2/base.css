@@ -71,7 +71,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
    ===================================================================== */
 
 /* "+" registration marks on the column lines; they stay put while the
-   page scrolls underneath, like marks on the glass of a light table */
+   page scrolls underneath. Kept faint, and without a blend mode: a blended
+   full-screen layer made every hover repaint the whole viewport. */
 .marks {
   position: fixed;
   inset: 0;
@@ -82,15 +83,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background-position:
     calc(var(--margin) - var(--gutter) / 2 - 4.5px)
     calc(var(--hdr-h) - 4.5px);
-  opacity: 0.6;
-}
-/* fine pointers have GPU to spare: the marks invert over photographs */
-@media (hover: hover) and (pointer: fine) {
-  .marks {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23fff' stroke-opacity='.62'/%3E%3C/svg%3E");
-    mix-blend-mode: difference;
-    opacity: 1;
-  }
+  opacity: 0.34;
 }
 
 .grain {
@@ -118,22 +111,16 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   inset: 0;
 }
 .fog i:nth-child(1) {
-  -webkit-backdrop-filter: blur(1.5px);
-  backdrop-filter: blur(1.5px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%);
-  mask-image: linear-gradient(to bottom, transparent, #000 45%);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 55%);
+  mask-image: linear-gradient(to bottom, transparent, #000 55%);
 }
 .fog i:nth-child(2) {
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 30%, #000 75%);
-  mask-image: linear-gradient(to bottom, transparent 30%, #000 75%);
-}
-.fog i:nth-child(3) {
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 60%, #000);
-  mask-image: linear-gradient(to bottom, transparent 60%, #000);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 45%, #000);
+  mask-image: linear-gradient(to bottom, transparent 45%, #000);
 }
 .fog.is-off { opacity: 0; }
 
@@ -173,15 +160,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .display {
   font-family: var(--font-display);
-  font-stretch: 125%;
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 0.96;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.9;
   text-wrap: balance;
 }
 .d1 { font-size: var(--fs-d1); }
-.d2 { font-size: var(--fs-d2); font-weight: 450; line-height: 1.02; letter-spacing: -0.03em; }
-.d3 { font-size: var(--fs-d3); font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+.d2 { font-size: var(--fs-d2); line-height: 0.92; }
+.d3 { font-size: var(--fs-d3); line-height: 1; letter-spacing: 0.015em; }
+
+/* an inverted band: the other palette, locally (tokens.css) */
+.inv { background: var(--ground); color: var(--ink); }
 
 .lead {
   font-size: var(--fs-lead);
@@ -244,8 +233,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
    Split text (JS wraps lines / words; the plain text is the default)
    ===================================================================== */
 
-.ln { display: block; white-space: nowrap; overflow: hidden; overflow: clip; padding-bottom: 0.12em; margin-bottom: -0.12em; }
-.ln > span { display: block; will-change: transform; }
+/* room above for umlaut dots, below for commas: the clip must not shave them */
+.ln { display: block; white-space: nowrap; overflow: hidden; overflow: clip; padding-block: 0.16em 0.12em; margin-block: -0.16em -0.12em; }
+.ln > span { display: block; }
 /* a measured line that still runs wide may wrap rather than be clipped */
 .is-loose .ln { white-space: normal; }
 

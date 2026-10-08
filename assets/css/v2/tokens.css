@@ -1,7 +1,7 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — fonts + design tokens
-   One variable grotesk (Archivo, width axis) for display and body,
-   one mono (Martian Mono) for annotations. Both OFL, self-hosted.
+   Bebas Neue for titles, one variable grotesk (Archivo) for body and the
+   wordmark, one mono (Martian Mono) for annotations. All OFL, self-hosted.
    ===================================================================== */
 
 @font-face {
@@ -9,6 +9,13 @@
   src: url('../../fonts/archivo-var-latin.woff2') format('woff2');
   font-weight: 100 900;
   font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('../../fonts/bebas-neue-latin.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -24,15 +31,19 @@
 :root {
   /* ---- Type ---- */
   --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-display: var(--font-sans);
+  /* title face. To go back to the expanded grotesk: set this to var(--font-sans)
+     and restore font-stretch 125% / weight 500 in .display (base.css). */
+  --font-display: 'Bebas Neue', 'Archivo', 'Arial Narrow', sans-serif;
   --font-mono: 'Martian Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* the hero is sized by width AND by the frozen viewport height, so four
-     lines always fit the first screen (German words are the layout brief) */
-  --fs-hero: min(8.2vw, calc(var(--vh, 1vh) * 13.5));
-  --fs-d1: clamp(1.75rem, 1.05rem + 3.1vw, 4rem);       /* 28–64px  section titles */
-  --fs-d2: clamp(1.5rem, 0.95rem + 2.5vw, 3.375rem);    /* 24–54px  statements, big rows */
-  --fs-d3: clamp(1.1875rem, 1.05rem + 0.7vw, 1.75rem);  /* 19–28px  row titles */
+  /* the hero title is sized by width AND by what the frozen viewport height
+     leaves after the bar and the notes (about 24.5rem), divided over four
+     lines at line-height 0.86: so the hero is exactly one screen on a short
+     laptop as well as on a tall monitor. Floor for landscape phones. */
+  --fs-hero: max(2.75rem, min(12.6vw, calc((var(--vh, 1vh) * 100 - 24.5rem) * 0.285)));
+  --fs-d1: clamp(2.5rem, 1.4rem + 5vw, 6rem);           /* 40–96px  section titles */
+  --fs-d2: clamp(2.125rem, 1.3rem + 3.6vw, 4.75rem);    /* 34–76px  big rows, panels */
+  --fs-d3: clamp(1.5rem, 1.3rem + 0.9vw, 2.125rem);     /* 24–34px  row titles */
   --fs-lead: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);    /* 16–18px */
   --fs-body: 1rem;
   --fs-small: 0.875rem;
@@ -46,7 +57,7 @@
   --pitch: calc((100vw - 2 * var(--margin) + var(--gutter)) / var(--cols)); /* JS refines to the px */
 
   /* ---- Spacing (fluid; breakpoints change layout, never these values) ---- */
-  --section: clamp(5.5rem, 3rem + 11vw, 13rem);
+  --section: clamp(6.5rem, 3.5rem + 13vw, 16rem);
   --head-gap: clamp(2rem, 1.2rem + 3vw, 4.5rem);
   --block-gap: clamp(1.25rem, 0.9rem + 1.4vw, 2.25rem);
   --row-pad: clamp(1.125rem, 0.95rem + 0.8vw, 1.75rem);
@@ -84,17 +95,15 @@
   :root { --cols: 8; --hdr-h: 4rem; }
 }
 @media (max-width: 37.5rem) {
-  :root { --fs-hero: 8.7vw; }
-}
-@media (max-width: 22.5rem) {
-  :root { --fs-hero: 8.5vw; }   /* "Ihre Webagentur in" still fits one line at 320px */
+  :root { --fs-hero: 13.4vw; }
 }
 
 /* =====================================================================
    PALETTE: light ("ember") — grey paper, ink, one ember accent
    ===================================================================== */
 :root,
-[data-palette="ember"] {
+[data-palette="ember"],
+[data-palette="ember-dark"] .inv {
   color-scheme: light;
   --ground: #ECEBE8;
   --ground-2: #E2E0DC;
@@ -111,9 +120,11 @@
 }
 
 /* =====================================================================
-   PALETTE: dark ("ember-dark") — the same plan, printed in negative
+   PALETTE: dark ("ember-dark") — the same plan, printed in negative.
+   .inv is a band in the other palette (services): ink ground, paper type.
    ===================================================================== */
-[data-palette="ember-dark"] {
+[data-palette="ember-dark"],
+:root:not([data-palette="ember-dark"]) .inv {
   color-scheme: dark;
   --ground: #141312;
   --ground-2: #1D1B19;

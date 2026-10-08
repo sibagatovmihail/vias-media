@@ -1,7 +1,8 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — page interactions
    contact links · theme · menu sheet · smooth scroll · split text ·
-   reveals · project reel (pinned scene) · fog · FAQ · cursor · ticker
+   reveals · project reel · horizontal scene + ink flood · service
+   drawings · hero drive / footer converge · fog · FAQ · cursor · ticker
    ===================================================================== */
 (function () {
   'use strict';
@@ -17,6 +18,7 @@
   function vh() { return (window.viasVH && window.viasVH.px) || window.innerHeight; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function smooth(t) { return t * t * (3 - 2 * t); }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
   /* ---- Contact details (mirrors assets/js/main.js until the old file is retired) ---- */
   var CONTACT = {
@@ -121,7 +123,8 @@
 
   /* =====================================================================
      Split text. The plain text in the markup is the default; JS wraps
-     lines (reveals) or words (ink fill) and redoes it on width / language.
+     lines (reveals), words (ink fill) or letters (roll) and redoes it on
+     width / language change.
      ===================================================================== */
   function tokenize(el) {
     var out = [], space = false;
@@ -132,7 +135,7 @@
         if (ws) { space = true; return m; }
         /* a dash never starts a line: it stays glued to the word before it */
         if (/^[–—-]$/.test(word) && space && out.length && out[out.length - 1].cls === cls) {
-          out[out.length - 1].t += '\u00a0' + word;
+          out[out.length - 1].t += ' ' + word;
           space = false;
           return m;
         }
@@ -143,7 +146,6 @@
     });
     return out;
   }
-  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function runs(toks) {
     /* consecutive tokens of one class become one span, so a .mark block stays whole */
     var html = '', i = 0;
@@ -174,9 +176,10 @@
       if (lastTop === null || Math.abs(top - lastTop) > 4) { lines.push([]); lastTop = top; }
       lines[lines.length - 1].push(toks[i]);
     });
+    /* --i staggers the reveal; --dir (-1 / 1) lets lines travel in opposite directions */
     el.innerHTML = lines.map(function (ln, i) {
       ln[0] = { t: ln[0].t, cls: ln[0].cls, sp: false };
-      return '<span class="ln" aria-hidden="true" style="--i:' + i + '"><span>' + runs(ln) + '</span></span>';
+      return '<span class="ln" aria-hidden="true" style="--i:' + i + ';--dir:' + (i % 2 ? 1 : -1) + '"><span>' + runs(ln) + '</span></span>';
     }).join('');
     var wide = false;
     [].forEach.call(el.querySelectorAll('.ln'), function (ln) { if (ln.scrollWidth > ln.clientWidth + 1) wide = true; });
@@ -191,12 +194,29 @@
       return (t.sp ? ' ' : '') + '<span class="w">' + esc(t.t) + '</span>';
     }).join('');
     el._words = el.querySelectorAll('.w');
+    el._on = -1;
+  }
+  /* letter roll (header links): the link keeps its name for assistive tech */
+  function splitRoll(el) {
+    var text = (el._txt != null ? el._txt : el.textContent).replace(/\s+/g, ' ').trim();
+    el._txt = text;
+    var link = el.closest('a, button');
+    if (link) link.setAttribute('aria-label', text);
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = text.split('').map(function (c, i) {
+      var ch = c === ' ' ? ' ' : c;
+      return '<span class="ch" data-c="' + esc(ch) + '" style="--c:' + i + '">' + esc(ch) + '</span>';
+    }).join('');
+    el.classList.add('is-split');
   }
   var lineEls = [].slice.call(document.querySelectorAll('[data-split]'));
   var fillEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-fill]'));
+  var rollEls = (reduced || !finePointer) ? [] : [].slice.call(document.querySelectorAll('[data-roll]'));
   function splitAll(fresh) {
     lineEls.forEach(function (el) { if (fresh) el._src = null; splitLines(el); });
     fillEls.forEach(function (el) { if (fresh) el._src = null; splitWords(el); });
+    if (fresh) rollEls.forEach(function (el) { el._txt = null; });
+    rollEls.forEach(splitRoll);
   }
 
   /* ---- Reveals: hidden only while JS is alive; <head> carries a no-JS-file failsafe ---- */
@@ -296,6 +316,117 @@
     };
   }
 
+  /* =====================================================================
+     "How I work" — pinned horizontal scene.
+       hold → the track pans left until the big word's letter I sits in the
+       middle → an ink layer grows out of that I (clip-path) until it covers
+       the stage. The Services band below has the same ink ground.
+     ===================================================================== */
+  var hs = document.querySelector('[data-hs]');
+  var hsc = null;
+  var HS_HOLD = 0.12, HS_FLOOD = 0.7;
+  if (hs && !reduced) {
+    hsc = {
+      stage: hs.querySelector('.hs__stage'),
+      vp: hs.querySelector('.hs__viewport'),
+      track: hs.querySelector('.hs__track'),
+      flood: hs.querySelector('.hs__flood'),
+      word: hs.querySelector('[data-word]'),
+      pan: 0, speed: 1.5, x: -1, f: -1
+    };
+    hs.classList.add('is-scene');
+  }
+  function wrapWordI() {
+    if (!hsc || !hsc.word) return;
+    var t = hsc.word.textContent;
+    var i = t.search(/i/i);
+    hsc.word.innerHTML = i < 0 ? esc(t)
+      : esc(t.slice(0, i)) + '<span class="hs__i">' + esc(t.charAt(i)) + '</span>' + esc(t.slice(i + 1));
+    hsc.i = hsc.word.querySelector('.hs__i');
+  }
+  function layoutHs() {
+    if (!hsc) return;
+    var V = vh();
+    hsc.speed = window.innerWidth < 768 ? 1.8 : 1.5;      /* px of pan per px of scroll */
+    hsc.track.style.transform = 'none';
+    var vw = hsc.vp.clientWidth;
+    var end = hsc.track.scrollWidth - vw;
+    if (hsc.i) {
+      var ir = hsc.i.getBoundingClientRect(), tr = hsc.track.getBoundingClientRect();
+      end = Math.min(end, ir.left - tr.left + ir.width / 2 - vw * 0.5);
+    }
+    hsc.pan = Math.max(0, end);
+    hsc.x = -1; hsc.f = -1;
+    hs.style.height = Math.round(hsc.stage.offsetHeight + HS_HOLD * V + hsc.pan / hsc.speed + HS_FLOOD * V) + 'px';
+  }
+  function updateHs(V) {
+    var r = hs.getBoundingClientRect();
+    var stageH = hsc.stage.offsetHeight;
+    var s = clamp(-r.top, 0, Math.max(0, r.height - stageH));
+    var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan);
+    if (x !== hsc.x) {
+      hsc.x = x;
+      hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)';
+    }
+    var f = clamp((s - HS_HOLD * V - hsc.pan / hsc.speed) / (HS_FLOOD * V), 0, 1);
+    if (f !== hsc.f) {
+      hsc.f = f;
+      var st = hsc.flood.style;
+      if (f <= 0) {
+        st.visibility = 'hidden';
+      } else {
+        /* start inside the stem of the I (same colour, so the start is invisible) */
+        var sr = hsc.stage.getBoundingClientRect();
+        var ir = hsc.i ? hsc.i.getBoundingClientRect() : { left: sr.left + sr.width / 2, right: sr.left + sr.width / 2, top: sr.top + sr.height / 2, bottom: sr.top + sr.height / 2, width: 0, height: 0 };
+        var k = 1 - Math.pow(f, 2.2);
+        var t = Math.max(0, (ir.top - sr.top + ir.height * 0.26) * k);
+        var b = Math.max(0, (sr.bottom - ir.bottom + ir.height * 0.34) * k);
+        var l = Math.max(0, (ir.left - sr.left + ir.width * 0.3) * k);
+        var rr = Math.max(0, (sr.right - ir.right + ir.width * 0.3) * k);
+        st.clipPath = 'inset(' + t.toFixed(1) + 'px ' + rr.toFixed(1) + 'px ' + b.toFixed(1) + 'px ' + l.toFixed(1) + 'px)';
+        st.visibility = 'visible';
+      }
+    }
+    return {
+      pinned: r.top <= V * 0.4 && r.bottom >= V * 0.9,
+      flooded: f > 0.9 && r.top <= 0 && r.bottom > M.hdrH * 0.5
+    };
+  }
+
+  /* =====================================================================
+     Services: a drawing for the hovered row slides in on the left.
+     Only transform and opacity change, so the hover stays on the compositor.
+     ===================================================================== */
+  var svc = document.querySelector('[data-svc]');
+  if (svc && finePointer) {
+    var svcPre = svc.querySelector('.svc-pre');
+    var svcFigs = svcPre ? [].slice.call(svcPre.querySelectorAll('.svc-pre__fig')) : [];
+    var svcRows = [].slice.call(svc.querySelectorAll('a.row'));
+    var svcWide = window.matchMedia('(min-width: 62.5rem)');
+    var showSvc = function (i, row) {
+      if (!svcPre || !svcWide.matches) return;
+      var y = Math.round(row.offsetTop + row.offsetHeight / 2 - svcPre.offsetHeight / 2) + 'px';
+      if (!svcPre.classList.contains('is-on')) {
+        /* first appearance: start at this row, do not travel in from another one */
+        svcPre.style.transition = 'none';
+        svcPre.style.setProperty('--py', y);
+        void svcPre.offsetWidth;
+        svcPre.style.transition = '';
+      } else {
+        svcPre.style.setProperty('--py', y);
+      }
+      svcFigs.forEach(function (f, k) { f.classList.toggle('is-on', k === i); });
+      svcPre.classList.add('is-on');
+    };
+    var hideSvc = function () { if (svcPre) svcPre.classList.remove('is-on'); };
+    svcRows.forEach(function (row, i) {
+      row.addEventListener('pointerenter', function () { showSvc(i, row); });
+      row.addEventListener('focus', function () { showSvc(i, row); });
+      row.addEventListener('blur', hideSvc);
+    });
+    svc.addEventListener('pointerleave', hideSvc);
+  }
+
   /* ---- Statement: words turn from pencil to ink as the block crosses the screen ---- */
   function updateFill(V) {
     fillEls.forEach(function (el) {
@@ -310,28 +441,81 @@
     });
   }
 
-  /* ---- One scroll tick for header, reel, fog and the statement ---- */
+  /* ---- Hero title: the lines drive apart as the hero scrolls away ---- */
+  var driveEl = reduced ? null : document.querySelector('[data-drive]');
+  var heroEl = driveEl ? driveEl.closest('section') : null;
+  var driveVal = -1;
+  function updateDrive() {
+    if (!driveEl) return;
+    var r = heroEl.getBoundingClientRect();
+    if (r.bottom < 0) return;
+    var v = Math.round(clamp(-r.top / r.height, 0, 1) * 0.09 * window.innerWidth);
+    if (v === driveVal) return;
+    driveVal = v;
+    driveEl.style.setProperty('--drive', v);
+  }
+
+  /* ---- Closing headline: grows and closes in as it comes up the screen ---- */
+  var convEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-converge]'));
+  function updateConverge(V) {
+    convEls.forEach(function (el) {
+      var r = el.parentElement.getBoundingClientRect();   /* the parent does not scale */
+      if (r.top > V * 1.2 || r.bottom < -V * 0.2) return;
+      var v = smooth(clamp((V - r.top) / (V * 0.62), 0, 1)).toFixed(3);
+      if (v === el._conv) return;
+      el._conv = v;
+      el.style.setProperty('--conv', v);
+    });
+  }
+
+  /* ---- Promote a scene's layers only while it is within a screen of the viewport ---- */
+  var sceneEls = [reel, hs].filter(Boolean);
+  function nearScenes(V) {
+    sceneEls.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      var near = r.top < 2 * V && r.bottom > -V;
+      if (near !== el._near) { el._near = near; el.classList.toggle('is-near', near); }
+    });
+  }
+
+  /* ---- One scroll tick for header, scenes, fog and the text effects ---- */
   var refreshCursor = null;   /* set by the cursor block on fine pointers */
   var fog = document.querySelector('.fog');
   var noFog = [].slice.call(document.querySelectorAll('[data-nofog]'));
+  var noFogCover = [].slice.call(document.querySelectorAll('[data-nofog-cover]'));   /* off while it fills the bottom edge */
+  var inkEls = [].slice.call(document.querySelectorAll('[data-ink]'));
   var ticking = false;
+  function underHeader(el) {
+    var r = el.getBoundingClientRect();
+    return r.top <= M.hdrH * 0.5 && r.bottom > M.hdrH * 0.5;
+  }
+  function updateHeader(rs, hss) {
+    if (!hdr) return;
+    var inv = hss.flooded || inkEls.some(underHeader);
+    hdr.classList.toggle('is-scrolled', window.scrollY > 8);
+    hdr.classList.toggle('is-on-media', rs.onMedia);
+    hdr.classList.toggle('is-inv', inv && !rs.onMedia);
+  }
+  /* the blur band is off wherever something is anchored to the bottom edge */
+  function updateFog(rs, hss, V) {
+    if (!fog) return;
+    var off = rs.covering || hss.pinned ||
+      noFog.some(function (el) { return el.getBoundingClientRect().top < V - 8; }) ||
+      noFogCover.some(function (el) { var r = el.getBoundingClientRect(); return r.top < V && r.bottom > V - 12; });
+    fog.classList.toggle('is-off', off);
+  }
   function tick() {
     ticking = false;
     if (root.classList.contains('menu-open')) return;   /* a pinned body reports scrollY 0 */
     var V = vh();
-    var state = scene ? updateReel(V) : { onMedia: false, covering: false };
-    if (hdr) {
-      hdr.classList.toggle('is-scrolled', window.scrollY > 8);
-      hdr.classList.toggle('is-on-media', state.onMedia);
-    }
-    if (fog) {
-      var off = state.covering;
-      for (var i = 0; i < noFog.length && !off; i++) {
-        off = noFog[i].getBoundingClientRect().top < V - 8;
-      }
-      fog.classList.toggle('is-off', off);
-    }
+    var rs = scene ? updateReel(V) : { onMedia: false, covering: false };
+    var hss = hsc ? updateHs(V) : { pinned: false, flooded: false };
+    nearScenes(V);
+    updateHeader(rs, hss);
+    updateFog(rs, hss, V);
     updateFill(V);
+    updateDrive();
+    updateConverge(V);
     if (refreshCursor) refreshCursor();
   }
   function requestTick() {
@@ -351,6 +535,7 @@
     resizeT = window.setTimeout(function () {
       measure();
       if (booted) splitAll(false);
+      layoutHs();
       reserveFaq();
       requestTick();
     }, 120);
@@ -395,49 +580,48 @@
   }
 
   /* =====================================================================
-     Cursor (fine pointers): a drafting crosshair with guide lines and a
-     label. The native cursor comes back for keyboard use.
+     Cursor (fine pointers): a drafting crosshair with guide lines; over a
+     labelled target the label takes its place. One element moves per
+     frame. The native cursor comes back for keyboard use.
      ===================================================================== */
   if (finePointer) {
     var cur = document.createElement('div');
     cur.className = 'cur';
     cur.setAttribute('aria-hidden', 'true');
-    cur.innerHTML = '<i class="cur__h"></i><i class="cur__v"></i><i class="cur__x"></i><b class="cur__tag"></b>';
+    cur.innerHTML = '<div class="cur__pos"><i class="cur__h"></i><i class="cur__v"></i><i class="cur__x"></i></div><b class="cur__tag"></b>';
     document.body.appendChild(cur);
-    var cH = cur.children[0], cV = cur.children[1], cX = cur.children[2], cTag = cur.children[3];
+    var cPos = cur.children[0], cTag = cur.children[1];
     var px = 0, py = 0, tx = 0, ty = 0, tagRaf = 0;
-    function tagLoop() {
-      tx += (px - tx) * (reduced ? 1 : 0.2);
-      ty += (py - ty) * (reduced ? 1 : 0.2);
+    var tagLoop = function () {
+      tx += (px - tx) * (reduced ? 1 : 0.22);
+      ty += (py - ty) * (reduced ? 1 : 0.22);
       cTag.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
       tagRaf = (Math.abs(px - tx) + Math.abs(py - ty) > 0.3) ? window.requestAnimationFrame(tagLoop) : 0;
-    }
+    };
     /* what is under the pointer decides the cursor's state; also re-read while
        scrolling, because the page moves under a resting pointer */
-    function readTarget(t) {
+    var readTarget = function (t) {
       t = t && t.closest ? t : null;
-      var link = t && t.closest('a, button, label, [role="button"]');
       var tagged = t && t.closest('[data-cur]');
-      cur.classList.toggle('is-link', !!link);
+      cur.classList.toggle('is-link', !!(t && t.closest('a, button, label, [role="button"]')));
+      cur.classList.toggle('is-light', !!(t && t.closest('.reel__frame, .hdr.is-on-media')));
+      cur.classList.toggle('is-inv', !!(t && t.closest('.inv, .hdr.is-inv, .hs__flood, .ftr__legal')));
       if (tagged) {
         var label = (root.lang === 'en' && tagged.getAttribute('data-cur-en')) || tagged.getAttribute('data-cur');
         if (cTag.textContent !== label) cTag.textContent = label;
       }
       cur.classList.toggle('has-tag', !!tagged);
-    }
+    };
     refreshCursor = function () {
       if (cur.classList.contains('is-live')) readTarget(document.elementFromPoint(px, py));
     };
     document.addEventListener('pointermove', function (e) {
       if (e.pointerType === 'touch') return;
       px = e.clientX; py = e.clientY;
-      root.classList.add('has-cur');
-      cur.classList.add('is-live');
+      if (!cur.classList.contains('is-live')) { root.classList.add('has-cur'); cur.classList.add('is-live'); tx = px; ty = py; }
       /* the individual translate property keeps position independent of the
          rotate/scale states set in CSS */
-      cH.style.translate = '0 ' + py + 'px';
-      cV.style.translate = px + 'px 0';
-      cX.style.translate = px + 'px ' + py + 'px';
+      cPos.style.translate = px + 'px ' + py + 'px';
       if (!tagRaf) tagRaf = window.requestAnimationFrame(tagLoop);
       readTarget(e.target);
     }, { passive: true });
@@ -452,6 +636,8 @@
   /* ---- Boot (last: everything above is defined) ---- */
   function boot() {
     splitAll(false);
+    wrapWordI();
+    layoutHs();
     startReveals();
     reserveFaq();
     tick();
@@ -465,10 +651,14 @@
   } else {
     bootOnce();
   }
+  /* late layout shifts (images, fonts): the scene lengths depend on real sizes */
+  window.addEventListener('load', function () { if (booted) { layoutHs(); requestTick(); } });
   /* i18n rewrote the text: split the new copy, keep already-revealed state */
   document.addEventListener('vias:lang', function () {
     if (!booted) return;
     splitAll(true);
+    wrapWordI();
+    layoutHs();
     reserveFaq();
     requestTick();
   });

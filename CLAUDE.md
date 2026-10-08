@@ -162,15 +162,29 @@ previous design (everything except `index.html` so far). Direction and reasoning
   `assets/js/v2/main.js`; `assets/js/vendor/lenis.min.js`. Old `main.js` / `components.css` are not loaded.
 - **Grid replaces the 72.5rem container:** full bleed, `.wrap` (fluid `--margin`) + `.grid` (4 columns, 8 from
   48rem). Section label in columns 1–2, content from column 3. No shadows, radius 0, hairline rows instead of cards.
-- **Type:** Archivo, display at `font-stretch: 125%` (`.display`, `.d1`–`.d3`), body at normal width, 16px.
-  Martian Mono only for bracket labels (`.tag`) and annotations, never for body copy. Accent phrase = `.mark` block.
-- **Accent (#E8593A) is a fill behind dark text only** (primary CTA, `.mark`, wordmark dot). Never accent-coloured text.
-- **Hero:** frozen `--vh` set inline in `<head>`; hero + the reel's top slice fill the first screen. The headline
-  is split into lines by JS; check line breaks in DE and EN at 320–1920px after any copy or size change.
-- **Motion:** Lenis on fine pointers only; the reel is a sticky scene driven by `updateReel()`; everything has a
-  static default and a `prefers-reduced-motion` path. Content hidden for reveals must stay covered by the
-  `rv-fallback` failsafe in `<head>`.
-- **Breakpoints in use:** 22.5rem, 30rem, 37.5rem, 48rem (grid 4→8), 62.5rem (burger → nav), 87.5rem.
+- **Type:** titles in Bebas Neue (`--font-display`, classes `.display`, `.d1`–`.d3`; caps only, so check
+  umlauts are not clipped). Body in Archivo at 16px. The `vias.` wordmark and the footer contact lines stay in
+  Archivo at `font-stretch: 125%`. Martian Mono only for bracket labels (`.tag`) and annotations, never for
+  body copy. Accent phrase = `.mark` block. To return to the expanded grotesk titles, change `--font-display`
+  (see the comment in `tokens.css`).
+- **Accent (#E8593A) is a fill behind dark text only** (primary CTA, `.mark`, wordmark dot, the free pricing
+  card). Never accent-coloured text.
+- **Inverted band:** `.inv` on a section switches it to the other palette (Services). Give it `data-ink` so the
+  header inverts over it.
+- **Hero:** frozen `--vh` set inline in `<head>`; the hero is exactly one screen. The headline is split into
+  lines by JS; check line breaks in DE and EN at 320–1920px after any copy or size change.
+- **Motion:** Lenis on fine pointers only. Three scroll scenes, each with a static default and a
+  `prefers-reduced-motion` path: the project reel (`updateReel()`), the horizontal "So arbeite ich" scene with
+  the ink flood into Services (`updateHs()`), and the hero lines driving apart / the footer headline closing in
+  (`--drive`, `--conv`). Content hidden for reveals must stay covered by the `rv-fallback` failsafe in `<head>`.
+- **Performance rules learned on this page:** no `mix-blend-mode` and no `backdrop-filter` on full-screen fixed
+  layers beyond the two fog strips; hover states change `opacity`/`transform` of a layer, text colour switches
+  in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
+- **Header:** ≥ 62.5rem logo, four links (letter-roll hover), theme switch; no CTA and no language switch there
+  (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
+- **Phones:** project screenshots are shown whole at their own ratio (never `object-fit: cover`).
+- **Pricing:** card prices carry `data-price`; no figures are published until the owner supplies them.
+- **Breakpoints in use:** 22.5rem, 30rem, 37.5rem, 48rem (grid 4→8), 62.5rem (burger → nav), 75rem, 87.5rem.
 - **Claims:** the homepage no longer says "Hosting/Server in Deutschland" (not true yet, see global guardrails).
 
 ---

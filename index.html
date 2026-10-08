@@ -41,12 +41,13 @@
   <meta name="twitter:description" content="Webagentur in Neubrandenburg: schnelle Websites für kleine Betriebe und Handwerker, mit lokalem SEO für mehr Kunden über Google. Zum Festpreis.">
   <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/og-default.png">
 
+  <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261008">
-  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261008">
-  <link rel="stylesheet" href="assets/css/consent.css?v=20261008">
-  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261008">
-  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261008">
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261008b">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261008b">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261008b">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261008b">
+  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261008b">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -389,7 +390,7 @@
 
   <!-- page ground: registration marks, grain, bottom fog -->
   <div class="marks" aria-hidden="true"></div>
-  <div class="fog" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i></div>
   <div class="grain" aria-hidden="true"></div>
 
   <!-- ===== HEADER ===== -->
@@ -401,14 +402,12 @@
         <span class="wordmark">vias<span class="dot">.</span></span>
       </a>
       <nav class="hdr__nav" aria-label="Hauptnavigation">
-        <a href="services.html" class="blink"><span data-en="Services">Leistungen</span></a>
-        <a href="work.html" class="blink"><span data-en="Work">Projekte</span></a>
-        <a href="contact.html" class="blink"><span data-en="Contact">Kontakt</span></a>
+        <a href="services.html" class="blink"><span class="roll" data-roll data-en="Services">Leistungen</span></a>
+        <a href="work.html" class="blink"><span class="roll" data-roll data-en="Work">Projekte</span></a>
+        <a href="#preise" class="blink"><span class="roll" data-roll data-en="Pricing">Preise</span></a>
+        <a href="contact.html" class="blink"><span class="roll" data-roll data-en="Contact">Kontakt</span></a>
       </nav>
       <div class="hdr__tools">
-        <button class="lang-toggle" type="button">
-          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
-        </button>
         <button class="theme-toggle" type="button" aria-label="Hell/Dunkel umschalten">
           <svg class="ico-moon" aria-hidden="true"><use href="#i-moon"/></svg>
           <svg class="ico-sun" aria-hidden="true"><use href="#i-sun"/></svg>
@@ -430,6 +429,7 @@
       <nav class="menu__list" aria-label="Menü">
         <a href="services.html" class="menu__row"><span data-en="Services">Leistungen</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
         <a href="work.html" class="menu__row"><span data-en="Work">Projekte</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="#preise" class="menu__row"><span data-en="Pricing">Preise</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
         <a href="blog/index.html" class="menu__row"><span>Blog</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
         <a href="contact.html" class="menu__row"><span data-en="Contact">Kontakt</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
       </nav>
@@ -456,10 +456,10 @@
   <main id="main" tabindex="-1">
 
     <!-- ===== HERO ===== -->
-    <section class="hero" id="top">
+    <section class="hero" id="top" data-nofog-cover>
       <div class="wrap hero__wrap">
         <div class="hero__text">
-          <h1 class="hero__title rv-lines" data-split data-en="Your web agency in Neubrandenburg – websites that bring customers.">Ihre Webagentur in Neubrandenburg – Webseiten, die Kunden bringen.</h1>
+          <h1 class="hero__title rv-lines" data-split data-drive data-en="Your web agency in Neubrandenburg – websites that bring customers.">Ihre Webagentur in Neubrandenburg – Webseiten, die Kunden bringen.</h1>
         </div>
         <div class="grid hero__info">
           <div class="hero__meta rv">
@@ -505,7 +505,6 @@
             <li class="reel__item is-in is-active">
               <div class="reel__pic">
                 <picture>
-                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/eagle-air-mobile-1.webp" width="800" height="1635">
                   <img src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="Website von Eagle Air HVAC, gestaltet von Vias Media" decoding="async" fetchpriority="high">
                 </picture>
               </div>
@@ -522,7 +521,6 @@
             <li class="reel__item">
               <div class="reel__pic">
                 <picture>
-                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/jesus-punkt-mobile-1.webp" width="660" height="1420">
                   <img src="assets/img/portfolio/jesus-punkt-1.webp" width="1760" height="958" alt="Website der Gemeinde Jesus Punkt, gestaltet von Vias Media" loading="lazy" decoding="async">
                 </picture>
               </div>
@@ -539,7 +537,6 @@
             <li class="reel__item">
               <div class="reel__pic">
                 <picture>
-                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/akkerman-stroy-mobile-1.webp" width="800" height="1639">
                   <img src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="961" alt="Website von Akkerman Stroy, gestaltet von Vias Media" loading="lazy" decoding="async">
                 </picture>
               </div>
@@ -556,7 +553,6 @@
             <li class="reel__item">
               <div class="reel__pic">
                 <picture>
-                  <source media="(max-width: 47.9375rem)" srcset="assets/img/portfolio/luxe-bouquets-mobile-1.webp" width="800" height="1635">
                   <img src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="Onlineshop von Luxe Bouquets, gestaltet von Vias Media" loading="lazy" decoding="async">
                 </picture>
               </div>
@@ -611,56 +607,119 @@
       </div>
     </section>
 
-    <!-- ===== FEATURES: how I work ===== -->
-    <section class="s s--tight-top" id="why">
-      <div class="wrap grid features">
-        <div class="s__label"><p class="tag" data-en="How I work">So arbeite ich</p></div>
-        <div class="s__head features__head">
-          <div><h2 class="display d1 rv-lines" data-split data-en="Built for how local businesses really work">Gemacht für die Art, wie lokale Unternehmen wirklich arbeiten</h2></div>
-          <div class="rv"><p class="lead" data-en-html="As a web agency in Neubrandenburg, I build websites that bring customers — for trades, practices and small businesses across the Lake District, focused on <span class='em'>getting you found</span>, earning trust, and <span class='em'>turning clicks into calls</span>.">Als Webagentur in Neubrandenburg baue ich Webseiten, die Kunden bringen – für Handwerk, Praxen und kleine Unternehmen in der Seenplatte, mit Fokus darauf, <span class='em'>gefunden zu werden</span>, Vertrauen zu schaffen und <span class='em'>aus Klicks Anrufe zu machen</span>.</p></div>
+    <!-- ===== HOW I WORK: plain list by default; main.js pins it and pans the panels sideways,
+         then the word at the end floods the screen with ink and hands over to Services ===== -->
+    <section class="hs" id="why" data-hs aria-labelledby="hs-title">
+      <div class="hs__stage">
+        <div class="hs__inner">
+          <div class="wrap grid hs__head">
+            <div class="s__label"><p class="tag" data-en="How I work">So arbeite ich</p></div>
+            <div class="s__head features__head">
+              <div><h2 id="hs-title" class="display d1 rv-lines" data-split data-en="Built for how local businesses really work">Gemacht für die Art, wie lokale Unternehmen wirklich arbeiten</h2></div>
+              <div class="rv"><p class="lead" data-en-html="As a web agency in Neubrandenburg, I build websites that bring customers — for trades, practices and small businesses across the Lake District, focused on <span class='em'>getting you found</span>, earning trust, and <span class='em'>turning clicks into calls</span>.">Als Webagentur in Neubrandenburg baue ich Webseiten, die Kunden bringen – für Handwerk, Praxen und kleine Unternehmen in der Seenplatte, mit Fokus darauf, <span class='em'>gefunden zu werden</span>, Vertrauen zu schaffen und <span class='em'>aus Klicks Anrufe zu machen</span>.</p></div>
+            </div>
+          </div>
+          <div class="hs__viewport">
+            <ul class="hs__track">
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 01 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Design made to measure">Design nach Maß</h3></div>
+                <div class="hs__d"><p data-en="No template, no page builder. Every site is designed for your business and leads visitors straight to the enquiry.">Keine Vorlage, kein Baukasten. Jede Seite wird für Ihren Betrieb entworfen und führt Besucher direkt zur Anfrage.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 02 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Accessible from day one">Barrierefrei von Anfang an</h3></div>
+                <div class="hs__d"><p data-en="Contrast, keyboard use and alt text to WCAG are part of every project — no surcharge, and in line with the BFSG.">Kontraste, Tastaturbedienung und Alternativtexte nach WCAG gehören zu jedem Projekt – ohne Aufpreis und passend zum BFSG.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 03 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="One fixed contact">Ein fester Ansprechpartner</h3></div>
+                <div class="hs__d"><p data-en="You always talk to me — from the first call to long after launch. No changing account managers, no hotline, and on-site visits if you like.">Sie sprechen immer mit mir – vom ersten Gespräch bis lange nach dem Launch. Keine wechselnden Zuständigkeiten, keine Hotline, gern auch vor Ort.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 04 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Results-driven">Ergebnisorientiert</h3></div>
+                <div class="hs__d"><p data-en="Search Console and your Business Profile are set up at launch, so you see how many people find you and call — in numbers, not guesses.">Search Console und Unternehmensprofil sind ab dem Launch eingerichtet – Sie sehen, wie viele Menschen Sie finden und anrufen, in Zahlen statt Vermutungen.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 05 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Found on Google and AI">Bei Google und KI gefunden</h3></div>
+                <div class="hs__d"><p data-en="Local SEO and structured data, so Google and assistants like ChatGPT recommend you when someone nearby searches for what you do.">Lokales SEO und strukturierte Daten, damit Google und Assistenten wie ChatGPT Sie empfehlen, wenn jemand in Ihrer Nähe nach Ihrer Leistung sucht.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 06 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Fast on every phone">Schnell auf jedem Handy</h3></div>
+                <div class="hs__d"><p data-en="Built to load instantly on mobile, where most local searches actually happen.">Gebaut, um auf dem Smartphone sofort zu laden – wo die meisten lokalen Suchanfragen stattfinden.</p></div>
+              </li>
+              <li class="hs__panel">
+                <span class="hs__n mono" aria-hidden="true">[ 07 / 07 ]</span>
+                <div class="hs__t"><h3 class="display d2" data-en="Support that sticks around">Support, der bleibt</h3></div>
+                <div class="hs__d"><p data-en="I'm still here after launch — with updates and changes.">Ich bin auch nach dem Launch da – mit Updates und Änderungen.</p></div>
+              </li>
+              <li class="hs__panel hs__panel--word" aria-hidden="true">
+                <span class="hs__word display" data-word data-en="Services">Leistungen</span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ul class="rows features__rows">
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Design made to measure">Design nach Maß</h3></div>
-            <div class="row__d"><p data-en="No template, no page builder. Every site is designed for your business and leads visitors straight to the enquiry.">Keine Vorlage, kein Baukasten. Jede Seite wird für Ihren Betrieb entworfen und führt Besucher direkt zur Anfrage.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Accessible from day one">Barrierefrei von Anfang an</h3></div>
-            <div class="row__d"><p data-en="Contrast, keyboard use and alt text to WCAG are part of every project — no surcharge, and in line with the BFSG.">Kontraste, Tastaturbedienung und Alternativtexte nach WCAG gehören zu jedem Projekt – ohne Aufpreis und passend zum BFSG.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="One fixed contact">Ein fester Ansprechpartner</h3></div>
-            <div class="row__d"><p data-en="You always talk to me — from the first call to long after launch. No changing account managers, no hotline, and on-site visits if you like.">Sie sprechen immer mit mir – vom ersten Gespräch bis lange nach dem Launch. Keine wechselnden Zuständigkeiten, keine Hotline, gern auch vor Ort.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Results-driven">Ergebnisorientiert</h3></div>
-            <div class="row__d"><p data-en="Search Console and your Business Profile are set up at launch, so you see how many people find you and call — in numbers, not guesses.">Search Console und Unternehmensprofil sind ab dem Launch eingerichtet – Sie sehen, wie viele Menschen Sie finden und anrufen, in Zahlen statt Vermutungen.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Found on Google and AI">Bei Google und KI gefunden</h3></div>
-            <div class="row__d"><p data-en="Local SEO and structured data, so Google and assistants like ChatGPT recommend you when someone nearby searches for what you do.">Lokales SEO und strukturierte Daten, damit Google und Assistenten wie ChatGPT Sie empfehlen, wenn jemand in Ihrer Nähe nach Ihrer Leistung sucht.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Fast on every phone">Schnell auf jedem Handy</h3></div>
-            <div class="row__d"><p data-en="Built to load instantly on mobile, where most local searches actually happen.">Gebaut, um auf dem Smartphone sofort zu laden – wo die meisten lokalen Suchanfragen stattfinden.</p></div>
-          </li>
-          <li class="row">
-            <div class="row__t"><h3 class="display d3" data-en="Support that sticks around">Support, der bleibt</h3></div>
-            <div class="row__d"><p data-en="I'm still here after launch — with updates and changes.">Ich bin auch nach dem Launch da – mit Updates und Änderungen.</p></div>
-          </li>
-        </ul>
+        <div class="hs__flood" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- ===== SERVICES ===== -->
-    <section class="s s--tight-top" id="services">
+    <!-- ===== SERVICES: an inked band. Rows are links; on hover a drawing for the service appears on the left ===== -->
+    <section class="s inv" id="services" data-ink>
       <div class="wrap grid services">
         <div class="s__label"><p class="tag" data-en="Services">Leistungen</p></div>
         <div class="s__head services__head">
           <div><h2 class="display d1 rv-lines" data-split data-en="How I help your business grow">Wie ich Ihrem Betrieb beim Wachsen helfe</h2></div>
           <div class="rv"><p class="lead" data-en-html="Websites, online shops and landing pages from one hand — <span class='em'>from the first sketch to ongoing support</span>, as a <a href='webagentur-neubrandenburg.html' class='link'>web agency right here in Neubrandenburg</a>.">Websites, Onlineshops und Landingpages aus einer Hand – <span class='em'>vom ersten Entwurf bis zur laufenden Betreuung</span>, als <a href='webagentur-neubrandenburg.html' class='link'>Webagentur direkt in Neubrandenburg</a>.</p></div>
         </div>
-        <div class="rows services__rows">
+        <div class="rows services__rows" data-svc>
+          <!-- drawings for the hover preview (decorative) -->
+          <div class="svc-pre" aria-hidden="true">
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="14" y="16" width="212" height="148"/><path d="M14 36h212"/>
+              <circle cx="25" cy="26" r="2.5"/><circle cx="35" cy="26" r="2.5"/><circle cx="45" cy="26" r="2.5"/>
+              <path d="M30 62h92M30 77h64" stroke-width="8"/><path d="M30 97h84M30 107h66"/>
+              <rect class="a" x="30" y="124" width="60" height="22" stroke="none"/>
+              <rect x="146" y="52" width="64" height="94"/><path d="M146 52l64 94M210 52l-64 94"/>
+              <path d="M134 36v128" stroke-dasharray="2 5"/>
+            </svg>
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M52 44L22 82l30 38M92 44l30 38-30 38M82 34L62 130" stroke-width="2.5"/>
+              <path d="M22 146h52M22 158h84"/><rect class="a" x="82" y="141" width="30" height="10" stroke="none"/>
+              <rect x="152" y="18" width="70" height="144"/><path d="M152 36h70M152 144h70M180 27h14"/>
+              <path d="M164 54h46M164 66h30M164 78h40" /><rect x="164" y="94" width="46" height="34"/><path d="M164 94l46 34"/>
+            </svg>
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="14" y="16" width="212" height="30"/><circle cx="32" cy="30" r="6"/><path d="M36.5 34.5l5.5 5.5M52 31h92"/>
+              <rect class="a" x="14" y="60" width="150" height="32" stroke="none"/><path d="M26 71h76M26 81h110" stroke="#161514"/>
+              <rect x="14" y="100" width="150" height="28"/><path d="M26 110h62M26 119h96"/>
+              <rect x="14" y="136" width="150" height="28"/><path d="M26 146h70M26 155h88"/>
+              <path d="M214 92c0 15-17 34-17 34s-17-19-17-34a17 17 0 0 1 34 0z"/><circle cx="197" cy="92" r="5.5"/><path d="M183 140h28"/>
+            </svg>
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M16 20h126v66H62l-22 20V86H16z"/><path d="M30 42h96M30 56h70"/>
+              <path d="M224 78H104v64h82l20 18v-18h18z"/>
+              <path d="M118 97l6 6 11-13M118 120l6 6 11-13" stroke-width="2"/><path d="M146 99h62M146 122h44"/>
+              <rect class="a" x="30" y="66" width="38" height="9" stroke="none"/>
+            </svg>
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="60" cy="66" r="42"/><path class="f" d="M60 24a42 42 0 0 1 0 84z" stroke="none"/>
+              <text x="122" y="88" font-size="56" font-weight="600" fill="currentColor" stroke="none" style="font-stretch:125%">Aa</text>
+              <rect x="24" y="130" width="88" height="28"/><path d="M40 144h56"/>
+              <rect class="as" x="17" y="123" width="102" height="42" stroke-dasharray="5 4" stroke-width="2"/>
+              <rect x="150" y="126" width="72" height="36"/><path d="M162 144h44M198 136l9 8-9 8M210 134v20"/>
+            </svg>
+            <svg class="svc-pre__fig" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M148 70a48 48 0 0 0-88-12" stroke-width="2"/><path d="M56 36v24h24" stroke-width="2"/>
+              <path d="M56 110a48 48 0 0 0 88 12" stroke-width="2"/><path d="M148 144v-24h-24" stroke-width="2"/>
+              <path d="M102 66v26l16 11"/>
+              <rect x="174" y="28" width="52" height="48"/><path d="M174 43h52M187 21v13M213 21v13"/>
+              <rect class="a" x="182" y="51" width="11" height="11" stroke="none"/><path d="M200 56h18M182 68h36"/>
+              <path d="M174 104h52M174 118h36M174 132h46"/>
+            </svg>
+          </div>
           <a href="services.html#webdesign" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">01</span>
             <div class="row__t"><h3 class="display" data-en="Web Design">Webdesign</h3></div>
@@ -698,6 +757,82 @@
             <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== PRICING: four joined cards; the free first meeting is the one in colour ===== -->
+    <section class="s" id="preise">
+      <div class="wrap grid pricing">
+        <div class="s__label"><p class="tag" data-en="Pricing">Preise</p></div>
+        <div class="s__head pricing__head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="What a website costs and what's included">Was eine Website kostet und was drin ist</h2></div>
+          <div class="rv"><p class="lead" data-en-html="You get a <span class='em'>fixed-price quote</span> before anything starts. You pay in two or three parts: the first on order, the last only after you have accepted the finished site.">Sie bekommen ein <span class='em'>Festpreis-Angebot</span>, bevor irgendetwas beginnt. Gezahlt wird in zwei oder drei Teilen: der erste bei Auftrag, der letzte erst nach der Abnahme.</p></div>
+        </div>
+        <ul class="pricing__cards">
+          <li class="pcard">
+            <div class="pcard__top">
+              <div><h3 class="display d2" data-en="One-pager">Onepager</h3></div>
+              <span class="mono pcard__time" data-en="2–4 weeks">2–4 Wochen</span>
+            </div>
+            <ul class="pcard__list">
+              <li data-en="One long page: services, references, contact">Eine lange Seite: Leistungen, Referenzen, Kontakt</li>
+              <li data-en="Designed for your business, no template">Für Ihren Betrieb entworfen, keine Vorlage</li>
+              <li data-en="Hand-written code, fast on every phone">Handgeschriebener Code, schnell auf jedem Handy</li>
+              <li data-en="Accessible to WCAG, no surcharge">Barrierefrei nach WCAG, ohne Aufpreis</li>
+              <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
+              <li data-en="Three months of support after launch">Drei Monate Betreuung nach dem Launch</li>
+            </ul>
+            <p class="pcard__price display"><span data-price="onepager" data-en="Fixed price in your quote">Festpreis im Angebot</span></p>
+            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+          </li>
+          <li class="pcard">
+            <div class="pcard__top">
+              <div><h3 class="display d2" data-en="Website">Website</h3></div>
+              <span class="mono pcard__time" data-en="2–4 weeks">2–4 Wochen</span>
+            </div>
+            <ul class="pcard__list">
+              <li data-en="Several pages: services, projects, about, contact">Mehrere Seiten: Leistungen, Projekte, Über uns, Kontakt</li>
+              <li data-en="Designed for your business, no template">Für Ihren Betrieb entworfen, keine Vorlage</li>
+              <li data-en="Hand-written code, fast on every phone">Handgeschriebener Code, schnell auf jedem Handy</li>
+              <li data-en="Accessible to WCAG, no surcharge">Barrierefrei nach WCAG, ohne Aufpreis</li>
+              <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
+              <li data-en="Three months of support after launch">Drei Monate Betreuung nach dem Launch</li>
+            </ul>
+            <p class="pcard__price display"><span data-price="website" data-en="Fixed price in your quote">Festpreis im Angebot</span></p>
+            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+          </li>
+          <li class="pcard pcard--free">
+            <div class="pcard__top">
+              <div><h3 class="display d2" data-en="First meeting">Erstgespräch</h3></div>
+              <span class="mono pcard__time" data-en="no obligation">unverbindlich</span>
+            </div>
+            <ul class="pcard__list">
+              <li data-en="We clarify your goals and your customers">Wir klären Ihre Ziele und Ihre Kunden</li>
+              <li data-en="We look at your current site together">Wir sehen uns Ihre jetzige Seite gemeinsam an</li>
+              <li data-en="We set scope and timeline">Wir stecken Umfang und Zeitplan ab</li>
+              <li data-en="By phone, video call or at your place">Am Telefon, per Video oder bei Ihnen vor Ort</li>
+              <li data-en="Afterwards: your fixed-price quote">Danach: Ihr Festpreis-Angebot</li>
+            </ul>
+            <p class="pcard__price display"><span>0 €</span></p>
+            <a href="contact.html" class="btn btn--lg btn--solid"><span data-en="Request a meeting">Termin anfragen</span></a>
+          </li>
+          <li class="pcard">
+            <div class="pcard__top">
+              <div><h3 class="display d2" data-en="Online shop">Onlineshop</h3></div>
+              <span class="mono pcard__time" data-en="by scope">nach Umfang</span>
+            </div>
+            <ul class="pcard__list">
+              <li data-en="Catalogue, product pages, cart and checkout">Katalog, Produktseiten, Warenkorb und Kasse</li>
+              <li data-en="Designed for your business, no template">Für Ihren Betrieb entworfen, keine Vorlage</li>
+              <li data-en="Hand-written code, fast on every phone">Handgeschriebener Code, schnell auf jedem Handy</li>
+              <li data-en="Accessible to WCAG, no surcharge">Barrierefrei nach WCAG, ohne Aufpreis</li>
+              <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
+              <li data-en="Three months of support after launch">Drei Monate Betreuung nach dem Launch</li>
+            </ul>
+            <p class="pcard__price display"><span data-price="shop" data-en="Fixed price in your quote">Festpreis im Angebot</span></p>
+            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -784,7 +919,7 @@
       <div class="grid ftr__cta">
         <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
         <div class="s__head">
-          <h2 class="display d1 rv-lines" data-split data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+          <h2 class="display ftr__big rv-lines" data-split data-converge data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
         </div>
         <div class="s__body ftr__actions rv">
           <a href="contact.html" class="btn btn--lg btn--accent">
@@ -838,13 +973,16 @@
         <a href="datenschutz.html" data-en="Privacy">Datenschutz</a>
         <a href="impressum.html">Impressum</a>
         <button type="button" data-cc-open data-en="Cookie settings">Cookie-Einstellungen</button>
+        <button class="lang-toggle lang-toggle--plain" type="button">
+          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+        </button>
       </nav>
     </div>
   </footer>
 
-  <script src="assets/js/i18n.js?v=20261008" defer></script>
+  <script src="assets/js/i18n.js?v=20261008b" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="assets/js/v2/main.js?v=20261008" defer></script>
-  <script src="assets/js/consent.js?v=20261008" defer></script>
+  <script src="assets/js/v2/main.js?v=20261008b" defer></script>
+  <script src="assets/js/consent.js?v=20261008b" defer></script>
 </body>
 </html>
