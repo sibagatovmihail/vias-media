@@ -183,7 +183,8 @@ previous design (everything except `index.html` so far). Direction and reasoning
 - **Header:** ≥ 62.5rem logo, four links (letter-roll hover), theme switch; no CTA and no language switch there
   (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
 - **Phones:** project screenshots are shown whole at their own ratio (never `object-fit: cover`).
-- **Pricing:** card prices carry `data-price`; no figures are published until the owner supplies them.
+- **Pricing:** card prices carry `data-price` (figures supplied by the owner on 2026-10-08: Onepager 575 €,
+  Website 695 €, Onlineshop 1.295 €). Change them only on the owner's word, in both `data-en` and the text.
 - **Breakpoints in use:** 22.5rem, 30rem, 37.5rem, 48rem (grid 4→8), 62.5rem (burger → nav), 75rem, 87.5rem.
 - **Claims:** the homepage no longer says "Hosting/Server in Deutschland" (not true yet, see global guardrails).
 
