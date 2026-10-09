@@ -165,7 +165,12 @@
 .svc__fig text { font-family: var(--font-sans); }
 .svc__main { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--block-gap); justify-items: start; }
 .svc__main h2 { font-size: clamp(2rem, 0.4rem + 8.6vw, 6rem); overflow-wrap: break-word; }   /* the longest name breaks once at 320px */
+.svc__more { margin-top: 0.25rem; }
+/* the same plate under a section label (service pages); it has no room on a phone */
+.svc__fig--label { display: none; }
+.lead--wide { max-width: 40rem; }
 @media (min-width: 48rem) {
+  .svc__fig--label { display: block; margin-top: var(--block-gap); }
   .svc__side { grid-column: 1 / span 2; }
   .svc__fig { width: min(100%, 15rem); }
   .svc__main { grid-column: 3 / -1; }
@@ -474,7 +479,6 @@ h2.tag { margin: 0; font-weight: 400; }
   background: var(--ground-2);
 }
 .field { position: relative; display: grid; gap: 0.5rem; }
-.field--wide { grid-column: 1 / -1; }
 .field__label {
   font-family: var(--font-mono);
   font-stretch: 87.5%;
@@ -483,8 +487,7 @@ h2.tag { margin: 0; font-weight: 400; }
 }
 .field__opt { color: var(--ink-3); }
 .field input,
-.field textarea,
-.select__trigger {
+.field textarea {
   width: 100%;
   height: 3.25rem;
   padding: 0 0.875rem;
@@ -501,12 +504,10 @@ h2.tag { margin: 0; font-weight: 400; }
 }
 .field textarea { height: 8.5rem; padding-block: 0.875rem; resize: vertical; }
 .field input:focus-visible,
-.field textarea:focus-visible,
-.select__trigger:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; border-color: var(--ink); }
+.field textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; border-color: var(--ink); }
 @media (hover: hover) {
   .field input:hover,
-  .field textarea:hover,
-  .select__trigger:hover { border-color: var(--ink-3); }
+  .field textarea:hover { border-color: var(--ink-3); }
 }
 .field.is-invalid input { border-color: var(--accent-ink); }
 .field__error {
@@ -524,72 +525,80 @@ h2.tag { margin: 0; font-weight: 400; }
 }
 .field.is-invalid .field__error { visibility: visible; }
 
-/* custom dropdown (listbox): the button looks like a field, the list opens under it */
-.select { position: relative; }
-.select__trigger { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; text-align: left; }
-.select__value { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.select__value.is-placeholder { color: var(--ink-3); }
-.select__chev { flex: none; width: 0.75rem; height: 0.75rem; transition: transform var(--dur-base) var(--ease-out); }
-.select__trigger[aria-expanded="true"] .select__chev { transform: rotate(180deg); }
-.select__menu {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - 1px);
-  z-index: 5;
-  max-height: min(21rem, calc(var(--vh, 1vh) * 50));
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border: 1px solid var(--ink);
+/* The enquiry as a short quiz. Every step lies in the same grid cell, so the
+   panel is as tall as its tallest step and never changes height; only the
+   active one is visible. Without JavaScript the steps just follow each other. */
+.quiz { grid-template-columns: minmax(0, 1fr); row-gap: 1.25rem; }
+.quiz__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.quiz__count { color: var(--ink-2); }
+.quiz__meter { display: flex; gap: 0.25rem; width: min(50%, 11rem); }
+.quiz__meter i { flex: 1; height: 0.25rem; background: var(--line); transition: background-color var(--dur-base) ease; }
+.quiz__meter i.is-on { background: var(--accent); }
+.quiz__step { display: grid; gap: 1.75rem; align-content: start; min-width: 0; }   /* the gap holds a field's error line */
+.quiz__q { font-size: var(--fs-d2); line-height: 0.92; }
+.quiz__q:focus { outline: none; }
+.quiz__tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.375rem; }
+.tile {
+  display: flex;
+  align-items: flex-end;
+  min-height: 4.5rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--line);
   background: var(--ground);
-  visibility: hidden;
+  font-weight: 550;
+  line-height: 1.2;
+  text-align: left;
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease, color var(--dur-fast) ease;
 }
-.select__menu.is-open { visibility: visible; }
-.select__menu:focus { outline: none; }
-.select__option { display: flex; align-items: center; min-height: 2.75rem; padding: 0.5rem 0.875rem; border-bottom: 1px solid var(--line-soft); cursor: pointer; }
-.select__option:last-child { border-bottom: 0; }
-.select__option.is-active { background: var(--ink); color: var(--ground); }
-.select__option[aria-selected="true"]::after { content: "×"; margin-left: auto; font-family: var(--font-mono); }
-
-.form__foot { display: grid; gap: 0.875rem; justify-items: start; }
-.form__foot .btn { min-width: 12rem; }
+.tile[aria-checked="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.tile:focus-visible { outline-offset: -2px; }
+@media (hover: hover) {
+  .tile:not([aria-checked="true"]):hover { border-color: var(--ink); }
+}
+.quiz__done { justify-items: start; }
+.quiz__done p { color: var(--ink-2); }
+/* one row at every width (a second row would change the panel's height between steps):
+   "back" is an arrow in a square, the action takes what it needs */
+.quiz__nav { display: flex; justify-content: space-between; gap: 0.5rem; min-height: 3.25rem; }
+.quiz__back { flex: none; width: 3.25rem; padding: 0; }
+.quiz__back svg { width: 1.125rem; height: 1.125rem; transform: scaleX(-1); }
+.quiz__next,
+.quiz__send { margin-left: auto; }
 .form__note { font-size: 0.8125rem; line-height: 1.4; color: var(--ink-2); }
 /* reserved line for "could not send": the form keeps its height */
-.form__status { min-height: 3.6em; font-size: 0.875rem; line-height: 1.2; color: var(--accent-ink); }
+.form__status { min-height: 3.6em; margin-top: -0.5rem; font-size: 0.875rem; line-height: 1.2; color: var(--accent-ink); }
 @media (min-width: 37.5rem) {
   .form__status { min-height: 2.4em; }
 }
 .hp { position: absolute; left: -200vw; width: 1px; height: 1px; overflow: hidden; }
-@media (min-width: 37.5rem) {
-  .form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .form__foot { grid-column: 1 / -1; }
-}
-
-/* "sent" dialog */
-.done {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-menu);
-  display: grid;
-  place-items: center;
-  padding: var(--margin);
-  background: rgba(14, 13, 12, 0.82);
+.quiz__busy,
+.is-sending .quiz__idle { display: none; }
+.is-sending .quiz__busy { display: inline; }
+html:not(.js) .quiz__bar,
+html:not(.js) .quiz__back,
+html:not(.js) .quiz__next,
+html:not(.js) .quiz__done { display: none; }
+.js .quiz__steps { display: grid; grid-template-columns: minmax(0, 1fr); }
+.js .quiz__step {
+  grid-area: 1 / 1;
   visibility: hidden;
   opacity: 0;
-  transition: opacity var(--dur-fast) ease, visibility 0s linear var(--dur-fast);
+  transform: translate3d(1.25rem, 0, 0);
+  transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
 }
-.done.is-open { visibility: visible; opacity: 1; transition-delay: 0s; }
-.done__box {
-  display: grid;
-  gap: 1rem;
-  justify-items: start;
-  width: min(100%, 30rem);
-  padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
-  border: 1px solid var(--ink);
-  background: var(--ground);
+.js .quiz__step.is-active { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+/* which buttons a step shows (data-at is set on the form by main.js) */
+.js .quiz[data-at="1"] .quiz__back,
+.js .quiz:not([data-at="3"]) .quiz__send,
+.js .quiz[data-at="3"] .quiz__next,
+.js .quiz[data-at="done"] .quiz__nav,
+.js .quiz[data-at="done"] .quiz__bar { display: none; }
+.quiz__go,
+.quiz[data-filled] .quiz__skip { display: none; }
+.quiz[data-filled] .quiz__go { display: inline; }
+@media (prefers-reduced-motion: reduce) {
+  .js .quiz__step { transform: none; transition: none; }
 }
-.done__box h2 { font-size: var(--fs-d2); }
-.done__box p { color: var(--ink-2); }
 
 /* =====================================================================
    TABLES — scroll sideways inside their frame on small screens

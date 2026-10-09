@@ -6,7 +6,13 @@
 
 - [Webagentur Neubrandenburg](https://viasmedia.com/webagentur-neubrandenburg.html): Local landing page — what a web agency in Neubrandenburg does differently, the four-step process, price range, an honest comparison of website builders vs. large agencies vs. Vias Media, references, service area towns and seven FAQs.
 - [Leistungen / Services](https://viasmedia.com/services.html): Websites, online shops and landing pages; web development, local SEO and AI visibility, digital consulting (by phone or on site), accessibility audits (WCAG 2.2 / BFSG) and ongoing support with hosting on servers in Germany — with the four-stage fixed-price project process (Discover, Design, Develop, Grow).
-- [Webdesign Neubrandenburg (homepage)](https://viasmedia.com/): What Vias Media does, who it serves, the six services, four case studies, client reviews, and FAQs on pricing, timelines, on-site meetings, hosting in Germany and post-launch support. One personal contact based in Neubrandenburg; every site is accessible under the BFSG.
+- [Webdesign](https://viasmedia.com/webdesign.html): Made-to-measure design for websites, shops and landing pages — phone first, accessible to WCAG 2.2, design shown before any code.
+- [Webentwicklung](https://viasmedia.com/webentwicklung.html): Hand-written HTML, CSS and JavaScript without a page builder — short loading times, structured data, no licence fee; the code belongs to the client.
+- [SEO-Optimierung](https://viasmedia.com/seo.html): Local SEO included in every project — regional keywords, technical SEO, structured data, Google Business Profile and Search Console.
+- [Digitale Beratung](https://viasmedia.com/beratung.html): Free first meeting by phone, video or on site in the Mecklenburg Lake District, followed by a fixed-price quote.
+- [Barrierefreiheits-Audits](https://viasmedia.com/barrierefreiheit.html): Accessibility testing of existing websites against WCAG 2.2 and the BFSG — automated tests, keyboard, screen-reader spot check, issue list and plan.
+- [Laufender Support](https://viasmedia.com/support.html): Optional ongoing care after launch — content changes, updates, monitoring, one fixed contact.
+- [Webdesign Neubrandenburg (homepage)](https://viasmedia.com/): What Vias Media does, who it serves, the six services, four case studies, prices, and FAQs on pricing, timelines, on-site meetings, hosting in Germany and post-launch support. One personal contact based in Neubrandenburg; every site is accessible under the BFSG.
 - [Kontakt / Contact](https://viasmedia.com/contact.html): Project enquiry form and direct contact details. Every enquiry gets a reply within one business day; the first consultation is free.
 
 ## Case Studies

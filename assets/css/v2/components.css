@@ -35,6 +35,28 @@
   .btn:hover .ico-arrow { transform: translate(0.1875rem, -0.1875rem); }
 }
 
+/* the page's main action as a plain text link: words, an arrow, one hairline.
+   No box. (The owner asked for "smaller and simpler" than a display-type line.) */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--ctl-h);      /* still a full-size touch target */
+  border-bottom: 1px solid currentColor;
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.cta__ico { display: inline-flex; }
+.cta__ico svg { width: 0.875rem; height: 0.875rem; transition: transform var(--dur-base) var(--ease-out); }
+@media (hover: hover) {
+  .cta:hover { border-bottom-width: 2px; }
+  .cta:hover .cta__ico svg { transform: translate(0.1875rem, -0.1875rem); }
+}
+.cta:focus-visible { outline-offset: 6px; }
+
 /* =====================================================================
    Header — one full-bleed bar on the page ground
    ===================================================================== */
@@ -249,26 +271,21 @@
   .menu__row:hover { background: var(--ink); color: var(--ground); }
   .menu__row:hover svg { transform: translateX(0.375rem); }
 }
+/* foot: the call tile (an icon in a square) on the left, the main action beside it */
 .menu__foot {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row-reverse;
   gap: 0.5rem;
   padding: var(--margin);
   padding-bottom: calc(var(--margin) + env(safe-area-inset-bottom, 0px));
 }
-.menu__foot .btn { width: 100%; height: 3.25rem; padding-inline: 0.5rem; }
-.menu__prefs {
-  grid-column: 1 / -1;
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
-}
-.menu__prefs .lang-toggle { flex: 1; height: 3rem; }
+.menu__foot .btn { flex: 1; height: 3.25rem; padding-inline: 0.5rem; }
+.menu__foot .menu__call { flex: none; width: 3.25rem; padding: 0; }
+.menu__call svg { width: 1.25rem; height: 1.25rem; }
 @media (min-width: 62.5rem) {
   .menu { display: none; }
 }
 @media (max-width: 22.5rem) {
-  .menu__foot { grid-template-columns: minmax(0, 1fr); }
   .menu__row { font-size: 2rem; min-height: 3.75rem; }
 }
 
@@ -467,6 +484,25 @@ html:not(.js) .faq-item__icon { display: none; }
   overflow: hidden;
   overflow: clip;
 }
+/* The last section of a page can stand still while the footer slides over it:
+   .tail wraps that section and adds one screen of travel; the footer starts that
+   screen early. main.js pins the section by its bottom edge (it is usually taller
+   than the screen), so all of this waits for the script (.js, not .rv-fallback). */
+.js:not(.rv-fallback) .tail { position: relative; z-index: 1; }
+.js:not(.rv-fallback) .tail > .s { position: sticky; top: 0; }
+.js:not(.rv-fallback) .tail::after { content: ""; display: block; height: calc(var(--vh, 1vh) * 100); }
+.js:not(.rv-fallback) .ftr--over {
+  z-index: 2;
+  margin-top: calc(var(--vh, 1vh) * -100);
+  padding-top: var(--section);
+  background: var(--ground);
+  border-top: 1px solid var(--line-soft);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js:not(.rv-fallback) .tail > .s { position: relative; top: auto !important; }
+  .js:not(.rv-fallback) .tail::after { display: none; }
+  .js:not(.rv-fallback) .ftr--over { margin-top: 0; padding-top: 0; border-top: 0; }
+}
 .ftr__cta { row-gap: var(--head-gap); }
 .ftr__cta .s__label,
 .ftr__cta .s__head,
@@ -481,7 +517,10 @@ html:not(.js) .faq-item__icon { display: none; }
   font-size: clamp(2.5rem, 1.3rem + 6vw, 7rem);
   line-height: 0.84;
 }
-.ftr__big .ln { transform: translate3d(calc((1 - var(--conv, 1)) * var(--dir, 1) * 70vw), 0, 0); }
+.ftr__big .ln {
+  transform: translate3d(calc((1 - var(--conv, 1)) * var(--dir, 1) * 16vw), 0, 0);
+  opacity: calc(0.12 + var(--conv, 1) * 0.88);
+}
 .ftr__actions {
   display: flex;
   flex-wrap: wrap;

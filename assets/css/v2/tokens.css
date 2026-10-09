@@ -43,7 +43,7 @@
   --fs-d1: clamp(2.5rem, 1.4rem + 5vw, 6rem);           /* 40–96px  section titles */
   --fs-d2: clamp(2.125rem, 1.3rem + 3.6vw, 4.75rem);    /* 34–76px  big rows, panels */
   --fs-d3: clamp(1.5rem, 1.3rem + 0.9vw, 2.125rem);     /* 24–34px  row titles */
-  --fs-lead: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);    /* 16–18px */
+  --fs-lead: 0.9375rem;                                 /* 15px; 14px from 62.5rem: section notes stay small */
   --fs-body: 1rem;
   --fs-small: 0.875rem;
   --fs-mono: 0.75rem;                                   /* 12px annotations */
@@ -94,7 +94,7 @@
   :root { --cols: 8; --hdr-h: 4rem; }
 }
 @media (min-width: 62.5rem) {
-  :root { --fs-hero: 7.1vw; }
+  :root { --fs-hero: 7.1vw; --fs-lead: 0.875rem; }
 }
 
 /* =====================================================================

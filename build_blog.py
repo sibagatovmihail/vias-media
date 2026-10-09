@@ -37,6 +37,12 @@ CASES = {
 STATIC_PAGES = [
     ("/", "monthly", "1.0"),
     ("/services.html", "monthly", "0.9"),
+    ("/webdesign.html", "monthly", "0.8"),
+    ("/webentwicklung.html", "monthly", "0.8"),
+    ("/seo.html", "monthly", "0.8"),
+    ("/beratung.html", "monthly", "0.8"),
+    ("/barrierefreiheit.html", "monthly", "0.8"),
+    ("/support.html", "monthly", "0.8"),
     ("/webagentur-neubrandenburg.html", "monthly", "0.9"),
     ("/work.html", "monthly", "0.9"),
     ("/contact.html", "monthly", "0.8"),

@@ -59,10 +59,6 @@
   align-self: end;
   justify-self: end;         /* the F ends in the bottom right corner */
 }
-@media (max-width: 22.5rem) {
-  .hero__actions { justify-self: stretch; }
-  .hero__actions .btn { width: 100%; }
-}
 @media (min-width: 62.5rem) {
   /* two bars: line 1 runs the full width (fitted by main.js), line 2 is shorter */
   .hero__title { max-width: none; }
@@ -102,7 +98,7 @@
   left: -0.02em;
   top: calc(var(--hdr-h) - 0.06em);
   font-family: var(--font-display);
-  font-size: 37vw;
+  font-size: 27vw;           /* main.js fits it to the width (data-fitw); this is the fallback */
   line-height: 0.8;
   letter-spacing: 0.005em;
   white-space: nowrap;
@@ -112,25 +108,31 @@
   user-select: none;
 }
 
-/* phones and tablets: a card as tall as its content, so the next one follows
-   directly and no screen is left half empty */
+/* Every case is at least one screen high and holds for a stretch (--case-hold)
+   before the next one starts to cover it: the visitor gets to the end of a
+   project first. The hold is the case's bottom margin; a pinned case covers the
+   screen, so that gap is never seen. */
+.cases { --case-hold: calc(var(--vh, 1vh) * 45); }
+.cases__intro { margin-bottom: calc(var(--case-hold) * 0.5); }
 .case {
   position: relative;
   display: flex;
   flex-direction: column;
+  min-height: calc(var(--vh, 1vh) * 100);
   padding-top: var(--hdr-h);
   background: var(--ground);
   border-top: 1px solid var(--line-soft);
 }
-/* main.js gives a card that is taller than the screen a negative top, so it
+.case:not(:last-child) { margin-bottom: var(--case-hold); }
+/* main.js gives a case that is taller than the screen a negative top, so it
    pins once its last line is on screen */
 @media (min-height: 37.5rem) {
   .cases__intro,
   .case { position: sticky; top: 0; }
 }
-/* phones: the screenshot whole, at its own ratio; the story under it */
-.case__media { position: relative; padding: var(--margin) var(--margin) 0; }
-.case__bg { display: none; }
+/* phones: two views of the site, each whole and at its own ratio; the story under them */
+.case__media { position: relative; display: grid; gap: 0.375rem; padding: var(--margin) var(--margin) 0; }
+.case__bg { order: 2; width: 100%; height: auto; border: 1px solid var(--line); background: var(--ground-2); }
 .case__frame { border: 1px solid var(--line); background: var(--ground-2); }
 .case__frame img { width: 100%; height: auto; }
 .case__body {
@@ -145,10 +147,16 @@
 .case__name { font-size: clamp(2.75rem, 1.4rem + 6vw, 7rem); line-height: 0.86; }
 .case__desc p { color: var(--ink-2); max-width: 30rem; text-wrap: pretty; }
 .case__body .btn { margin-top: 0.5rem; }
+@media (min-width: 37.5rem) and (max-width: 62.4375rem) {
+  .case__media { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* tablets: the two views side by side */
+  .case__bg { order: 0; }
+}
 
 @media (min-width: 62.5rem) {
-  .case { flex-direction: row; min-height: calc(var(--vh, 1vh) * 100); padding-top: 0; }
+  .cases { --case-hold: calc(var(--vh, 1vh) * 70); }
+  .case { flex-direction: row; padding-top: 0; }
   .case__media {
+    display: block;
     flex: none;
     width: 50%;
     padding: 0;
@@ -158,11 +166,11 @@
   }
   /* a second view of the same site, pushed back until it is only atmosphere */
   .case__bg {
-    display: block;
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    border: 0;
     object-fit: cover;
     object-position: 20% top;
     filter: brightness(0.3) saturate(0.7) blur(0.5rem);
@@ -215,11 +223,12 @@
 
 /* =====================================================================
    HOW I WORK — default: a ruled list. With JS and motion (.is-scene):
-   the section pins and seven panels pan sideways; then a sheet with the
-   next section's name slides in. The name is cut out of the sheet (an SVG
-   clip path of the letters' outlines) and a photograph shows through; the
-   word zooms into its letter I until the photograph is the whole screen,
-   and its lower edge fades to the page ground, where Services begins.
+   the section pins and seven panels pan sideways. The next section's name
+   is the last thing in that row (an SVG clip path of the letters' outlines
+   with a photograph showing through). When the row has been scrolled to
+   its end, the word grows from its place into its letter I until the
+   photograph is the whole screen; its lower edge fades to the page ground,
+   where Services begins.
    ===================================================================== */
 .hs { position: relative; z-index: 1; padding-bottom: var(--section); background: var(--ground); }
 .features__head { display: grid; gap: var(--block-gap); }
@@ -233,7 +242,8 @@
 }
 .hs__n { color: var(--ink-3); }
 .hs__d p { color: var(--ink-2); max-width: 34rem; text-wrap: pretty; }
-.hs__mask { display: none; }
+.hs__mask,
+.hs__wordcell { display: none; }
 @media (min-width: 48rem) {
   .hs:not(.is-scene) .hs__viewport { padding-left: calc(var(--margin) + 2 * var(--pitch)); }
   .hs:not(.is-scene) .hs__panel { grid-template-columns: 1fr 1fr; column-gap: var(--gutter); align-items: baseline; }
@@ -299,14 +309,15 @@
 .is-scene .hs__d { margin-top: auto; }
 .is-scene .hs__d p { font-size: 0.9375rem; }
 
-/* the sheet with the cut-out word */
+/* the last cell of the row is empty and one screen wide (main.js sets the width):
+   the word is drawn over it, in an SVG that covers the stage, and pans with the row */
+.is-scene .hs__wordcell { display: block; flex: none; width: 100vw; border-left: 1px solid var(--line); }
 .is-scene .hs__mask {
   display: block;
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: var(--ground);
-  transform: translate3d(100%, 0, 0);     /* slides in from the right (main.js) */
+  pointer-events: none;
 }
 .hs__svg { display: block; width: 100%; height: 100%; }
 .hs__mask-fade {
@@ -333,8 +344,7 @@
 }
 /* layers are promoted only while the scene is near the screen (.is-near, set
    by main.js); a permanent will-change made every frame's bookkeeping heavier */
-.is-near .hs__track,
-.is-near .hs__mask { will-change: transform; }
+.is-near .hs__track { will-change: transform; }
 
 /* =====================================================================
    SERVICES — big ruled links. On hover (fine pointers, wide screens) a
@@ -418,24 +428,37 @@
    would otherwise stop one header height short) */
 .under__anchor { position: absolute; top: calc(var(--vh, 1vh) * 100 + var(--hdr-h) + 1rem); }
 .pricing-sec {
-  --glow-pad: clamp(11rem, calc(var(--vh, 1vh) * 44), 26rem);
   position: sticky;
   top: 0;
-  padding-top: var(--glow-pad);
+  padding-top: clamp(8rem, calc(var(--vh, 1vh) * 34), 20rem);
 }
-/* the image is bright between 20 % and 57 % of its height. It is 1/0.6 as
-   tall as the space above the text, so the text starts at 60 %, where the
-   small label still has 6.6:1 (measured 2026-10-08). Keep the ratio. */
-.pricing__glow {
+/* The photograph does not scroll: it is fixed to the screen and cut to the
+   section's box (clip-path clips fixed children, which background-attachment
+   cannot do on iOS). The cards travel over it. The file is toned down so that
+   ink-coloured text keeps 4.6:1 on its brightest band (measured 2026-10-09);
+   text that sits on the picture is set in --ink, not --ink-2. */
+.pricing__bg { position: absolute; inset: 0; clip-path: inset(0); }
+.pricing__img {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100 + 7rem);     /* covers the screen when a phone's toolbar slides away */
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+/* the picture's top and bottom edges melt into the page ground */
+.pricing__bg::after {
+  content: "";
   position: absolute;
-  inset: 0 0 auto 0;
-  height: calc(var(--glow-pad) / 0.6);
-  background: var(--ground) url('../../img/v2/glow-900.webp') center top / 100% 100% no-repeat;
-}
-@media (min-width: 48rem) {
-  .pricing__glow { background-image: url('../../img/v2/glow-1600.webp'); }
+  inset: 0;
+  background:
+    linear-gradient(to bottom, var(--ground), rgba(20, 19, 18, 0) 9rem),
+    linear-gradient(to top, var(--ground), rgba(20, 19, 18, 0) 12rem);
 }
 .pricing { position: relative; row-gap: var(--head-gap); }
+.pricing .tag,
+.pricing .lead { color: var(--ink); }
 .pricing__head { display: grid; gap: var(--block-gap); }
 .pricing__cards {
   grid-column: 1 / -1;
@@ -448,7 +471,7 @@
   flex-direction: column;
   gap: 1.25rem;
   padding: clamp(1.125rem, 0.9rem + 0.8vw, 1.75rem);
-  background: var(--ground-2);
+  background: rgba(29, 27, 25, 0.84);   /* the photograph glows through a little */
 }
 /* the duration sits above the name, so long names never collide with it */
 .pcard__top {
@@ -498,6 +521,9 @@
   .cases__intro,
   .case,
   .pricing-sec { position: relative; top: auto; }
+  .pricing__img { position: absolute; height: 100%; }
+  .cases__intro,
+  .case:not(:last-child) { margin-bottom: 0; }
   .under { margin-top: 0; }
   .under::after { display: none; }
   .under__anchor { top: calc(var(--hdr-h) + 1rem); }

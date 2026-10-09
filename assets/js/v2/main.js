@@ -293,7 +293,7 @@
      ===================================================================== */
   var hs = document.querySelector('[data-hs]');
   var hsc = null;
-  var HS_HOLD = 0.12, HS_SLIDE = 0.55, HS_ZOOM = 1.15;
+  var HS_HOLD = 0.12, HS_DWELL = 0.12, HS_ZOOM = 1.15;
   /* The next section's name as outlines of the title face (Bebas Neue), from
      tools/word-path.py. Live <text> in a clip path stops rendering in Chrome
      once it is magnified about ten times; outlines scale without limit.
@@ -305,31 +305,37 @@
   if (hs && !reduced) {
     hsc = {
       stage: hs.querySelector('.hs__stage'),
+      inner: hs.querySelector('.hs__inner'),
       vp: hs.querySelector('.hs__viewport'),
       track: hs.querySelector('.hs__track'),
-      mask: hs.querySelector('.hs__mask'),
+      cell: hs.querySelector('.hs__wordcell'),
       svg: hs.querySelector('.hs__svg'),
       word: hs.querySelector('#hs-word'),
       img: hs.querySelector('#hs-img'),
       fade: hs.querySelector('.hs__mask-fade'),
-      pan: 0, speed: 1.5, x: -1, c: -1, z: -1, geo: null
+      pan: 0, speed: 1.5, x: -1, z: -1, geo: null
     };
     hs.classList.add('is-scene');
   }
-  /* size the SVG to the stage, set the word, and work out the zoom geometry */
+  /* The word is the last thing in the row of panels: an empty cell one screen wide
+     keeps its place in the track, and the word itself is drawn over that cell in an
+     SVG that covers the stage. It pans in with the cards; when the row has been
+     scrolled to its end, the word grows from that place into its letter I. */
   function layoutMask() {
-    var W = hsc.stage.clientWidth, H = vh();
+    var W = hsc.stage.clientWidth, H = vh(), stageH = hsc.stage.clientHeight;
     var m = MASK_WORDS[root.lang === 'en' ? 'en' : 'de'];
-    hsc.svg.setAttribute('viewBox', '0 0 ' + W + ' ' + hsc.stage.clientHeight);
+    var st = hsc.stage.getBoundingClientRect(), band = hsc.vp.getBoundingClientRect();
+    var bandH = band.height, bandCy = band.top - st.top + bandH / 2;
+    hsc.svg.setAttribute('viewBox', '0 0 ' + W + ' ' + stageH);
     hsc.word.setAttribute('d', m.d);
-    var s = Math.min(0.9 * W / m.w, 0.6 * H / m.h);      /* px per font unit: fits the width, caps at most 60 % of the height */
+    var s = Math.min((W - 2 * M.margin) / m.w, 0.7 * bandH / m.h);   /* px per font unit: as wide as the row allows */
     var stem = (m.f[1] - m.f[0]) * s;
     hsc.geo = {
-      s: s,
-      x0: (W - m.w * s) / 2, y0: (H - m.h * s) / 2,      /* the word's top left corner at rest */
-      cx: W / 2, cy: H / 2,                              /* its centre */
-      fx: (W - m.w * s) / 2 + (m.f[0] + m.f[1]) / 2 * s, /* the middle of the I: where the zoom ends up */
-      kmax: 1.15 * Math.max(W / stem, hsc.stage.clientHeight / (m.h * s))
+      s: s, H: H,
+      x0: (W - m.w * s) / 2, y0: bandCy - m.h * s / 2,     /* the word's top left corner at rest */
+      cx: W / 2, cy: bandCy,                               /* its centre: the middle of the row */
+      fx: (W - m.w * s) / 2 + (m.f[0] + m.f[1]) / 2 * s,   /* the middle of the I: where the zoom ends up */
+      kmax: 1.15 * Math.max(W / stem, 2 * (stageH - H / 2) / (m.h * s))
     };
     if (!hsc.img.getAttribute('href')) {
       hsc.img.setAttribute('href', 'assets/img/v2/' + (W < 820 ? 'sparks-1100.webp' : 'sparks-1920.webp'));
@@ -340,35 +346,39 @@
     var V = vh();
     hsc.speed = window.innerWidth < 768 ? 1.8 : 1.5;      /* px of pan per px of scroll */
     hsc.track.style.transform = 'none';
+    hsc.cell.style.width = hsc.vp.clientWidth + 'px';
     hsc.pan = Math.max(0, hsc.track.scrollWidth - hsc.vp.clientWidth);
     layoutMask();
-    hsc.x = -1; hsc.c = -1; hsc.z = -1;
-    hs.style.height = Math.round(hsc.stage.offsetHeight + (HS_HOLD + HS_SLIDE + HS_ZOOM) * V + hsc.pan / hsc.speed) + 'px';
+    hsc.x = -1; hsc.z = -1;
+    hs.style.height = Math.round(hsc.stage.offsetHeight + (HS_HOLD + HS_DWELL + HS_ZOOM) * V + hsc.pan / hsc.speed) + 'px';
   }
-  function setZoom(z) {
+  /* z: 0 → 1 zoom; ox: how far (px) the word still has to pan in from the right */
+  function setZoom(z, ox) {
     var g = hsc.geo;
     if (!g) return;
     var k = Math.pow(g.kmax, z);                          /* exponential: the zoom feels even */
-    /* the fixed point travels from the word's centre to the middle of the I early on */
-    var ax = g.cx + (g.fx - g.cx) * smooth(clamp(z / 0.3, 0, 1));
-    hsc.word.setAttribute('transform', 'translate(' + (g.cx + k * (g.x0 - ax)).toFixed(2) + ' ' + (g.cy + k * (g.y0 - g.cy)).toFixed(2) + ') scale(' + (k * g.s).toFixed(5) + ')');
+    var e = smooth(clamp(z / 0.3, 0, 1));
+    /* early in the zoom the fixed point moves from the word's centre to the middle of
+       the I, and from the row's height to the middle of the screen */
+    var ax = g.cx + (g.fx - g.cx) * e;
+    var sy = g.cy + (g.H / 2 - g.cy) * e;
+    hsc.word.setAttribute('transform', 'translate(' + (g.cx + k * (g.x0 - ax) + ox).toFixed(2) + ' ' + (sy + k * (g.y0 - g.cy)).toFixed(2) + ') scale(' + (k * g.s).toFixed(5) + ')');
     /* at the very end the clip is dropped: the photograph is simply the screen */
     if (z >= 0.985) hsc.img.removeAttribute('clip-path'); else hsc.img.setAttribute('clip-path', 'url(#hs-clip)');
     hsc.fade.style.opacity = clamp((z - 0.6) / 0.4, 0, 1).toFixed(3);
+    hsc.inner.style.opacity = (1 - clamp(z / 0.22, 0, 1)).toFixed(3);   /* the head and the row step back */
   }
   function updateHs(V) {
     var r = hs.getBoundingClientRect();
     var stageH = hsc.stage.offsetHeight;
     var s = clamp(-r.top, 0, Math.max(0, r.height - stageH));
     var panLen = hsc.pan / hsc.speed;
-    var c = smooth(clamp((s - HS_HOLD * V - panLen) / (HS_SLIDE * V), 0, 1));       /* sheet slides in */
-    var z = clamp((s - HS_HOLD * V - panLen - HS_SLIDE * V) / (HS_ZOOM * V), 0, 1); /* zoom */
-    /* the panels keep moving a little while the sheet comes in, so nothing stops dead */
-    var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan) + c * hsc.vp.clientWidth * 0.3;
-    if (x !== hsc.x) { hsc.x = x; hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)'; }
-    if (c !== hsc.c) { hsc.c = c; hsc.mask.style.transform = 'translate3d(' + ((1 - c) * 100).toFixed(2) + '%,0,0)'; }
-    if (z !== hsc.z) { hsc.z = z; setZoom(z); }
-    return { pinned: r.top <= V * 0.4 && r.bottom >= V * 0.9 };
+    var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan);
+    var z = clamp((s - HS_HOLD * V - panLen - HS_DWELL * V) / (HS_ZOOM * V), 0, 1);
+    if (x === hsc.x && z === hsc.z) return;
+    if (x !== hsc.x) hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)';
+    hsc.x = x; hsc.z = z;
+    setZoom(z, hsc.pan - x);
   }
 
   /* =====================================================================
@@ -409,12 +419,22 @@
   var casesEl = reduced ? null : document.querySelector('.cases');
   var caseEls = casesEl ? [].slice.call(casesEl.querySelectorAll('.case')) : [];
   /* everything that pins at the top: the heroes and the project cards */
-  var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .case'));
+  var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .case, .tail > .s'));
   /* a pinned block taller than the screen pins with its bottom edge on the
      screen's, so its last line (the button) is seen before the next sheet covers it */
   function layoutCases() {
     var V = vh();
-    pinEls.forEach(function (el) { el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
+    pinEls.forEach(function (el) { el._hold = 0; el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
+    fitWords();
+  }
+  /* a word set as large as its box is wide (the ghost word behind the projects intro) */
+  var fitEls = [].slice.call(document.querySelectorAll('[data-fitw]'));
+  function fitWords() {
+    fitEls.forEach(function (el) {
+      el.style.fontSize = '';
+      var w = el.getBoundingClientRect().width, room = el.parentElement.clientWidth - 2 * M.margin;
+      if (w > 0 && room > 0) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * room / w).toFixed(2) + 'px';
+    });
   }
   function updateCases(V) {
     if (!casesEl || !desktop.matches) return;
@@ -422,8 +442,11 @@
     if (box.top > V || box.bottom < 0) return;
     var tops = caseEls.map(function (el) { return el.getBoundingClientRect().top; });
     caseEls.forEach(function (el, i) {
-      /* 1 while it comes in, 0 when it is pinned, -1 once the next one has covered it */
-      var p = tops[i] > 0 ? tops[i] / V : (i + 1 < tops.length ? clamp(tops[i + 1] / V, 0, 1) - 1 : tops[i] / V);
+      /* 1 while it comes in, 0 when it pins, -1 once the next one has covered it. The
+         next one starts a hold away (the case's bottom margin), so the frame keeps
+         gliding while the case stands still */
+      var hold = el._hold || (el._hold = V + (parseFloat(getComputedStyle(el).marginBottom) || 0));
+      var p = tops[i] > 0 ? tops[i] / V : (i + 1 < tops.length ? clamp(tops[i + 1] / hold, 0, 1) - 1 : tops[i] / V);
       var y = Math.round(clamp(p, -1, 1) * 0.14 * V);
       if (y === el._cy) return;
       el._cy = y;
@@ -458,16 +481,27 @@
 
   /* ---- Closing headline: its lines come in from the sides and meet ---- */
   var convEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-converge]'));
+  var convRaf = 0;
+  /* the value follows the scroll with a little inertia, so a wheel step never makes it jump */
+  function convStep() {
+    convRaf = 0;
+    var busy = false;
+    convEls.forEach(function (el) {
+      if (el._to == null) return;
+      el._at = (el._at == null ? el._to : el._at + (el._to - el._at) * 0.09);
+      if (Math.abs(el._to - el._at) < 0.002) el._at = el._to; else busy = true;
+      el.style.setProperty('--conv', el._at.toFixed(3));
+    });
+    if (busy) convRaf = window.requestAnimationFrame(convStep);
+  }
   function updateConverge(V) {
     convEls.forEach(function (el) {
       var r = el.parentElement.getBoundingClientRect();   /* the parent does not move */
-      if (r.top > V * 1.2 || r.bottom < -V * 0.2) return;
-      var t = clamp((V - r.top) / (V * 0.55), 0, 1);
-      var v = (1 - Math.pow(1 - t, 3)).toFixed(3);        /* ease out: fast in, settles gently */
-      if (v === el._conv) return;
-      el._conv = v;
-      el.style.setProperty('--conv', v);
+      if (r.top > V * 1.3 || r.bottom < -V * 0.3) return;
+      /* spread over most of a screen: starts as the block comes up, done near the middle */
+      el._to = smooth(clamp((V * 0.96 - r.top) / (V * 0.62), 0, 1));
     });
+    if (!convRaf) convRaf = window.requestAnimationFrame(convStep);
   }
 
   /* ---- Promote the scene's layers only while it is within a screen of the viewport ---- */
@@ -639,102 +673,86 @@
     window.addEventListener('load', syncTables);
   }
 
-  /* ---- Custom dropdown (listbox pattern): arrows, Home/End, Enter, Esc, click outside ---- */
-  document.querySelectorAll('[data-select]').forEach(function (box) {
-    var trigger = box.querySelector('.select__trigger');
-    var list = box.querySelector('.select__menu');
-    var valueEl = box.querySelector('.select__value');
-    var hidden = box.querySelector('input[type="hidden"]');
-    var options = [].slice.call(box.querySelectorAll('.select__option'));
-    var active = -1;
-    if (!trigger || !list || !options.length) return;
-    function isOpen() { return list.classList.contains('is-open'); }
-    function setActive(i) {
-      active = (i + options.length) % options.length;
-      options.forEach(function (o, k) { o.classList.toggle('is-active', k === active); });
-      list.setAttribute('aria-activedescendant', options[active].id);
-      options[active].scrollIntoView({ block: 'nearest' });
-    }
-    function open() {
-      list.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
-      var sel = options.findIndex(function (o) { return o.getAttribute('aria-selected') === 'true'; });
-      setActive(sel >= 0 ? sel : 0);
-      list.focus({ preventScroll: true });
-      /* the whole list on screen, also on a phone */
-      var r = list.getBoundingClientRect();
-      if (r.bottom > window.innerHeight - 96) window.scrollBy(0, r.bottom - window.innerHeight + 96);   /* clear of the fog strip */
-    }
-    function close(refocus) {
-      list.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
-      list.removeAttribute('aria-activedescendant');
-      options.forEach(function (o) { o.classList.remove('is-active'); });
-      if (refocus) trigger.focus();
-    }
-    function choose(opt) {
-      options.forEach(function (o) { o.setAttribute('aria-selected', String(o === opt)); });
-      valueEl.textContent = opt.textContent;
-      valueEl.classList.remove('is-placeholder');
-      box._chosen = opt;
-      if (hidden) hidden.value = opt.getAttribute('data-value');
-    }
-    trigger.addEventListener('click', function () { if (isOpen()) close(false); else open(); });
-    trigger.addEventListener('keydown', function (e) {
-      if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !isOpen()) { e.preventDefault(); open(); }
-    });
-    options.forEach(function (opt, i) {
-      opt.addEventListener('click', function () { choose(opt); close(true); });
-      opt.addEventListener('pointermove', function () { if (i !== active) setActive(i); });
-    });
-    list.addEventListener('keydown', function (e) {
-      var k = e.key;
-      if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
-      else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
-      else if (k === 'Home') { e.preventDefault(); setActive(0); }
-      else if (k === 'End') { e.preventDefault(); setActive(options.length - 1); }
-      else if (k === 'Enter' || k === ' ') { e.preventDefault(); if (active >= 0) { choose(options[active]); close(true); } }
-      else if (k === 'Escape') { e.preventDefault(); close(true); }
-      else if (k === 'Tab') { close(false); }
-      else if (k.length === 1) {   /* type-ahead: first option starting with the letter */
-        var hit = options.findIndex(function (o) { return o.textContent.trim().toLowerCase().indexOf(k.toLowerCase()) === 0; });
-        if (hit >= 0) setActive(hit);
-      }
-    });
-    document.addEventListener('click', function (e) { if (isOpen() && !box.contains(e.target)) close(false); });
-    /* the language switch rewrites the option texts: show the chosen one again */
-    document.addEventListener('vias:lang', function () { if (box._chosen) valueEl.textContent = box._chosen.textContent; });
-    box._reset = function () {
-      options.forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
-      box._chosen = null;
-      if (hidden) hidden.value = '';
-      valueEl.textContent = valueEl.getAttribute(root.lang === 'en' ? 'data-en' : 'data-ph-de') || '';
-      valueEl.classList.add('is-placeholder');
-    };
-  });
-
-  /* ---- Contact form: own validation (messages sit in reserved space, nothing
-     jumps), send in the background, then a small dialog ---- */
-  var form = document.getElementById('contact-form');
+  /* ---- Enquiry as a short quiz (contact page): tap an answer, add a line, leave a
+     contact. One step is shown at a time; all steps share one grid cell, so the
+     panel never changes height. Answers are custom radio tiles synced to a hidden
+     input; validation messages sit in reserved space. ---- */
+  var form = document.querySelector('[data-quiz]');
   if (form) {
     var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var done = document.getElementById('form-done');
-    var doneClose = document.getElementById('form-done-close');
-    var status = form.querySelector('.form__status');
-    var submit = form.querySelector('button[type="submit"]');
-    var lastFocus = null;
-    var say = function (de, en) { return root.lang === 'en' ? en : de; };
+    var qSteps = [].slice.call(form.querySelectorAll('[data-step]'));
+    var qDone = form.querySelector('[data-step-done]');
+    var qCount = form.querySelector('[data-quiz-n]');
+    var qDots = [].slice.call(form.querySelectorAll('.quiz__meter i'));
+    var qStatus = form.querySelector('.form__status');
+    var qSend = form.querySelector('.quiz__send');
+    var qAt = 0;
     var checks = {
       name: function (v) { return v.length > 0; },
       email: function (v) { return EMAIL_RE.test(v); },
       phone: function (v) { var d = v.replace(/\D/g, ''); return !v || (d.length >= 7 && d.length <= 15); }
     };
+    /* does the step in view hold an answer? decides between "Überspringen" and "Weiter" */
+    var qFilled = function () {
+      var step = qSteps[qAt];
+      var has = !!(step && (step.querySelector('[aria-checked="true"]') ||
+        [].some.call(step.querySelectorAll('input:not([type="hidden"]), textarea'), function (f) { return f.value.trim(); })));
+      if (has) form.setAttribute('data-filled', ''); else form.removeAttribute('data-filled');
+    };
+    var qShow = function (panel, at, focus) {
+      qSteps.concat(qDone).forEach(function (p) {
+        p.classList.toggle('is-active', p === panel);
+        if (p === panel) p.removeAttribute('inert'); else p.setAttribute('inert', '');
+      });
+      form.setAttribute('data-at', at);
+      if (focus) { var h = panel.querySelector('.quiz__q'); if (h) h.focus({ preventScroll: true }); }
+    };
+    var qGo = function (i, focus) {
+      qAt = clamp(i, 0, qSteps.length - 1);
+      qShow(qSteps[qAt], String(qAt + 1), focus);
+      if (qCount) qCount.textContent = String(qAt + 1);
+      qDots.forEach(function (d, k) { d.classList.toggle('is-on', k <= qAt); });
+      qFilled();
+    };
+    /* answer tiles: a radio group. Arrows move and choose; a tap also moves on */
+    form.querySelectorAll('[data-choice]').forEach(function (group) {
+      var tiles = [].slice.call(group.querySelectorAll('[role="radio"]'));
+      var hidden = group.parentElement.querySelector('input[type="hidden"]');
+      var pick = function (t) {
+        tiles.forEach(function (o) { o.setAttribute('aria-checked', String(o === t)); o.tabIndex = o === t ? 0 : -1; });
+        if (hidden) hidden.value = t.getAttribute('data-value');
+        qFilled();
+      };
+      tiles.forEach(function (t, i) {
+        t.addEventListener('click', function () {
+          pick(t);
+          window.setTimeout(function () { qGo(qAt + 1, true); }, reduced ? 0 : 260);   /* long enough to see the tile fill */
+        });
+        t.addEventListener('keydown', function (e) {
+          var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var n = tiles[(i + d + tiles.length) % tiles.length];
+          pick(n); n.focus();
+        });
+      });
+    });
+    form.querySelector('[data-quiz-next]').addEventListener('click', function () { qGo(qAt + 1, true); });
+    form.querySelector('[data-quiz-back]').addEventListener('click', function () { qGo(qAt - 1, true); });
+    form.addEventListener('input', qFilled);
     var setInvalid = function (input, bad) {
       var field = input.closest('.field');
       if (field) field.classList.toggle('is-invalid', bad);
       if (bad) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
     };
-    var validate = function () {
+    Object.keys(checks).forEach(function (name) {
+      var input = form.elements[name];
+      if (input) input.addEventListener('input', function () { setInvalid(input, false); });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (qAt < qSteps.length - 1) { qGo(qAt + 1, true); return; }   /* Enter in an earlier step moves on */
+      if (qStatus) qStatus.textContent = '';
       var firstBad = null;
       Object.keys(checks).forEach(function (name) {
         var input = form.elements[name];
@@ -743,62 +761,25 @@
         setInvalid(input, bad);
         if (bad && !firstBad) firstBad = input;
       });
-      return firstBad;
-    };
-    Object.keys(checks).forEach(function (name) {
-      var input = form.elements[name];
-      if (input) input.addEventListener('input', function () { setInvalid(input, false); });
-    });
-    var closeDone = function () {
-      if (!done || !done.classList.contains('is-open')) return;
-      done.classList.remove('is-open');
-      done.setAttribute('aria-hidden', 'true');
-      if (main) main.removeAttribute('inert');
-      unlockScroll();
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
-    };
-    var openDone = function () {
-      if (!done) return;
-      lastFocus = submit;                  /* the button is disabled while sending, so it is not the active element */
-      lockScroll();                        /* the page behind an overlay never scrolls */
-      if (main) main.setAttribute('inert', '');
-      done.classList.add('is-open');
-      done.setAttribute('aria-hidden', 'false');
-      if (doneClose) doneClose.focus();
-    };
-    if (done) {
-      if (doneClose) doneClose.addEventListener('click', closeDone);
-      done.addEventListener('click', function (e) { if (e.target === done) closeDone(); });
-      document.addEventListener('keydown', function (e) {
-        if (!done.classList.contains('is-open')) return;
-        if (e.key === 'Escape') closeDone();
-        else if (e.key === 'Tab' && doneClose) { e.preventDefault(); doneClose.focus(); }   /* one control: focus stays on it */
-      });
-    }
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (status) status.textContent = '';
-      var bad = validate();
-      if (bad) { bad.focus(); return; }
-      var label = submit.querySelector('span');
-      var idle = label.textContent;
-      label.textContent = say('Wird gesendet …', 'Sending …');
-      submit.disabled = true;
+      if (firstBad) { firstBad.focus(); return; }
+      form.classList.add('is-sending');
+      qSend.disabled = true;
       window.fetch(form.action, { method: 'POST', body: new window.FormData(form), headers: { Accept: 'application/json' } })
         .then(function (res) { return res.json(); })
         .then(function (data) {
           if (!data || !data.success) throw new Error('not sent');
-          form.reset();
-          form.querySelectorAll('[data-select]').forEach(function (b) { if (b._reset) b._reset(); });
-          openDone();
+          qDots.forEach(function (d) { d.classList.add('is-on'); });
+          form.style.minHeight = form.offsetHeight + 'px';   /* the panel keeps its size when the buttons go */
+          qShow(qDone, 'done', true);
         })
         .catch(function () {
-          if (status) status.textContent = say(
-            'Senden fehlgeschlagen. Bitte noch einmal versuchen oder an mykhailo@viasmedia.com schreiben.',
-            'Sending failed. Please try again or write to mykhailo@viasmedia.com.');
+          if (qStatus) qStatus.textContent = root.lang === 'en'
+            ? 'Sending failed. Please try again or write to mykhailo@viasmedia.com.'
+            : 'Senden fehlgeschlagen. Bitte noch einmal versuchen oder an mykhailo@viasmedia.com schreiben.';
         })
-        .then(function () { label.textContent = idle; submit.disabled = false; });
+        .then(function () { form.classList.remove('is-sending'); qSend.disabled = false; });
     });
+    qGo(0, false);
   }
 
   /* =====================================================================

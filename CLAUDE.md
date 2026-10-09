@@ -173,8 +173,10 @@ Direction and reasoning: `docs/design-research/`.
   transition), `components.css` (shared: buttons, header, menu, rows, FAQ, cursor, footer), `home.css`
   (homepage only), `pages.css` (all other pages, one file so it is cached once); `assets/js/v2/main.js` (one
   script for every page, each block looks for its own markup); `assets/js/vendor/lenis.min.js`.
-- **Header, menu sheet, footer and the script tags are copied into every page.** A change to them goes into
-  `index.html`, all root pages and `content/_templates/{article,index}.html`, then `python3 build_blog.py`.
+- **Header, menu sheet, footer and the script tags are copied into every page.** Change them in `index.html`,
+  then run `python3 tools/sync-chrome.py` (copies them into all root pages and both blog templates, keeps each
+  page's own `<main>`, current nav entry and footer variant, and gives every page index.html's `?v=`) and
+  `python3 build_blog.py`. `--check` only reports.
   Differences on purpose: `aria-current` on the current nav link (`"page"`, or `"true"` on a child page such as
   a case study), "Preise" points to `index.html#preise` outside the homepage, blog pages prefix paths with
   `../` or `../../`, the contact page's footer has `ftr--bare` (no second call to action).
@@ -193,21 +195,35 @@ Direction and reasoning: `docs/design-research/`.
   (see the comment in `tokens.css`).
 - **Accent (#E8593A) is a fill behind dark text only** (primary CTA, `.mark`, wordmark dot, the free pricing
   card). Never accent-coloured text.
+- **Pricing:** lies under Services (`.under`) and has a photograph that does not scroll (`.pricing__img` is
+  `position: fixed`, cut to the section by `clip-path: inset(0)` on its wrapper; `background-attachment: fixed`
+  does not work on iOS). Text directly on the photograph is `--ink`, never `--ink-2`: the file is darkened so
+  ink keeps 4.6:1 on its brightest band. Cards are slightly see-through.
+- **Footer over the last section:** wrap a page's last section in `.tail` and the footer gets `ftr--over`
+  (sync-chrome sets it): the section stands still at its end while the footer slides over it. Used on the
+  homepage, services and landing page (all end in the FAQ). It waits for the script (`.js:not(.rv-fallback)`).
+- **Scroll-linked entrances are slow:** the closing headline's halves travel 16vw with a fade, spread over
+  0.6 of a screen, with inertia (`convStep()`). The owner called the earlier fast 70vw fly-in unprofessional.
 - **Section flow:** every section is an opaque sheet (`.s` has the ground colour and `z-index: 1`). Pinned
   sheets stay put while the next one slides over them: the hero, the projects intro and each `.case` are
   `position: sticky; top: 0` (CSS only). Pricing does the opposite: `.under` starts one screen before Services
   ends, so Services (higher `z-index`) lifts off it. A new section must be opaque or it shows what is pinned
   underneath.
 - **Hero:** frozen `--vh` set inline in `<head>`; the hero is exactly one screen, laid out as an F: title
-  across the top, note on the left, one CTA bottom right. From 62.5rem the title is forced onto two lines
+  across the top, note on the left, one action bottom right. That action is `.cta`: a small plain text link
+  ("Beraten Sie mich", an arrow, one hairline), not a button box (owner, 2026-10-09: "remove this default
+  button look", then "smaller and simpler"). The service pages use the same `.cta`. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
   lines in DE and EN at 320–1920px after any copy or size change.
-- **Projects:** `.cases`. Laptops: one screen per case, blurred dark backdrop (`.case__bg`) on the left with
-  the screenshot gliding through it (`--cy`, `updateCases()`), story top right. Phones and tablets: cards as
-  tall as their content, screenshots whole at their own ratio (never `object-fit: cover`).
-- **Word mask ("So arbeite ich" → Services):** after the horizontal pan a sheet slides in with the next
-  section's name cut out of it; a photograph shows through and the word zooms into its letter I
-  (`updateHs()`, `setZoom()`). The letters are **outlines** in an SVG clip path (`MASK_WORDS` in `main.js`),
+- **Projects:** `.cases`. The ghost word behind the intro is fitted to the width (`data-fitw`). Every case is
+  at least one screen and **holds** before the next one covers it: the hold is the case's bottom margin
+  (`--case-hold`), which is never seen because a pinned case covers the screen. Laptops: blurred dark backdrop
+  (`.case__bg`) on the left with the screenshot gliding through it (`--cy`, `updateCases()`), story top right.
+  Phones: both screenshots stacked, each whole at its own ratio (never `object-fit: cover`); tablets: side by side.
+- **Word mask ("So arbeite ich" → Services):** the next section's name is the **last thing in the row of
+  panels** (an empty cell, `.hs__wordcell`, keeps its place; the word is drawn over it in an SVG covering the
+  stage). It pans in with the cards; when the row is at its end the word grows from that place into its
+  letter I until the photograph is the screen (`updateHs()`, `setZoom()`). The letters are **outlines** in an SVG clip path (`MASK_WORDS` in `main.js`),
   not live text: Chrome stops drawing `<text>` in a clip path beyond about 10× magnification. If the section
   is renamed, regenerate both languages with `python3 tools/word-path.py WORD I` (needs fontTools + brotli).
 - **Motion:** Lenis on fine pointers only. Every scene has a static default and a `prefers-reduced-motion`
@@ -218,7 +234,9 @@ Direction and reasoning: `docs/design-research/`.
   layers beyond the two fog strips; hover states change `opacity`/`transform` of a layer, text colour switches
   in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
 - **Header:** ≥ 62.5rem logo and four links (letter-roll hover), nothing else: no CTA, no language switch, no
-  theme switch (language is in the footer bar and the phone menu). Below that: logo, CTA (hidden ≤ 30rem), burger.
+  theme switch. Below that: logo, CTA (hidden ≤ 30rem), burger. The language switch lives only in the footer
+  bar. Phone menu foot: the call button is an icon in a square on the left, the main action beside it
+  (`flex-direction: row-reverse`).
 - **Sub-pages** (all in `pages.css`):
   - `.phero`: one-screen page hero with the homepage's F layout (title top, note left, foot row with facts
     left and action right), pinned so the first section slides over it. `.phero--short` for text pages
@@ -229,9 +247,16 @@ Direction and reasoning: `docs/design-research/`.
   - Services: `.svc` sheets (ids are link targets). Sequences: `.steps` (rows on phones, four standing panels
     on laptops). Projects: `.wk` (the whole entry is one link). Case study: `.shots`, `.moves`, gallery
     (`[data-slider]`, native sideways scroll, `overflow-y: hidden`), `.stats`, `.pn`.
-  - Contact: the form comes before the details on phones. Fields are 3.25rem high like `.btn--lg`; error
-    lines are absolutely positioned in the row gap, so the form never changes height; the dropdown is a
-    custom listbox (`[data-select]`). The form still posts to Web3Forms (see open points).
+  - Service pages: `webdesign.html`, `webentwicklung.html`, `seo.html`, `beratung.html`,
+    `barrierefreiheit.html`, `support.html` (hero with breadcrumb and three facts, "Enthalten" rows, four
+    steps, one reference, cost, FAQ, previous/next). Their copy only repeats claims the site already makes.
+    They **repeat the three package prices** in `data-price` spans: change prices there too. They are listed
+    in `STATIC_PAGES` (`build_blog.py`) and `llms.txt`.
+  - Contact: the form comes before the details on phones. It is a three-step quiz (`[data-quiz]`): answer
+    tiles (a custom radio group synced to a hidden input; a tap moves on), an optional note, then name and
+    contact. All steps share one grid cell, so the panel never changes height; error lines sit in reserved
+    space; the last step says "sent". Without JavaScript the steps follow each other as one form. It still
+    posts to Web3Forms (see open points).
   - Text pages use `.prose`: mixed-case Archivo for headings, only the page title is in Bebas Neue (long
     all-caps headings are hard to read). Blog list and article blocks are styled on the class names
     `build_blog.py` writes (`.blog-card`, `.post__case`, `.post__related`, `.post__cta`); `.post__body`

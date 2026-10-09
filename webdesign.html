@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.className="js";
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
+  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* if main.js never arrives, nothing may stay hidden */
+  window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-en="Web Design in Neubrandenburg: Made-to-Measure Websites | Vias Media">Webdesign in Neubrandenburg: Websites nach Maß | Vias Media</title>
+  <meta name="description" content="Webdesign für Handwerk, Praxen und kleine Betriebe in der Seenplatte: für Ihren Betrieb entworfen, barrierefrei und schnell auf dem Handy. Zum Festpreis." data-en="Web design for trades, practices and small businesses in the Lake District: designed for your business, accessible and fast on phones. At a fixed price.">
+  <link rel="canonical" href="https://viasmedia.com/webdesign.html">
+
+  <!-- Favicons & PWA -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#E8593A">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#141312">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vias Media">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Webdesign in Neubrandenburg: Websites nach Maß | Vias Media">
+  <meta property="og:description" content="Webdesign für Handwerk, Praxen und kleine Betriebe in der Seenplatte: für Ihren Betrieb entworfen, barrierefrei und schnell auf dem Handy. Zum Festpreis.">
+  <meta property="og:url" content="https://viasmedia.com/webdesign.html">
+  <meta property="og:image" content="https://viasmedia.com/assets/img/og/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webdesign in Neubrandenburg: Websites nach Maß | Vias Media">
+  <meta name="twitter:description" content="Webdesign für Handwerk, Praxen und kleine Betriebe in der Seenplatte: für Ihren Betrieb entworfen, barrierefrei und schnell auf dem Handy. Zum Festpreis.">
+  <meta name="twitter:image" content="https://viasmedia.com/assets/img/og/og-default.png">
+
+  <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261009q">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261009q">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261009q">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261009q">
+  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261009q">
+  <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://viasmedia.com/webdesign.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://viasmedia.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Leistungen",
+          "item": "https://viasmedia.com/services.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Webdesign",
+          "item": "https://viasmedia.com/webdesign.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://viasmedia.com/webdesign.html#webpage",
+      "url": "https://viasmedia.com/webdesign.html",
+      "name": "Webdesign in Neubrandenburg: Websites nach Maß | Vias Media",
+      "description": "Webdesign für Handwerk, Praxen und kleine Betriebe in der Seenplatte: für Ihren Betrieb entworfen, barrierefrei und schnell auf dem Handy. Zum Festpreis.",
+      "inLanguage": "de-DE",
+      "isPartOf": {
+        "@id": "https://viasmedia.com/#website"
+      },
+      "about": {
+        "@id": "https://viasmedia.com/services.html#webdesign"
+      },
+      "breadcrumb": {
+        "@id": "https://viasmedia.com/webdesign.html#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".phero__title",
+          ".phero__lead",
+          "h2"
+        ]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://viasmedia.com/services.html#webdesign",
+      "name": "Webdesign",
+      "url": "https://viasmedia.com/webdesign.html",
+      "description": "Websites, Onlineshops und Landingpages, die zu Ihrem Betrieb passen: für Sie entworfen statt aus der Vorlage, klar gegliedert und auf dem Handy so gut wie am Schreibtisch.",
+      "provider": {
+        "@id": "https://viasmedia.com/#organization"
+      },
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Mecklenburg-Vorpommern"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-en="Skip to content">Zum Inhalt springen</a>
+
+  <!-- icon sprite (Heroicons outline 24 + WhatsApp glyph) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
+  </svg>
+
+  <!-- page ground: registration marks, grain, bottom fog -->
+  <div class="marks" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"><i></i><i></i></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="hdr" id="header">
+    <div class="wrap hdr__bar">
+      <a href="index.html" class="hdr__logo" aria-label="Vias Media – Startseite">
+        <img src="assets/img/logo-mark-dark.png" alt="" width="1019" height="947" class="logo-mark">
+        <span class="wordmark">vias<span class="dot">.</span></span>
+      </a>
+      <nav class="hdr__nav" aria-label="Hauptnavigation">
+        <a href="services.html" class="blink" aria-current="true"><span class="roll" data-roll data-en="Services">Leistungen</span></a>
+        <a href="work.html" class="blink"><span class="roll" data-roll data-en="Work">Projekte</span></a>
+        <a href="index.html#preise" class="blink"><span class="roll" data-roll data-en="Pricing">Preise</span></a>
+        <a href="contact.html" class="blink"><span class="roll" data-roll data-en="Contact">Kontakt</span></a>
+      </nav>
+      <div class="hdr__tools">
+        <a href="contact.html" class="btn btn--accent hdr__cta">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+        </a>
+        <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MENU SHEET (≤ 999px) ===== -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__panel">
+      <nav class="menu__list" aria-label="Menü">
+        <a href="services.html" class="menu__row" aria-current="true"><span data-en="Services">Leistungen</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="work.html" class="menu__row"><span data-en="Work">Projekte</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="index.html#preise" class="menu__row"><span data-en="Pricing">Preise</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="blog/index.html" class="menu__row"><span>Blog</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+        <a href="contact.html" class="menu__row"><span data-en="Contact">Kontakt</span><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </nav>
+      <div class="menu__foot">
+        <a href="contact.html" class="btn btn--accent">
+          <span data-en="Free Consultation">Kostenlose Beratung</span>
+        </a>
+        <a data-contact="call" href="tel:+4916095761094" class="btn menu__call">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg><span class="vh" data-en="Call">Anrufen</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="phero" data-nofog-cover>
+      <div class="wrap phero__wrap">
+        <nav class="crumb" aria-label="Brotkrumen">
+          <a href="index.html" data-en="Home">Start</a><span aria-hidden="true">/</span>
+          <a href="services.html" data-en="Services">Leistungen</a><span aria-hidden="true">/</span>
+          <span aria-current="page" data-en="Web Design">Webdesign</span>
+        </nav>
+        <div><h1 class="phero__title rv-lines" data-split data-drive data-en="Web design that leads visitors to the enquiry">Webdesign, das Besucher zur Anfrage führt</h1></div>
+        <div class="phero__lead-cover rv">
+          <p class="phero__lead" data-en="Websites, online shops and landing pages that fit your business: designed for you instead of taken from a template, clearly structured, and as good on a phone as on a desk.">Websites, Onlineshops und Landingpages, die zu Ihrem Betrieb passen: für Sie entworfen statt aus der Vorlage, klar gegliedert und auf dem Handy so gut wie am Schreibtisch.</p>
+        </div>
+        <div class="phero__foot rv">
+          <dl class="meta"><div><dt class="meta__k" data-en="Design">Entwurf</dt><dd class="meta__v" data-en="before any code">vor dem ersten Code</dd></div><div><dt class="meta__k" data-en="Templates">Vorlagen</dt><dd class="meta__v" data-en="none">keine</dd></div><div><dt class="meta__k" data-en="Price">Preis</dt><dd class="meta__v" data-en="fixed">Festpreis</dd></div></dl>
+          <div class="phero__actions">
+            <a href="contact.html" class="cta" data-cur="Los" data-cur-en="Go">
+              <span class="cta__txt" data-en="Advise me">Beraten Sie mich</span>
+              <span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHAT IS INCLUDED ===== -->
+    <section class="s">
+      <div class="wrap grid sec">
+        <div class="s__label">
+          <p class="tag" data-en="Included">Enthalten</p>
+          <div class="svc__fig svc__fig--label" aria-hidden="true"><svg viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="14" y="16" width="212" height="148"/><path d="M14 36h212"/>
+              <circle cx="25" cy="26" r="2.5"/><circle cx="35" cy="26" r="2.5"/><circle cx="45" cy="26" r="2.5"/>
+              <path d="M30 62h92M30 77h64" stroke-width="8"/><path d="M30 97h84M30 107h66"/>
+              <rect class="a" x="30" y="124" width="60" height="22" stroke="none"/>
+              <rect x="146" y="52" width="64" height="94"/><path d="M146 52l64 94M210 52l-64 94"/>
+              <path d="M134 36v128" stroke-dasharray="2 5"/>
+            </svg></div>
+        </div>
+        <div class="s__head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="What the design includes">Was zum Entwurf gehört</h2></div>
+        </div>
+        <ul class="rows rows--txt s__full">
+          <li class="row">
+            <span class="row__n" aria-hidden="true">01</span>
+            <div class="row__t"><h3 class="display d3" data-en="Made to measure">Entwurf nach Maß</h3></div>
+            <div class="row__d"><p data-en="No template, no page builder. Every page is designed for your business, your customers and your offers.">Kein Template, kein Baukasten. Jede Seite wird für Ihren Betrieb, Ihre Kunden und Ihre Angebote entworfen.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">02</span>
+            <div class="row__t"><h3 class="display d3" data-en="A clear path to the enquiry">Ein klarer Weg zur Anfrage</h3></div>
+            <div class="row__d"><p data-en="Phone, form or WhatsApp are within reach on every page. Nobody has to search for how to reach you.">Telefon, Formular oder WhatsApp sind auf jeder Seite in Reichweite. Niemand muss suchen, wie er Sie erreicht.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">03</span>
+            <div class="row__t"><h3 class="display d3" data-en="Phone first">Zuerst fürs Handy</h3></div>
+            <div class="row__d"><p data-en="Most local searches happen on the go. The layout is made for the small screen first and grows from there.">Die meisten lokalen Suchen passieren unterwegs. Das Layout entsteht zuerst für den kleinen Bildschirm und wächst dann mit.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">04</span>
+            <div class="row__t"><h3 class="display d3" data-en="Designed accessible">Barrierefrei gestaltet</h3></div>
+            <div class="row__d"><p data-en="Contrast, type sizes and controls to WCAG 2.2 are part of the design: no surcharge, and in line with the BFSG.">Kontraste, Schriftgrößen und Bedienung nach WCAG 2.2 sind Teil des Entwurfs: ohne Aufpreis und passend zum BFSG.</p></div>
+          </li>
+          <li class="row">
+            <span class="row__n" aria-hidden="true">05</span>
+            <div class="row__t"><h3 class="display d3" data-en="Texts and pictures with a plan">Texte und Bilder mit Plan</h3></div>
+            <div class="row__d"><p data-en="If texts or photos are missing, I guide you step by step, from draft texts to photo suggestions.">Fehlen Texte oder Fotos, begleite ich Sie Schritt für Schritt, von Textentwürfen bis zu Bildvorschlägen.</p></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT GOES ===== -->
+    <section class="s">
+      <div class="wrap grid sec">
+        <div class="s__label"><p class="tag" data-en="Process">Ablauf</p></div>
+        <div class="s__head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="From the first talk to the finished design">Vom Gespräch zum fertigen Entwurf</h2></div>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 01 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="First meeting">Erstgespräch</h3></div>
+            <div class="step__d"><p data-en="Free, by phone or at your place. We clarify goals, customers and scope.">Kostenlos, am Telefon oder bei Ihnen vor Ort. Wir klären Ziele, Kunden und Umfang.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 02 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Design">Entwurf</h3></div>
+            <div class="step__d"><p data-en="You see a design for the homepage and sub-pages before a single line of code is written.">Sie sehen einen Entwurf für Startseite und Unterseiten, bevor eine Zeile Code entsteht.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 03 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Refinement">Feinschliff</h3></div>
+            <div class="step__d"><p data-en="Changes are part of the process. We refine it together until it fits.">Anpassungen sind Teil des Prozesses. Wir verfeinern gemeinsam, bis es passt.</p></div>
+          </li>
+          <li class="step">
+            <span class="mono step__n" aria-hidden="true">[ 04 / 04 ]</span>
+            <div class="step__t"><h3 class="display d2" data-en="Build">Umsetzung</h3></div>
+            <div class="step__d"><p data-en="The agreed design is built by hand: fast, accessible and ready for Google.">Der abgestimmte Entwurf wird von Hand gebaut: schnell, barrierefrei und bereit für Google.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== A PROJECT THAT SHOWS IT ===== -->
+    <section class="s">
+      <div class="wrap grid sec">
+        <div class="s__label"><p class="tag" data-en="Reference">Referenz</p></div>
+        <div class="rows refs">
+          <a href="work-luxe-bouquets.html" class="row" data-cur="Ansehen" data-cur-en="View">
+            <span class="row__n" aria-hidden="true">01</span>
+            <div class="row__t"><h2 class="display">Luxe Bouquets</h2></div>
+            <div class="row__d"><span class="refs__num" data-en="+85%">+85 %</span><span class="refs__lbl" data-en="online orders">Online-Bestellungen</span></div>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COST ===== -->
+    <section class="s">
+      <div class="wrap grid sec">
+        <div class="s__label"><p class="tag" data-en="Cost">Kosten</p></div>
+        <div class="s__head head">
+          <div><h2 class="display d1 rv-lines" data-split data-en="What it costs">Was es kostet</h2></div>
+          <div class="rv"><p class="lead lead--wide" data-en-html="A one-pager costs &lt;span data-price=&quot;onepager&quot;&gt;€575&lt;/span&gt;, a website with several pages &lt;span data-price=&quot;website&quot;&gt;€695&lt;/span&gt;, an online shop &lt;span data-price=&quot;shop&quot;&gt;€1,295&lt;/span&gt;. You get a &lt;span class=&#x27;em&#x27;&gt;fixed-price quote&lt;/span&gt; before anything starts.">Ein Onepager kostet <span data-price="onepager">575 €</span>, eine Website mit mehreren Seiten <span data-price="website">695 €</span>, ein Onlineshop <span data-price="shop">1.295 €</span>. Sie bekommen ein <span class='em'>Festpreis-Angebot</span>, bevor irgendetwas beginnt.</p></div>
+          <a href="index.html#preise" class="btn"><span data-en="See the three packages">Die drei Pakete ansehen</span><svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="s" id="faq">
+      <div class="wrap grid faq">
+        <div class="faq__head">
+          <div><p class="tag" data-en="Questions">Fragen</p></div>
+          <div><h2 class="display d1 rv-lines" data-split data-en="Questions about Web Design">Fragen zu Webdesign</h2></div>
+        </div>
+        <div class="faq__list" data-faq>
+          <div class="faq-item is-open">
+            <button class="faq-item__q" type="button" aria-expanded="true" aria-controls="faq-panel-1" id="faq-trigger-1">
+              <span class="display d3" data-en="How long does a project take?">Wie lange dauert ein Projekt?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1">
+              <div class="faq-item__answer"><p data-en="Most small-business sites launch in 2–4 weeks. The exact timeline depends on scope and how quickly I get your content and feedback; you get a binding schedule with the quote.">Die meisten Websites für kleine Unternehmen gehen in 2–4 Wochen live. Der genaue Zeitplan hängt vom Umfang ab und davon, wie schnell ich Inhalte und Feedback erhalte; einen verbindlichen Zeitrahmen nenne ich Ihnen im Angebot.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2">
+              <span class="display d3" data-en="What do I need to get started?">Was brauche ich für den Start?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-2" role="region" aria-labelledby="faq-trigger-2">
+              <div class="faq-item__answer"><p data-en="Just your goals and any branding you already have (logo, photos, text). Don't have those yet? I'll guide you step by step, from draft texts to photo suggestions — many clients start from scratch.">Nur Ihre Ziele und vorhandenes Branding (Logo, Fotos, Texte). Noch nichts davon? Ich begleite Sie Schritt für Schritt, von Textentwürfen bis zu Bildvorschlägen — viele Kunden starten bei null.</p></div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3">
+              <span class="display d3" data-en="What is the difference between web design and web development?">Was ist der Unterschied zwischen Webdesign und Webentwicklung?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3">
+              <div class="faq-item__answer"><p data-en="Web design decides what a website looks like and how a visitor moves through it; web development is the code that makes it actually work. Design covers layout, typography, colour, imagery and the path from landing to enquiry. Development covers the HTML, CSS and JavaScript, loading speed, mobile behaviour, forms and hosting. At Vias Media both come from the same person, so nothing gets lost in handover — and every site is hand-coded rather than assembled in a page builder, which is why load times stay low and Lighthouse performance scores land in the 90s.">Webdesign entscheidet, wie eine Website aussieht und wie sich Besucher darin bewegen; Webentwicklung ist der Code, der sie tatsächlich funktionieren lässt. Zum Design gehören Layout, Typografie, Farben, Bildsprache und der Weg vom ersten Blick bis zur Anfrage. Zur Entwicklung gehören HTML, CSS und JavaScript, Ladezeit, Verhalten auf dem Handy, Formulare und Hosting. Bei Vias Media kommt beides aus einer Hand, sodass bei der Übergabe nichts verloren geht — und jede Seite wird handgeschrieben statt in einem Baukasten zusammengeklickt. Genau deshalb bleiben die Ladezeiten niedrig und die Lighthouse-Performance-Werte im 90er-Bereich.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PREVIOUS / NEXT SERVICE ===== -->
+    <nav class="pn" aria-label="Weitere Leistungen">
+      <a href="support.html" class="pn__cell" data-cur="Öffnen" data-cur-en="Open">
+        <span class="pn__dir" data-en="← Previous service">← Vorherige Leistung</span>
+        <span class="display pn__name" data-en="Ongoing Support">Laufender Support</span>
+      </a>
+      <a href="webentwicklung.html" class="pn__cell pn__cell--next" data-cur="Öffnen" data-cur-en="Open">
+        <span class="pn__dir" data-en="Next service →">Nächste Leistung →</span>
+        <span class="display pn__name" data-en="Web Development">Webentwicklung</span>
+      </a>
+    </nav>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="ftr" id="contact" data-nofog>
+    <div class="wrap">
+      <div class="grid ftr__cta">
+        <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
+        <div class="s__head">
+          <h2 class="display ftr__big rv-lines" data-split data-lines="mark" data-converge data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+        </div>
+        <div class="s__body ftr__actions rv">
+          <a href="contact.html" class="btn btn--lg btn--accent">
+            <span data-en="Start a Project">Projekt starten</span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+          </a>
+          <a href="services.html" class="btn btn--lg"><span data-en="View services">Leistungen ansehen</span></a>
+        </div>
+      </div>
+
+      <div class="ftr__lines">
+        <a class="ftr__line" href="tel:+4916095761094" data-cur="Anrufen" data-cur-en="Call"><span>+49 160 95761094</span></a>
+        <a class="ftr__line" href="mailto:mykhailo@viasmedia.com" data-cur="Schreiben" data-cur-en="Write"><span>mykhailo@viasmedia.com</span></a>
+      </div>
+
+      <div class="grid ftr__cols">
+        <div class="ftr__col ftr__col--nap">
+          <p class="tag">Vias Media</p>
+          <span data-en="Built for trades &amp; small businesses.">Für Handwerker &amp; kleine Unternehmen gemacht.</span>
+          <span>Robert-Koch-Str. 15, 17036 Neubrandenburg</span>
+        </div>
+        <nav class="ftr__col" aria-label="Leistungen">
+          <p class="tag" data-en="Services">Leistungen</p>
+          <a href="webdesign.html" data-en="Web Design">Webdesign</a>
+          <a href="webentwicklung.html" data-en="Development">Entwicklung</a>
+          <a href="seo.html">SEO</a>
+          <a href="beratung.html" data-en="Consulting">Beratung</a>
+          <a href="barrierefreiheit.html" data-en="Accessibility">Barrierefreiheit</a>
+          <a href="support.html">Support</a>
+          <a href="webagentur-neubrandenburg.html" data-en="Web Agency Neubrandenburg">Webagentur Neubrandenburg</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Unternehmen">
+          <p class="tag" data-en="Company">Unternehmen</p>
+          <a href="work.html" data-en="Work">Projekte</a>
+          <a href="blog/index.html">Blog</a>
+          <a href="contact.html" data-en="Contact">Kontakt</a>
+        </nav>
+        <nav class="ftr__col" aria-label="Anfrage">
+          <p class="tag" data-en="Connect">Verbinden</p>
+          <a href="contact.html" data-en="Start a project">Projekt starten</a>
+          <a href="contact.html" data-en="Get a quote">Angebot anfordern</a>
+          <a data-contact="whatsapp" href="https://wa.me/4916095761094">WhatsApp</a>
+        </nav>
+      </div>
+
+      <div class="ftr__word" aria-hidden="true">vias<span class="dot">.</span></div>
+    </div>
+    <div class="wrap ftr__legal">
+      <p class="mono"><span data-en="© 2026 Vias Media. All rights reserved.">© 2026 Vias Media. Alle Rechte vorbehalten.</span></p>
+      <nav aria-label="Rechtliches">
+        <a href="datenschutz.html" data-en="Privacy">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
+        <button type="button" data-cc-open data-en="Cookie settings">Cookie-Einstellungen</button>
+        <button class="lang-toggle lang-toggle--plain" type="button">
+          <span class="vh" data-en="Switch language:">Sprache wechseln:</span><span class="lang-cur">DE</span><span class="lang-sep">/</span><span class="lang-alt">EN</span>
+        </button>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n.js?v=20261009q" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
+  <script src="assets/js/v2/main.js?v=20261009q" defer></script>
+  <script src="assets/js/consent.js?v=20261009q" defer></script>
+</body>
+</html>
