@@ -119,6 +119,14 @@ Fallow is installed as a Claude Code skill (`fallow@fallow-skills`). It is a sta
 - **JS** — `middleware.js`, `api/**`, `assets/js/v2/main.js`: unused exports/files, duplication, complexity hotspots.
 - **CSS** — `assets/css/**`: unused selectors and duplicated rule blocks (Fallow's CSS layer).
 - It will **not** meaningfully cover inline HTML, the standalone `Vias Media (standalone).html` dump, or design fidelity. Don't expect dependency-graph results without a `package.json`.
+- **`.fallowrc.json` (added 2026-10-09) names the entry points:** the root HTML pages, the built blog pages,
+  `api/*.js` and `middleware.js`. Without it Fallow sees no entry point and reports every stylesheet and script
+  as an unused file. With it, an "unused file" is one that no page loads. The blog templates are ignored
+  (their relative paths only resolve after `build_blog.py` has written the pages). A new top-level page folder
+  needs a line in `entry`.
+- **Reading `health`:** the script files have no tests, so the CRAP score flags any function with five or more
+  branches; look at cyclomatic (> 20) and cognitive (> 15) instead. The top-level function of
+  `assets/js/v2/main.js` scores high by design: it is a flat list of "is this markup on the page?" guards.
 
 **Setup (once):** `npm install -g fallow` (frictionless CLI), or rely on `npx fallow …` per run. Verify with `fallow --version`.
 

@@ -1,0 +1,5 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": ["*.html", "blog/**/index.html", "api/*.js", "middleware.js"],
+  "ignorePatterns": ["content/_templates/**", ".playwright-mcp/**", "graphify-out/**"]
+}

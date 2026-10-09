@@ -21,3 +21,6 @@ IMPECCABLE.md
 PRODUCT.md
 docs/superpowers/
 .vercel
+
+# Fallow cache
+.fallow/
