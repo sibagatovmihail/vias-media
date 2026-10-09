@@ -246,6 +246,14 @@ Direction and reasoning: `docs/design-research/`.
   the title face is really in use (`cssIn()`, `faceActive()`, `settle()`). Safari runs a deferred script
   before a stylesheet that is not cached yet, and reports a font as loaded before it has arrived; both made
   titles break in the wrong places on the owner's iPhone. Do not go back to `document.fonts.ready`.
+- **Titles on touch devices are never cut into lines.** `splitLines()` only measures lines on fine pointers
+  (the line-by-line reveal on laptops). On phones and tablets a `[data-split]` title stays plain text inside
+  one `.pl` block, the browser wraps it, and it is uncovered as a whole (`clip-path`). Measured lines broke in
+  the wrong places on the owner's iPhone twice, the second time for a reason no test engine showed, so do not
+  bring measured lines back there. Lines the copy forces (`data-lines="dash"` on laptops, `data-lines="mark"`
+  in the footer) are not measured and stay. A measured line that does not fit its box falls back to `.pl`,
+  and a `ResizeObserver` re-measures when a title's box changes. A spaced dash is glued to the word before it
+  (`&nbsp;–`), so it never starts a line.
 - **Pressed states:** every hover state has an `:active` twin (blocks at the end of `components.css` and
   `pages.css`), because a finger has no hover. iOS only applies `:active` because `main.js` registers an
   empty `touchstart` listener.

@@ -200,15 +200,29 @@
     toks.forEach(function (t, i) { if (cut < 0 && /\bmark\b/.test(t.cls)) cut = i; });
     return cut > 0 ? [toks.slice(0, cut), toks.slice(cut)] : null;
   }
+  /* The title as plain text in one block: the browser wraps it, live, and it is
+     revealed as a whole. Nothing is measured, so nothing can go stale. */
+  function plainTitle(el) {
+    el.removeAttribute('aria-label');
+    /* a dash stays with the word before it and never starts a line */
+    el.innerHTML = '<span class="pl">' + el._src.replace(/ (?=[–—](?:\s|$))/g, '&nbsp;') + '</span>';
+    el.classList.remove('is-loose');
+    el.classList.add('is-ready');
+  }
   function splitLines(el) {
     if (el._src == null) el._src = el.innerHTML;
     el.innerHTML = el._src;
     el.style.fontSize = '';
     var toks = tokenize(el);
     if (!toks.length) return;
-    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
     var mode = el.getAttribute('data-lines');
     var forced = mode === 'mark' ? markLines(toks) : (mode === 'dash' && desktop.matches) ? dashLines(toks) : null;
+    /* Touch devices never get measured lines. On the owner's iPhone they broke in
+       the wrong places more than once, for reasons no test engine reproduced; a
+       line that is not frozen cannot be wrong. Lines the copy itself forces (the
+       two-line hero on laptops, the footer question) are not measured either. */
+    if (!forced && !finePointer) { plainTitle(el); return; }
+    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
     var lines = forced || measuredLines(el, toks);
     /* --i staggers the reveal; --dir (-1 / 1) lets lines travel in opposite directions */
     el.innerHTML = lines.map(function (ln, i) {
@@ -218,7 +232,10 @@
     if (forced && el.hasAttribute('data-fit')) fitLines(el);
     var wide = false;
     [].forEach.call(el.querySelectorAll('.ln'), function (ln) { if (ln.scrollWidth > ln.clientWidth + 1) wide = true; });
+    /* a measured line that does not fit its box was measured wrongly: give the title back to the browser */
+    if (wide && !forced) { plainTitle(el); return; }
     el.classList.toggle('is-loose', wide);
+    el._w = el.clientWidth;
     el.classList.add('is-ready');
   }
   /* scale the type so the longest line spans the full width (the top bar of the F) */
@@ -258,10 +275,32 @@
   var fillEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-fill]'));
   var rollEls = (reduced || !finePointer) ? [] : [].slice.call(document.querySelectorAll('[data-roll]'));
   function splitAll(fresh) {
-    lineEls.forEach(function (el) { if (fresh) el._src = null; splitLines(el); });
+    lineEls.forEach(function (el) {
+      /* fresh: the language script has rewritten the text. Where it has not (the
+         element still holds our own wrappers), the stored source stays; a plain
+         block may have been translated inside, so its content is the new source */
+      if (fresh) {
+        var pl = el.querySelector('.pl');
+        if (pl) el._src = pl.innerHTML; else if (!el.querySelector('.ln')) el._src = null;
+      }
+      splitLines(el);
+    });
     fillEls.forEach(function (el) { if (fresh) el._src = null; splitWords(el); });
     if (fresh) rollEls.forEach(function (el) { el._txt = null; });
     rollEls.forEach(splitRoll);
+  }
+
+  /* measured lines belong to one width: when a title's box changes without the
+     window changing (a late scrollbar, a container that settles), measure again */
+  if (finePointer && lineEls.length && 'ResizeObserver' in window) {
+    var lineT = 0;
+    var lineRO = new ResizeObserver(function () {
+      if (!booted) return;
+      if (!lineEls.some(function (el) { return el._w != null && Math.abs(el.clientWidth - el._w) > 1; })) return;
+      window.clearTimeout(lineT);
+      lineT = window.setTimeout(function () { splitAll(false); requestTick(); }, 80);
+    });
+    lineEls.forEach(function (el) { lineRO.observe(el); });
   }
 
   /* ---- Reveals: hidden only while JS is alive; <head> carries a no-JS-file failsafe ---- */
