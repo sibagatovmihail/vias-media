@@ -67,6 +67,9 @@
     });
   }
 
+  /* ---- Pressed states: iOS Safari only applies :active when something listens for touches ---- */
+  document.addEventListener('touchstart', function () {}, { passive: true });
+
   /* ---- Cookie settings link ---- */
   document.querySelectorAll('[data-cc-open]').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -293,7 +296,7 @@
      ===================================================================== */
   var hs = document.querySelector('[data-hs]');
   var hsc = null;
-  var HS_HOLD = 0.12, HS_DWELL = 0.12, HS_ZOOM = 1.15;
+  var HS_HOLD = 0.12, HS_DWELL = 0.12, HS_ZOOM = 1.15;   /* in screens of scroll; layoutHs shortens the zoom on phones */
   /* The next section's name as outlines of the title face (Bebas Neue), from
      tools/word-path.py. Live <text> in a clip path stops rendering in Chrome
      once it is magnified about ten times; outlines scale without limit.
@@ -313,7 +316,7 @@
       word: hs.querySelector('#hs-word'),
       img: hs.querySelector('#hs-img'),
       fade: hs.querySelector('.hs__mask-fade'),
-      pan: 0, speed: 1.5, x: -1, z: -1, geo: null
+      pan: 0, speed: 1.5, zoom: HS_ZOOM, x: -1, z: -1, geo: null
     };
     hs.classList.add('is-scene');
   }
@@ -328,13 +331,22 @@
     var bandH = band.height, bandCy = band.top - st.top + bandH / 2;
     hsc.svg.setAttribute('viewBox', '0 0 ' + W + ' ' + stageH);
     hsc.word.setAttribute('d', m.d);
-    var s = Math.min((W - 2 * M.margin) / m.w, 0.7 * bandH / m.h);   /* px per font unit: as wide as the row allows */
+    var fit = (W - 2 * M.margin) / m.w;                   /* px per font unit with the whole word across the row */
+    var mid = (m.f[0] + m.f[1]) / 2;                      /* the middle of the letter I, in font units */
+    var s = Math.min(fit, 0.7 * bandH / m.h), x0 = (W - m.w * s) / 2;
+    if (fit * m.h < 0.3 * bandH) {
+      /* phones: the whole word would be a thin strip in a tall row. It is set as
+         tall as the row allows instead and runs off the right edge; the row ends
+         with the letter I in the middle of the screen, and the zoom starts there */
+      s = Math.max(fit, Math.min(0.5 * bandH / m.h, (W / 2 - M.margin) / mid));
+      if (s > fit) x0 = W / 2 - mid * s;
+    }
     var stem = (m.f[1] - m.f[0]) * s;
     hsc.geo = {
       s: s, H: H,
-      x0: (W - m.w * s) / 2, y0: bandCy - m.h * s / 2,     /* the word's top left corner at rest */
-      cx: W / 2, cy: bandCy,                               /* its centre: the middle of the row */
-      fx: (W - m.w * s) / 2 + (m.f[0] + m.f[1]) / 2 * s,   /* the middle of the I: where the zoom ends up */
+      x0: x0, y0: bandCy - m.h * s / 2,                    /* the word's top left corner at rest */
+      cx: W / 2, cy: bandCy,                               /* where the zoom starts from: the middle of the row */
+      fx: x0 + mid * s,                                    /* the middle of the I: where the zoom ends up */
       kmax: 1.15 * Math.max(W / stem, 2 * (stageH - H / 2) / (m.h * s))
     };
     if (!hsc.img.getAttribute('href')) {
@@ -345,12 +357,13 @@
     if (!hsc) return;
     var V = vh();
     hsc.speed = window.innerWidth < 768 ? 1.8 : 1.5;      /* px of pan per px of scroll */
+    hsc.zoom = window.innerWidth < 768 ? 0.8 : HS_ZOOM;   /* phones: a shorter way into the photograph */
     hsc.track.style.transform = 'none';
     hsc.cell.style.width = hsc.vp.clientWidth + 'px';
     hsc.pan = Math.max(0, hsc.track.scrollWidth - hsc.vp.clientWidth);
     layoutMask();
     hsc.x = -1; hsc.z = -1;
-    hs.style.height = Math.round(hsc.stage.offsetHeight + (HS_HOLD + HS_DWELL + HS_ZOOM) * V + hsc.pan / hsc.speed) + 'px';
+    hs.style.height = Math.round(hsc.stage.offsetHeight + (HS_HOLD + HS_DWELL + hsc.zoom) * V + hsc.pan / hsc.speed) + 'px';
   }
   /* z: 0 → 1 zoom; ox: how far (px) the word still has to pan in from the right */
   function setZoom(z, ox) {
@@ -374,7 +387,7 @@
     var s = clamp(-r.top, 0, Math.max(0, r.height - stageH));
     var panLen = hsc.pan / hsc.speed;
     var x = clamp((s - HS_HOLD * V) * hsc.speed, 0, hsc.pan);
-    var z = clamp((s - HS_HOLD * V - panLen - HS_DWELL * V) / (HS_ZOOM * V), 0, 1);
+    var z = clamp((s - HS_HOLD * V - panLen - HS_DWELL * V) / (hsc.zoom * V), 0, 1);
     if (x === hsc.x && z === hsc.z) return;
     if (x !== hsc.x) hsc.track.style.transform = 'translate3d(' + (-x).toFixed(1) + 'px,0,0)';
     hsc.x = x; hsc.z = z;
@@ -422,10 +435,19 @@
   var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .case, .tail > .s'));
   /* a pinned block taller than the screen pins with its bottom edge on the
      screen's, so its last line (the button) is seen before the next sheet covers it */
-  function layoutCases() {
+  function layoutPins() {
     var V = vh();
     pinEls.forEach(function (el) { el._hold = 0; el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
+  }
+  function layoutCases() {
+    layoutPins();
     fitWords();
+  }
+  /* a pinned block that changes height later (an image arrives, the FAQ reserves its
+     tallest answer) gets its top again, or the next sheet would cover it too early */
+  if (pinEls.length && 'ResizeObserver' in window) {
+    var pinRO = new ResizeObserver(function () { layoutPins(); });
+    pinEls.forEach(function (el) { pinRO.observe(el); });
   }
   /* a word set as large as its box is wide (the ghost word behind the projects intro) */
   var fitEls = [].slice.call(document.querySelectorAll('[data-fitw]'));
@@ -584,15 +606,16 @@
     if (window.innerWidth === lastW) return;
     lastW = window.innerWidth;
     window.clearTimeout(resizeT);
-    resizeT = window.setTimeout(function () {
-      measure();
-      if (booted) splitAll(false);
-      layoutCases();
-      layoutHs();
-      reserveFaq();
-      requestTick();
-    }, 120);
+    resizeT = window.setTimeout(relayout, 120);
   });
+  function relayout() {
+    measure();
+    if (booted) splitAll(false);
+    reserveFaq();
+    layoutCases();
+    layoutHs();
+    requestTick();
+  }
 
   /* ---- FAQ: one open at a time; the list reserves the tallest open state ---- */
   var faq = document.querySelector('[data-faq]');
@@ -837,30 +860,69 @@
   /* ---- Boot (last: everything above is defined) ---- */
   function boot() {
     splitAll(false);
+    reserveFaq();
     layoutCases();
     layoutHs();
     startReveals();
-    reserveFaq();
     tick();
   }
-  /* wait for the display face so line breaks are measured with the real widths (capped) */
-  var booted = false;
-  function bootOnce() { if (booted) return; booted = true; boot(); }
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(bootOnce);
-    window.setTimeout(bootOnce, 1200);
-  } else {
-    bootOnce();
+  /* Line breaks and pinned heights are measured, so they are only right once the
+     stylesheets have applied and the title face is really in use. Neither can be
+     taken for granted in Safari: a deferred script may run before a stylesheet
+     that is not in the cache yet (titles were then measured at the wrong size),
+     and the Font Loading API reports a face as loaded before it has arrived (they
+     were measured in the fallback face). So both are tested by what they do: every
+     stylesheet link has its sheet, and a word set in the title face has a different
+     width than in the fallback. Everything is measured the moment both hold. */
+  var booted = false, fontT = 0;
+  function cssIn() {
+    return [].every.call(document.querySelectorAll('link[rel="stylesheet"]'), function (l) { return !!l.sheet; });
   }
-  /* late layout shifts (images, fonts): the scene length depends on real sizes */
-  window.addEventListener('load', function () { if (booted) { layoutCases(); layoutHs(); requestTick(); } });
+  function faceActive() {
+    var s = document.createElement('span');
+    s.style.cssText = 'position:absolute;left:-999em;top:0;font-size:80px;white-space:nowrap;visibility:hidden';
+    s.textContent = 'BESbswy 0123';
+    document.body.appendChild(s);
+    s.style.fontFamily = 'monospace';
+    var a = s.offsetWidth;
+    s.style.fontFamily = '"Bebas Neue", monospace';
+    var b = s.offsetWidth;
+    document.body.removeChild(s);
+    return a !== b;
+  }
+  /* measure now: the first time that is the boot, later it is a fresh layout */
+  function settle() {
+    if (!booted) { booted = true; boot(); return; }
+    window.clearTimeout(fontT);
+    fontT = window.setTimeout(relayout, 60);
+  }
+  /* look every 100ms (for at most 15s) until stylesheets and face are in, then measure */
+  function watch(tries) {
+    if (cssIn() && faceActive()) { settle(); return; }
+    if (tries > 0) window.setTimeout(function () { watch(tries - 1); }, 100);
+  }
+  if (cssIn() && faceActive()) {
+    settle();
+  } else {
+    if (document.fonts && document.fonts.forEach) {
+      document.fonts.forEach(function (f) { if (/Bebas Neue|Archivo/.test(f.family)) f.load().catch(function () {}); });
+    }
+    /* a slow font does not hold the page back for more than 1.2s; a missing stylesheet does */
+    window.setTimeout(function () { if (!booted && cssIn()) settle(); }, 1200);
+    watch(150);
+  }
+  if (document.fonts && document.fonts.addEventListener) {
+    document.fonts.addEventListener('loadingdone', function () { if (booted) settle(); });
+  }
+  /* everything has arrived (images too): the last word on every measured size */
+  window.addEventListener('load', settle);
   /* i18n rewrote the text: split the new copy, keep already-revealed state */
   document.addEventListener('vias:lang', function () {
     if (!booted) return;
     splitAll(true);
+    reserveFaq();
     layoutCases();
     layoutHs();
-    reserveFaq();
     requestTick();
   });
 })();

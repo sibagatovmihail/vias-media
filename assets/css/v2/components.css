@@ -35,22 +35,23 @@
   .btn:hover .ico-arrow { transform: translate(0.1875rem, -0.1875rem); }
 }
 
-/* the page's main action as a plain text link: words, an arrow, one hairline.
-   No box. (The owner asked for "smaller and simpler" than a display-type line.) */
+/* the page's main action as a plain text link: small lower-case words, an arrow,
+   one hairline. No box. (Owner: "smaller and simpler", then "smaller, in small
+   letters".) Also used for "all projects" under the project stack. */
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4375rem;
   min-height: var(--ctl-h);      /* still a full-size touch target */
   border-bottom: 1px solid currentColor;
-  font-size: 1.0625rem;
+  font-size: 0.875rem;
   font-weight: 550;
-  letter-spacing: -0.005em;
   line-height: 1;
+  text-transform: lowercase;
   white-space: nowrap;
 }
 .cta__ico { display: inline-flex; }
-.cta__ico svg { width: 0.875rem; height: 0.875rem; transition: transform var(--dur-base) var(--ease-out); }
+.cta__ico svg { width: 0.75rem; height: 0.75rem; transition: transform var(--dur-base) var(--ease-out); }
 @media (hover: hover) {
   .cta:hover { border-bottom-width: 2px; }
   .cta:hover .cta__ico svg { transform: translate(0.1875rem, -0.1875rem); }
@@ -211,8 +212,23 @@
   .burger span { left: 0.625rem; right: 0.625rem; }
 }
 
-@media (max-width: 30rem) {
+/* phones: no bar and no button, only the logo and the burger over the page.
+   A short scrim under them lets text that scrolls beneath fade out instead of
+   running into the logo. The sheet menu brings the solid ground back. */
+@media (max-width: 47.9375rem) {
+  .hdr,
+  .hdr.is-scrolled { background: transparent; border-bottom-color: transparent; }
+  .hdr::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -0.75rem 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(20, 19, 18, 0.94), rgba(20, 19, 18, 0.74) 62%, rgba(20, 19, 18, 0));
+  }
   .hdr__cta { display: none; }
+  .menu-open .hdr { background: var(--ground); }
+  .menu-open .hdr::before { display: none; }
 }
 @media (min-width: 62.5rem) {
   /* laptops: logo and the four links, nothing else (language lives in the
@@ -487,10 +503,12 @@ html:not(.js) .faq-item__icon { display: none; }
 /* The last section of a page can stand still while the footer slides over it:
    .tail wraps that section and adds one screen of travel; the footer starts that
    screen early. main.js pins the section by its bottom edge (it is usually taller
-   than the screen), so all of this waits for the script (.js, not .rv-fallback). */
+   than the screen), so all of this waits for the script (.js, not .rv-fallback).
+   The section is scrolled to its very end first and then holds for a quarter of
+   a screen (the extra 25 in the travel) before the footer starts to cover it. */
 .js:not(.rv-fallback) .tail { position: relative; z-index: 1; }
 .js:not(.rv-fallback) .tail > .s { position: sticky; top: 0; }
-.js:not(.rv-fallback) .tail::after { content: ""; display: block; height: calc(var(--vh, 1vh) * 100); }
+.js:not(.rv-fallback) .tail::after { content: ""; display: block; height: calc(var(--vh, 1vh) * 125); }
 .js:not(.rv-fallback) .ftr--over {
   z-index: 2;
   margin-top: calc(var(--vh, 1vh) * -100);
@@ -644,3 +662,26 @@ html:not(.js) .faq-item__icon { display: none; }
 .cc-link:hover { color: var(--ink); }
 .cc-title,
 .cc-modal__title { font-family: var(--font-sans); font-stretch: 125%; letter-spacing: -0.02em; }
+
+/* =====================================================================
+   Pressed states — what a finger gets instead of hover: the same change
+   the pointer sees, for as long as the finger is down. (iOS applies
+   :active only because main.js registers a touchstart listener.)
+   ===================================================================== */
+a,
+button { -webkit-tap-highlight-color: transparent; }
+.btn:active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+.btn--solid:active { background: transparent; color: var(--ink); }
+.cta:active { background: var(--ink); border-bottom-color: var(--ink); color: var(--ground); box-shadow: 0 0 0 0.5rem var(--ink); }
+.burger:active { background: var(--ink); color: var(--ground); }
+.lang-toggle:active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+a.row:active { color: var(--ground); }
+a.row:active::before { opacity: 1; }
+a.row:active .row__n,
+a.row:active .row__d p { color: inherit; }
+.faq-item__q:active { background: var(--ink); color: var(--ground); box-shadow: -0.75rem 0 0 var(--ink), 0.75rem 0 0 var(--ink); }
+.faq-item__q:active .faq-item__icon { border-color: currentColor; }
+.ftr__line:active { color: var(--ground); }
+.ftr__line:active::before { opacity: 1; }
+.ftr__col a:active,
+.ftr__col button:active { color: var(--ink); text-decoration-color: currentColor; }

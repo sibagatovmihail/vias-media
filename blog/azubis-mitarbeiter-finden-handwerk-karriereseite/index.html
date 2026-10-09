@@ -2,12 +2,13 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>document.documentElement.className="js";
-  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
-  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero.
+     It has to come after the viewport tag: before it an iPhone still reports a 980px wide page, and a height 2.5 times too large */
+  (function(){var d=document.documentElement,w=0;window.viasVH={px:0};function s(){w=window.innerWidth;window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}function c(){if(window.innerWidth!==w)s();}s();window.addEventListener('resize',c);document.addEventListener('DOMContentLoaded',c);window.addEventListener('pageshow',c);
   /* if main.js never arrives, nothing may stay hidden */
   window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Azubis & Mitarbeiter finden im Handwerk — Vias Media</title>
   <meta name="description" content="Über 16.000 Lehrstellen im Handwerk blieben 2025 unbesetzt. Wie eine Karriereseite mit Google for Jobs Bewerber aus der Region bringt – mit Checkliste für Betriebe in MV.">
   <link rel="canonical" href="https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite">
@@ -48,11 +49,11 @@
 
   <link rel="preload" href="../../assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../../assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../../assets/css/v2/tokens.css?v=20261009q">
-  <link rel="stylesheet" href="../../assets/css/v2/base.css?v=20261009q">
-  <link rel="stylesheet" href="../../assets/css/consent.css?v=20261009q">
-  <link rel="stylesheet" href="../../assets/css/v2/components.css?v=20261009q">
-  <link rel="stylesheet" href="../../assets/css/v2/pages.css?v=20261009q">
+  <link rel="stylesheet" href="../../assets/css/v2/tokens.css?v=20261009u">
+  <link rel="stylesheet" href="../../assets/css/v2/base.css?v=20261009u">
+  <link rel="stylesheet" href="../../assets/css/consent.css?v=20261009u">
+  <link rel="stylesheet" href="../../assets/css/v2/components.css?v=20261009u">
+  <link rel="stylesheet" href="../../assets/css/v2/pages.css?v=20261009u">
   <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite#article", "url": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite", "headline": "Azubis und Mitarbeiter finden: Warum Handwerksbetriebe eine Karriereseite brauchen", "name": "Azubis und Mitarbeiter finden: Warum Handwerksbetriebe eine Karriereseite brauchen", "description": "Über 16.000 Lehrstellen im Handwerk blieben 2025 unbesetzt. Wie eine Karriereseite mit Google for Jobs Bewerber aus der Region bringt – mit Checkliste für Betriebe in MV.", "datePublished": "2026-10-02", "dateModified": "2026-10-02", "author": {"@id": "https://viasmedia.com/#mykhailo"}, "publisher": {"@id": "https://viasmedia.com/#organization"}, "isPartOf": {"@id": "https://viasmedia.com/blog#blog"}, "image": {"@type": "ImageObject", "url": "https://viasmedia.com/assets/img/og/blog-default.png", "width": 1200, "height": 630}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite"}, "breadcrumb": {"@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite#breadcrumb"}, "articleSection": "Handwerk", "wordCount": 1067, "timeRequired": "PT5M", "inLanguage": "de-DE", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".post__lead", ".post__body h2", ".post__body p"]}}, {"@type": "Person", "@id": "https://viasmedia.com/#mykhailo", "name": "Mykhailo Sibahatov", "jobTitle": "Webdesigner und Webentwickler", "url": "https://viasmedia.com/", "worksFor": {"@id": "https://viasmedia.com/#organization"}, "knowsAbout": ["Webdesign", "Webentwicklung", "Lokales SEO", "Barrierefreiheit im Web", "Core Web Vitals"], "knowsLanguage": ["de", "en"]}, {"@type": "BreadcrumbList", "@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://viasmedia.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://viasmedia.com/blog"}, {"@type": "ListItem", "position": 3, "name": "Azubis und Mitarbeiter finden: Warum Handwerksbetriebe eine Karriereseite brauchen", "item": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite"}]}, {"@type": "FAQPage", "@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite#faq", "isPartOf": {"@id": "https://viasmedia.com/blog/azubis-mitarbeiter-finden-handwerk-karriereseite#article"}, "mainEntity": [{"@type": "Question", "name": "Wie finde ich als kleiner Handwerksbetrieb einen Azubi?", "acceptedAnswer": {"@type": "Answer", "text": "Kombinieren Sie die kostenlose Lehrstellenbörse der Handwerkskammer mit einer eigenen Karriereseite, die für „Beruf + Ausbildung + Ort\" gefunden wird, und bieten Sie Praktika und Probetage an. Entscheidend sind eine sichtbare Ausbildungsvergütung, echte Fotos aus dem Betrieb und eine Bewerbung, die auf dem Handy in zwei Minuten erledigt ist."}}, {"@type": "Question", "name": "Kostet Google for Jobs etwas?", "acceptedAnswer": {"@type": "Answer", "text": "Nein. Google nimmt Stellenanzeigen kostenlos in den Stellenbereich der Suche auf, wenn die Seite korrekt mit strukturierten Daten vom Typ JobPosting ausgezeichnet ist. Die Einrichtung ist einmaliger technischer Aufwand auf der Website."}}, {"@type": "Question", "name": "Sollte ich das Gehalt in der Stellenanzeige nennen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Eine Gehaltsspanne oder die Ausbildungsvergütung je Lehrjahr gehört zu den wichtigsten Angaben für Bewerber und ist eines der empfohlenen Felder für Google for Jobs. Neben einer Anzeige, die eine konkrete Zahl nennt, hat eine Anzeige ohne Gehaltsangabe einen klaren Nachteil."}}, {"@type": "Question", "name": "Brauche ich für jede Stelle eine eigene Seite?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, wenn die Stelle bei Google gefunden werden soll. Jede Stelle bekommt eine eigene Unterseite mit eigenem Titel, Ort und eigener JobPosting-Auszeichnung. Ist die Stelle besetzt, wird die Seite entfernt oder als besetzt markiert, damit Google sie aus dem Stellenbereich nimmt. Eine Karriereseite mit Google-for-Jobs-Auszeichnung baue ich als Teil jeder Handwerker-Website oder als Ergänzung zu Ihrer bestehenden Seite. Fragen Sie das unverbindlich an."}}]}]}</script>
 </head>
@@ -109,7 +110,7 @@
       </nav>
       <div class="menu__foot">
         <a href="../../contact.html" class="btn btn--accent">
-          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <span data-en="Advise me">Beraten Sie mich</span>
         </a>
         <a data-contact="call" href="tel:+4916095761094" class="btn menu__call">
           <svg aria-hidden="true"><use href="#i-phone"/></svg><span class="vh" data-en="Call">Anrufen</span>
@@ -312,9 +313,9 @@
     </div>
   </footer>
 
-  <script src="../../assets/js/i18n.js?v=20261009q" defer></script>
+  <script src="../../assets/js/i18n.js?v=20261009u" defer></script>
   <script src="../../assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="../../assets/js/v2/main.js?v=20261009q" defer></script>
-  <script src="../../assets/js/consent.js?v=20261009q" defer></script>
+  <script src="../../assets/js/v2/main.js?v=20261009u" defer></script>
+  <script src="../../assets/js/consent.js?v=20261009u" defer></script>
 </body>
 </html>

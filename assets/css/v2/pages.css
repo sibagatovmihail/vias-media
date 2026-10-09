@@ -771,3 +771,23 @@ html:not(.js) .quiz__done { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .phero { position: relative; top: auto; }
 }
+
+/* pressed states (touch): the same change the pointer sees on hover */
+.crumb a:active { color: var(--ink); text-decoration-color: currentColor; }
+.duo__item:active { color: var(--ground); }
+.duo__item:active::before { opacity: 1; }
+.duo__item:active p { color: inherit; }
+.refs a.row:active .refs__lbl { color: inherit; }
+.wk:active .wk__media { border-color: var(--ink); }
+.wk:active .btn { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+.pn__cell:active { color: var(--ground); }
+.pn__cell:active::before { opacity: 1; }
+.pn__cell:active .pn__dir { color: inherit; }
+.gal__btn:not(:disabled):active { background: var(--ink); color: var(--ground); }
+.tile:not([aria-checked="true"]):active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+.blog-card:active { color: var(--ground); }
+.blog-card:active::before { opacity: 1; }
+.blog-card:active .t-body,
+.blog-card:active .t-label-md,
+.blog-card:active .blog-card__meta { color: inherit; }
+.post__cta .btn:active { background: transparent; border-color: #161514; color: #161514; }

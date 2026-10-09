@@ -24,3 +24,6 @@ docs/superpowers/
 
 # Fallow cache
 .fallow/
+
+# browser-test scratch (screenshots, harness pages, design-canvas exports)
+.playwright-mcp/

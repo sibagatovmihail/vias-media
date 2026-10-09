@@ -2,12 +2,13 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>document.documentElement.className="js";
-  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero */
-  (function(){var d=document.documentElement,w=window.innerWidth;window.viasVH={px:window.innerHeight};function s(){window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}s();window.addEventListener('resize',function(){if(window.innerWidth!==w){w=window.innerWidth;s();}});
+  /* one frozen viewport unit (refreshed on width change only): iOS Safari's toolbar never resizes the hero.
+     It has to come after the viewport tag: before it an iPhone still reports a 980px wide page, and a height 2.5 times too large */
+  (function(){var d=document.documentElement,w=0;window.viasVH={px:0};function s(){w=window.innerWidth;window.viasVH.px=window.innerHeight;d.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}function c(){if(window.innerWidth!==w)s();}s();window.addEventListener('resize',c);document.addEventListener('DOMContentLoaded',c);window.addEventListener('pageshow',c);
   /* if main.js never arrives, nothing may stay hidden */
   window.setTimeout(function(){if(!window.viasReady)d.classList.add('rv-fallback');},2500);})();</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-en="Website Support in Neubrandenburg: Ongoing Care | Vias Media">Website-Betreuung in Neubrandenburg: laufender Support | Vias Media</title>
   <meta name="description" content="Updates, Inhaltsänderungen und Fehlerbehebungen nach dem Launch, mit einem festen Ansprechpartner. Die Betreuung ist optional: Die Website gehört Ihnen." data-en="Updates, content changes and fixes after launch, with one fixed contact. Support is optional: the website belongs to you.">
   <link rel="canonical" href="https://viasmedia.com/support.html">
@@ -42,11 +43,11 @@
 
   <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261009q">
-  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261009q">
-  <link rel="stylesheet" href="assets/css/consent.css?v=20261009q">
-  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261009q">
-  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261009q">
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261009u">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261009u">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261009u">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261009u">
+  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261009u">
   <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
   <script type="application/ld+json">
 {
@@ -172,7 +173,7 @@
       </nav>
       <div class="menu__foot">
         <a href="contact.html" class="btn btn--accent">
-          <span data-en="Free Consultation">Kostenlose Beratung</span>
+          <span data-en="Advise me">Beraten Sie mich</span>
         </a>
         <a data-contact="call" href="tel:+4916095761094" class="btn menu__call">
           <svg aria-hidden="true"><use href="#i-phone"/></svg><span class="vh" data-en="Call">Anrufen</span>
@@ -416,9 +417,9 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n.js?v=20261009q" defer></script>
+  <script src="assets/js/i18n.js?v=20261009u" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="assets/js/v2/main.js?v=20261009q" defer></script>
-  <script src="assets/js/consent.js?v=20261009q" defer></script>
+  <script src="assets/js/v2/main.js?v=20261009u" defer></script>
+  <script src="assets/js/consent.js?v=20261009u" defer></script>
 </body>
 </html>

@@ -96,7 +96,7 @@
 .ghost {
   position: absolute;
   left: -0.02em;
-  top: calc(var(--hdr-h) - 0.06em);
+  top: calc(var(--hdr-h) + 0.05em);     /* clear of the header: the word starts under it, not behind it */
   font-family: var(--font-display);
   font-size: 27vw;           /* main.js fits it to the width (data-fitw); this is the fallback */
   line-height: 0.8;
@@ -111,9 +111,10 @@
 /* Every case is at least one screen high and holds for a stretch (--case-hold)
    before the next one starts to cover it: the visitor gets to the end of a
    project first. The hold is the case's bottom margin; a pinned case covers the
-   screen, so that gap is never seen. */
+   screen, so that gap is never seen. The last case is covered like the others:
+   the list is one screen longer than its cases, and what follows the section
+   starts one screen early and slides over it. */
 .cases { --case-hold: calc(var(--vh, 1vh) * 45); }
-.cases__intro { margin-bottom: calc(var(--case-hold) * 0.5); }
 .case {
   position: relative;
   display: flex;
@@ -123,16 +124,20 @@
   background: var(--ground);
   border-top: 1px solid var(--line-soft);
 }
-.case:not(:last-child) { margin-bottom: var(--case-hold); }
 /* main.js gives a case that is taller than the screen a negative top, so it
    pins once its last line is on screen */
 @media (min-height: 37.5rem) {
   .cases__intro,
   .case { position: sticky; top: 0; }
+  .cases__intro { margin-bottom: calc(var(--case-hold) * 0.5); }
+  .case { margin-bottom: var(--case-hold); }
+  .cases__list::after { content: ""; display: block; height: calc(var(--vh, 1vh) * 100); }
+  .reel-more { margin-top: calc(var(--vh, 1vh) * -100); }
 }
-/* phones: two views of the site, each whole and at its own ratio; the story under them */
+/* phones: one view of the site, whole and at its own ratio, the story under it.
+   Tablets show a second view beside it; laptops use it as the backdrop. */
 .case__media { position: relative; display: grid; gap: 0.375rem; padding: var(--margin) var(--margin) 0; }
-.case__bg { order: 2; width: 100%; height: auto; border: 1px solid var(--line); background: var(--ground-2); }
+.case__bg { display: none; order: 2; width: 100%; height: auto; border: 1px solid var(--line); background: var(--ground-2); }
 .case__frame { border: 1px solid var(--line); background: var(--ground-2); }
 .case__frame img { width: 100%; height: auto; }
 .case__body {
@@ -149,7 +154,7 @@
 .case__body .btn { margin-top: 0.5rem; }
 @media (min-width: 37.5rem) and (max-width: 62.4375rem) {
   .case__media { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* tablets: the two views side by side */
-  .case__bg { order: 0; }
+  .case__bg { display: block; order: 0; }
 }
 
 @media (min-width: 62.5rem) {
@@ -166,6 +171,7 @@
   }
   /* a second view of the same site, pushed back until it is only atmosphere */
   .case__bg {
+    display: block;
     position: absolute;
     inset: 0;
     width: 100%;
@@ -508,6 +514,7 @@
 @media (hover: hover) {
   .pcard--free .btn:hover { background: transparent; border-color: #161514; color: #161514; }
 }
+.pcard--free .btn:active { background: transparent; border-color: #161514; color: #161514; }
 @media (min-width: 37.5625rem) {
   .pricing__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -523,7 +530,9 @@
   .pricing-sec { position: relative; top: auto; }
   .pricing__img { position: absolute; height: 100%; }
   .cases__intro,
-  .case:not(:last-child) { margin-bottom: 0; }
+  .case { margin-bottom: 0; }
+  .cases__list::after { display: none; }
+  .reel-more { margin-top: 0; }
   .under { margin-top: 0; }
   .under::after { display: none; }
   .under__anchor { top: calc(var(--hdr-h) + 1rem); }

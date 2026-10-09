@@ -200,8 +200,11 @@ Direction and reasoning: `docs/design-research/`.
   does not work on iOS). Text directly on the photograph is `--ink`, never `--ink-2`: the file is darkened so
   ink keeps 4.6:1 on its brightest band. Cards are slightly see-through.
 - **Footer over the last section:** wrap a page's last section in `.tail` and the footer gets `ftr--over`
-  (sync-chrome sets it): the section stands still at its end while the footer slides over it. Used on the
-  homepage, services and landing page (all end in the FAQ). It waits for the script (`.js:not(.rv-fallback)`).
+  (sync-chrome sets it): the section is scrolled to its very end, holds for a quarter of a screen, and only
+  then the footer slides over it (owner, 2026-10-09: "let him scroll to the end of the section and only then
+  transition"). Used on the homepage, services and landing page (all end in the FAQ). It waits for the script
+  (`.js:not(.rv-fallback)`). `main.js` pins the section by its bottom edge and a `ResizeObserver` keeps that
+  top current when the section changes height.
 - **Scroll-linked entrances are slow:** the closing headline's halves travel 16vw with a fade, spread over
   0.6 of a screen, with inertia (`convStep()`). The owner called the earlier fast 70vw fly-in unprofessional.
 - **Section flow:** every section is an opaque sheet (`.s` has the ground colour and `z-index: 1`). Pinned
@@ -209,34 +212,56 @@ Direction and reasoning: `docs/design-research/`.
   `position: sticky; top: 0` (CSS only). Pricing does the opposite: `.under` starts one screen before Services
   ends, so Services (higher `z-index`) lifts off it. A new section must be opaque or it shows what is pinned
   underneath.
-- **Hero:** frozen `--vh` set inline in `<head>`; the hero is exactly one screen, laid out as an F: title
-  across the top, note on the left, one action bottom right. That action is `.cta`: a small plain text link
-  ("Beraten Sie mich", an arrow, one hairline), not a button box (owner, 2026-10-09: "remove this default
-  button look", then "smaller and simpler"). The service pages use the same `.cta`. From 62.5rem the title is forced onto two lines
+- **Hero:** frozen `--vh` set inline in `<head>`, **in a script that comes after the viewport tag**. Before
+  that tag an iPhone still reports a 980px wide page and a height about 2.5 times too large; every pinned
+  scene was then far too long on phones (found 2026-10-09). The hero is exactly one screen, laid out as an F:
+  title across the top, note on the left, one action bottom right. That action is `.cta`: a small lower-case
+  text link (14px, `text-transform: lowercase`, an arrow, one hairline), not a button box (owner, 2026-10-09:
+  "remove this default button look", "smaller and simpler", then "smaller, in small letters"). The service
+  pages and "alle projekte ansehen" use the same `.cta`. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
   lines in DE and EN at 320–1920px after any copy or size change.
-- **Projects:** `.cases`. The ghost word behind the intro is fitted to the width (`data-fitw`). Every case is
-  at least one screen and **holds** before the next one covers it: the hold is the case's bottom margin
-  (`--case-hold`), which is never seen because a pinned case covers the screen. Laptops: blurred dark backdrop
-  (`.case__bg`) on the left with the screenshot gliding through it (`--cy`, `updateCases()`), story top right.
-  Phones: both screenshots stacked, each whole at its own ratio (never `object-fit: cover`); tablets: side by side.
+- **Projects:** `.cases`. The ghost word behind the intro is fitted to the width (`data-fitw`) and starts
+  below the header, not behind it. Every case is at least one screen and **holds** before the next one covers
+  it: the hold is the case's bottom margin (`--case-hold`), which is never seen because a pinned case covers
+  the screen. **The last case is covered too:** the list is one screen longer than its cases
+  (`.cases__list::after`) and what follows (`.reel-more`, then the next section) starts one screen early.
+  Laptops: blurred dark backdrop (`.case__bg`) on the left with the screenshot gliding through it (`--cy`,
+  `updateCases()`), story top right. Phones: **one** screenshot, whole at its own ratio (never
+  `object-fit: cover`); tablets: two side by side.
 - **Word mask ("So arbeite ich" → Services):** the next section's name is the **last thing in the row of
   panels** (an empty cell, `.hs__wordcell`, keeps its place; the word is drawn over it in an SVG covering the
   stage). It pans in with the cards; when the row is at its end the word grows from that place into its
-  letter I until the photograph is the screen (`updateHs()`, `setZoom()`). The letters are **outlines** in an SVG clip path (`MASK_WORDS` in `main.js`),
+  letter I until the photograph is the screen (`updateHs()`, `setZoom()`). On phones and upright tablets the
+  whole word would be a thin strip, so it is set as tall as the row allows and runs off the right edge; the
+  row ends with the I in the middle of the screen and the zoom starts there (owner: "taller, never mind
+  seeing the whole word"); the zoom is shorter there (0.8 of a screen). The letters are **outlines** in an SVG clip path (`MASK_WORDS` in `main.js`),
   not live text: Chrome stops drawing `<text>` in a clip path beyond about 10× magnification. If the section
   is renamed, regenerate both languages with `python3 tools/word-path.py WORD I` (needs fontTools + brotli).
 - **Motion:** Lenis on fine pointers only. Every scene has a static default and a `prefers-reduced-motion`
   path (nothing pinned, no mask). Scroll-driven values: `--drive` (hero lines part), `--cy` (case
   screenshots), the hs scene, `--conv` (the footer question's two halves come in from the sides and meet).
   Content hidden for reveals must stay covered by the `rv-fallback` failsafe in `<head>`.
+- **Start-up order (`main.js`, end of file):** nothing is measured before the stylesheets have applied and
+  the title face is really in use (`cssIn()`, `faceActive()`, `settle()`). Safari runs a deferred script
+  before a stylesheet that is not cached yet, and reports a font as loaded before it has arrived; both made
+  titles break in the wrong places on the owner's iPhone. Do not go back to `document.fonts.ready`.
+- **Pressed states:** every hover state has an `:active` twin (blocks at the end of `components.css` and
+  `pages.css`), because a finger has no hover. iOS only applies `:active` because `main.js` registers an
+  empty `touchstart` listener.
+- **Testing phones:** Chromium with a resized window does **not** reproduce iPhone behaviour (viewport tag,
+  script and font timing). Use the WebKit scripts in `.playwright-mcp/wk/` (untracked): `run.js` scrolls a
+  page on an iPhone profile and takes screenshots, `sweep.js` checks ten pages on four devices with slow
+  fonts, `csweep.js` is the 13-width Chromium sweep.
 - **Performance rules learned on this page:** no `mix-blend-mode` and no `backdrop-filter` on full-screen fixed
   layers beyond the two fog strips; hover states change `opacity`/`transform` of a layer, text colour switches
   in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
 - **Header:** ≥ 62.5rem logo and four links (letter-roll hover), nothing else: no CTA, no language switch, no
-  theme switch. Below that: logo, CTA (hidden ≤ 30rem), burger. The language switch lives only in the footer
-  bar. Phone menu foot: the call button is an icon in a square on the left, the main action beside it
-  (`flex-direction: row-reverse`).
+  theme switch. Tablets (48–62.5rem): logo, CTA, burger on the solid bar. **Phones (< 48rem): logo and burger
+  only, no bar** (owner, 2026-10-09); a short gradient under them lets text that scrolls beneath fade out,
+  and the solid ground comes back while the menu is open. The language switch lives only in the footer
+  bar. Phone menu foot: the call button is an icon in a square on the left, the main action
+  ("Beraten Sie mich") beside it (`flex-direction: row-reverse`).
 - **Sub-pages** (all in `pages.css`):
   - `.phero`: one-screen page hero with the homepage's F layout (title top, note left, foot row with facts
     left and action right), pinned so the first section slides over it. `.phero--short` for text pages
