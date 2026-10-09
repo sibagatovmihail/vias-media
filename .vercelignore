@@ -8,6 +8,9 @@
 
 # Agent / tooling artifacts — never part of the site
 .claude
+.playwright-mcp
+.fallowrc.json
+tools
 .fallow
 .impeccable
 .graphifyignore
