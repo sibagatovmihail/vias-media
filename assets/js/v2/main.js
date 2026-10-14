@@ -257,17 +257,15 @@
     el._words = el.querySelectorAll('.w');
     el._on = -1;
   }
-  /* letter roll (header links): the link keeps its name for assistive tech */
+  /* word roll (header links): the word is one cube that turns as a whole; the link
+     keeps its name for assistive tech */
   function splitRoll(el) {
     var text = (el._txt != null ? el._txt : el.textContent).replace(/\s+/g, ' ').trim();
     el._txt = text;
     var link = el.closest('a, button');
     if (link) link.setAttribute('aria-label', text);
     el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = text.split('').map(function (c, i) {
-      var ch = c === ' ' ? ' ' : c;
-      return '<span class="ch" data-c="' + esc(ch) + '" style="--c:' + i + '">' + esc(ch) + '</span>';
-    }).join('');
+    el.innerHTML = '<span class="ch" data-c="' + esc(text) + '">' + esc(text) + '</span>';
     el.classList.add('is-split');
   }
   /* a word whose letters rise one by one (the service pages' masthead) */
@@ -543,8 +541,11 @@
      Cranes. Every flight is new (owner: "too slow and too repetitive …
      as if they weren't alive"): one to three birds at different depths
      (nearer = bigger, brighter, faster), crossing in 9–14 s at their own
-     height inside the flock's band. Each bird beats its wings in bursts
-     and glides in between, climbs a little while it beats and sinks while
+     height inside the flock's band. Each bird beats its wings in bursts,
+     flutters now and then and glides in between; every beat has its own
+     depth and pace, the downstroke is quicker than the upstroke, the tips
+     sweep forward on the way down and trail on the way up, and the far
+     wing runs a little out of step. It climbs while it beats, sinks while
      it glides, sways in a slow wave and pitches with its climb. Only the
      transforms of four elements per bird change. The loop runs only while
      the flock can be seen (not under a covered hero, not in a closed
@@ -583,27 +584,50 @@
         b.x = -b.w * 1.15 - (i ? rand(0.25, 0.9) * base : 0);      /* the others start behind */
         b.yb = clamp(y0 + (i ? rand(-0.11, 0.11) * H : 0), H * (bandA - 0.06), H * (bandB + 0.04));
         b.vy = 0; b.y = b.yb;
-        b.ph = rand(0, 6.283); b.f = rand(1.25, 1.7);
-        b.amp = 1; b.flap = true; b.until = rand(1.2, 3.5);
+        b.ph = rand(0, 6.283); b.f = rand(1.25, 1.7); b.pace = 1;
+        b.amp = 1; b.mode = 'beat'; b.until = rand(1.2, 3.5);
+        b.d = 1; b.dT = 1; b.cyc = -1; b.pw = 1; b.fo = rand(0, 0.45);
+        b.gp = 0.2; b.gf = -0.16;
         b.wave = rand(5, 13) * z; b.wf2 = rand(0.18, 0.32); b.wp = rand(0, 6.283);
         b.o = 0.22 + 0.32 * z;
         b.el.style.width = b.w + 'px';
         b.el.style.opacity = b.o.toFixed(2);
       });
     };
+    /* the wing's height through one beat: 1 = up, -1 = down. The downstroke takes
+       42 % of the beat, the upstroke the rest (a bird pushes down fast, recovers slowly) */
+    var stroke = function (ph) {
+      var u = (ph / 6.283) % 1;
+      if (u < 0) u += 1;
+      return u < 0.42 ? Math.cos(Math.PI * u / 0.42) : Math.cos(Math.PI + Math.PI * (u - 0.42) / 0.58);
+    };
+    var setMode = function (b) {
+      var r = Math.random();
+      b.mode = b.mode !== 'glide' && r < 0.4 ? 'glide' : (r > 0.9 ? 'flutter' : 'beat');
+      if (b.mode === 'glide') { b.until = rand(0.7, 2.2); b.gp = rand(0.02, 0.4); b.gf = rand(-0.28, -0.08); }
+      else if (b.mode === 'flutter') { b.until = rand(0.5, 1.1); b.f = rand(2.3, 2.9); }
+      else { b.until = rand(1.4, 4); b.f = rand(1.2, 1.75); }
+    };
     var step = function (b, dt, t) {
-      /* bursts of beats, then a glide */
+      /* beats, quick shallow flutters and glides follow each other at random */
       b.until -= dt;
-      if (b.until <= 0) {
-        b.flap = !b.flap || Math.random() < 0.25;
-        b.until = b.flap ? rand(1.4, 4) : rand(0.7, 2);
-        if (b.flap) b.f = rand(1.25, 1.7);
+      if (b.until <= 0) setMode(b);
+      var flap = b.mode !== 'glide';
+      b.amp += ((flap ? 1 : 0) - b.amp) * Math.min(1, dt * 3.2);
+      /* every beat gets its own depth and pace; now and then a deep one */
+      var cyc = Math.floor(b.ph / 6.283);
+      if (cyc !== b.cyc) {
+        b.cyc = cyc;
+        b.dT = b.mode === 'flutter' ? rand(0.45, 0.65) : (Math.random() < 0.12 ? rand(1.12, 1.25) : rand(0.72, 1.06));
+        b.pace = rand(0.9, 1.12);
       }
-      b.amp += ((b.flap ? 1 : 0) - b.amp) * Math.min(1, dt * 3.2);
-      b.ph += 6.283 * b.f * dt * (0.35 + 0.65 * Math.max(b.amp, 0.2));
-      var c = Math.cos(b.ph);
+      b.d += (b.dT - b.d) * Math.min(1, dt * 7);
+      b.ph += 6.283 * b.f * b.pace * dt * (0.35 + 0.65 * Math.max(b.amp, 0.2));
+      var pw = stroke(b.ph), pf = stroke(b.ph - b.fo);
+      var vel = dt ? (pw - b.pw) / dt : 0;
+      b.pw = pw;
       /* climb while beating, sink while gliding, a slow wave on top; held inside the band */
-      var lift = b.amp * 14 - (1 - b.amp) * 12;
+      var lift = b.amp * 14 * b.d - (1 - b.amp) * 12;
       b.vy += ((-lift) - b.vy) * Math.min(1, dt * 1.5);
       b.yb += b.vy * dt * b.z;
       var lo = H * (bandA - 0.08), hi = H * (bandB + 0.06);
@@ -612,14 +636,17 @@
       var wave = Math.sin(t * b.wf2 * 6.283 + b.wp) * b.wave;
       var dyw = Math.cos(t * b.wf2 * 6.283 + b.wp) * b.wave * b.wf2 * 6.283;
       b.x += b.v * dt;
-      var pitch = clamp(Math.atan2(b.vy * b.z + dyw, b.v) * 57.3, -9, 9) + b.amp * c * 1.2;
+      var pitch = clamp(Math.atan2(b.vy * b.z + dyw, b.v) * 57.3, -9, 9) + b.amp * pw * 1.2 * b.d;
       b.el.style.transform = 'translate3d(' + b.x.toFixed(1) + 'px,' + (b.yb + wave).toFixed(1) + 'px,0) rotate(' + pitch.toFixed(2) + 'deg)';
-      /* wings: up at cos 1, down at cos -1; gliding holds them out, a little raised */
-      var near = b.amp * (0.1 + 0.9 * c) + (1 - b.amp) * 0.2;
-      var far = b.amp * (0.075 - 0.625 * c) + (1 - b.amp) * -0.16;
-      b.wn.style.transform = 'scaleY(' + near.toFixed(3) + ')';
-      b.wf.style.transform = 'translate(22px,-4px) scale(0.8,' + far.toFixed(3) + ')';
-      b.bob.style.transform = 'translateY(' + (b.amp * 3 * c).toFixed(2) + 'px)';
+      /* gliding holds the wings out at this glide's height, with a slight tremble */
+      var tremble = (1 - b.amp) * Math.sin(t * 9 + b.wp) * 0.035;
+      var near = b.amp * (0.1 + 0.9 * pw * b.d) + (1 - b.amp) * (b.gp + tremble);
+      var far = b.amp * (0.075 - 0.625 * pf * b.d) + (1 - b.amp) * (b.gf - tremble);
+      /* the tips sweep forward on the way down and trail on the way up */
+      var sweep = clamp(vel * 0.8 * b.amp, -12, 12);
+      b.wn.style.transform = 'skewX(' + sweep.toFixed(2) + 'deg) scaleY(' + clamp(near, -1, 1.2).toFixed(3) + ')';
+      b.wf.style.transform = 'translate(22px,-4px) skewX(' + (sweep * 0.7).toFixed(2) + 'deg) scale(0.8,' + clamp(far, -0.8, 0.85).toFixed(3) + ')';
+      b.bob.style.transform = 'translateY(' + (b.amp * 3 * pw * b.d).toFixed(2) + 'px)';
       return b.x < W + b.w * 0.2;
     };
     var visible = function () {

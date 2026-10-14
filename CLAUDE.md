@@ -228,12 +228,15 @@ Direction and reasoning: `docs/design-research/`.
   title across the top, note on the left, one action bottom right. That action is `.cta`: a small lower-case
   text link (14px, `text-transform: lowercase`, an arrow) in `--accent-2`, no box and no underline (owner,
   2026-10-09: "remove this default button look", "smaller and simpler", "smaller, in small letters";
-  2026-10-14: gold, "the underline deleted"). The service pages and "alle projekte ansehen" use the same
+  2026-10-14: gold, "the underline deleted"). On hover (and press) a gold fill sweeps in from the left behind
+  the words, they turn dark and the arrow runs on ("more feedback on hover"). The service pages and "alle projekte ansehen" use the same
   `.cta`. Behind the hero cranes fly from left to right (`.flock`, components.css), drawn after an old print
   of whooping cranes the owner chose (white bodies, dark outlined primaries). `initFlock()` (main.js) flies
   them and every flight is new (owner: the looping version was "too slow and too repetitive … as if they
   weren't alive"): one to three birds at different depths, 9–14 s per crossing, wing beats in bursts with
-  glides between, climbing while beating and sinking while gliding, a slow wave and pitch. The loop runs only
+  glides between and the odd quick flutter; every beat has its own depth and pace, the downstroke is quicker
+  than the upstroke, the tips sweep forward and trail back, the far wing runs a little out of step ("more
+  variation in the wings"); climbing while beating and sinking while gliding, a slow wave and pitch. The loop runs only
   while the flock can be seen; under reduced motion the birds rest in the print's pose. The flight band is
   `--band-a` / `--band-b` on the `.flock`. The "sent" dialog has its own small flock. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
@@ -283,7 +286,7 @@ Direction and reasoning: `docs/design-research/`.
 - **Performance rules learned on this page:** no `mix-blend-mode` and no `backdrop-filter` on full-screen fixed
   layers beyond the two fog strips; hover states change `opacity`/`transform` of a layer, text colour switches
   in one step; `will-change` only under `.is-near` (set while a scene is within a screen of the viewport).
-- **Header:** ≥ 62.5rem logo and four links (letter-roll hover), nothing else: no CTA, no language switch, no
+- **Header:** ≥ 62.5rem logo and four links (word-roll hover: the whole word turns as one cube, owner 2026-10-14), nothing else: no CTA, no language switch, no
   theme switch. Tablets (48–62.5rem): logo, CTA, burger on the solid bar. **Phones (< 48rem): logo and burger
   only, no bar** (owner, 2026-10-09); a short gradient under them lets text that scrolls beneath fade out,
   and the solid ground comes back while the menu is open. The language switch lives only in the footer
@@ -342,6 +345,9 @@ Direction and reasoning: `docs/design-research/`.
 - **Open points:** the contact form's backend (Web3Forms, against the own-sites rule; needs an SMTP function
   and credentials; the enquiry modal posts there too), the result figures in the case studies ("2× Anfragen" at Eagle Air was already
   questioned), the Akkerman Stroy quote.
+- **Favicon:** the boat on a white disc (owner, 2026-10-14: contrast on dark browser tabs), one drawing for
+  light and dark schemes; strokes thickened for 16 and 32 px. The links carry `?v=2`: bump it on the next
+  change. Touch and app icons (cream squares) are unchanged.
 - **Images:** sources and licences in `assets/img/v2/CREDITS.md`; add a line for every new image and say
   whether it is a photo, drawn by script or AI-generated.
 - **Pricing:** card prices carry `data-price` (figures supplied by the owner on 2026-10-08: Onepager 575 €,
