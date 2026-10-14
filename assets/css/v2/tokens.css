@@ -113,6 +113,10 @@
   --accent: #E8593A;         /* fills only: dark text on it is 5.1:1 */
   --accent-ink: #F0704F;     /* when the accent has to be text: 6.3:1 */
   --on-accent: #161514;
+  /* second accent, used sparingly: the hero's main action and positive feedback
+     (a chosen answer, a valid field, a sent enquiry). 8.6:1 on the ground, so it
+     may be text as well as a fill */
+  --accent-2: #E8AE3A;
   --marks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4.5h9M4.5 0v9' stroke='%23EFE9DF' stroke-opacity='.5'/%3E%3C/svg%3E");
 }
 

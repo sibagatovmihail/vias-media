@@ -43,11 +43,11 @@
 
   <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261009w">
-  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261009w">
-  <link rel="stylesheet" href="assets/css/consent.css?v=20261009w">
-  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261009w">
-  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261009w">
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261014a">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261014a">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261014a">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261014a">
+  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261014a">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -381,7 +381,6 @@
 
   <!-- icon sprite (Heroicons outline 24 + WhatsApp glyph) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="i-arrow-ur" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></symbol>
     <symbol id="i-arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.13c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.35c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></symbol>
@@ -408,7 +407,7 @@
       <div class="hdr__tools">
         <a href="contact.html" class="btn btn--accent hdr__cta">
           <span data-en="Free Consultation">Kostenlose Beratung</span>
-          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+          <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
         </a>
         <button class="burger" id="burger" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
           <span></span><span></span>
@@ -442,6 +441,13 @@
 
     <!-- ===== HERO: an F. Two bars of title, the note as the stem, the action bottom right ===== -->
     <section class="hero" id="top" data-nofog-cover>
+      <!-- three cranes cross the hero from left to right, after an old print of whooping
+           cranes: white bodies, dark outlined primaries. Decorative; paused while covered -->
+      <div class="flock" aria-hidden="true">
+        <div class="crane crane--1"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+        <div class="crane crane--2"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+        <div class="crane crane--3"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+      </div>
       <div class="wrap hero__wrap">
         <div class="hero__text">
           <h1 class="hero__title rv-lines" data-split data-lines="dash" data-fit data-drive data-en="Your web agency in Neubrandenburg&nbsp;– websites that bring customers.">Ihre Webagentur in Neubrandenburg&nbsp;– Webseiten, die Kunden bringen.</h1>
@@ -452,95 +458,114 @@
         <div class="hero__actions rv">
           <a href="contact.html" class="cta" data-cur="Los" data-cur-en="Go">
             <span class="cta__txt" data-en="Advise me">Beraten Sie mich</span>
-            <span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ===== PROJECTS: every block slides over the one before it (sticky stack).
-         Each case: the site in a frame on a dimmed second screenshot, the story beside it ===== -->
-    <section class="cases" id="work" aria-labelledby="cases-title" data-nofog-cover>
-      <div class="cases__intro">
-        <span class="ghost" aria-hidden="true" data-fitw data-en="Work">Projekte</span>
-        <div class="wrap cases__intro-in">
-          <div><p class="tag" data-en="Work">Projekte</p></div>
-          <div><h2 id="cases-title" class="display d1 rv-lines" data-split data-en="My latest projects">Meine neuesten Projekte</h2></div>
+    <!-- ===== PROJECTS: a wall of record sleeves. Laptops: the sleeves lean against a wall,
+         turned away; the one under the pointer (or keyboard focus) is pulled out: it turns to
+         face you, rises, its record slides out and its story shows on the left. Phones and
+         tablets: the sleeves stand flat in a sideways row with the story under each ===== -->
+    <section class="s crate-sec" id="work" aria-labelledby="crate-title">
+      <div class="wrap grid crate-head">
+        <div class="s__label"><p class="tag" data-en="Work">Projekte</p></div>
+        <div class="s__head crate-head__main">
+          <div><h2 id="crate-title" class="display d1 rv-lines" data-split data-en="My latest projects">Meine neuesten Projekte</h2></div>
+          <div class="rv">
+            <a href="work.html" class="cta">
+              <span class="cta__txt" data-en="See all work">Alle Projekte ansehen</span>
+              <span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
+            </a>
+          </div>
         </div>
       </div>
-      <ol class="cases__list">
-        <li class="case">
-          <div class="case__media">
-            <img class="case__bg" src="assets/img/portfolio/eagle-air-2.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
-            <div class="case__frame"><img src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="Website von Eagle Air HVAC, gestaltet von Vias Media" loading="lazy" decoding="async"></div>
-          </div>
-          <div class="case__body">
-            <p class="mono case__count">[ 01 / 04 ]</p>
-            <div><h3 class="display case__name rv-lines" data-split>Eagle Air HVAC</h3></div>
-            <p class="mono case__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Development">Entwicklung</span></p>
-            <div class="case__desc"><p data-en="A dated brochure, rebuilt into a lead engine that loads in under a second — and turns Sarasota's hot-day panic searches into booked visits.">Eine veraltete Broschüren-Website, neu gebaut zur Lead-Maschine, die in unter einer Sekunde lädt — und aus Panik-Suchen an heißen Tagen in Sarasota gebuchte Termine macht.</p></div>
-            <a href="work-eagle-air.html" class="btn" data-cur="Ansehen" data-cur-en="View">
+      <div class="wrap">
+        <ol class="crate" data-crate>
+        <li class="rec is-on">
+          <a class="rec__sleeve" href="work-eagle-air.html" tabindex="-1" aria-hidden="true" data-cur="Ansehen" data-cur-en="View">
+            <span class="rec__disc"><span class="rec__vinyl"><span class="rec__label">01</span></span></span>
+            <span class="rec__cover">
+              <span class="rec__shot"><img src="assets/img/portfolio/eagle-air-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async"></span>
+              <span class="mono rec__no">[ 01 ]</span>
+              <span class="display rec__name">Eagle Air HVAC</span>
+            </span>
+          </a>
+          <div class="rec__info">
+            <p class="mono rec__count">[ 01 / 04 ]</p>
+            <div><h3 class="display rec__title">Eagle Air HVAC</h3></div>
+            <p class="mono rec__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Development">Entwicklung</span></p>
+            <div class="rec__desc"><p data-en="A dated brochure, rebuilt into a lead engine that loads in under a second — and turns Sarasota's hot-day panic searches into booked visits.">Eine veraltete Broschüren-Website, neu gebaut zur Lead-Maschine, die in unter einer Sekunde lädt — und aus Panik-Suchen an heißen Tagen in Sarasota gebuchte Termine macht.</p></div>
+            <a href="work-eagle-air.html" class="btn rec__btn" data-cur="Ansehen" data-cur-en="View">
               <span class="vh">Eagle Air HVAC: </span><span data-en="View case study">Fallstudie ansehen</span>
-              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
             </a>
           </div>
         </li>
-        <li class="case">
-          <div class="case__media">
-            <img class="case__bg" src="assets/img/portfolio/jesus-punkt-3.webp" width="1760" height="958" alt="" loading="lazy" decoding="async">
-            <div class="case__frame"><img src="assets/img/portfolio/jesus-punkt-1.webp" width="1760" height="958" alt="Website der Gemeinde Jesus Punkt, gestaltet von Vias Media" loading="lazy" decoding="async"></div>
-          </div>
-          <div class="case__body">
-            <p class="mono case__count">[ 02 / 04 ]</p>
-            <div><h3 class="display case__name rv-lines" data-split>Jesus Punkt</h3></div>
-            <p class="mono case__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Multilingual">Mehrsprachig</span></p>
-            <div class="case__desc"><p data-en="A website for a living church in Neubrandenburg — warm, clear and in three languages, so every visitor knows straight away when and where they are welcome.">Eine Website für eine lebendige Gemeinde in Neubrandenburg — warm, klar und in drei Sprachen, damit jeder Besucher sofort weiß, wann und wo er willkommen ist.</p></div>
-            <a href="work-jesus-punkt.html" class="btn" data-cur="Ansehen" data-cur-en="View">
+        <li class="rec">
+          <a class="rec__sleeve" href="work-jesus-punkt.html" tabindex="-1" aria-hidden="true" data-cur="Ansehen" data-cur-en="View">
+            <span class="rec__disc"><span class="rec__vinyl"><span class="rec__label">02</span></span></span>
+            <span class="rec__cover">
+              <span class="rec__shot"><img src="assets/img/portfolio/jesus-punkt-1.webp" width="1760" height="958" alt="" loading="lazy" decoding="async"></span>
+              <span class="mono rec__no">[ 02 ]</span>
+              <span class="display rec__name">Jesus Punkt</span>
+            </span>
+          </a>
+          <div class="rec__info">
+            <p class="mono rec__count">[ 02 / 04 ]</p>
+            <div><h3 class="display rec__title">Jesus Punkt</h3></div>
+            <p class="mono rec__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="Multilingual">Mehrsprachig</span></p>
+            <div class="rec__desc"><p data-en="A website for a living church in Neubrandenburg — warm, clear and in three languages, so every visitor knows straight away when and where they are welcome.">Eine Website für eine lebendige Gemeinde in Neubrandenburg — warm, klar und in drei Sprachen, damit jeder Besucher sofort weiß, wann und wo er willkommen ist.</p></div>
+            <a href="work-jesus-punkt.html" class="btn rec__btn" data-cur="Ansehen" data-cur-en="View">
               <span class="vh">Jesus Punkt: </span><span data-en="View case study">Fallstudie ansehen</span>
-              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
             </a>
           </div>
         </li>
-        <li class="case">
-          <div class="case__media">
-            <img class="case__bg" src="assets/img/portfolio/akkerman-stroy-2.webp" width="1760" height="961" alt="" loading="lazy" decoding="async">
-            <div class="case__frame"><img src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="961" alt="Website von Akkerman Stroy, gestaltet von Vias Media" loading="lazy" decoding="async"></div>
-          </div>
-          <div class="case__body">
-            <p class="mono case__count">[ 03 / 04 ]</p>
-            <div><h3 class="display case__name rv-lines" data-split>Akkerman Stroy</h3></div>
-            <p class="mono case__tags"><span data-en="Web Design">Webdesign</span> · <span>SEO</span></p>
-            <div class="case__desc"><p data-en="A search-first rebuild that put a growing construction firm on the map for the queries that matter — across Mecklenburg-Vorpommern and Berlin.">Ein such-orientierter Neubau, der ein wachsendes Bauunternehmen für die relevanten Suchanfragen sichtbar machte — in Mecklenburg-Vorpommern und Berlin.</p></div>
-            <a href="work-akkerman-stroy.html" class="btn" data-cur="Ansehen" data-cur-en="View">
+        <li class="rec">
+          <a class="rec__sleeve" href="work-akkerman-stroy.html" tabindex="-1" aria-hidden="true" data-cur="Ansehen" data-cur-en="View">
+            <span class="rec__disc"><span class="rec__vinyl"><span class="rec__label">03</span></span></span>
+            <span class="rec__cover">
+              <span class="rec__shot"><img src="assets/img/portfolio/akkerman-stroy-1.webp" width="1760" height="961" alt="" loading="lazy" decoding="async"></span>
+              <span class="mono rec__no">[ 03 ]</span>
+              <span class="display rec__name">Akkerman Stroy</span>
+            </span>
+          </a>
+          <div class="rec__info">
+            <p class="mono rec__count">[ 03 / 04 ]</p>
+            <div><h3 class="display rec__title">Akkerman Stroy</h3></div>
+            <p class="mono rec__tags"><span data-en="Web Design">Webdesign</span> · <span>SEO</span></p>
+            <div class="rec__desc"><p data-en="A search-first rebuild that put a growing construction firm on the map for the queries that matter — across Mecklenburg-Vorpommern and Berlin.">Ein such-orientierter Neubau, der ein wachsendes Bauunternehmen für die relevanten Suchanfragen sichtbar machte — in Mecklenburg-Vorpommern und Berlin.</p></div>
+            <a href="work-akkerman-stroy.html" class="btn rec__btn" data-cur="Ansehen" data-cur-en="View">
               <span class="vh">Akkerman Stroy: </span><span data-en="View case study">Fallstudie ansehen</span>
-              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
             </a>
           </div>
         </li>
-        <li class="case">
-          <div class="case__media">
-            <img class="case__bg" src="assets/img/portfolio/luxe-bouquets-3.webp" width="1760" height="957" alt="" loading="lazy" decoding="async">
-            <div class="case__frame"><img src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="Onlineshop von Luxe Bouquets, gestaltet von Vias Media" loading="lazy" decoding="async"></div>
-          </div>
-          <div class="case__body">
-            <p class="mono case__count">[ 04 / 04 ]</p>
-            <div><h3 class="display case__name rv-lines" data-split>Luxe Bouquets</h3></div>
-            <p class="mono case__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="E-commerce">E-Commerce</span></p>
-            <div class="case__desc"><p data-en="A florist's shop window, brought online — where the bouquets sell themselves and ordering for a specific day takes about a minute.">Das Schaufenster einer Floristin, online gebracht — wo die Sträuße sich selbst verkaufen und das Bestellen für einen bestimmten Tag etwa eine Minute dauert.</p></div>
-            <a href="work-luxe-bouquets.html" class="btn" data-cur="Ansehen" data-cur-en="View">
+        <li class="rec">
+          <a class="rec__sleeve" href="work-luxe-bouquets.html" tabindex="-1" aria-hidden="true" data-cur="Ansehen" data-cur-en="View">
+            <span class="rec__disc"><span class="rec__vinyl"><span class="rec__label">04</span></span></span>
+            <span class="rec__cover">
+              <span class="rec__shot"><img src="assets/img/portfolio/luxe-bouquets-1.webp" width="1760" height="957" alt="" loading="lazy" decoding="async"></span>
+              <span class="mono rec__no">[ 04 ]</span>
+              <span class="display rec__name">Luxe Bouquets</span>
+            </span>
+          </a>
+          <div class="rec__info">
+            <p class="mono rec__count">[ 04 / 04 ]</p>
+            <div><h3 class="display rec__title">Luxe Bouquets</h3></div>
+            <p class="mono rec__tags"><span data-en="Web Design">Webdesign</span> · <span data-en="E-commerce">E-Commerce</span></p>
+            <div class="rec__desc"><p data-en="A florist's shop window, brought online — where the bouquets sell themselves and ordering for a specific day takes about a minute.">Das Schaufenster einer Floristin, online gebracht — wo die Sträuße sich selbst verkaufen und das Bestellen für einen bestimmten Tag etwa eine Minute dauert.</p></div>
+            <a href="work-luxe-bouquets.html" class="btn rec__btn" data-cur="Ansehen" data-cur-en="View">
               <span class="vh">Luxe Bouquets: </span><span data-en="View case study">Fallstudie ansehen</span>
-              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+              <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
             </a>
           </div>
         </li>
-      </ol>
+        </ol>
+      </div>
     </section>
-    <div class="wrap reel-more">
-      <a href="work.html" class="cta">
-        <span class="cta__txt" data-en="See all work">Alle Projekte ansehen</span>
-        <span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
-      </a>
-    </div>
 
     <!-- ===== WHY A WEBSITE ===== -->
     <section class="s" id="warum">
@@ -696,47 +721,45 @@
             <span class="row__n" aria-hidden="true">01</span>
             <div class="row__t"><h3 class="display" data-en="Web Design">Webdesign</h3></div>
             <div class="row__d"><p data-en="Websites, online shops and landing pages that show your work and make getting in touch obvious.">Websites, Onlineshops und Landingpages, die Ihre Arbeit zeigen und den Weg zur Anfrage offensichtlich machen.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
           <a href="webentwicklung.html" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">02</span>
             <div class="row__t"><h3 class="display" data-en="Web Development">Webentwicklung</h3></div>
             <div class="row__d"><p data-en="Hand-built, accessible code that loads fast on every phone.">Handgebauter, barrierefreier Code, der auf jedem Smartphone schnell lädt.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
           <a href="seo.html" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">03</span>
             <div class="row__t"><h3 class="display" data-en="SEO Optimization">SEO-Optimierung</h3></div>
             <div class="row__d"><p data-en="Local SEO so you show up when nearby customers search your trade and town.">Lokales SEO, damit Sie erscheinen, wenn Kunden in der Nähe nach Ihrem Gewerk und Ort suchen.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
           <a href="beratung.html" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">04</span>
             <div class="row__t"><h3 class="display" data-en="Digital Consulting">Digitale Beratung</h3></div>
             <div class="row__d"><p data-en="Straight answers on what your business needs online and what it costs — on the phone or at your place.">Klare Antworten, was Ihr Betrieb online wirklich braucht und was es kostet – am Telefon oder bei Ihnen vor Ort.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
           <a href="barrierefreiheit.html" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">05</span>
             <div class="row__t"><h3 class="display" data-en="Accessibility Audits">Barrierefreiheits-Audits</h3></div>
             <div class="row__d"><p data-en="I test existing sites against WCAG and the BFSG — with a clear list of issues and a plan to fix them.">Ich prüfe bestehende Websites nach WCAG und BFSG – mit klarer Mängelliste und Plan zur Umsetzung.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
           <a href="support.html" class="row" data-cur="Öffnen" data-cur-en="Open">
             <span class="row__n" aria-hidden="true">06</span>
             <div class="row__t"><h3 class="display" data-en="Ongoing Support">Laufender Support</h3></div>
             <div class="row__d"><p data-en="Updates, fixes and content changes — so your site stays secure and current.">Updates, Fehlerbehebungen und Inhaltsänderungen – damit Ihre Seite sicher und aktuell bleibt.</p></div>
-            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-ur"/></svg></span>
+            <span class="row__go" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ===== PRICING: lies underneath Services and is uncovered as Services lifts away.
-         A photograph stays fixed behind it while the cards scroll over it; the free meeting in colour ===== -->
-    <div class="under">
-      <span class="under__anchor" id="preise"></span>
-      <section class="s pricing-sec" aria-labelledby="pricing-title">
+    <!-- ===== PRICING: scrolls like any section; a photograph behind the cards,
+         the free meeting in colour ===== -->
+    <section class="s pricing-sec" id="preise" aria-labelledby="pricing-title">
       <div class="pricing__bg" aria-hidden="true">
         <img class="pricing__img" src="assets/img/v2/horizon-1100.webp" srcset="assets/img/v2/horizon-1100.webp 1100w, assets/img/v2/horizon-2000.webp 2000w" sizes="100vw" width="2000" height="1127" alt="" loading="lazy" decoding="async">
       </div>
@@ -760,7 +783,7 @@
               <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
             </ul>
             <p class="pcard__price display"><span data-price="onepager" data-en="€575">575 €</span></p>
-            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+            <a href="contact.html" class="btn btn--lg" data-pick="Web Design"><span data-en="Request a quote">Angebot anfordern</span></a>
           </li>
           <li class="pcard">
             <div class="pcard__top">
@@ -775,7 +798,7 @@
               <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
             </ul>
             <p class="pcard__price display"><span data-price="website" data-en="€695">695 €</span></p>
-            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+            <a href="contact.html" class="btn btn--lg" data-pick="Web Design"><span data-en="Request a quote">Angebot anfordern</span></a>
           </li>
           <li class="pcard pcard--free">
             <div class="pcard__top">
@@ -790,7 +813,7 @@
               <li data-en="Afterwards: your fixed-price quote">Danach: Ihr Festpreis-Angebot</li>
             </ul>
             <p class="pcard__price display"><span>0 €</span></p>
-            <a href="contact.html" class="btn btn--lg btn--solid"><span data-en="Request a meeting">Termin anfragen</span></a>
+            <a href="contact.html" class="btn btn--lg btn--solid" data-pick="Not sure yet"><span data-en="Request a meeting">Termin anfragen</span></a>
           </li>
           <li class="pcard">
             <div class="pcard__top">
@@ -805,12 +828,11 @@
               <li data-en="Local SEO, Search Console, Business Profile">Lokales SEO, Search Console, Unternehmensprofil</li>
             </ul>
             <p class="pcard__price display"><span data-price="shop" data-en="€1,295">1.295 €</span></p>
-            <a href="contact.html" class="btn btn--lg"><span data-en="Request a quote">Angebot anfordern</span></a>
+            <a href="contact.html" class="btn btn--lg" data-pick="Online Shop"><span data-en="Request a quote">Angebot anfordern</span></a>
           </li>
         </ul>
       </div>
     </section>
-    </div>
 
     <!-- ===== FAQ: stays put at its end while the footer slides over it (.tail) ===== -->
     <div class="tail">
@@ -897,12 +919,12 @@
       <div class="grid ftr__cta">
         <div class="s__label"><p class="tag" data-en="Contact">Kontakt</p></div>
         <div class="s__head">
-          <h2 class="display ftr__big rv-lines" data-split data-lines="mark" data-converge data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
+          <h2 class="display ftr__big rv-lines" data-split data-lines="mark" data-en-html="Ready to win more <span class='mark'>local customers</span>?">Bereit für mehr <span class='mark'>lokale Kunden</span>?</h2>
         </div>
         <div class="s__body ftr__actions rv">
           <a href="contact.html" class="btn btn--lg btn--accent">
             <span data-en="Start a Project">Projekt starten</span>
-            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-ur"/></svg>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
           </a>
           <a href="services.html" class="btn btn--lg"><span data-en="View services">Leistungen ansehen</span></a>
         </div>
@@ -958,9 +980,102 @@
     </div>
   </footer>
 
-  <script src="assets/js/i18n.js?v=20261009w" defer></script>
+  <!-- ===== ENQUIRY MODAL: every button that asks for an enquiry (start a project, advise me,
+       request a quote) opens it in place, in three short steps with a confirmation for each;
+       after sending, the thank-you page. Without JavaScript those buttons go to contact.html ===== -->
+  <div class="mq" id="enquiry" role="dialog" aria-modal="true" aria-labelledby="mq-title">
+    <div class="mq__scrim" data-mq-close></div>
+    <div class="mq__panel" data-lenis-prevent>
+      <div class="mq__head">
+        <h2 class="tag mq__title" id="mq-title" data-en="Your enquiry">Ihre Anfrage</h2>
+        <button class="mq__x" type="button" data-mq-close><span class="vh" data-en="Close">Schließen</span></button>
+      </div>
+      <form class="form quiz mq__form" id="mq-form" action="https://api.web3forms.com/submit" method="POST" novalidate aria-labelledby="mq-title" data-quiz data-thanks="/danke.html">
+        <input type="hidden" name="access_key" value="0680ff66-18e9-411b-989b-08f1d0ddbe3f">
+        <input type="hidden" name="subject" value="New project enquiry — Vias Media">
+        <input type="hidden" name="from_name" value="Vias Media Website">
+        <input type="hidden" name="redirect" value="https://viasmedia.com/danke.html">
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="quiz__bar">
+          <p class="mono quiz__count" aria-live="polite"><span data-en="Step">Schritt</span> <span data-quiz-n>1</span> / 3</p>
+          <div class="quiz__meter" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+        </div>
+        <!-- what has been chosen so far (filled by main.js) -->
+        <p class="mono quiz__sum" data-quiz-sum></p>
+
+        <div class="quiz__steps">
+          <div class="quiz__step is-active" role="group" aria-labelledby="mq-q1" data-step>
+            <h3 class="display quiz__q" id="mq-q1" tabindex="-1" data-en="What do you need?">Was brauchen Sie?</h3>
+            <div class="quiz__tiles" role="radiogroup" aria-labelledby="mq-q1" data-choice>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="0" data-value="Web Design"><span data-en="A new website">Eine neue Website</span></button>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="-1" data-value="Online Shop"><span data-en="An online shop">Einen Onlineshop</span></button>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="-1" data-value="SEO Optimization"><span data-en="Getting found on Google">Bei Google gefunden werden</span></button>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="-1" data-value="Accessibility Audit"><span data-en="Having my website checked">Meine Website prüfen lassen</span></button>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="-1" data-value="Ongoing Support"><span data-en="Care for my website">Betreuung meiner Website</span></button>
+                <button type="button" class="tile" role="radio" aria-checked="false" tabindex="-1" data-value="Not sure yet"><span data-en="Advice first">Erst einmal Beratung</span></button>
+            </div>
+            <input type="hidden" name="service" id="mq-service">
+            <p class="form__note" data-en="Tap an answer. You can change it at any time.">Tippen Sie eine Antwort an. Sie können sie jederzeit ändern.</p>
+          </div>
+
+          <div class="quiz__step" role="group" aria-labelledby="mq-q2" data-step>
+            <h3 class="display quiz__q" id="mq-q2" tabindex="-1" data-en="What is it about?">Worum geht es?</h3>
+            <div class="field">
+              <label class="field__label" for="mq-message"><span data-en="A line or two about your project">Ein, zwei Sätze zu Ihrem Vorhaben</span> <span class="field__opt">(optional)</span></label>
+              <textarea id="mq-message" name="message"></textarea>
+            </div>
+          </div>
+
+          <div class="quiz__step" role="group" aria-labelledby="mq-q3" data-step>
+            <h3 class="display quiz__q" id="mq-q3" tabindex="-1" data-en="How do I reach you?">Wie erreiche ich Sie?</h3>
+            <div class="field" data-check="name">
+              <label class="field__label" for="mq-name"><span data-en="Name">Name</span></label>
+              <input type="text" id="mq-name" name="name" autocomplete="name" required aria-describedby="mq-name-error">
+              <span class="field__error" id="mq-name-error" data-en="Please enter your name.">Bitte Namen eingeben.</span>
+            </div>
+            <div class="field" data-check="email">
+              <label class="field__label" for="mq-email"><span data-en="Email">E-Mail</span></label>
+              <input type="email" id="mq-email" name="email" autocomplete="email" inputmode="email" required aria-describedby="mq-email-error">
+              <span class="field__error" id="mq-email-error" data-en="Please enter a valid email.">Bitte gültige E-Mail eingeben.</span>
+            </div>
+            <div class="field" data-check="phone">
+              <label class="field__label" for="mq-phone"><span data-en="Phone">Telefon</span> <span class="field__opt">(optional)</span></label>
+              <input type="tel" id="mq-phone" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="mq-phone-error">
+              <span class="field__error" id="mq-phone-error" data-en="Please enter a valid number.">Bitte gültige Nummer eingeben.</span>
+            </div>
+          </div>
+
+          <div class="quiz__step quiz__done" data-step-done>
+            <h3 class="display quiz__q" id="mq-done" tabindex="-1" data-en="Enquiry sent">Anfrage gesendet</h3>
+            <p data-en="Thanks. I'll be in touch within one business day.">Danke. Ich melde mich innerhalb eines Werktags.</p>
+          </div>
+        </div>
+
+        <!-- one reserved line: a confirmation for every step (gold) or why sending failed -->
+        <div class="quiz__msg">
+          <p class="quiz__fb" aria-live="polite" data-quiz-fb></p>
+          <p class="form__status" role="alert"></p>
+        </div>
+        <div class="quiz__nav">
+          <button type="button" class="btn btn--lg quiz__back" data-quiz-back><svg aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="vh" data-en="Back">Zurück</span></button>
+          <button type="button" class="btn btn--lg btn--accent quiz__next" data-quiz-next>
+            <span class="quiz__skip" data-en="Skip">Überspringen</span><span class="quiz__go" data-en="Next">Weiter</span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
+          </button>
+          <button type="submit" class="btn btn--lg btn--accent quiz__send">
+            <span class="quiz__idle" data-en="Send enquiry">Anfrage senden</span><span class="quiz__busy" data-en="Sending …">Wird gesendet …</span><span class="quiz__sent" data-en="Sent">Gesendet</span>
+            <svg class="ico-arrow" aria-hidden="true"><use href="#i-arrow-r"/></svg>
+          </button>
+        </div>
+        <p class="form__note" data-en-html="How I handle your details is explained in the <a href='/datenschutz.html' class='link'>privacy policy</a>.">Wie ich Ihre Angaben verarbeite, steht in der <a href='/datenschutz.html' class='link'>Datenschutzerklärung</a>.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/i18n.js?v=20261014a" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="assets/js/v2/main.js?v=20261009w" defer></script>
-  <script src="assets/js/consent.js?v=20261009w" defer></script>
+  <script src="assets/js/v2/main.js?v=20261014a" defer></script>
+  <script src="assets/js/consent.js?v=20261014a" defer></script>
 </body>
 </html>

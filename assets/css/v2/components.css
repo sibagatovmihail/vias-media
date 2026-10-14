@@ -32,31 +32,97 @@
 @media (hover: hover) {
   .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
   .btn--solid:hover { background: transparent; color: var(--ink); }
-  .btn:hover .ico-arrow { transform: translate(0.1875rem, -0.1875rem); }
+  .btn:hover .ico-arrow { transform: translateX(0.1875rem); }
 }
 
-/* the page's main action as a plain text link: small lower-case words, an arrow,
-   one hairline. No box. (Owner: "smaller and simpler", then "smaller, in small
-   letters".) Also used for "all projects" under the project stack. */
+/* the page's main action as a plain text link: small lower-case words and an
+   arrow, in the second accent, no box and no underline. (Owner: "smaller and
+   simpler", "smaller, in small letters", then "use #E8AE3A on the cta in the hero,
+   the underline deleted".) Also used for "all projects" under the projects. */
 .cta {
   display: inline-flex;
   align-items: center;
-  gap: 0.4375rem;
+  gap: 0.5rem;
   min-height: var(--ctl-h);      /* still a full-size touch target */
-  border-bottom: 1px solid currentColor;
+  color: var(--accent-2);
   font-size: 0.875rem;
-  font-weight: 550;
+  font-weight: 600;
   line-height: 1;
   text-transform: lowercase;
   white-space: nowrap;
 }
 .cta__ico { display: inline-flex; }
-.cta__ico svg { width: 0.75rem; height: 0.75rem; transition: transform var(--dur-base) var(--ease-out); }
+.cta__ico svg { width: 0.875rem; height: 0.875rem; transition: transform var(--dur-base) var(--ease-out); }
 @media (hover: hover) {
-  .cta:hover { border-bottom-width: 2px; }
-  .cta:hover .cta__ico svg { transform: translate(0.1875rem, -0.1875rem); }
+  .cta:hover .cta__ico svg { transform: translateX(0.3125rem); }
 }
 .cta:focus-visible { outline-offset: 6px; }
+
+/* =====================================================================
+   Cranes — a small flock after an old print of whooping cranes (white
+   bodies, dark primaries with hairlines between the feathers; on the dark
+   ground the dark parts get an ink outline). Each crane crosses from left
+   to right (one composited transform on the wrapper); inside, the wings
+   beat by scaling around the shoulder line and the bird rises a little on
+   every downstroke. The far wing moves against the near one, as in the
+   print. Decorative only (aria-hidden). Used in the homepage hero and on
+   the thank-you page.
+   ===================================================================== */
+.flock {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  overflow: clip;
+  pointer-events: none;
+  color: var(--ink);
+}
+.crane {
+  position: absolute;
+  left: 0;
+  top: var(--top, 50%);
+  width: var(--w, 12rem);
+  opacity: var(--o, 0.4);
+  transform: translate3d(-32vw, 0, 0);
+  animation: cr-fly var(--fly, 40s) linear var(--d, 0s) infinite;
+}
+.crane svg { display: block; width: 100%; height: auto; overflow: visible; }
+.crane g { transform-box: view-box; }
+.cr__wn,
+.cr__wf { transform-origin: 0 100px; animation: var(--flap, 1.2s) ease-in-out var(--fd, 0s) infinite; }
+.cr__wn { animation-name: cr-wn; }
+.cr__wf { animation-name: cr-wf; transform: translate(22px, -4px) scale(0.8, -0.55); }
+.cr__bob { animation: cr-bob var(--flap, 1.2s) ease-in-out var(--fd, 0s) infinite; }
+.cr-k { fill: currentColor; }
+.cr-d { fill: var(--ground-2); stroke: currentColor; stroke-width: 1.3; stroke-linejoin: round; }
+.cr-l { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; }
+.cr-leg { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.cr-x { fill: var(--ground); }
+.cr-bl { fill: none; stroke: var(--ground); stroke-width: 1.1; opacity: 0.55; }
+@keyframes cr-fly {
+  from { transform: translate3d(-32vw, 0, 0); }
+  to { transform: translate3d(128vw, calc(var(--vh, 1vh) * -7), 0); }
+}
+@keyframes cr-wn {
+  0%, 100% { transform: scaleY(1); }
+  46% { transform: scaleY(-0.8); }
+}
+@keyframes cr-wf {
+  0%, 100% { transform: translate(22px, -4px) scale(0.8, -0.55); }
+  46% { transform: translate(22px, -4px) scale(0.8, 0.7); }
+}
+@keyframes cr-bob {
+  0%, 100% { transform: translateY(3px); }
+  46% { transform: translateY(-3px); }
+}
+/* a covered hero (the next sheet lies over it) or a hidden page: nothing moves */
+.is-covered .crane,
+.is-covered .crane g { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .crane,
+  .crane g { animation: none; }
+  .crane { transform: translate3d(var(--rest, 50vw), 0, 0); }
+}
 
 /* =====================================================================
    Header — one full-bleed bar on the page ground
@@ -356,7 +422,7 @@ a.row::before {
   a.row:hover::before { opacity: 1; }
   a.row:hover .row__n,
   a.row:hover .row__d p { color: inherit; }
-  a.row:hover .row__go svg { transform: translate(0.25rem, -0.25rem); }
+  a.row:hover .row__go svg { transform: translateX(0.25rem); }
 }
 a.row:focus-visible { outline-offset: -3px; }
 
@@ -525,20 +591,27 @@ html:not(.js) .faq-item__icon { display: none; }
 .ftr__cta .s__label,
 .ftr__cta .s__head,
 .ftr__cta .s__body { grid-column: 1 / -1; margin-bottom: 0; }
-/* the closing question, in two parts: one comes in from the left, one from
-   the right, and they meet (--conv runs 0 → 1 as the block comes up the
-   screen, set by main.js). Side by side where they fit, stacked where not. */
+/* the closing question on two lines of almost equal length, stacked and left
+   aligned. They rise one after the other like every title; then the accent
+   block sweeps in behind the second line from the left, and the words turn
+   dark on it once it is complete. (Owner, 2026-10-14: the halves that came in
+   from both sides were "really bad and unbalanced".) */
 .ftr__big {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.22em;
-  font-size: clamp(2.5rem, 1.3rem + 6vw, 7rem);
-  line-height: 0.84;
+  font-size: clamp(2.75rem, 1.2rem + 7.4vw, 8.5rem);
+  line-height: 0.86;
 }
-.ftr__big .ln {
-  transform: translate3d(calc((1 - var(--conv, 1)) * var(--dir, 1) * 16vw), 0, 0);
-  opacity: calc(0.12 + var(--conv, 1) * 0.88);
+.js .ftr__big .mark {
+  transition: background-size 0.8s var(--ease-io) 0.55s, color 0.25s ease 1.25s;
 }
+.js .ftr__big:not(.is-in) .mark {
+  background-size: 0% 1.02em;
+  color: var(--ink);
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .ftr__big .mark { transition: none; }
+}
+.rv-fallback .ftr__big .mark { background-size: 100% 1.02em; color: var(--on-accent); }
 .ftr__actions {
   display: flex;
   flex-wrap: wrap;
@@ -655,6 +728,262 @@ html:not(.js) .faq-item__icon { display: none; }
 }
 
 /* =====================================================================
+   Enquiry form — the three-step quiz, used on the contact page and in the
+   enquiry modal (below). Fields are one height with the buttons, square,
+   a hairline frame; the error line sits in the gap under its field and
+   never moves anything.
+   ===================================================================== */
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 1.75rem;
+  column-gap: 0.5rem;
+  padding: clamp(1.125rem, 0.9rem + 1.2vw, 2rem);
+  background: var(--ground-2);
+}
+/* fields: one height with the buttons, square, a hairline frame. The error
+   line sits in the gap under its field and never moves anything. */
+.field { position: relative; display: grid; gap: 0.5rem; }
+.field__label {
+  font-family: var(--font-mono);
+  font-stretch: 87.5%;
+  font-size: var(--fs-mono);
+  color: var(--ink-2);
+}
+.field__opt { color: var(--ink-3); }
+.field input,
+.field textarea {
+  width: 100%;
+  height: 3.25rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color var(--dur-fast) ease;
+}
+.field textarea { height: 8.5rem; padding-block: 0.875rem; resize: vertical; }
+.field input:focus-visible,
+.field textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; border-color: var(--ink); }
+@media (hover: hover) {
+  .field input:hover,
+  .field textarea:hover { border-color: var(--ink-3); }
+}
+.field.is-invalid input { border-color: var(--accent-ink); }
+/* a field that is right confirms itself: a gold tick inside it */
+.field[data-check]::after {
+  content: "";
+  position: absolute;
+  right: 1rem;
+  bottom: 1.4rem;
+  width: 0.75rem;
+  height: 0.4375rem;
+  border-left: 2px solid var(--accent-2);
+  border-bottom: 2px solid var(--accent-2);
+  transform: rotate(-45deg) scale(0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) ease, transform var(--dur-base) var(--ease-out);
+}
+.field.is-valid::after { opacity: 1; transform: rotate(-45deg) scale(1); }
+.field[data-check] input { padding-right: 2.5rem; }
+.field__error {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 0.25rem);
+  overflow: hidden;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  color: var(--accent-ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  visibility: hidden;
+}
+.field.is-invalid .field__error { visibility: visible; }
+
+/* The enquiry as a short quiz. Every step lies in the same grid cell, so the
+   panel is as tall as its tallest step and never changes height; only the
+   active one is visible. Without JavaScript the steps just follow each other. */
+.quiz { grid-template-columns: minmax(0, 1fr); row-gap: 1.25rem; }
+.quiz__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.quiz__count { color: var(--ink-2); }
+.quiz__meter { display: flex; gap: 0.25rem; width: min(50%, 11rem); }
+.quiz__meter i { flex: 1; height: 0.25rem; background: var(--line); transition: background-color var(--dur-base) ease; }
+.quiz__meter i.is-on { background: var(--ink); }
+.quiz__meter i.is-done { background: var(--accent-2); }   /* a step behind you is done: the positive colour */
+.quiz__step { display: grid; gap: 1.75rem; align-content: start; min-width: 0; }   /* the gap holds a field's error line */
+.quiz__q { font-size: var(--fs-d2); line-height: 0.92; }
+.quiz__q:focus { outline: none; }
+.quiz__tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.375rem; }
+.tile {
+  display: flex;
+  align-items: flex-end;
+  min-height: 4.5rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--line);
+  background: var(--ground);
+  font-weight: 550;
+  line-height: 1.2;
+  text-align: left;
+  transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+/* the chosen answer: filled in the positive colour, with a tick */
+.tile { position: relative; padding-right: 2.25rem; }
+.tile::after {
+  content: "";
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: 0.875rem;
+  height: 0.5rem;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg) scale(0.4);
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease, transform var(--dur-base) var(--ease-out);
+}
+.tile[aria-checked="true"] { background: var(--accent-2); border-color: var(--accent-2); color: var(--on-accent); }
+.tile[aria-checked="true"]::after { opacity: 1; transform: rotate(-45deg) scale(1); }
+.tile:focus-visible { outline-offset: -2px; }
+@media (hover: hover) {
+  .tile:not([aria-checked="true"]):hover { border-color: var(--ink); }
+}
+.quiz__done { justify-items: start; }
+.quiz__done p { color: var(--ink-2); }
+/* one row at every width (a second row would change the panel's height between steps):
+   "back" is an arrow in a square, the action takes what it needs */
+.quiz__nav { display: flex; justify-content: space-between; gap: 0.5rem; min-height: 3.25rem; }
+.quiz__back { flex: none; width: 3.25rem; padding: 0; }
+.quiz__back svg { width: 1.125rem; height: 1.125rem; transform: scaleX(-1); }
+.quiz__next,
+.quiz__send { margin-left: auto; }
+.form__note { font-size: 0.8125rem; line-height: 1.4; color: var(--ink-2); }
+/* the reserved line under the steps: a confirmation for every action (gold, with a
+   tick) or why sending failed. Both share one cell, so the form keeps its height */
+.quiz__msg { display: grid; min-height: 2.6em; margin-top: -0.5rem; font-size: 0.875rem; line-height: 1.3; }
+.quiz__msg > * { grid-area: 1 / 1; }
+.quiz__fb { color: var(--accent-2); font-weight: 550; opacity: 0; transform: translate3d(0, 0.25rem, 0); }
+.quiz__fb.is-on { opacity: 1; transform: none; transition: opacity 0.3s ease, transform 0.4s var(--ease-out); }
+.quiz__fb.is-on::before { content: "\2713\00a0\00a0"; content: "\2713\00a0\00a0" / ""; }
+.form__status { color: var(--accent-ink); }
+.form__status:empty { display: none; }
+/* what has been chosen so far, one quiet line under the progress bar */
+.quiz__sum { min-height: 1.45em; margin-top: -0.5rem; color: var(--ink-2); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.quiz__sum.is-on::before { content: "\2713\00a0"; content: "\2713\00a0" / ""; color: var(--accent-2); }
+@media (min-width: 37.5rem) {
+  .quiz__msg { min-height: 1.4em; }
+}
+.hp { position: absolute; left: -200vw; width: 1px; height: 1px; overflow: hidden; }
+.quiz__busy,
+.quiz__sent,
+.is-sending .quiz__idle,
+.is-sent .quiz__idle { display: none; }
+.is-sending .quiz__busy,
+.is-sent .quiz__sent { display: inline; }
+/* sent: the button itself turns to the positive colour for the moment before the thank-you page */
+.is-sent .quiz__send { background: var(--accent-2); border-color: var(--accent-2); color: var(--on-accent); }
+.is-sent .quiz__send .ico-arrow { display: none; }
+.is-sent .quiz__send::after { content: "\2713"; content: "\2713" / ""; font-weight: 700; }
+html:not(.js) .quiz__bar,
+html:not(.js) .quiz__sum,
+html:not(.js) .quiz__back,
+html:not(.js) .quiz__next,
+html:not(.js) .quiz__done { display: none; }
+.js .quiz__steps { display: grid; grid-template-columns: minmax(0, 1fr); }
+.js .quiz__step {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  transform: translate3d(1.25rem, 0, 0);
+  transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+.js .quiz__step.is-active { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+/* which buttons a step shows (data-at is set on the form by main.js) */
+.js .quiz[data-at="1"] .quiz__back,
+.js .quiz:not([data-at="3"]) .quiz__send,
+.js .quiz[data-at="3"] .quiz__next,
+.js .quiz[data-at="done"] .quiz__nav,
+.js .quiz[data-at="done"] .quiz__bar { display: none; }
+.quiz__go,
+.quiz[data-filled] .quiz__skip { display: none; }
+.quiz[data-filled] .quiz__go { display: inline; }
+@media (prefers-reduced-motion: reduce) {
+  .js .quiz__step { transform: none; transition: none; }
+}
+
+.tile:not([aria-checked="true"]):active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+
+/* =====================================================================
+   Enquiry modal — a centred panel on laptops, a full-screen sheet on
+   phones. One size for every step (the quiz never changes height). The
+   page behind is pinned (main.js), the scrim closes it.
+   ===================================================================== */
+.mq {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+  transition: visibility 0s linear 0.45s;
+}
+.mq.is-open { visibility: visible; transition-delay: 0s; }
+.mq__scrim { position: absolute; inset: 0; background: rgba(12, 11, 10, 0.78); opacity: 0; transition: opacity 0.35s ease; }
+.mq.is-open .mq__scrim { opacity: 1; }
+.mq__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ground-2);
+  transform: translate3d(0, 2.5rem, 0);
+  opacity: 0;
+  transition: transform 0.5s var(--ease-out), opacity 0.3s ease;
+}
+.mq.is-open .mq__panel { transform: none; opacity: 1; }
+.mq__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem clamp(1.125rem, 0.9rem + 1.2vw, 2rem);
+  padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--ground-2);
+}
+.mq__title { margin: 0; font-weight: 400; }
+.mq__x { position: relative; flex: none; width: var(--ctl-h); height: var(--ctl-h); border: 1px solid var(--line); transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease, color var(--dur-fast) ease; }
+.mq__x::before,
+.mq__x::after { content: ""; position: absolute; left: 50%; top: 50%; width: 1rem; height: 1.5px; margin: -0.75px 0 0 -0.5rem; background: currentColor; transform: rotate(45deg); }
+.mq__x::after { transform: rotate(-45deg); }
+@media (hover: hover) {
+  .mq__x:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+}
+.mq__x:active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+.mq__form { flex: 1; align-content: start; padding-bottom: calc(clamp(1.125rem, 0.9rem + 1.2vw, 2rem) + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 48rem) {
+  .mq { padding: var(--margin); }
+  .mq__panel { width: min(100%, 40rem); height: auto; max-height: calc(100% - 2rem); border: 1px solid var(--line); }
+  .mq__head { padding-top: 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mq__panel,
+  .mq__scrim { transition: none; }
+}
+
+/* =====================================================================
    Consent banner — adopt the plan's look, fix link contrast
    ===================================================================== */
 #cc-banner { border-top-color: var(--ink); }
@@ -672,7 +1001,7 @@ a,
 button { -webkit-tap-highlight-color: transparent; }
 .btn:active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
 .btn--solid:active { background: transparent; color: var(--ink); }
-.cta:active { background: var(--ink); border-bottom-color: var(--ink); color: var(--ground); box-shadow: 0 0 0 0.5rem var(--ink); }
+.cta:active { background: var(--accent-2); color: var(--on-accent); box-shadow: 0 0 0 0.5rem var(--accent-2); }
 .burger:active { background: var(--ink); color: var(--ground); }
 .lang-toggle:active { background: var(--ink); border-color: var(--ink); color: var(--ground); }
 a.row:active { color: var(--ground); }

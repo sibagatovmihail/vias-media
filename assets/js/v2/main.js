@@ -1,12 +1,11 @@
 /* =====================================================================
    Vias Media v2 "Bauplan" — page interactions
    contact links · menu sheet · smooth scroll · split text + hero fit ·
-   reveals · horizontal scene + masked-word zoom · service drawings ·
-   hero drive / footer converge · fog · FAQ · gallery · contact form ·
-   cursor. One file for every page: each block looks for its own markup
-   and does nothing where it is missing.
-   (The project stack, the pricing reveal and the page-change transition
-   are CSS only: home.css, base.css.)
+   reveals · record sleeves · horizontal scene + masked-word zoom ·
+   service drawings · hero drive + cranes · fog · FAQ · gallery ·
+   enquiry quiz (page and modal) · cursor. One file for every page: each
+   block looks for its own markup and does nothing where it is missing.
+   (The page-change transition is CSS only: base.css.)
    ===================================================================== */
 (function () {
   'use strict';
@@ -62,7 +61,7 @@
       lerp: 0.11,
       anchors: true,
       prevent: function (node) {
-        return !!(node.closest && node.closest('#cc-modal-overlay, #cc-banner, .menu'));
+        return !!(node.closest && node.closest('#cc-modal-overlay, #cc-banner, .menu, .mq'));
       }
     });
   }
@@ -271,6 +270,24 @@
     }).join('');
     el.classList.add('is-split');
   }
+  /* a word whose letters rise one by one (the service pages' masthead) */
+  var letterEls = [].slice.call(document.querySelectorAll('[data-letters]'));
+  function splitLetters(el) {
+    var text = el.textContent.replace(/\s+/g, ' ').trim();
+    el.innerHTML = text.split('').map(function (c, i) {
+      return '<span class="lt" style="--c:' + i + '">' + (c === ' ' ? '&nbsp;' : esc(c)) + '</span>';
+    }).join('');
+    el.classList.add('is-split');
+  }
+  /* a word set as large as its box is wide (the service pages' masthead) */
+  var fitEls = [].slice.call(document.querySelectorAll('[data-fitw]'));
+  function fitWords() {
+    fitEls.forEach(function (el) {
+      el.style.fontSize = '';
+      var w = el.getBoundingClientRect().width, room = el.parentElement.clientWidth - 2 * M.margin;
+      if (w > 0 && room > 0) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * room / w * 0.995).toFixed(2) + 'px';
+    });
+  }
   var lineEls = [].slice.call(document.querySelectorAll('[data-split]'));
   var fillEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-fill]'));
   var rollEls = (reduced || !finePointer) ? [] : [].slice.call(document.querySelectorAll('[data-roll]'));
@@ -288,6 +305,8 @@
     fillEls.forEach(function (el) { if (fresh) el._src = null; splitWords(el); });
     if (fresh) rollEls.forEach(function (el) { el._txt = null; });
     rollEls.forEach(splitRoll);
+    letterEls.forEach(splitLetters);
+    fitWords();
   }
 
   /* measured lines belong to one width: when a title's box changes without the
@@ -304,7 +323,7 @@
   }
 
   /* ---- Reveals: hidden only while JS is alive; <head> carries a no-JS-file failsafe ---- */
-  var rvEls = [].slice.call(document.querySelectorAll('.rv, .rv-lines'));
+  var rvEls = [].slice.call(document.querySelectorAll('.rv, .rv-lines, [data-crate], [data-letters], .sx-ref__card'));
   var io = null;
   function startReveals() {
     if (reduced || !('IntersectionObserver' in window)) {
@@ -466,21 +485,13 @@
     svc.addEventListener('pointerleave', hideSvc);
   }
 
-  /* ---- Projects (laptops): each screenshot glides up through its backdrop. The
-     stack itself is CSS; this only reads four boxes and moves four frames. ---- */
-  var casesEl = reduced ? null : document.querySelector('.cases');
-  var caseEls = casesEl ? [].slice.call(casesEl.querySelectorAll('.case')) : [];
-  /* everything that pins at the top: the heroes and the project cards */
-  var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .case, .tail > .s'));
+  /* everything that pins at the top: the heroes and the last section before the footer */
+  var pinEls = reduced ? [] : [].slice.call(document.querySelectorAll('.hero, .phero:not(.phero--short), .tail > .s'));
   /* a pinned block taller than the screen pins with its bottom edge on the
      screen's, so its last line (the button) is seen before the next sheet covers it */
   function layoutPins() {
     var V = vh();
-    pinEls.forEach(function (el) { el._hold = 0; el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
-  }
-  function layoutCases() {
-    layoutPins();
-    fitWords();
+    pinEls.forEach(function (el) { el.style.top = Math.min(0, V - el.offsetHeight) + 'px'; });
   }
   /* a pinned block that changes height later (an image arrives, the FAQ reserves its
      tallest answer) gets its top again, or the next sheet would cover it too early */
@@ -488,30 +499,26 @@
     var pinRO = new ResizeObserver(function () { layoutPins(); });
     pinEls.forEach(function (el) { pinRO.observe(el); });
   }
-  /* a word set as large as its box is wide (the ghost word behind the projects intro) */
-  var fitEls = [].slice.call(document.querySelectorAll('[data-fitw]'));
-  function fitWords() {
-    fitEls.forEach(function (el) {
-      el.style.fontSize = '';
-      var w = el.getBoundingClientRect().width, room = el.parentElement.clientWidth - 2 * M.margin;
-      if (w > 0 && room > 0) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * room / w).toFixed(2) + 'px';
+
+  /* ---- Projects: record sleeves. The one under the mouse (or holding keyboard
+     focus) is pulled out; CSS does the rest (laptops only, see home.css). The
+     last one pulled stays out, so the story panel is never empty. ---- */
+  var crate = document.querySelector('[data-crate]');
+  if (crate) {
+    var recs = [].slice.call(crate.querySelectorAll('.rec'));
+    var pull = function (r) {
+      if (r.classList.contains('is-on')) return;
+      recs.forEach(function (x) { x.classList.toggle('is-on', x === r); });
+    };
+    recs.forEach(function (r, k) {
+      var sleeve = r.querySelector('.rec__sleeve');
+      sleeve.style.setProperty('--k', k);
+      sleeve.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') pull(r); });
+      r.addEventListener('focusin', function () { pull(r); });
     });
-  }
-  function updateCases(V) {
-    if (!casesEl || !desktop.matches) return;
-    var box = casesEl.getBoundingClientRect();
-    if (box.top > V || box.bottom < 0) return;
-    var tops = caseEls.map(function (el) { return el.getBoundingClientRect().top; });
-    caseEls.forEach(function (el, i) {
-      /* 1 while it comes in, 0 when it pins, -1 once the next one has covered it. The
-         next one starts a hold away (the case's bottom margin), so the frame keeps
-         gliding while the case stands still */
-      var hold = el._hold || (el._hold = V + (parseFloat(getComputedStyle(el).marginBottom) || 0));
-      var p = tops[i] > 0 ? tops[i] / V : (i + 1 < tops.length ? clamp(tops[i + 1] / hold, 0, 1) - 1 : tops[i] / V);
-      var y = Math.round(clamp(p, -1, 1) * 0.14 * V);
-      if (y === el._cy) return;
-      el._cy = y;
-      el.style.setProperty('--cy', y);
+    /* after the entrance the sleeves answer the pointer without the stagger */
+    crate.addEventListener('transitionend', function () {
+      if (crate.classList.contains('is-in')) crate.classList.add('is-settled');
     });
   }
 
@@ -529,10 +536,16 @@
     });
   }
 
-  /* ---- Hero title: the lines drive apart while the projects slide over the pinned hero ---- */
+  /* ---- Hero title: the lines drive apart while the projects slide over the pinned hero.
+     Once the hero is covered, its cranes stop flying (no work for a hidden layer) ---- */
   var driveEl = reduced ? null : document.querySelector('[data-drive]');
   var driveVal = -1;
+  var flockHost = document.querySelector('.flock') ? document.querySelector('.flock').parentElement : null;
   function updateDrive(V) {
+    if (flockHost) {
+      var covered = window.scrollY > V * 1.05;
+      if (covered !== flockHost._cov) { flockHost._cov = covered; flockHost.classList.toggle('is-covered', covered); }
+    }
     if (!driveEl) return;
     var v = Math.round(clamp(window.scrollY / V, 0, 1) * 0.11 * window.innerWidth);
     if (v === driveVal) return;
@@ -540,29 +553,27 @@
     driveEl.style.setProperty('--drive', v);
   }
 
-  /* ---- Closing headline: its lines come in from the sides and meet ---- */
-  var convEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-converge]'));
-  var convRaf = 0;
-  /* the value follows the scroll with a little inertia, so a wheel step never makes it jump */
-  function convStep() {
-    convRaf = 0;
-    var busy = false;
-    convEls.forEach(function (el) {
-      if (el._to == null) return;
-      el._at = (el._at == null ? el._to : el._at + (el._to - el._at) * 0.09);
-      if (Math.abs(el._to - el._at) < 0.002) el._at = el._to; else busy = true;
-      el.style.setProperty('--conv', el._at.toFixed(3));
+  /* ---- Service pages' time line: the fill follows the list up the screen; a stage
+     lights up once the fill has reached its node ---- */
+  var flowEls = reduced ? [] : [].slice.call(document.querySelectorAll('[data-flow]'));
+  flowEls.forEach(function (el) { el.classList.add('is-live'); el._steps = [].slice.call(el.children); el._f = -1; });
+  function updateFlow(V) {
+    flowEls.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top > V * 1.2 || r.bottom < -V * 0.2) return;
+      var across = desktop.matches;
+      /* starts when the list's top passes 80% of the screen, complete when its end passes 45% */
+      var len = across ? r.height * 0.6 : r.height;
+      var f = clamp((V * 0.8 - r.top) / (len + V * 0.35), 0, 1);
+      f = Math.round(f * 1000) / 1000;
+      if (f === el._f) return;
+      el._f = f;
+      el.style.setProperty('--flow', f);
+      el._steps.forEach(function (st) {
+        var at = across ? (st.offsetLeft / r.width) : (st.offsetTop / r.height);
+        st.classList.toggle('is-done', f > 0 && f >= at - 0.001);
+      });
     });
-    if (busy) convRaf = window.requestAnimationFrame(convStep);
-  }
-  function updateConverge(V) {
-    convEls.forEach(function (el) {
-      var r = el.parentElement.getBoundingClientRect();   /* the parent does not move */
-      if (r.top > V * 1.3 || r.bottom < -V * 0.3) return;
-      /* spread over most of a screen: starts as the block comes up, done near the middle */
-      el._to = smooth(clamp((V * 0.96 - r.top) / (V * 0.62), 0, 1));
-    });
-    if (!convRaf) convRaf = window.requestAnimationFrame(convStep);
   }
 
   /* ---- Promote the scene's layers only while it is within a screen of the viewport ---- */
@@ -588,7 +599,7 @@
   }
   function tick() {
     ticking = false;
-    if (root.classList.contains('menu-open')) return;   /* a pinned body reports scrollY 0 */
+    if (root.classList.contains('menu-open') || root.classList.contains('mq-open')) return;   /* a pinned body reports scrollY 0 */
     var V = vh();
     if (hsc) updateHs(V);
     nearScene(V);
@@ -596,8 +607,7 @@
     updateFog(V);
     updateFill(V);
     updateDrive(V);
-    updateCases(V);
-    updateConverge(V);
+    updateFlow(V);
     if (refreshCursor) refreshCursor();
   }
   function requestTick() {
@@ -628,7 +638,7 @@
       dy = r.top - M.hdrH - pad;                                    /* under the header */
     } else {
       var hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
-      var sheet = hit && !el.contains(hit) && !hit.contains(el) ? hit.closest('.case, .cases__intro, .s, .hs, .ftr, .reel-more, .pn, .ct') : null;
+      var sheet = hit && !el.contains(hit) && !hit.contains(el) ? hit.closest('.s, .hs, .ftr, .pn, .ct') : null;
       if (sheet && !sheet.contains(el)) dy = Math.min(0, sheet.getBoundingClientRect().top - r.bottom - pad);   /* back until the sheet has cleared it */
     }
     if (Math.abs(dy) < 1) return;
@@ -651,7 +661,7 @@
     measure();
     if (booted) splitAll(false);
     reserveFaq();
-    layoutCases();
+    layoutPins();
     layoutHs();
     requestTick();
   }
@@ -735,24 +745,67 @@
     window.addEventListener('load', syncTables);
   }
 
-  /* ---- Enquiry as a short quiz (contact page): tap an answer, add a line, leave a
-     contact. One step is shown at a time; all steps share one grid cell, so the
-     panel never changes height. Answers are custom radio tiles synced to a hidden
-     input; validation messages sit in reserved space. ---- */
-  var form = document.querySelector('[data-quiz]');
-  if (form) {
-    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  /* ---- Enquiry as a short quiz (contact page and the enquiry modal): tap an
+     answer, add a line, leave a contact. One step is shown at a time; all steps
+     share one grid cell, so the panel never changes height. Answers are custom
+     radio tiles synced to a hidden input; error lines sit in reserved space.
+     Every action gets a confirmation in the reserved line under the steps
+     (owner: "positive feedback on every action"); a sent enquiry goes to the
+     thank-you page. ---- */
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var FB = {
+    pick: ['Gute Wahl: ', 'Good choice: '],
+    noted: ['Danke, das hilft mir bei der Vorbereitung.', 'Thanks, that helps me prepare.'],
+    skipped: ['Kein Problem, das klären wir im Gespräch.', "No problem, we'll cover it when we talk."],
+    name: ['Freut mich, ', 'Nice to meet you, '],
+    email: ['Die E-Mail-Adresse sieht gut aus.', 'That email address looks good.'],
+    phone: ['Dann kann ich Sie auch anrufen.', 'Then I can call you too.'],
+    ready: ['Alles da. Sie können absenden.', 'All set. You can send it now.'],
+    sent: ['Angekommen. Einen Moment …', 'Received. One moment …'],
+    note: ['Nachricht', 'Message'],
+    fail: ['Senden fehlgeschlagen. Bitte noch einmal versuchen oder an mykhailo@viasmedia.com schreiben.',
+      'Sending failed. Please try again or write to mykhailo@viasmedia.com.']
+  };
+  function t(key) { return FB[key][root.lang === 'en' ? 1 : 0]; }
+  function initQuiz(form) {
     var qSteps = [].slice.call(form.querySelectorAll('[data-step]'));
     var qDone = form.querySelector('[data-step-done]');
     var qCount = form.querySelector('[data-quiz-n]');
     var qDots = [].slice.call(form.querySelectorAll('.quiz__meter i'));
     var qStatus = form.querySelector('.form__status');
+    var qFb = form.querySelector('[data-quiz-fb]');
+    var qSum = form.querySelector('[data-quiz-sum]');
     var qSend = form.querySelector('.quiz__send');
-    var qAt = 0;
+    var qMsg = form.elements.message;
+    var qAt = 0, fbT = 0;
     var checks = {
-      name: function (v) { return v.length > 0; },
+      name: function (v) { return v.length > 1; },
       email: function (v) { return EMAIL_RE.test(v); },
-      phone: function (v) { var d = v.replace(/\D/g, ''); return !v || (d.length >= 7 && d.length <= 15); }
+      phone: function (v) { var d = v.replace(/\D/g, ''); return d.length >= 7 && d.length <= 15; }
+    };
+    /* a confirmation in the reserved line; it fades in afresh each time */
+    var say = function (text) {
+      if (!qFb) return;
+      if (qStatus) qStatus.textContent = '';
+      qFb.classList.remove('is-on');
+      window.clearTimeout(fbT);
+      fbT = window.setTimeout(function () {
+        qFb.textContent = text || '';
+        if (text) qFb.classList.add('is-on');
+      }, text ? 40 : 0);
+    };
+    var chosen = function () {
+      var on = form.querySelector('.tile[aria-checked="true"]');
+      return on ? on.textContent.replace(/\s+/g, ' ').trim() : '';
+    };
+    /* the running summary of what has been given so far */
+    var summary = function () {
+      if (!qSum) return;
+      var parts = [];
+      if (chosen()) parts.push(chosen());
+      if (qMsg && qMsg.value.trim().length > 2) parts.push(t('note') + ' ✓');
+      qSum.textContent = parts.join('  ·  ');
+      qSum.classList.toggle('is-on', parts.length > 0);
     };
     /* does the step in view hold an answer? decides between "Überspringen" and "Weiter" */
     var qFilled = function () {
@@ -769,28 +822,43 @@
       form.setAttribute('data-at', at);
       if (focus) { var h = panel.querySelector('.quiz__q'); if (h) h.focus({ preventScroll: true }); }
     };
+    var allValid = function () {
+      return checks.name(form.elements.name.value.trim()) && checks.email(form.elements.email.value.trim()) &&
+        (!form.elements.phone.value.trim() || checks.phone(form.elements.phone.value.trim()));
+    };
     var qGo = function (i, focus) {
+      var from = qAt;
       qAt = clamp(i, 0, qSteps.length - 1);
       qShow(qSteps[qAt], String(qAt + 1), focus);
       if (qCount) qCount.textContent = String(qAt + 1);
-      qDots.forEach(function (d, k) { d.classList.toggle('is-on', k <= qAt); });
+      qDots.forEach(function (d, k) { d.classList.toggle('is-on', k <= qAt); d.classList.toggle('is-done', k < qAt); });
       qFilled();
+      summary();
+      /* arriving at the contact step from the note: say what became of the note */
+      if (qAt === 2 && from === 1) say(qMsg && qMsg.value.trim() ? t('noted') : t('skipped'));
+      else if (qAt === 2 && allValid()) say(t('ready'));
+      else if (qAt !== from) say('');
     };
+    form._go = qGo;
     /* answer tiles: a radio group. Arrows move and choose; a tap also moves on */
+    var pick = null;
     form.querySelectorAll('[data-choice]').forEach(function (group) {
       var tiles = [].slice.call(group.querySelectorAll('[role="radio"]'));
       var hidden = group.parentElement.querySelector('input[type="hidden"]');
-      var pick = function (t) {
-        tiles.forEach(function (o) { o.setAttribute('aria-checked', String(o === t)); o.tabIndex = o === t ? 0 : -1; });
-        if (hidden) hidden.value = t.getAttribute('data-value');
+      pick = function (tile, quiet) {
+        tiles.forEach(function (o) { o.setAttribute('aria-checked', String(o === tile)); o.tabIndex = o === tile ? 0 : -1; });
+        if (hidden) hidden.value = tile.getAttribute('data-value');
         qFilled();
+        summary();
+        if (!quiet) say(t('pick') + tile.textContent.replace(/\s+/g, ' ').trim() + '.');
       };
-      tiles.forEach(function (t, i) {
-        t.addEventListener('click', function () {
-          pick(t);
-          window.setTimeout(function () { qGo(qAt + 1, true); }, reduced ? 0 : 260);   /* long enough to see the tile fill */
+      tiles.forEach(function (tile, i) {
+        tile.addEventListener('click', function () {
+          pick(tile);
+          /* long enough to see the tile fill and read the confirmation */
+          window.setTimeout(function () { if (qAt === 0) qGo(1, true); }, reduced ? 0 : 650);
         });
-        t.addEventListener('keydown', function (e) {
+        tile.addEventListener('keydown', function (e) {
           var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
           if (!d) return;
           e.preventDefault();
@@ -799,18 +867,45 @@
         });
       });
     });
+    /* an opener may bring an answer with it (the price cards) */
+    form._pick = function (value) {
+      var tile = value && form.querySelector('.tile[data-value="' + value + '"]');
+      if (tile && pick) pick(tile);
+    };
     form.querySelector('[data-quiz-next]').addEventListener('click', function () { qGo(qAt + 1, true); });
     form.querySelector('[data-quiz-back]').addEventListener('click', function () { qGo(qAt - 1, true); });
-    form.addEventListener('input', qFilled);
-    var setInvalid = function (input, bad) {
+    form.addEventListener('input', function () { qFilled(); summary(); });
+    var setState = function (input, state) {
       var field = input.closest('.field');
-      if (field) field.classList.toggle('is-invalid', bad);
-      if (bad) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+      if (field) { field.classList.toggle('is-invalid', state === 'bad'); field.classList.toggle('is-valid', state === 'ok'); }
+      if (state === 'bad') input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
+    };
+    /* a field confirms itself (a gold tick and a line) once it is right; an error only
+       shows after leaving the field or on sending */
+    var confirmation = function (name, v) {
+      if (allValid()) return t('ready');
+      return name === 'name' ? t('name') + v.split(/\s+/)[0] + '.' : t(name);
     };
     Object.keys(checks).forEach(function (name) {
       var input = form.elements[name];
-      if (input) input.addEventListener('input', function () { setInvalid(input, false); });
+      if (!input) return;
+      var field = input.closest('.field');
+      var judge = function (leaving) {
+        var v = input.value.trim();
+        var ok = !!v && checks[name](v);
+        var was = field.classList.contains('is-valid');
+        setState(input, ok ? 'ok' : (leaving && v ? 'bad' : ''));
+        if (ok && !was) say(confirmation(name, v));
+      };
+      input.addEventListener('input', function () { judge(false); });
+      input.addEventListener('blur', function () { judge(true); });
     });
+    if (qMsg) {
+      var noted = false;
+      qMsg.addEventListener('input', function () {
+        if (!noted && qMsg.value.trim().length >= 12) { noted = true; say(t('noted')); }
+      });
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (qAt < qSteps.length - 1) { qGo(qAt + 1, true); return; }   /* Enter in an earlier step moves on */
@@ -819,29 +914,118 @@
       Object.keys(checks).forEach(function (name) {
         var input = form.elements[name];
         if (!input) return;
-        var bad = !checks[name](input.value.trim());
-        setInvalid(input, bad);
+        var v = input.value.trim();
+        var bad = name === 'phone' ? (v && !checks.phone(v)) : !checks[name](v);
+        setState(input, bad ? 'bad' : (v ? 'ok' : ''));
         if (bad && !firstBad) firstBad = input;
       });
-      if (firstBad) { firstBad.focus(); return; }
+      if (firstBad) { say(''); firstBad.focus(); return; }
       form.classList.add('is-sending');
       qSend.disabled = true;
       window.fetch(form.action, { method: 'POST', body: new window.FormData(form), headers: { Accept: 'application/json' } })
         .then(function (res) { return res.json(); })
         .then(function (data) {
           if (!data || !data.success) throw new Error('not sent');
-          qDots.forEach(function (d) { d.classList.add('is-on'); });
-          form.style.minHeight = form.offsetHeight + 'px';   /* the panel keeps its size when the buttons go */
-          qShow(qDone, 'done', true);
+          form.classList.remove('is-sending');
+          form.classList.add('is-sent');
+          qDots.forEach(function (d) { d.classList.add('is-on', 'is-done'); });
+          say(t('sent'));
+          /* the thank-you page greets by first name and repeats the choice; nothing else is kept */
+          try {
+            window.sessionStorage.setItem('vias-enquiry', JSON.stringify({ name: form.elements.name.value.trim().split(/\s+/)[0], service: chosen() }));
+          } catch (err) { /* private mode: the page greets without a name */ }
+          window.setTimeout(function () {
+            var to = form.getAttribute('data-thanks');
+            if (to) window.location.href = to;
+            else qShow(qDone, 'done', true);
+          }, reduced ? 200 : 900);
         })
         .catch(function () {
-          if (qStatus) qStatus.textContent = root.lang === 'en'
-            ? 'Sending failed. Please try again or write to mykhailo@viasmedia.com.'
-            : 'Senden fehlgeschlagen. Bitte noch einmal versuchen oder an mykhailo@viasmedia.com schreiben.';
-        })
-        .then(function () { form.classList.remove('is-sending'); qSend.disabled = false; });
+          form.classList.remove('is-sending');
+          say('');
+          if (qStatus) qStatus.textContent = t('fail');
+          qSend.disabled = false;
+        });
     });
     qGo(0, false);
+  }
+  [].forEach.call(document.querySelectorAll('[data-quiz]'), initQuiz);
+  /* thank-you page: repeat the topic the visitor chose (left by the form in this tab) */
+  var tySum = document.querySelector('[data-ty-sum]');
+  if (tySum && window.viasTySum) {
+    tySum.textContent = (root.lang === 'en' ? 'Your topic: ' : 'Ihr Thema: ') + window.viasTySum;
+    tySum.hidden = false;
+  }
+
+  /* ---- The enquiry modal: every button that asks for an enquiry opens it in
+     place (the link to contact.html stays as the fallback). Focus stays inside,
+     Esc and the scrim close it, the page behind is pinned, and what was entered
+     stays when it is closed half way. On the contact page the form is already
+     on the page, so the same buttons bring that into view instead. ---- */
+  var mq = document.getElementById('enquiry');
+  var mqForm = mq ? mq.querySelector('[data-quiz]') : null;
+  var pageForm = document.querySelector('.ct__form');
+  var mqFrom = null;
+  function isOpener(a) {
+    return a && a.matches && a.matches('a.btn[href$="contact.html"], a.cta[href$="contact.html"], a[data-pick]');
+  }
+  function setOutside(off) {
+    [document.getElementById('main'), hdr, document.querySelector('.ftr')].forEach(function (el) {
+      if (el) el.toggleAttribute('inert', off);
+    });
+  }
+  function openMq(from) {
+    if (!mq || mq.classList.contains('is-open')) return;
+    mqFrom = from || null;
+    if (menu && menu.classList.contains('is-open')) setMenu(false);
+    if (from && from.hasAttribute('data-pick') && mqForm && mqForm._pick) mqForm._pick(from.getAttribute('data-pick'));
+    lockScroll();
+    root.classList.add('mq-open');
+    mq.classList.add('is-open');
+    setOutside(true);
+    window.setTimeout(function () {
+      var q = mq.querySelector('.quiz__step.is-active .quiz__q');
+      if (q) q.focus({ preventScroll: true });
+    }, 60);
+  }
+  function closeMq() {
+    if (!mq || !mq.classList.contains('is-open')) return;
+    mq.classList.remove('is-open');
+    root.classList.remove('mq-open');
+    setOutside(false);
+    unlockScroll();
+    if (mqFrom && mqFrom.focus) mqFrom.focus({ preventScroll: true });
+  }
+  if (mq || pageForm) {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a');
+      if (!isOpener(a) || e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+      e.preventDefault();
+      if (pageForm) {
+        if (a.hasAttribute('data-pick') && pageForm._pick) pageForm._pick(a.getAttribute('data-pick'));
+        var y = pageForm.getBoundingClientRect().top + window.scrollY - M.hdrH - 16;
+        if (lenis) lenis.scrollTo(y); else window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+        return;
+      }
+      openMq(a);
+    });
+  }
+  if (mq) {
+    mq.querySelectorAll('[data-mq-close]').forEach(function (b) { b.addEventListener('click', closeMq); });
+    document.addEventListener('keydown', function (e) {
+      if (!mq.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeMq(); return; }
+      if (e.key !== 'Tab') return;
+      /* keep keyboard focus inside the dialog */
+      var f = [].filter.call(mq.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'), function (el) {
+        return !el.disabled && el.offsetParent !== null && !el.closest('[inert]') && !el.classList.contains('hp');
+      });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) closeMq(); });
   }
 
   /* =====================================================================
@@ -900,7 +1084,7 @@
   function boot() {
     splitAll(false);
     reserveFaq();
-    layoutCases();
+    layoutPins();
     layoutHs();
     startReveals();
     tick();
@@ -960,7 +1144,7 @@
     if (!booted) return;
     splitAll(true);
     reserveFaq();
-    layoutCases();
+    layoutPins();
     layoutHs();
     requestTick();
   });

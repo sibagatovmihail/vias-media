@@ -13,8 +13,9 @@ targets. The asset version (?v=) of index.html is copied to every page as well.
 
 Kept per page: everything between the menu and the footer (<main> and anything
 after it), which nav entry is current (aria-current), and the footer variant
-(ftr--bare on the contact page; ftr--over where the last section is wrapped in
-.tail). Blog templates get their ../ or ../../ path prefix.
+(ftr--bare on the contact and thank-you pages, which also get no enquiry modal;
+ftr--over where the last section is wrapped in .tail). Blog templates get their
+../ or ../../ path prefix.
 """
 import glob
 import re
@@ -76,6 +77,9 @@ def main():
         f = foot
         if 'ftr--bare' in page:
             f = f.replace('<footer class="ftr"', '<footer class="ftr ftr--bare"', 1)
+            # the contact page holds the form itself and the thank-you page needs none:
+            # no enquiry modal there
+            f = re.sub(r'  <!-- ===== ENQUIRY MODAL.*?\n  </div>\n\n', '', f, count=1, flags=re.S)
         elif 'class="tail"' in page:
             f = f.replace('<footer class="ftr"', '<footer class="ftr ftr--over"', 1)
         a0, a1 = cut(page, TOP_START, TOP_END)

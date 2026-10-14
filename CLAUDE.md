@@ -177,7 +177,7 @@ Direction and reasoning: `docs/design-research/`.
   then run `python3 tools/sync-chrome.py` (copies them into all root pages and both blog templates, keeps each
   page's own `<main>`, current nav entry and footer variant, and gives every page index.html's `?v=`) and
   `python3 build_blog.py`. `--check` only reports.
-  Differences on purpose: `aria-current` on the current nav link (`"page"`, or `"true"` on a child page such as
+  The enquiry modal sits in that chrome too (after the footer). Differences on purpose: `aria-current` on the current nav link (`"page"`, or `"true"` on a child page such as
   a case study), "Preise" points to `index.html#preise` outside the homepage, blog pages prefix paths with
   `../` or `../../`, the contact page's footer has `ftr--bare` (no second call to action).
 - **One asset version for all pages:** the `?v=` on the CSS/JS links is the same string in every HTML file and
@@ -195,40 +195,54 @@ Direction and reasoning: `docs/design-research/`.
   (see the comment in `tokens.css`).
 - **Accent (#E8593A) is a fill behind dark text only** (primary CTA, `.mark`, wordmark dot, the free pricing
   card). Never accent-coloured text.
-- **Pricing:** lies under Services (`.under`) and has a photograph that does not scroll (`.pricing__img` is
-  `position: fixed`, cut to the section by `clip-path: inset(0)` on its wrapper; `background-attachment: fixed`
-  does not work on iOS). Text directly on the photograph is `--ink`, never `--ink-2`: the file is darkened so
-  ink keeps 4.6:1 on its brightest band. Cards are slightly see-through.
+- **Second accent `--accent-2` (#E8AE3A), used sparingly** (owner, 2026-10-14): the `.cta` text link (hero
+  action, "alle projekte ansehen") and positive feedback only: the chosen quiz answer, done progress
+  segments, a valid field's tick, the confirmation line, the sent button, the thank-you seal. It may be text
+  (8.6:1). Nowhere else.
+- **Arrows are straight, left to right** (`#i-arrow-r`, hover nudges `translateX`). The diagonal `#i-arrow-ur`
+  was removed everywhere on 2026-10-14; do not bring it back.
+- **Pricing:** a plain section that scrolls like the others (owner, 2026-10-14: Leistungen and Preise "just
+  normally scrolled through, without an overlap animation"; the `.under` reveal and the fixed photograph are
+  gone). The photograph lies behind it (`position: absolute`). Text directly on it is `--ink`, never `--ink-2`:
+  the file is darkened so ink keeps 4.6:1 on its brightest band. Cards are slightly see-through. Each card's
+  button opens the enquiry modal with a matching answer chosen (`data-pick`).
 - **Footer over the last section:** wrap a page's last section in `.tail` and the footer gets `ftr--over`
   (sync-chrome sets it): the section is scrolled to its very end, holds for a quarter of a screen, and only
   then the footer slides over it (owner, 2026-10-09: "let him scroll to the end of the section and only then
   transition"). Used on the homepage, services and landing page (all end in the FAQ). It waits for the script
   (`.js:not(.rv-fallback)`). `main.js` pins the section by its bottom edge and a `ResizeObserver` keeps that
   top current when the section changes height.
-- **Scroll-linked entrances are slow:** the closing headline's halves travel 16vw with a fade, spread over
-  0.6 of a screen, with inertia (`convStep()`). The owner called the earlier fast 70vw fly-in unprofessional.
-- **Section flow:** every section is an opaque sheet (`.s` has the ground colour and `z-index: 1`). Pinned
-  sheets stay put while the next one slides over them: the hero, the projects intro and each `.case` are
-  `position: sticky; top: 0` (CSS only). Pricing does the opposite: `.under` starts one screen before Services
-  ends, so Services (higher `z-index`) lifts off it. A new section must be opaque or it shows what is pinned
-  underneath.
+- **Footer title:** "Bereit für mehr / lokale Kunden?" on two stacked lines of almost equal length; they rise
+  like every title, then the accent block sweeps in behind the second line and the words turn dark on it. The
+  halves that flew in from both sides were rejected twice (70vw "unprofessional", then the 16vw version
+  "really bad and unbalanced", 2026-10-14).
+- **Section flow:** every section is an opaque sheet (`.s` has the ground colour and `z-index: 1`). The hero
+  is pinned (`position: sticky; top: 0`) and the next sheet slides over it; after that the homepage scrolls
+  normally until the FAQ, which holds while the footer covers it (`.tail`). A new section must be opaque or it
+  shows what is pinned underneath.
 - **Hero:** frozen `--vh` set inline in `<head>`, **in a script that comes after the viewport tag**. Before
   that tag an iPhone still reports a 980px wide page and a height about 2.5 times too large; every pinned
   scene was then far too long on phones (found 2026-10-09). The hero is exactly one screen, laid out as an F:
   title across the top, note on the left, one action bottom right. That action is `.cta`: a small lower-case
-  text link (14px, `text-transform: lowercase`, an arrow, one hairline), not a button box (owner, 2026-10-09:
-  "remove this default button look", "smaller and simpler", then "smaller, in small letters"). The service
-  pages and "alle projekte ansehen" use the same `.cta`. From 62.5rem the title is forced onto two lines
+  text link (14px, `text-transform: lowercase`, an arrow) in `--accent-2`, no box and no underline (owner,
+  2026-10-09: "remove this default button look", "smaller and simpler", "smaller, in small letters";
+  2026-10-14: gold, "the underline deleted"). The service pages and "alle projekte ansehen" use the same
+  `.cta`. Behind the hero a flock of three cranes flies from left to right (`.flock`, components.css), drawn
+  after an old print of whooping cranes the owner chose (white bodies, dark outlined primaries): one
+  composited transform per bird for the flight, wing beats by `scaleY` around the shoulder line, paused while
+  the hero is covered (`.is-covered`, `updateDrive()`), static under reduced motion. The thank-you page uses
+  the same flock. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
   lines in DE and EN at 320–1920px after any copy or size change.
-- **Projects:** `.cases`. The ghost word behind the intro is fitted to the width (`data-fitw`) and starts
-  below the header, not behind it. Every case is at least one screen and **holds** before the next one covers
-  it: the hold is the case's bottom margin (`--case-hold`), which is never seen because a pinned case covers
-  the screen. **The last case is covered too:** the list is one screen longer than its cases
-  (`.cases__list::after`) and what follows (`.reel-more`, then the next section) starts one screen early.
-  Laptops: blurred dark backdrop (`.case__bg`) on the left with the screenshot gliding through it (`--cy`,
-  `updateCases()`), story top right. Phones: **one** screenshot, whole at its own ratio (never
-  `object-fit: cover`); tablets: two side by side.
+- **Projects (homepage):** record sleeves (`.crate`, `.rec`), one screen tall at most (owner, 2026-10-14:
+  "smaller and readable", "like a vinyl record … skewed to the wall, on hover the project pops up as if I had
+  taken out the record"). Laptops with a mouse (≥ 62.5rem, fine pointer): the sleeves lean against a wall
+  (`rotateY(46deg)`, overlapping); the one under the pointer or holding keyboard focus is pulled (`.is-on`,
+  main.js): it faces you, rises, its record slides out and spins, the sleeves after it step aside, and its
+  story stands in the panel on the left. Touch and smaller screens: the sleeves stand flat in a sideways row
+  (rule 11b) with the story under each. A sleeve is a square cover: the screenshot whole at its own ratio,
+  the name under it. The `.crate` must stay `position: relative`, or the hidden `.vh` labels escape the
+  scroll container and widen the page on phones (found 2026-10-14).
 - **Word mask ("So arbeite ich" → Services):** the next section's name is the **last thing in the row of
   panels** (an empty cell, `.hs__wordcell`, keeps its place; the word is drawn over it in an SVG covering the
   stage). It pans in with the cards; when the row is at its end the word grows from that place into its
@@ -239,8 +253,8 @@ Direction and reasoning: `docs/design-research/`.
   not live text: Chrome stops drawing `<text>` in a clip path beyond about 10× magnification. If the section
   is renamed, regenerate both languages with `python3 tools/word-path.py WORD I` (needs fontTools + brotli).
 - **Motion:** Lenis on fine pointers only. Every scene has a static default and a `prefers-reduced-motion`
-  path (nothing pinned, no mask). Scroll-driven values: `--drive` (hero lines part), `--cy` (case
-  screenshots), the hs scene, `--conv` (the footer question's two halves come in from the sides and meet).
+  path (nothing pinned, no mask, cranes still). Scroll-driven values: `--drive` (hero lines part), the hs
+  scene, `--flow` (service pages' time line).
   Content hidden for reveals must stay covered by the `rv-fallback` failsafe in `<head>`.
 - **Start-up order (`main.js`, end of file):** nothing is measured before the stylesheets have applied and
   the title face is really in use (`cssIn()`, `faceActive()`, `settle()`). Safari runs a deferred script
@@ -277,19 +291,38 @@ Direction and reasoning: `docs/design-research/`.
     lines and fitted to the width on laptops (homepage, landing page).
   - Because the hero stays pinned under the whole page, **every block inside `<main>` must be opaque and
     gaps must be padding, never margin** (a margin shows the hero through).
-  - Services: `.svc` sheets (ids are link targets). Sequences: `.steps` (rows on phones, four standing panels
-    on laptops). Projects: `.wk` (the whole entry is one link). Case study: `.shots`, `.moves`, gallery
+  - Services: six `.svc` cells in one tight hairline grid (3 columns on laptops, 2 on tablets, compact rows
+    on phones; ids are link targets; the whole cell is the link). Owner, 2026-10-14: "pack the services more
+    tightly, not one column with lots of white space". Sequences: `.steps` (rows on phones, four standing
+    panels on laptops). Projects: `.wk` (the whole entry is one link). Case study: `.shots`, `.moves`, gallery
     (`[data-slider]`, native sideways scroll, `overflow-y: hidden`), `.stats`, `.pn`.
   - Service pages: `webdesign.html`, `webentwicklung.html`, `seo.html`, `beratung.html`,
-    `barrierefreiheit.html`, `support.html` (hero with breadcrumb and three facts, "Enthalten" rows, four
-    steps, one reference, cost, FAQ, previous/next). Their copy only repeats claims the site already makes.
-    They **repeat the three package prices** in `data-price` spans: change prices there too. They are listed
-    in `STATIC_PAGES` (`build_blog.py`) and `llms.txt`.
+    `barrierefreiheit.html`, `support.html` are a "data sheet" (`.sx`, pages.css), deliberately unlike the
+    main pages (owner, 2026-10-14: "do not just copy their layout … different composition of h1 and its
+    placing, more or less white space, different animations"): a masthead hero that is not pinned (the
+    service name across the full width, letters rising one by one, `data-fitw data-letters`; the h1 beneath
+    it in Archivo, mixed case; the drawing beside it on tablets and up; the three facts in one ruled strip), a
+    checklist whose ticks draw themselves, a time line that fills on scroll (`data-flow`, across on laptops,
+    down on phones), a featured reference, a cost box, FAQ, previous/next; tighter section spacing. Their copy
+    only repeats claims the site already makes. They **repeat the three package prices** in `data-price`
+    spans: change prices there too. They are listed in `STATIC_PAGES` (`build_blog.py`) and `llms.txt`.
   - Contact: the form comes before the details on phones. It is a three-step quiz (`[data-quiz]`): answer
     tiles (a custom radio group synced to a hidden input; a tap moves on), an optional note, then name and
     contact. All steps share one grid cell, so the panel never changes height; error lines sit in reserved
-    space; the last step says "sent". Without JavaScript the steps follow each other as one form. It still
-    posts to Web3Forms (see open points).
+    space. Without JavaScript the steps follow each other as one form. It still posts to Web3Forms (see open
+    points).
+  - **Enquiry modal** (`#enquiry`, `.mq`, in the chrome of index.html): every `a.btn` / `a.cta` to
+    contact.html and every `[data-pick]` opens the same quiz in place (contact.html stays the no-JS fallback;
+    on the contact page itself the buttons scroll to its inline form). Centred panel from 48rem, full-screen
+    sheet on phones, page pinned behind it, focus kept inside, Esc and the scrim close it, entries kept when
+    closed half way. sync-chrome leaves it off pages with `ftr--bare` (contact, thank-you). Positive feedback
+    on every action (owner, 2026-10-14): the chosen tile turns gold with a tick, a running summary line, a
+    gold confirmation line under the steps for every answer, note and valid field, gold ticks in valid
+    fields, "Gesendet ✓" on the button; then `/danke.html`.
+  - **Thank-you page** (`danke.html`, `noindex`, not in the sitemap): the hero cranes carry the message across,
+    a gold seal draws itself, the title greets by first name and the chosen topic is repeated (both left by the
+    form in `sessionStorage`, read once and deleted), then what happens next. The hidden `redirect` field
+    sends no-JS posts there too.
   - Text pages use `.prose`: mixed-case Archivo for headings, only the page title is in Bebas Neue (long
     all-caps headings are hard to read). Blog list and article blocks are styled on the class names
     `build_blog.py` writes (`.blog-card`, `.post__case`, `.post__related`, `.post__cta`); `.post__body`
@@ -298,7 +331,7 @@ Direction and reasoning: `docs/design-research/`.
   gone from services and landing page (visible text, meta description, structured data); the services FAQ
   "Wo wird meine Website gehostet?" was removed. Voice is "ich" on every page.
 - **Open points:** the contact form's backend (Web3Forms, against the own-sites rule; needs an SMTP function
-  and credentials), the result figures in the case studies ("2× Anfragen" at Eagle Air was already
+  and credentials; the enquiry modal posts there too), the result figures in the case studies ("2× Anfragen" at Eagle Air was already
   questioned), the Akkerman Stroy quote.
 - **Images:** sources and licences in `assets/img/v2/CREDITS.md`; add a line for every new image and say
   whether it is a photo, drawn by script or AI-generated.
