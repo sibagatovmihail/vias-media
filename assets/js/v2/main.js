@@ -500,27 +500,160 @@
     pinEls.forEach(function (el) { pinRO.observe(el); });
   }
 
-  /* ---- Projects: record sleeves. The one under the mouse (or holding keyboard
-     focus) is pulled out; CSS does the rest (laptops only, see home.css). The
-     last one pulled stays out, so the story panel is never empty. ---- */
+  /* ---- Projects: sleeves on a wall (laptops). The one under the pointer is
+     pulled out. Hit-testing the turned sleeves answered late (each shows only a
+     narrow strip, and a pulled one covers its neighbours), so the choice is made
+     from the pointer's x alone: every sleeve owns the strip from its visible left
+     edge to the next one's, in the current state. The last one pulled stays out,
+     so the story panel is never empty. Keyboard focus pulls too. ---- */
   var crate = document.querySelector('[data-crate]');
   if (crate) {
     var recs = [].slice.call(crate.querySelectorAll('.rec'));
-    var pull = function (r) {
-      if (r.classList.contains('is-on')) return;
-      recs.forEach(function (x) { x.classList.toggle('is-on', x === r); });
+    var wall = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 62.5rem)');
+    var onAt = 0;
+    var pull = function (i) {
+      if (i === onAt && recs[i].classList.contains('is-on')) return;
+      onAt = i;
+      recs.forEach(function (x, k) { x.classList.toggle('is-on', k === i); });
     };
     recs.forEach(function (r, k) {
-      var sleeve = r.querySelector('.rec__sleeve');
-      sleeve.style.setProperty('--k', k);
-      sleeve.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') pull(r); });
-      r.addEventListener('focusin', function () { pull(r); });
+      r.querySelector('.rec__sleeve').style.setProperty('--k', k);
+      r.addEventListener('focusin', function () { pull(k); });
     });
+    crate.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch' || !wall.matches) return;
+      var S = recs[0].offsetWidth, shift = S * 0.58, x = e.clientX;
+      var lefts = recs.map(function (r, k) { return r.getBoundingClientRect().left + (k > onAt ? shift : 0); });
+      var first = lefts[0], end = lefts[lefts.length - 1] + S;
+      if (x < first || x > end) return;                          /* the story panel and the space after the wall */
+      var y = e.clientY, top = recs[0].getBoundingClientRect().top - S * 0.1;
+      if (y < top || y > top + S * 1.25) return;
+      var i = 0;
+      while (i < lefts.length - 1 && x >= lefts[i + 1]) i++;
+      pull(i);
+    }, { passive: true });
     /* after the entrance the sleeves answer the pointer without the stagger */
     crate.addEventListener('transitionend', function () {
       if (crate.classList.contains('is-in')) crate.classList.add('is-settled');
     });
   }
+
+
+  /* =====================================================================
+     Cranes. Every flight is new (owner: "too slow and too repetitive …
+     as if they weren't alive"): one to three birds at different depths
+     (nearer = bigger, brighter, faster), crossing in 9–14 s at their own
+     height inside the flock's band. Each bird beats its wings in bursts
+     and glides in between, climbs a little while it beats and sinks while
+     it glides, sways in a slow wave and pitches with its climb. Only the
+     transforms of four elements per bird change. The loop runs only while
+     the flock can be seen (not under a covered hero, not in a closed
+     dialog, not in a hidden tab). Reduced motion: the birds rest in the
+     print's pose (CSS).
+     ===================================================================== */
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function initFlock(el) {
+    var birds = [].slice.call(el.querySelectorAll('.crane')).map(function (c) {
+      return { el: c, wn: c.querySelector('.cr__wn'), wf: c.querySelector('.cr__wf'), bob: c.querySelector('.cr__bob'), on: false };
+    });
+    if (!birds.length) return;
+    el.classList.add('is-js');
+    var W = 0, H = 0, base = 0, bandA = 0.45, bandB = 0.75, raf = 0, last = 0, wait = 0.6;
+    var measure = function () {
+      W = el.clientWidth; H = el.clientHeight;
+      var cs = getComputedStyle(el);
+      bandA = parseFloat(cs.getPropertyValue('--band-a')) || 0.45;
+      bandB = parseFloat(cs.getPropertyValue('--band-b')) || 0.75;
+      base = birds[0].el.offsetWidth || 200;               /* the nearest bird's width */
+    };
+    var launch = function () {
+      measure();
+      var n = Math.random() < 0.18 ? 1 : (Math.random() < 0.45 ? 2 : 3);
+      var lead = rand(0.82, 1);
+      var T = rand(9, 14);                                 /* seconds for the leader to cross */
+      var y0 = H * rand(bandA, bandB);
+      birds.forEach(function (b, i) {
+        b.on = i < n;
+        b.el.style.visibility = b.on ? 'visible' : 'hidden';
+        if (!b.on) return;
+        var z = i === 0 ? lead : clamp(lead - rand(0.12, 0.38), 0.45, 0.95);
+        b.z = z;
+        b.w = base * z;
+        b.v = (W + base * 2.2) / T * (0.72 + 0.28 * z) * rand(0.95, 1.05);
+        b.x = -b.w * 1.15 - (i ? rand(0.25, 0.9) * base : 0);      /* the others start behind */
+        b.yb = clamp(y0 + (i ? rand(-0.11, 0.11) * H : 0), H * (bandA - 0.06), H * (bandB + 0.04));
+        b.vy = 0; b.y = b.yb;
+        b.ph = rand(0, 6.283); b.f = rand(1.25, 1.7);
+        b.amp = 1; b.flap = true; b.until = rand(1.2, 3.5);
+        b.wave = rand(5, 13) * z; b.wf2 = rand(0.18, 0.32); b.wp = rand(0, 6.283);
+        b.o = 0.22 + 0.32 * z;
+        b.el.style.width = b.w + 'px';
+        b.el.style.opacity = b.o.toFixed(2);
+      });
+    };
+    var step = function (b, dt, t) {
+      /* bursts of beats, then a glide */
+      b.until -= dt;
+      if (b.until <= 0) {
+        b.flap = !b.flap || Math.random() < 0.25;
+        b.until = b.flap ? rand(1.4, 4) : rand(0.7, 2);
+        if (b.flap) b.f = rand(1.25, 1.7);
+      }
+      b.amp += ((b.flap ? 1 : 0) - b.amp) * Math.min(1, dt * 3.2);
+      b.ph += 6.283 * b.f * dt * (0.35 + 0.65 * Math.max(b.amp, 0.2));
+      var c = Math.cos(b.ph);
+      /* climb while beating, sink while gliding, a slow wave on top; held inside the band */
+      var lift = b.amp * 14 - (1 - b.amp) * 12;
+      b.vy += ((-lift) - b.vy) * Math.min(1, dt * 1.5);
+      b.yb += b.vy * dt * b.z;
+      var lo = H * (bandA - 0.08), hi = H * (bandB + 0.06);
+      if (b.yb < lo) b.yb += (lo - b.yb) * dt * 2;
+      if (b.yb > hi) b.yb += (hi - b.yb) * dt * 2;
+      var wave = Math.sin(t * b.wf2 * 6.283 + b.wp) * b.wave;
+      var dyw = Math.cos(t * b.wf2 * 6.283 + b.wp) * b.wave * b.wf2 * 6.283;
+      b.x += b.v * dt;
+      var pitch = clamp(Math.atan2(b.vy * b.z + dyw, b.v) * 57.3, -9, 9) + b.amp * c * 1.2;
+      b.el.style.transform = 'translate3d(' + b.x.toFixed(1) + 'px,' + (b.yb + wave).toFixed(1) + 'px,0) rotate(' + pitch.toFixed(2) + 'deg)';
+      /* wings: up at cos 1, down at cos -1; gliding holds them out, a little raised */
+      var near = b.amp * (0.1 + 0.9 * c) + (1 - b.amp) * 0.2;
+      var far = b.amp * (0.075 - 0.625 * c) + (1 - b.amp) * -0.16;
+      b.wn.style.transform = 'scaleY(' + near.toFixed(3) + ')';
+      b.wf.style.transform = 'translate(22px,-4px) scale(0.8,' + far.toFixed(3) + ')';
+      b.bob.style.transform = 'translateY(' + (b.amp * 3 * c).toFixed(2) + 'px)';
+      return b.x < W + b.w * 0.2;
+    };
+    var visible = function () {
+      if (document.hidden) return false;
+      var host = el.closest('.sent');
+      if (host) return host.classList.contains('is-open');
+      var r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh()) return false;
+      /* a pinned hero under the next sheet: covered once the page has moved a screen */
+      return !(el.closest('.hero') && window.scrollY > vh() * 1.05);
+    };
+    var frame = function (now) {
+      raf = 0;
+      if (!visible()) { last = 0; return; }
+      var dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
+      last = now;
+      if (wait > 0) {
+        wait -= dt;
+        if (wait <= 0) launch();
+      } else {
+        var t = now / 1000, flying = false;
+        birds.forEach(function (b) { if (b.on && step(b, dt, t)) flying = true; });
+        if (!flying) { birds.forEach(function (b) { b.on = false; b.el.style.visibility = 'hidden'; }); wait = rand(1.2, 5); }
+      }
+      raf = window.requestAnimationFrame(frame);
+    };
+    el._wake = function () { if (!raf) raf = window.requestAnimationFrame(frame); };
+    birds.forEach(function (b) { b.el.style.visibility = 'hidden'; });
+    el._wake();
+  }
+  var flocks = reduced ? [] : [].slice.call(document.querySelectorAll('.flock'));
+  flocks.forEach(initFlock);
+  function wakeFlocks() { flocks.forEach(function (f) { if (f._wake) f._wake(); }); }
+  document.addEventListener('visibilitychange', wakeFlocks);
 
   /* ---- Statement: words turn from pencil to ink as the block crosses the screen ---- */
   function updateFill(V) {
@@ -536,16 +669,10 @@
     });
   }
 
-  /* ---- Hero title: the lines drive apart while the projects slide over the pinned hero.
-     Once the hero is covered, its cranes stop flying (no work for a hidden layer) ---- */
+  /* ---- Hero title: the lines drive apart while the next sheet slides over the pinned hero ---- */
   var driveEl = reduced ? null : document.querySelector('[data-drive]');
   var driveVal = -1;
-  var flockHost = document.querySelector('.flock') ? document.querySelector('.flock').parentElement : null;
   function updateDrive(V) {
-    if (flockHost) {
-      var covered = window.scrollY > V * 1.05;
-      if (covered !== flockHost._cov) { flockHost._cov = covered; flockHost.classList.toggle('is-covered', covered); }
-    }
     if (!driveEl) return;
     var v = Math.round(clamp(window.scrollY / V, 0, 1) * 0.11 * window.innerWidth);
     if (v === driveVal) return;
@@ -608,6 +735,7 @@
     updateFill(V);
     updateDrive(V);
     updateFlow(V);
+    wakeFlocks();
     if (refreshCursor) refreshCursor();
   }
   function requestTick() {
@@ -840,6 +968,20 @@
       else if (qAt !== from) say('');
     };
     form._go = qGo;
+    /* after a send the form starts again from the first step, empty */
+    form._reset = function () {
+      form.reset();
+      form.querySelectorAll('.tile').forEach(function (o, k) { o.setAttribute('aria-checked', 'false'); o.tabIndex = k ? -1 : 0; });
+      form.querySelectorAll('.field').forEach(function (f) { f.classList.remove('is-valid', 'is-invalid'); });
+      form.querySelectorAll('[aria-invalid]').forEach(function (i) { i.removeAttribute('aria-invalid'); });
+      form.classList.remove('is-sent');
+      qSend.disabled = false;
+      noted = false;
+      qDots.forEach(function (d) { d.classList.remove('is-done'); });
+      qAt = 0;
+      qGo(0, false);
+      say('');
+    };
     /* answer tiles: a radio group. Arrows move and choose; a tap also moves on */
     var pick = null;
     form.querySelectorAll('[data-choice]').forEach(function (group) {
@@ -900,8 +1042,8 @@
       input.addEventListener('input', function () { judge(false); });
       input.addEventListener('blur', function () { judge(true); });
     });
+    var noted = false;
     if (qMsg) {
-      var noted = false;
       qMsg.addEventListener('input', function () {
         if (!noted && qMsg.value.trim().length >= 12) { noted = true; say(t('noted')); }
       });
@@ -930,14 +1072,11 @@
           form.classList.add('is-sent');
           qDots.forEach(function (d) { d.classList.add('is-on', 'is-done'); });
           say(t('sent'));
-          /* the thank-you page greets by first name and repeats the choice; nothing else is kept */
-          try {
-            window.sessionStorage.setItem('vias-enquiry', JSON.stringify({ name: form.elements.name.value.trim().split(/\s+/)[0], service: chosen() }));
-          } catch (err) { /* private mode: the page greets without a name */ }
+          /* the confirmation dialog greets by first name and repeats the choice; nothing is kept */
+          var info = { name: form.elements.name.value.trim().split(/\s+/)[0], service: chosen() };
           window.setTimeout(function () {
-            var to = form.getAttribute('data-thanks');
-            if (to) window.location.href = to;
-            else qShow(qDone, 'done', true);
+            if (window.viasSent) window.viasSent(info); else qShow(qDone, 'done', true);
+            form._reset();
           }, reduced ? 200 : 900);
         })
         .catch(function () {
@@ -950,12 +1089,6 @@
     qGo(0, false);
   }
   [].forEach.call(document.querySelectorAll('[data-quiz]'), initQuiz);
-  /* thank-you page: repeat the topic the visitor chose (left by the form in this tab) */
-  var tySum = document.querySelector('[data-ty-sum]');
-  if (tySum && window.viasTySum) {
-    tySum.textContent = (root.lang === 'en' ? 'Your topic: ' : 'Ihr Thema: ') + window.viasTySum;
-    tySum.hidden = false;
-  }
 
   /* ---- The enquiry modal: every button that asks for an enquiry opens it in
      place (the link to contact.html stays as the fallback). Focus stays inside,
@@ -981,6 +1114,7 @@
     if (from && from.hasAttribute('data-pick') && mqForm && mqForm._pick) mqForm._pick(from.getAttribute('data-pick'));
     lockScroll();
     root.classList.add('mq-open');
+    mq.removeAttribute('inert');
     mq.classList.add('is-open');
     setOutside(true);
     window.setTimeout(function () {
@@ -991,6 +1125,7 @@
   function closeMq() {
     if (!mq || !mq.classList.contains('is-open')) return;
     mq.classList.remove('is-open');
+    mq.setAttribute('inert', '');
     root.classList.remove('mq-open');
     setOutside(false);
     unlockScroll();
@@ -1010,23 +1145,75 @@
       openMq(a);
     });
   }
+  /* keep keyboard focus inside an open dialog */
+  function trapTab(e, box) {
+    var f = [].filter.call(box.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'), function (el) {
+      return !el.disabled && el.offsetParent !== null && !el.closest('[inert]') && !el.classList.contains('hp') && el.getAttribute('tabindex') !== '-1';
+    });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
   if (mq) {
     mq.querySelectorAll('[data-mq-close]').forEach(function (b) { b.addEventListener('click', closeMq); });
-    document.addEventListener('keydown', function (e) {
-      if (!mq.classList.contains('is-open')) return;
-      if (e.key === 'Escape') { e.preventDefault(); closeMq(); return; }
-      if (e.key !== 'Tab') return;
-      /* keep keyboard focus inside the dialog */
-      var f = [].filter.call(mq.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'), function (el) {
-        return !el.disabled && el.offsetParent !== null && !el.closest('[inert]') && !el.classList.contains('hp');
-      });
-      if (!f.length) return;
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    });
     window.addEventListener('pageshow', function (e) { if (e.persisted) closeMq(); });
   }
+
+  /* ---- Sent: the confirmation after an enquiry, always a dialog (owner: "the success page
+     should always be a popup modal"). It takes over from the enquiry modal without letting
+     the page move, greets by first name and repeats the topic. ---- */
+  var sent = document.getElementById('gesendet');
+  /* the greeting: by first name when the form left one, and the chosen topic */
+  function greetSent(info) {
+    var en = root.lang === 'en';
+    var title = sent.querySelector('.sent__title'), sum = sent.querySelector('[data-sent-sum]');
+    var n = (info && info.name) ? String(info.name).slice(0, 40) : '';
+    var thanks = n ? 'Thank you, ' + n + '.' : 'Thank you.';
+    title.textContent = en ? thanks : (n ? 'Danke, ' + n + '.' : 'Danke.');
+    title.setAttribute('data-en', thanks);
+    var topic = info && info.service;
+    sum.textContent = topic ? (en ? 'Your topic: ' : 'Ihr Thema: ') + topic : '';
+    sum.hidden = !topic;
+    return title;
+  }
+  function openSent(info) {
+    if (!sent) return;
+    var title = greetSent(info);
+    var locked = root.classList.contains('mq-open');
+    if (mq && mq.classList.contains('is-open')) { mq.classList.remove('is-open'); mq.setAttribute('inert', ''); }
+    if (!locked) lockScroll();
+    root.classList.add('mq-open');
+    sent.removeAttribute('inert');
+    sent.classList.add('is-open');
+    setOutside(true);
+    wakeFlocks();
+    window.setTimeout(function () { title.focus({ preventScroll: true }); }, 60);
+  }
+  function closeSent() {
+    if (!sent || !sent.classList.contains('is-open')) return;
+    sent.classList.remove('is-open');
+    sent.setAttribute('inert', '');
+    root.classList.remove('mq-open');
+    setOutside(false);
+    unlockScroll();
+    if (window.location.hash === '#gesendet') window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    if (mqFrom && mqFrom.focus) mqFrom.focus({ preventScroll: true });
+  }
+  if (sent) {
+    window.viasSent = openSent;
+    sent.querySelectorAll('[data-sent-close]').forEach(function (b) {
+      b.addEventListener('click', function (e) { e.preventDefault(); closeSent(); });
+    });
+    /* arriving from the form without JavaScript in between (its redirect) */
+    if (window.location.hash === '#gesendet') openSent(null); else sent.setAttribute('inert', '');
+  }
+  document.addEventListener('keydown', function (e) {
+    var box = sent && sent.classList.contains('is-open') ? sent : (mq && mq.classList.contains('is-open') ? mq : null);
+    if (!box) return;
+    if (e.key === 'Escape') { e.preventDefault(); if (box === sent) closeSent(); else closeMq(); return; }
+    if (e.key === 'Tab') trapTab(e, box);
+  });
 
   /* =====================================================================
      Cursor (fine pointers): a drafting crosshair with guide lines; over a

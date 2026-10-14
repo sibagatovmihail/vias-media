@@ -197,13 +197,15 @@ Direction and reasoning: `docs/design-research/`.
   card). Never accent-coloured text.
 - **Second accent `--accent-2` (#E8AE3A), used sparingly** (owner, 2026-10-14): the `.cta` text link (hero
   action, "alle projekte ansehen") and positive feedback only: the chosen quiz answer, done progress
-  segments, a valid field's tick, the confirmation line, the sent button, the thank-you seal. It may be text
+  segments, a valid field's tick, the confirmation line, the sent button, the seal in the sent dialog. It may be text
   (8.6:1). Nowhere else.
 - **Arrows are straight, left to right** (`#i-arrow-r`, hover nudges `translateX`). The diagonal `#i-arrow-ur`
   was removed everywhere on 2026-10-14; do not bring it back.
 - **Pricing:** a plain section that scrolls like the others (owner, 2026-10-14: Leistungen and Preise "just
-  normally scrolled through, without an overlap animation"; the `.under` reveal and the fixed photograph are
-  gone). The photograph lies behind it (`position: absolute`). Text directly on it is `--ink`, never `--ink-2`:
+  normally scrolled through, without an overlap animation"; the `.under` reveal is gone). Its photograph is
+  fixed to the screen (owner, same day: "fixed as a background … keeping the same position visually"):
+  `.pricing__img` is `position: fixed`, cut to the section by `clip-path: inset(0)` on its wrapper
+  (`background-attachment: fixed` does not work on iOS). Text directly on it is `--ink`, never `--ink-2`:
   the file is darkened so ink keeps 4.6:1 on its brightest band. Cards are slightly see-through. Each card's
   button opens the enquiry modal with a matching answer chosen (`data-pick`).
 - **Footer over the last section:** wrap a page's last section in `.tail` and the footer gets `ftr--over`
@@ -227,19 +229,22 @@ Direction and reasoning: `docs/design-research/`.
   text link (14px, `text-transform: lowercase`, an arrow) in `--accent-2`, no box and no underline (owner,
   2026-10-09: "remove this default button look", "smaller and simpler", "smaller, in small letters";
   2026-10-14: gold, "the underline deleted"). The service pages and "alle projekte ansehen" use the same
-  `.cta`. Behind the hero a flock of three cranes flies from left to right (`.flock`, components.css), drawn
-  after an old print of whooping cranes the owner chose (white bodies, dark outlined primaries): one
-  composited transform per bird for the flight, wing beats by `scaleY` around the shoulder line, paused while
-  the hero is covered (`.is-covered`, `updateDrive()`), static under reduced motion. The thank-you page uses
-  the same flock. From 62.5rem the title is forced onto two lines
+  `.cta`. Behind the hero cranes fly from left to right (`.flock`, components.css), drawn after an old print
+  of whooping cranes the owner chose (white bodies, dark outlined primaries). `initFlock()` (main.js) flies
+  them and every flight is new (owner: the looping version was "too slow and too repetitive … as if they
+  weren't alive"): one to three birds at different depths, 9–14 s per crossing, wing beats in bursts with
+  glides between, climbing while beating and sinking while gliding, a slow wave and pitch. The loop runs only
+  while the flock can be seen; under reduced motion the birds rest in the print's pose. The flight band is
+  `--band-a` / `--band-b` on the `.flock`. The "sent" dialog has its own small flock. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
   lines in DE and EN at 320–1920px after any copy or size change.
-- **Projects (homepage):** record sleeves (`.crate`, `.rec`), one screen tall at most (owner, 2026-10-14:
-  "smaller and readable", "like a vinyl record … skewed to the wall, on hover the project pops up as if I had
-  taken out the record"). Laptops with a mouse (≥ 62.5rem, fine pointer): the sleeves lean against a wall
-  (`rotateY(46deg)`, overlapping); the one under the pointer or holding keyboard focus is pulled (`.is-on`,
-  main.js): it faces you, rises, its record slides out and spins, the sleeves after it step aside, and its
-  story stands in the panel on the left. Touch and smaller screens: the sleeves stand flat in a sideways row
+- **Projects (homepage):** sleeves on a wall (`.crate`, `.rec`), one screen tall at most (owner, 2026-10-14:
+  "smaller and readable"; the vinyl record was only an example, so there are no discs). Laptops with a mouse
+  (≥ 62.5rem, fine pointer): the sleeves lean against a wall (`rotateY(46deg)`, overlapping); the one under
+  the pointer or holding keyboard focus is pulled (`.is-on`): it faces you and rises, the sleeves after it
+  step aside, and its story stands in the panel on the left. Which sleeve is under the pointer is decided
+  from the pointer's x over the wall (each owns the strip to the next one's visible edge), not by hovering
+  the turned sleeves, which answered "really late". Touch and smaller screens: the sleeves stand flat in a sideways row
   (rule 11b) with the story under each. A sleeve is a square cover: the screenshot whole at its own ratio,
   the name under it. The `.crate` must stay `position: relative`, or the hidden `.vh` labels escape the
   scroll container and widen the page on phones (found 2026-10-14).
@@ -306,7 +311,8 @@ Direction and reasoning: `docs/design-research/`.
     down on phones), a featured reference, a cost box, FAQ, previous/next; tighter section spacing. Their copy
     only repeats claims the site already makes. They **repeat the three package prices** in `data-price`
     spans: change prices there too. They are listed in `STATIC_PAGES` (`build_blog.py`) and `llms.txt`.
-  - Contact: the form comes before the details on phones. It is a three-step quiz (`[data-quiz]`): answer
+  - Contact: the form alone in the middle under a centred head, what happens next and the direct contact
+    below it side by side (owner, 2026-10-14: the two-column page was "so stuffed"). It is a three-step quiz (`[data-quiz]`): answer
     tiles (a custom radio group synced to a hidden input; a tap moves on), an optional note, then name and
     contact. All steps share one grid cell, so the panel never changes height; error lines sit in reserved
     space. Without JavaScript the steps follow each other as one form. It still posts to Web3Forms (see open
@@ -315,14 +321,17 @@ Direction and reasoning: `docs/design-research/`.
     contact.html and every `[data-pick]` opens the same quiz in place (contact.html stays the no-JS fallback;
     on the contact page itself the buttons scroll to its inline form). Centred panel from 48rem, full-screen
     sheet on phones, page pinned behind it, focus kept inside, Esc and the scrim close it, entries kept when
-    closed half way. sync-chrome leaves it off pages with `ftr--bare` (contact, thank-you). Positive feedback
+    closed half way. sync-chrome leaves it off pages with `ftr--bare` (the contact page). Positive feedback
     on every action (owner, 2026-10-14): the chosen tile turns gold with a tick, a running summary line, a
     gold confirmation line under the steps for every answer, note and valid field, gold ticks in valid
-    fields, "Gesendet ✓" on the button; then `/danke.html`.
-  - **Thank-you page** (`danke.html`, `noindex`, not in the sitemap): the hero cranes carry the message across,
-    a gold seal draws itself, the title greets by first name and the chosen topic is repeated (both left by the
-    form in `sessionStorage`, read once and deleted), then what happens next. The hidden `redirect` field
-    sends no-JS posts there too.
+    fields, "Gesendet ✓" on the button; then the "sent" dialog. The closed modal is `inert` and takes no
+    pointer events: its active step sets `visibility: visible` itself and once sat unseen in the middle of
+    every page, swallowing hovers (found 2026-10-14).
+  - **Sent dialog** (`#gesendet`, `.sent`, in the chrome of every page, the contact page included): the
+    success is always a popup (owner, 2026-10-14), never a page. It takes over from the modal (or the
+    contact page's form), greets by first name, repeats the topic, a gold seal draws itself, a small flock
+    flies through its top band, then what happens next. Without JavaScript the form's `redirect` lands on
+    `contact.html#gesendet` and `:target` shows it. The forms reset after a send.
   - Text pages use `.prose`: mixed-case Archivo for headings, only the page title is in Bebas Neue (long
     all-caps headings are hard to read). Blog list and article blocks are styled on the class names
     `build_blog.py` writes (`.blog-card`, `.post__case`, `.post__related`, `.post__cta`); `.post__body`

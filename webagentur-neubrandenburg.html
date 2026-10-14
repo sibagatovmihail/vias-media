@@ -43,11 +43,11 @@
 
   <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261014a">
-  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261014a">
-  <link rel="stylesheet" href="assets/css/consent.css?v=20261014a">
-  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261014a">
-  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261014a">
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261014b">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261014b">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261014b">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261014b">
+  <link rel="stylesheet" href="assets/css/v2/pages.css?v=20261014b">
   <script type="speculationrules">{"prefetch":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/api/*"}},{"not":{"href_matches":"/teacher*"}},{"not":{"href_matches":"/login*"}}]},"eagerness":"moderate"}]}</script>
   <script type="application/ld+json">
 {
@@ -586,18 +586,18 @@
   <!-- ===== ENQUIRY MODAL: every button that asks for an enquiry (start a project, advise me,
        request a quote) opens it in place, in three short steps with a confirmation for each;
        after sending, the thank-you page. Without JavaScript those buttons go to contact.html ===== -->
-  <div class="mq" id="enquiry" role="dialog" aria-modal="true" aria-labelledby="mq-title">
+  <div class="mq" id="enquiry" role="dialog" aria-modal="true" aria-labelledby="mq-title" inert>
     <div class="mq__scrim" data-mq-close></div>
     <div class="mq__panel" data-lenis-prevent>
       <div class="mq__head">
         <h2 class="tag mq__title" id="mq-title" data-en="Your enquiry">Ihre Anfrage</h2>
         <button class="mq__x" type="button" data-mq-close><span class="vh" data-en="Close">Schließen</span></button>
       </div>
-      <form class="form quiz mq__form" id="mq-form" action="https://api.web3forms.com/submit" method="POST" novalidate aria-labelledby="mq-title" data-quiz data-thanks="/danke.html">
+      <form class="form quiz mq__form" id="mq-form" action="https://api.web3forms.com/submit" method="POST" novalidate aria-labelledby="mq-title" data-quiz>
         <input type="hidden" name="access_key" value="0680ff66-18e9-411b-989b-08f1d0ddbe3f">
         <input type="hidden" name="subject" value="New project enquiry — Vias Media">
         <input type="hidden" name="from_name" value="Vias Media Website">
-        <input type="hidden" name="redirect" value="https://viasmedia.com/danke.html">
+        <input type="hidden" name="redirect" value="https://viasmedia.com/contact.html#gesendet">
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div class="quiz__bar">
@@ -676,9 +676,46 @@
     </div>
   </div>
 
-  <script src="assets/js/i18n.js?v=20261014a" defer></script>
+  <!-- ===== SENT: the confirmation after an enquiry, always a popup (owner, 2026-10-14). main.js
+       opens it after a successful send (from the modal or the contact page), greets by first name
+       and repeats the chosen topic; the cranes from the hero carry the message off. Without
+       JavaScript the form's redirect lands on contact.html#gesendet and CSS (:target) shows it ===== -->
+  <div class="sent" id="gesendet" role="dialog" aria-modal="true" aria-labelledby="sent-title">
+    <a class="sent__scrim" href="#" data-sent-close tabindex="-1" aria-hidden="true"></a>
+    <div class="sent__panel" data-lenis-prevent>
+      <div class="flock sent__flock" aria-hidden="true">
+        <div class="crane crane--1"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+        <div class="crane crane--2"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+        <div class="crane crane--3"><svg viewBox="20 -40 370 200" focusable="false"><g class="cr__bob"><g class="cr__wf"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g><g class="cr__bd"><path class="cr-leg" d="M156 115.5 L36 118.5 M158 118 L40 123 M36 118.5 l-6 -1.6 M36 118.5 l-6 2 M40 123 l-6 -1.2 M40 123 l-6 2.4"/><path class="cr-d" d="M128 104 L104 106 L109 109.5 L101 112 L126 113 Z"/><path class="cr-k" d="M382 96.5 L347 93.6 C341 89.6 331 89.4 325 93 C300 97 276 98 252 99 C232 94 196 93 168 95.5 C152 97 140 100 128 104 L108 109.5 C126 113 144 116 162 118 C190 123.5 222 122.5 248 111.5 C274 106.5 302 104 326 102 C333 102.6 340 101.4 345 98.6 L382 97.6 Z"/><path class="cr-x" d="M328 92.2 C332 89.6 339 89.8 343 92.6 L336 95.4 Z"/><circle class="cr-x" cx="338.5" cy="94.6" r="1.3"/><path class="cr-bl" d="M176 120.5 C204 123 230 119 246 111.5"/></g><g class="cr__wn"><path class="cr-d" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 L210.3 44 L206.7 38 L202.8 32 L198.3 26 L193.5 20 L188.2 14.1 L182.4 8.1 L176.2 2.3 L169.5 -3.5 L162.2 -9.2 L154.5 -14.8 L146.2 -20.3 L137.4 -25.7 L128 -30.9 L118 -36 Q120 -28.2 122 -20.4 Q114 -24.7 106 -29 Q109.8 -21.3 113.6 -13.6 Q105.3 -16.3 97 -19 Q102.3 -11.9 107.6 -4.8 Q99.3 -5.9 91 -7 Q97.7 -0.9 104.4 5.2 Q96.7 5.6 89 6 L88.9 14.1 L97.7 26.7 L99.3 35.5 L110.1 47.4 L112.9 56.7 L125.2 67.2 L129 76.9 L142.2 85 L147.1 95.2 L160 100 Z"/><path class="cr-k" d="M226 100 L225.9 94.9 L225.4 89.7 L224.7 84.3 L223.7 78.8 L222.3 73.2 L220.7 67.5 L218.6 61.7 L216.2 55.9 L213.4 49.9 Q205.4 39.6 192 40 Q184.9 42.1 180 56 Q171.4 62.8 174 74 Q168.1 85.5 172 90 Q170.8 100.1 176 100 Z"/><path class="cr-l" d="M125.2 -16.5 L146.8 9.6 M117.5 -10.3 L143.6 12.2 M112 -2.2 L141.3 15.5 M109 7 L140.1 19.3 M192.2 37.2 L192.9 26 M178.4 53.7 L171.9 44.6 M171.3 74.7 L160.4 77.4 M170.1 92.1 L162.6 100.4"/></g></g></svg></div>
+      </div>
+      <div class="sent__head">
+        <svg class="sent__seal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M19.5 33.5l8.5 8.5 16.5-18"/></svg>
+        <a class="mq__x" href="#" data-sent-close><span class="vh" data-en="Close">Schließen</span></a>
+      </div>
+      <div class="sent__body">
+        <p class="tag" data-en="Enquiry sent">Anfrage gesendet</p>
+        <h2 class="display sent__title" id="sent-title" tabindex="-1" data-en="Thank you.">Danke.</h2>
+        <p class="sent__lead" data-en-html="Your enquiry is on its way. I read it <span class='em'>personally</span> and get back to you <span class='em'>within one business day</span>.">Ihre Anfrage ist unterwegs. Ich lese sie <span class='em'>persönlich</span> und melde mich <span class='em'>innerhalb eines Werktags</span>.</p>
+        <p class="mono sent__sum" data-sent-sum hidden></p>
+        <div class="sent__next">
+          <p class="tag" data-en="What happens next">Was als Nächstes passiert</p>
+          <ol class="rows">
+            <li class="row"><span class="row__n" aria-hidden="true">01</span><span class="row__t" data-en="I read your enquiry">Ich lese Ihre Anfrage</span><span class="row__d" data-en="Personally, not an autoresponder.">Persönlich, kein Autoresponder.</span></li>
+            <li class="row"><span class="row__n" aria-hidden="true">02</span><span class="row__t" data-en="A free first conversation">Ein kostenloses Erstgespräch</span><span class="row__d" data-en="We talk goals, scope and timeline.">Wir besprechen Ziele, Umfang und Zeitplan.</span></li>
+            <li class="row"><span class="row__n" aria-hidden="true">03</span><span class="row__t" data-en="A clear quote">Ein klares Angebot</span><span class="row__d" data-en="Fixed scope, timeline and price.">Fester Umfang, Zeitplan und Preis.</span></li>
+          </ol>
+        </div>
+        <div class="sent__act">
+          <a href="#" class="btn btn--lg btn--accent" data-sent-close><span data-en="Done">Fertig</span></a>
+          <a href="/work.html" class="cta"><span class="cta__txt" data-en="See my work meanwhile">Projekte ansehen</span><span class="cta__ico" aria-hidden="true"><svg><use href="#i-arrow-r"/></svg></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/i18n.js?v=20261014b" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="assets/js/v2/main.js?v=20261014a" defer></script>
-  <script src="assets/js/consent.js?v=20261014a" defer></script>
+  <script src="assets/js/v2/main.js?v=20261014b" defer></script>
+  <script src="assets/js/consent.js?v=20261014b" defer></script>
 </body>
 </html>
