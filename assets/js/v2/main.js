@@ -415,7 +415,7 @@
       kmax: 1.15 * Math.max(W / stem, 2 * (stageH - H / 2) / (m.h * s))
     };
     if (!hsc.img.getAttribute('href')) {
-      hsc.img.setAttribute('href', 'assets/img/v2/' + (W < 820 ? 'sparks-1100.webp' : 'sparks-1920.webp'));
+      hsc.img.setAttribute('href', 'assets/img/v2/clouds-810.webp');
     }
   }
   function layoutHs() {

@@ -454,7 +454,8 @@
    to the section's box by clip-path on its wrapper, which clips fixed
    children (background-attachment: fixed does not work on iOS). The file
    is toned down so ink-coloured text keeps 4.6:1 on its brightest band
-   (measured 2026-10-09): text on the picture is --ink, not --ink-2.
+   (hills-1056.webp: 49 % brightness, 4.8:1 at the sun, measured 2026-10-15):
+   text on the picture is --ink, not --ink-2.
    ===================================================================== */
 .pricing__bg { position: absolute; inset: 0; clip-path: inset(0); }
 .pricing__img {
@@ -464,7 +465,7 @@
   width: 100%;
   height: calc(var(--vh, 1vh) * 100 + 7rem);     /* covers the screen when a phone's toolbar slides away */
   object-fit: cover;
-  object-position: 50% 42%;
+  object-position: 50% 30%;    /* landscape screens: the sun and the hills */
 }
 /* the picture's top and bottom edges melt into the page ground */
 .pricing__bg::after {
