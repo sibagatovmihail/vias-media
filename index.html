@@ -43,11 +43,11 @@
 
   <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261014c">
-  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261014c">
-  <link rel="stylesheet" href="assets/css/consent.css?v=20261014c">
-  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261014c">
-  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261014c">
+  <link rel="stylesheet" href="assets/css/v2/tokens.css?v=20261015a">
+  <link rel="stylesheet" href="assets/css/v2/base.css?v=20261015a">
+  <link rel="stylesheet" href="assets/css/consent.css?v=20261015a">
+  <link rel="stylesheet" href="assets/css/v2/components.css?v=20261015a">
+  <link rel="stylesheet" href="assets/css/v2/home.css?v=20261015a">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -464,10 +464,19 @@
       </div>
     </section>
 
-    <!-- ===== PROJECTS: a wall of sleeves. Laptops: the sleeves lean against a wall, turned
-         away; the one under the pointer (or keyboard focus) is pulled out: it turns to face
-         you and rises, and its story shows on the left. Phones and tablets: the sleeves stand
-         flat in a sideways row with the story under each ===== -->
+    <!-- the hero's action again, as a calendar in the bottom right corner once the hero
+         has been scrolled through (main.js shows it; it stays hidden without the script) -->
+    <div class="dock" data-dock inert>
+      <a href="contact.html" class="cta dock__btn" data-cur="Los" data-cur-en="Go">
+        <span class="vh" data-en="Advise me">Beraten Sie mich</span>
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"><path d="M3.75 5.25h16.5v15H3.75zM3.75 9.75h16.5M8.25 3v4.5M15.75 3v4.5"/><path d="M7.5 13.5h1.5M11.25 13.5h1.5M15 13.5h1.5M7.5 17h1.5M11.25 17h1.5"/></svg>
+      </a>
+    </div>
+
+    <!-- ===== PROJECTS: a wall of sleeves. The sleeves lean against a wall, turned away;
+         the pulled one (under the pointer, tapped, swiped to, or holding keyboard focus)
+         turns to face you and rises, and its story shows beside the wall: on the left on
+         laptops, under it on phones and tablets ===== -->
     <section class="s crate-sec" id="work" aria-labelledby="crate-title">
       <div class="wrap grid crate-head">
         <div class="s__label"><p class="tag" data-en="Work">Projekte</p></div>
@@ -1106,9 +1115,9 @@
     </div>
   </div>
 
-  <script src="assets/js/i18n.js?v=20261014c" defer></script>
+  <script src="assets/js/i18n.js?v=20261015a" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="assets/js/v2/main.js?v=20261014c" defer></script>
-  <script src="assets/js/consent.js?v=20261014c" defer></script>
+  <script src="assets/js/v2/main.js?v=20261015a" defer></script>
+  <script src="assets/js/consent.js?v=20261015a" defer></script>
 </body>
 </html>

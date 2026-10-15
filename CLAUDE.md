@@ -241,16 +241,27 @@ Direction and reasoning: `docs/design-research/`.
   `--band-a` / `--band-b` on the `.flock`. The "sent" dialog has its own small flock. From 62.5rem the title is forced onto two lines
   (`data-lines="dash"`) and `fitLines()` scales it to the full width; below that it wraps on four. Check the
   lines in DE and EN at 320–1920px after any copy or size change.
-- **Projects (homepage):** sleeves on a wall (`.crate`, `.rec`), one screen tall at most (owner, 2026-10-14:
-  "smaller and readable"; the vinyl record was only an example, so there are no discs). Laptops with a mouse
-  (≥ 62.5rem, fine pointer): the sleeves lean against a wall (`rotateY(46deg)`, overlapping); the one under
-  the pointer or holding keyboard focus is pulled (`.is-on`): it faces you and rises, the sleeves after it
-  step aside, and its story stands in the panel on the left. Which sleeve is under the pointer is decided
-  from the pointer's x over the wall (each owns the strip to the next one's visible edge), not by hovering
-  the turned sleeves, which answered "really late". Touch and smaller screens: the sleeves stand flat in a sideways row
-  (rule 11b) with the story under each. A sleeve is a square cover: the screenshot whole at its own ratio,
-  the name under it. The `.crate` must stay `position: relative`, or the hidden `.vh` labels escape the
-  scroll container and widen the page on phones (found 2026-10-14).
+- **Projects (homepage):** sleeves on a wall (`.crate`, `.rec`) **at every width** (owner, 2026-10-15: "make
+  the portfolio section similar on the phones as on laptops"; the sideways row on touch is gone). The sleeves
+  lean against the wall (`--lean`, overlapping by `--strip`); the pulled one (`.is-on`) faces you and rises,
+  the ones after it step aside (`--step`). ≥ 62.5rem (mouse or touch): the story stands in the panel on the
+  left; below that the wall is at most 1.8 sleeves wide and the story stands under it (`--info-h`, the
+  tallest story, measured by `sizeCrate()`; the laptop wall is at least that tall too). Laptops with a mouse pull by the pointer's x over the wall (each
+  sleeve owns the strip to the next one's visible edge; hovering the turned sleeves answered "really late").
+  A tap on a sleeve that is not out pulls it, a tap on the pulled one opens its case study (the sleeve that
+  was out at `pointerdown` decides: the tap's focus pulls before the click arrives); on touch a sideways swipe
+  pulls the next one (`touch-action: pan-y`). Keyboard focus on a story's button pulls its sleeve. A sleeve
+  is a square cover: the screenshot whole at its own ratio, the name under it. The `.crate` must stay
+  `position: relative` (the stories and the hidden `.vh` labels are placed in it).
+- **Hero action timing and dock:** on phones and touch screens (`max-width: 62.4375rem` or `hover: none`)
+  the hero's `.cta` is shown as soon as the script runs (`.is-quick`), without waiting for the title face or
+  the stagger (owner, 2026-10-15: it "appears too late on the phones"); laptops keep lines → note → action.
+  Once the hero has been scrolled through (the next sheet covers it whole), the same action is docked in the
+  bottom right corner as a **calendar icon only** (`.dock`, after the hero in index.html, `updateDock()`;
+  owner, same day: "only appear when I have scrolled through the hero", "just make it a calendar icon"): a
+  ground square with a hairline, gold icon, the label in a `.vh` span; hover/press fill it gold and the icon
+  turns dark. It opens the enquiry modal, leaves when the footer comes up and is `inert` while hidden.
+  Homepage only.
 - **Word mask ("So arbeite ich" → Services):** the next section's name is the **last thing in the row of
   panels** (an empty cell, `.hs__wordcell`, keeps its place; the word is drawn over it in an SVG covering the
   stage). It pans in with the cards; when the row is at its end the word grows from that place into its

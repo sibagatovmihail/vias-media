@@ -84,46 +84,91 @@
 /* first-load order: lines rise, then the note, then the action */
 .hero__lead-cover { --i: 4; }
 .hero__actions { --i: 6; }
+/* phones and touch screens: the action does not wait for the title face or the
+   stagger (it came last, about two seconds in); main.js shows it at once */
+.js .hero__actions.is-quick.is-in { transition-duration: 0.45s; transition-delay: 0.05s; }
+
+/* the hero's action, docked in the bottom right corner as a calendar once
+   the hero has been scrolled through (owner, 2026-10-15: "only appear when I
+   have scrolled through the hero", "just make it a calendar icon"); it leaves
+   when the footer (with its own call) comes up. A ground square keeps it
+   readable over whatever scrolls beneath; the gold fill of the hover and
+   press fills the whole square and the icon turns dark on it */
+.dock {
+  position: fixed;
+  right: var(--margin);
+  bottom: calc(clamp(1.25rem, calc(var(--vh, 1vh) * 3.4), 2.5rem) + env(safe-area-inset-bottom, 0px));
+  z-index: 45;               /* above the fog band, under the header, menu and dialogs */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 0.75rem, 0);
+  transition: opacity 0.25s ease, transform 0.4s var(--ease-out), visibility 0s linear 0.4s;
+}
+.dock.is-on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.dock__btn.cta {
+  justify-content: center;
+  width: calc(var(--ctl-h) + 0.25rem);
+  height: calc(var(--ctl-h) + 0.25rem);
+  margin-inline: 0;
+  padding: 0;
+  background: var(--ground);
+  border: 1px solid var(--line);
+}
+.dock__btn.cta::before { inset: -1px; }
+.dock__btn svg { width: 1.375rem; height: 1.375rem; }
+@media (prefers-reduced-motion: reduce) {
+  .dock { transform: none; transition: opacity 0.2s ease, visibility 0s linear 0.2s; }
+}
 
 /* =====================================================================
-   PROJECTS — sleeves. Default (phones, tablets, touch): the sleeves
-   stand flat in a sideways row (sideways scroll only), each with its
-   story underneath. Laptops with a mouse: the sleeves lean against a
-   wall, turned away and overlapping; the one under the pointer is pulled
-   out (it turns to face you and rises) and its story stands in the panel
-   on the left. Which one is under the pointer is decided by its x over
-   the wall (main.js), so the pull answers at once. Sleeves are square covers: the screenshot whole at its own ratio,
-   the name under it.
+   PROJECTS — sleeves on a wall, at every width. The sleeves lean against
+   the wall, turned away and overlapping; the pulled one turns to face you
+   and rises, the ones after it step aside, and its story stands beside
+   the wall (laptops: in the panel on the left; phones and tablets: under
+   the wall). Laptops with a mouse pull by the pointer's x over the wall
+   (main.js), so the pull answers at once; a tap (or a sideways swipe on
+   touch screens) pulls the next one. Sleeves are square covers: the
+   screenshot whole at its own ratio, the name under it.
+     --strip  the share of a leaning sleeve that shows before the next one
+     --lean   how far a leaning sleeve is turned
+     --step   how far the sleeves after the pulled one step aside
    ===================================================================== */
 .crate-head__main { display: grid; gap: var(--block-gap); justify-items: start; }
 @media (min-width: 48rem) {
   .crate-head__main { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
 }
 .crate {
-  --S: min(72vw, 19rem);                 /* sleeve size */
-  position: relative;                    /* the containing block of the hidden labels (.vh), or they escape the clip and widen the page */
+  /* phones and tablets: the wall is 1.8 sleeves wide at most (a pulled one,
+     three strips and the turned edge of the last), so it fits the column */
+  --S: min(calc((100vw - 2 * var(--margin) - 0.75rem) / 1.8), 19rem);
+  --strip: 0.2;
+  --lean: 68deg;
+  --step: calc(var(--S) * (1 - var(--strip)) + 0.75rem);
+  position: relative;                    /* the containing block of the stories and the hidden labels (.vh) */
   display: flex;
-  gap: 0.5rem;
-  margin: var(--head-gap) calc(var(--margin) * -1) -1rem;
-  padding: 0.5rem var(--margin) 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;                    /* sideways only (rule 11b) */
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--margin);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  margin-top: var(--head-gap);
+  padding: calc(var(--S) * 0.1) 0 calc(var(--info-h, 17rem) + var(--S) * 0.16);
+  touch-action: pan-y;                   /* a sideways swipe pulls the next sleeve, the page still scrolls */
 }
-.crate::-webkit-scrollbar { display: none; }
 .rec {
   flex: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
   width: var(--S);
-  scroll-snap-align: start;
+  margin-right: calc(var(--S) * (var(--strip) - 1));
 }
-.rec__sleeve { position: relative; display: block; width: var(--S); aspect-ratio: 1; }
+.rec:last-child { margin-right: 0; }
+.rec.is-on { z-index: 5; }
+.rec__sleeve {
+  position: relative;
+  display: block;
+  width: var(--S);
+  aspect-ratio: 1;
+  transform-origin: 0 50%;
+  transform: perspective(1500px) translate3d(var(--sx, 0px), var(--sy, 0px), 0) rotateY(var(--ry, var(--lean)));
+  transition: transform 0.45s var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.rec.is-on .rec__sleeve { --ry: 0deg; --sy: calc(var(--S) * -0.07); }
+.rec.is-on ~ .rec .rec__sleeve { --sx: var(--step); }
 .rec__cover {
   position: relative;
   display: flex;
@@ -135,73 +180,63 @@
   background: var(--ground-2);
   container-type: inline-size;
 }
+/* sleeves that are not pulled sit in the wall's shade (a layer's opacity, no filter) */
+.rec__cover::after { content: ""; position: absolute; inset: -1px; background: var(--ground); opacity: 0.38; transition: opacity 0.3s ease; pointer-events: none; }
+.rec.is-on .rec__cover::after { opacity: 0; }
 .rec__shot { display: block; border: 1px solid var(--line-soft); background: var(--ground); }
 .rec__shot img { width: 100%; height: auto; }
 .rec__no { margin-top: auto; color: var(--ink-3); }
 .rec__name { font-size: 15cqi; line-height: 0.86; overflow-wrap: break-word; }
-.rec__info { display: grid; gap: 0.625rem; justify-items: start; padding-right: 0.5rem; }
+/* the story of the pulled sleeve. Hidden ones stay focusable: a keyboard
+   focus pulls their sleeve first. Phones and tablets: under the wall */
+.rec__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--S) * 1.24);
+  display: grid;
+  gap: 0.625rem;
+  justify-items: start;
+  opacity: 0;
+  transform: translate3d(0, 0.75rem, 0);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.4s var(--ease-out);
+}
+.rec.is-on .rec__info { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.05s; }
 .rec__count,
 .rec__tags { color: var(--ink-2); }
-.rec__title { font-size: var(--fs-d3); line-height: 0.95; }
+.rec__title { font-size: var(--fs-d2); line-height: 0.9; }
 .rec__desc p { color: var(--ink-2); font-size: 0.9375rem; max-width: 30rem; text-wrap: pretty; }
 .rec__btn { margin-top: 0.25rem; }
 .rec__sleeve:active .rec__cover { border-color: var(--ink); }
 
-@media (hover: hover) and (pointer: fine) and (min-width: 62.5rem) {
+@media (min-width: 62.5rem) {
+  /* laptops: a wider wall, the story in the panel on the left */
   .crate {
     --S: clamp(13rem, 21.5vw, 26rem);
+    --strip: 0.46;
+    --lean: 46deg;
+    --step: calc(var(--S) * 0.58);
     --panel: max(17rem, calc(2 * var(--pitch) - var(--gutter)));
-    position: relative;
-    gap: 0;
-    min-height: calc(var(--S) * 1.16);
-    margin: var(--head-gap) 0 0;
+    min-height: max(calc(var(--S) * 1.16), calc(var(--S) * 0.03 + var(--info-h, 0px)));   /* a long story on a narrow laptop */
     padding: calc(var(--S) * 0.1) 0 0 calc(var(--panel) + 2 * var(--gutter));
-    overflow: visible;
-    scroll-snap-type: none;
   }
-  .rec {
-    display: block;
-    width: var(--S);
-    margin-right: calc(var(--S) * -0.54);
-  }
-  .rec:last-child { margin-right: 0; }
-  .rec.is-on { z-index: 5; }
-  /* leaning against the wall, turned away; the pulled one faces you and rises;
-     the ones after it step aside so its record has room */
-  .rec__sleeve {
-    transform-origin: 0 50%;
-    transform: perspective(1500px) translate3d(var(--sx, 0px), var(--sy, 0px), 0) rotateY(var(--ry, 46deg));
-    transition: transform 0.45s var(--ease-out);
-  }
-  .rec.is-on .rec__sleeve { --ry: 0deg; --sy: calc(var(--S) * -0.07); }
-  .rec.is-on ~ .rec .rec__sleeve { --sx: calc(var(--S) * 0.58); }
-  /* sleeves that are not pulled sit in the wall's shade (a layer's opacity, no filter) */
-  .rec__cover::after { content: ""; position: absolute; inset: -1px; background: var(--ground); opacity: 0.38; transition: opacity 0.3s ease; pointer-events: none; }
-  .rec.is-on .rec__cover::after { opacity: 0; }
-  /* the story of the pulled record stands in the panel on the left. Hidden ones
-     stay focusable: a keyboard focus pulls their record first */
   .rec__info {
-    position: absolute;
-    left: 0;
+    right: auto;
     top: calc(var(--S) * 0.03);
     width: var(--panel);
     gap: 0.75rem;
-    opacity: 0;
-    transform: translate3d(0, 0.75rem, 0);
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.4s var(--ease-out);
   }
-  .rec.is-on .rec__info { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.05s; }
   .rec__title { font-size: clamp(2.5rem, 1rem + 2.8vw, 4.5rem); line-height: 0.86; }
   .rec__desc p { font-size: 0.875rem; }
   .rec__btn { margin-top: 0.75rem; }
-  /* entrance: the sleeves swing in from flat against the wall, one after another */
-  .js .crate:not(.is-in) .rec__sleeve { --ry: 84deg; opacity: 0; }
-  .js .crate .rec__sleeve { transition: transform 0.45s var(--ease-out), opacity 0.4s ease; }
-  .js .crate:not(.is-settled) .rec__sleeve { transition-duration: 0.8s, 0.5s; }
-  .js .crate.is-in .rec__sleeve { transition-delay: calc(var(--k, 0) * 90ms), calc(var(--k, 0) * 90ms); }
-  .js .crate.is-in.is-settled .rec__sleeve { transition-delay: 0s; }
 }
+/* entrance: the sleeves swing in from flat against the wall, one after another */
+.js .crate:not(.is-in) .rec__sleeve { --ry: 84deg; opacity: 0; }
+.js .crate .rec__sleeve { transition: transform 0.45s var(--ease-out), opacity 0.4s ease; }
+.js .crate:not(.is-settled) .rec__sleeve { transition-duration: 0.8s, 0.5s; }
+.js .crate.is-in .rec__sleeve { transition-delay: calc(var(--k, 0) * 90ms), calc(var(--k, 0) * 90ms); }
+.js .crate.is-in.is-settled .rec__sleeve { transition-delay: 0s; }
 .rv-fallback .crate .rec__sleeve { opacity: 1 !important; }
 
 /* =====================================================================

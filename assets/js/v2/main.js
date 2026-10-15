@@ -323,6 +323,15 @@
   /* ---- Reveals: hidden only while JS is alive; <head> carries a no-JS-file failsafe ---- */
   var rvEls = [].slice.call(document.querySelectorAll('.rv, .rv-lines, [data-crate], [data-letters], .sx-ref__card'));
   var io = null;
+  /* phones and touch screens: the hero's action is plain text in the body face, so it
+     does not wait for the title face, the observer or the stagger (it came last,
+     about two seconds in). Laptops keep the order: lines, note, action */
+  var heroAct = document.querySelector('.hero__actions');
+  if (heroAct && !reduced && window.matchMedia('(max-width: 62.4375rem), (hover: none)').matches) {
+    rvEls.splice(rvEls.indexOf(heroAct), 1);
+    heroAct.classList.add('is-quick');
+    window.requestAnimationFrame(function () { heroAct.classList.add('is-in'); });
+  }
   function startReveals() {
     if (reduced || !('IntersectionObserver' in window)) {
       rvEls.forEach(function (el) { el.classList.add('is-in'); });
@@ -498,28 +507,41 @@
     pinEls.forEach(function (el) { pinRO.observe(el); });
   }
 
-  /* ---- Projects: sleeves on a wall (laptops). The one under the pointer is
-     pulled out. Hit-testing the turned sleeves answered late (each shows only a
-     narrow strip, and a pulled one covers its neighbours), so the choice is made
-     from the pointer's x alone: every sleeve owns the strip from its visible left
-     edge to the next one's, in the current state. The last one pulled stays out,
-     so the story panel is never empty. Keyboard focus pulls too. ---- */
+  /* ---- Projects: sleeves on a wall. The pulled one faces you and its story
+     stands beside the wall. Laptops with a mouse pull by the pointer: hit-testing
+     the turned sleeves answered late (each shows only a narrow strip, and a pulled
+     one covers its neighbours), so the choice is made from the pointer's x alone:
+     every sleeve owns the strip from its visible left edge to the next one's, in
+     the current state. A tap on a sleeve that is not pulled pulls it (a tap on the
+     pulled one opens its case study); on touch screens a sideways swipe pulls the
+     next or previous one. The last one pulled stays out, so the story is never
+     empty. Keyboard focus pulls too. ---- */
   var crate = document.querySelector('[data-crate]');
+  var sizeCrate = function () {};
   if (crate) {
     var recs = [].slice.call(crate.querySelectorAll('.rec'));
-    var wall = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 62.5rem)');
+    var infos = recs.map(function (r) { return r.querySelector('.rec__info'); });
+    var wall = window.matchMedia('(min-width: 62.5rem)');
     var onAt = 0;
     var pull = function (i) {
+      i = Math.max(0, Math.min(recs.length - 1, i));
       if (i === onAt && recs[i].classList.contains('is-on')) return;
       onAt = i;
       recs.forEach(function (x, k) { x.classList.toggle('is-on', k === i); });
+    };
+    /* the stories stand one at a time beside the wall (under it on phones and
+       tablets, left of it on laptops), so the wall reserves the tallest of them */
+    sizeCrate = function () {
+      var h = 0;
+      infos.forEach(function (el) { if (el) h = Math.max(h, el.offsetHeight); });
+      if (h) crate.style.setProperty('--info-h', h + 'px');
     };
     recs.forEach(function (r, k) {
       r.querySelector('.rec__sleeve').style.setProperty('--k', k);
       r.addEventListener('focusin', function () { pull(k); });
     });
     crate.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch' || !wall.matches) return;
+      if (e.pointerType !== 'mouse' || !wall.matches) return;
       var S = recs[0].offsetWidth, shift = S * 0.58, x = e.clientX;
       var lefts = recs.map(function (r, k) { return r.getBoundingClientRect().left + (k > onAt ? shift : 0); });
       var first = lefts[0], end = lefts[lefts.length - 1] + S;
@@ -530,12 +552,53 @@
       while (i < lefts.length - 1 && x >= lefts[i + 1]) i++;
       pull(i);
     }, { passive: true });
-    /* after the entrance the sleeves answer the pointer without the stagger */
+    /* which one was out when the finger or button went down: a tap focuses the
+       sleeve, and the focus pulls it before the click arrives */
+    var swX = 0, swY = 0, swOn = false, swiped = 0, downAt = -1;
+    crate.addEventListener('pointerdown', function (e) {
+      downAt = onAt;
+      if (e.pointerType === 'mouse') return;
+      swX = e.clientX; swY = e.clientY; swOn = true;
+    }, { passive: true });
+    crate.addEventListener('pointerup', function (e) {
+      if (!swOn) return;
+      swOn = false;
+      var dx = e.clientX - swX, dy = e.clientY - swY;
+      if (Math.abs(dx) < 32 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      swiped = Date.now();
+      pull(onAt + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    crate.addEventListener('pointercancel', function () { swOn = false; });
+    crate.addEventListener('click', function (e) {
+      var sl = e.target.closest('.rec__sleeve');
+      if (!sl) return;
+      var k = recs.indexOf(sl.parentNode), was = downAt < 0 ? onAt : downAt;
+      downAt = -1;
+      if (Date.now() - swiped < 400 || k !== was) { e.preventDefault(); pull(k); }
+    });
+    /* after the entrance the sleeves answer without the stagger */
     crate.addEventListener('transitionend', function () {
       if (crate.classList.contains('is-in')) crate.classList.add('is-settled');
     });
   }
 
+  /* ---- The hero's action, docked in the bottom right corner as a calendar: it
+     shows once the hero has been scrolled through (the next sheet has covered it
+     whole, or it has scrolled away where it is not pinned), and leaves when the
+     footer comes up with its own call to action. ---- */
+  var dock = document.querySelector('[data-dock]');
+  var dockNext = dock ? document.querySelector('.hero') : null;
+  if (dockNext) dockNext = dockNext.nextElementSibling;
+  while (dockNext && !dockNext.matches('section, .tail')) dockNext = dockNext.nextElementSibling;
+  var dockFtr = document.querySelector('.ftr');
+  function updateDock(V) {
+    if (!dock || !dockNext) return;
+    var on = dockNext.getBoundingClientRect().top <= 1 &&
+      !(dockFtr && dockFtr.getBoundingClientRect().top < V);
+    if (on === dock.classList.contains('is-on')) return;
+    dock.classList.toggle('is-on', on);
+    dock.toggleAttribute('inert', !on);
+  }
 
   /* =====================================================================
      Cranes. Every flight is new (owner: "too slow and too repetitive …
@@ -762,6 +825,7 @@
     updateFill(V);
     updateDrive(V);
     updateFlow(V);
+    updateDock(V);
     wakeFlocks();
     if (refreshCursor) refreshCursor();
   }
@@ -815,6 +879,7 @@
   function relayout() {
     measure();
     if (booted) splitAll(false);
+    sizeCrate();
     reserveFaq();
     layoutPins();
     layoutHs();
@@ -1297,6 +1362,7 @@
   /* ---- Boot (last: everything above is defined) ---- */
   function boot() {
     splitAll(false);
+    sizeCrate();
     reserveFaq();
     layoutPins();
     layoutHs();
@@ -1357,6 +1423,7 @@
   document.addEventListener('vias:lang', function () {
     if (!booted) return;
     splitAll(true);
+    sizeCrate();
     reserveFaq();
     layoutPins();
     layoutHs();
