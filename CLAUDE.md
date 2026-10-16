@@ -323,7 +323,7 @@ Direction and reasoning: `docs/design-research/`.
     it in Archivo, mixed case; the drawing beside it on tablets and up; the three facts in one ruled strip), a
     checklist whose ticks draw themselves, a time line that fills on scroll (`data-flow`, across on laptops,
     down on phones), a featured reference, a cost box, FAQ, previous/next; tighter section spacing. Their copy
-    only repeats claims the site already makes. They **repeat the three package prices** in `data-price`
+    only repeats claims the site already makes. They **repeat the package prices** (Website, Onlineshop, Abo) in `data-price`
     spans: change prices there too. They are listed in `STATIC_PAGES` (`build_blog.py`) and `llms.txt`.
   - Contact: the form alone in the middle under a centred head, what happens next and the direct contact
     below it side by side (owner, 2026-10-14: the two-column page was "so stuffed"). It is a three-step quiz (`[data-quiz]`): answer
@@ -361,8 +361,13 @@ Direction and reasoning: `docs/design-research/`.
   change. Touch and app icons (cream squares) are unchanged.
 - **Images:** sources and licences in `assets/img/v2/CREDITS.md`; add a line for every new image and say
   whether it is a photo, drawn by script or AI-generated.
-- **Pricing:** card prices carry `data-price` (figures supplied by the owner on 2026-10-08: Onepager 575 €,
-  Website 695 €, Onlineshop 1.295 €). Change them only on the owner's word, in both `data-en` and the text.
+- **Pricing:** card prices carry `data-price` (owner's figures; 2026-10-15: Website 485 €, the Onepager card
+  replaced by the **Website-Abo**, 0 € Einrichtung + 49 € im Monat (`data-price="abo-setup"` / `"abo"`);
+  Onlineshop 1.295 € unchanged since 2026-10-08). Change them only on the owner's word, in both `data-en` and
+  the text. Abo terms (owner, 2026-10-16): one page or several, hosting/updates/small changes included,
+  **12 Monate Mindestlaufzeit**, and the site belongs to the client only at a fixed price (so ownership claims
+  say "beim Festpreis"). Wherever a price range is given (services and landing FAQ, blog), it reads "ab 485 €"
+  plus the Abo; the old "höheren dreistelligen bis niedrigen vierstelligen" wording is gone.
 - **Breakpoints in use:** 22.5rem, 30rem, 37.5rem, 48rem (grid 4→8), 62.5rem (burger → nav), 75rem, 87.5rem.
 - **Claims:** the homepage no longer says "Hosting/Server in Deutschland" (not true yet, see global guardrails).
 

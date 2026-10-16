@@ -46,7 +46,7 @@ Portal-Anfragen sind Preisvergleichs-Anfragen. Der Kunde hat bewusst eine Plattf
 
 ## Ab wann lohnt sich eine eigene Website statt eines Portals?
 
-Eine eigene Website lohnt sich, sobald ihre Kosten über die Nutzungsdauer niedriger sind als die Portalkosten im selben Zeitraum — und das ist bei fast jedem Betrieb mit regelmäßigen Portalausgaben der Fall. Eine professionelle Handwerker-Website kostet bei Vias Media einmalig einen Betrag im **höheren dreistelligen bis niedrigen vierstelligen Euro-Bereich**, dazu kommen etwa **10 bis 20 Euro im Jahr** für die Domain. Im Rechenbeispiel oben entsprechen die Portalkosten eines Jahres also mehreren Websites.
+Eine eigene Website lohnt sich, sobald ihre Kosten über die Nutzungsdauer niedriger sind als die Portalkosten im selben Zeitraum — und das ist bei fast jedem Betrieb mit regelmäßigen Portalausgaben der Fall. Eine professionelle Handwerker-Website kostet bei Vias Media einmalig **ab 485 €**, dazu kommen etwa **10 bis 20 Euro im Jahr** für die Domain. Im Rechenbeispiel oben entsprechen die Portalkosten eines Jahres also mehreren Websites.
 
 <div class="tbl" markdown="1">
 
